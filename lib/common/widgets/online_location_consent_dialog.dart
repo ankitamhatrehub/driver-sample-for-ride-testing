@@ -1,18 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
 import '../constants/colors.dart';
+import 'package:rider_app/service/location_consent_service.dart';
 
-enum OnlineLocationChoice {
-  always,
-  whileInUse,
-  thisTime,
-}
+enum OnlineLocationChoice { always, whileInUse, thisTime }
 
 /// Shown every time a driver toggles Online, before the OS location prompt.
 /// Returns the selected choice, or null if the driver stays offline.
+
 Future<OnlineLocationChoice?> showOnlineLocationConsentDialog(
   BuildContext context,
 ) async {
@@ -102,7 +97,8 @@ class _OnlineLocationConsentSheetState
                   'Best for drivers — get rides even when the app is in the background',
               recommended: true,
               selected: _selected == OnlineLocationChoice.always,
-              onTap: () => setState(() => _selected = OnlineLocationChoice.always),
+              onTap: () =>
+                  setState(() => _selected = OnlineLocationChoice.always),
             ),
             const SizedBox(height: 8),
             _ChoiceOption(
@@ -149,24 +145,23 @@ class _OnlineLocationConsentSheetState
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: const Text(
                   'Continue',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
+            const SizedBox(height: 10),
+            Center(
               child: TextButton(
                 onPressed: () => Navigator.of(context).pop(null),
-                child: Text(
-                  'Stay offline',
+                child: const Text(
+                  'Cancel (Stay Offline)',
                   style: TextStyle(
-                    color: Colors.blueGrey.shade500,
+                    color: Colors.blueGrey,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -182,106 +177,101 @@ class _OnlineLocationConsentSheetState
 class _ChoiceOption extends StatelessWidget {
   final String title;
   final String subtitle;
-  final bool selected;
   final bool recommended;
+  final bool selected;
   final VoidCallback onTap;
 
   const _ChoiceOption({
     required this.title,
     required this.subtitle,
+    this.recommended = false,
     required this.selected,
     required this.onTap,
-    this.recommended = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = selected
-        ? (recommended ? const Color(0xFF10B981) : AppColors.primary)
-        : Colors.black12;
-    final bgColor = selected
-        ? (recommended ? const Color(0xFFECFDF5) : const Color(0xFFEEF2FF))
-        : const Color(0xFFF8FAFC);
-
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Ink(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: borderColor, width: selected ? 1.6 : 1),
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: selected
+              ? AppColors.primary.withValues(alpha: 0.06)
+              : Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: selected ? AppColors.primary : Colors.grey.shade200,
+            width: selected ? 2 : 1,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                selected
-                    ? Icons.radio_button_checked_rounded
-                    : Icons.radio_button_off_rounded,
-                size: 22,
-                color: selected
-                    ? (recommended ? const Color(0xFF059669) : AppColors.primary)
-                    : Colors.blueGrey.shade400,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF0F172A),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Radio<bool>(
+              value: true,
+              groupValue: selected,
+              onChanged: (_) => onTap(),
+              activeColor: AppColors.primary,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: selected
+                                ? AppColors.primary
+                                : const Color(0xFF0F172A),
+                          ),
+                        ),
+                      ),
+                      if (recommended) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDCFCE7),
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: const Text(
+                            'RECOMMENDED',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF166534),
                             ),
                           ),
                         ),
-                        if (recommended) ...[
-                          const SizedBox(width: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF10B981),
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: const Text(
-                              'Recommended',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
                       ],
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      height: 1.35,
+                      color: Colors.blueGrey.shade600,
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 12,
-                        height: 1.35,
-                        color: Colors.blueGrey.shade600,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -290,31 +280,17 @@ class _ChoiceOption extends StatelessWidget {
 
 /// In-app online consent + OS location permission based on the driver's choice.
 Future<bool> requestOnlineLocationPermission(BuildContext context) async {
-  final choice = await showOnlineLocationConsentDialog(context);
-  if (choice == null) return false;
-  if (!context.mounted) return false;
-
   final serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
     if (context.mounted) {
-      final open = await showDialog<bool>(
+      final open = await _showLocationActionDialog(
         context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Turn on location'),
-          content: const Text(
-            'Device location is turned off. Enable GPS to go online and receive rides.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Open settings'),
-            ),
-          ],
-        ),
+        icon: Icons.location_off_rounded,
+        iconColor: const Color(0xFFF59E0B),
+        title: 'Turn on location',
+        message:
+            'Device location is turned off. Enable GPS to go online and receive ride requests.',
+        confirmText: 'Open Settings',
       );
       if (open == true) {
         await Geolocator.openLocationSettings();
@@ -324,11 +300,41 @@ Future<bool> requestOnlineLocationPermission(BuildContext context) async {
   }
 
   var permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
+
+  // If location permission is ALREADY granted, skip all modal sheets and return true immediately!
+  if (permission == LocationPermission.whileInUse ||
+      permission == LocationPermission.always) {
+    await LocationConsentService.accept();
+    return true;
   }
 
-  if (permission == LocationPermission.denied) {
+  if (permission == LocationPermission.deniedForever) {
+    if (context.mounted) {
+      final open = await _showLocationActionDialog(
+        context: context,
+        icon: Icons.block_rounded,
+        iconColor: const Color(0xFFEF4444),
+        title: 'Location Blocked',
+        message:
+            'Location permission is permanently denied. Open Settings and allow location (Always / While using the app) to go online.',
+        confirmText: 'Open Settings',
+      );
+      if (open == true) {
+        await Geolocator.openAppSettings();
+      }
+    }
+    return false;
+  }
+
+  // OS permission is denied: show in-app disclosure modal ONCE before OS prompt
+  final choice = await showOnlineLocationConsentDialog(context);
+  if (choice == null) return false;
+  if (!context.mounted) return false;
+
+  permission = await Geolocator.requestPermission();
+
+  if (permission == LocationPermission.denied ||
+      permission == LocationPermission.deniedForever) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -340,71 +346,212 @@ Future<bool> requestOnlineLocationPermission(BuildContext context) async {
     return false;
   }
 
-  if (permission == LocationPermission.deniedForever) {
-    if (context.mounted) {
-      final open = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Location blocked'),
-          content: const Text(
-            'Location permission is permanently denied. Open Settings and allow '
-            'location (Always / While using the app) to go online.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Open settings'),
-            ),
-          ],
-        ),
-      );
-      if (open == true) {
-        await Geolocator.openAppSettings();
-      }
-    }
-    return false;
-  }
-
-  // If driver selected Always, try upgrading beyond while-in-use.
-  if (choice == OnlineLocationChoice.always &&
-      permission == LocationPermission.whileInUse) {
-    if (Platform.isAndroid) {
-      permission = await Geolocator.requestPermission();
-    }
-    if (permission != LocationPermission.always && context.mounted) {
-      final open = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Enable “Allow all the time”'),
-          content: const Text(
-            'Android needs you to set location to “Allow all the time” in Settings '
-            'for background ride matching.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Keep while using'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Open settings'),
-            ),
-          ],
-        ),
-      );
-      if (open == true) {
-        await Geolocator.openAppSettings();
-        permission = await Geolocator.checkPermission();
-      }
-    }
-  }
-
-  // whileInUse and thisTime both need at least while-in-use from the OS.
-  // "Only this time" is an OS-level one-session grant when the system dialog offers it.
+  await LocationConsentService.accept();
   return permission == LocationPermission.whileInUse ||
       permission == LocationPermission.always;
+}
+
+Future<bool?> _showLocationActionDialog({
+  required BuildContext context,
+  required IconData icon,
+  required Color iconColor,
+  required String title,
+  required String message,
+  required String confirmText,
+  String cancelText = 'Cancel',
+}) {
+  final isLongCancel = cancelText.length > 8;
+
+  return showDialog<bool>(
+    context: context,
+    builder: (ctx) => Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
+      elevation: 12,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 24, 22, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: iconColor.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: iconColor, size: 32),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0F172A),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 13.5,
+                color: Color(0xFF64748B),
+                height: 1.45,
+              ),
+            ),
+            const SizedBox(height: 22),
+            if (isLongCancel) ...[
+              // Stacked layout for multi-word or long secondary action
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF6366F1).withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(ctx, true),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    child: Text(
+                      confirmText,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                height: 46,
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    side: const BorderSide(
+                      color: Color(0xFFCBD5E1),
+                      width: 1.2,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    foregroundColor: const Color(0xFF475569),
+                  ),
+                  child: Text(
+                    cancelText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ] else ...[
+              // Balanced side-by-side layout for single-word actions
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 46,
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(ctx, false),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          side: const BorderSide(
+                            color: Color(0xFFCBD5E1),
+                            width: 1.2,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          foregroundColor: const Color(0xFF475569),
+                        ),
+                        child: Text(
+                          cancelText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: SizedBox(
+                      height: 46,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(
+                                0xFF6366F1,
+                              ).withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pop(ctx, true),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                          child: Text(
+                            confirmText,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ],
+        ),
+      ),
+    ),
+  );
 }

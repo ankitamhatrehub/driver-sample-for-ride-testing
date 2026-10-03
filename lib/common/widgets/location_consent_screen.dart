@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../constants/colors.dart';
-import '../services/location_consent_service.dart';
+import 'package:rider_app/service/location_consent_service.dart';
 
 /// Play Store prominent disclosure for location collection.
 /// Shown before the system location permission prompt.
@@ -42,33 +42,6 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
-  }
-
-  void _onDecline() {
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Location required'),
-        content: const Text(
-          'TORKK Driver needs your location to show nearby ride requests, '
-          'navigate trips, and keep you and passengers safe.\n\n'
-          'Without location access you cannot go online as a driver.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Go back'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              // Stay on consent screen; user must acknowledge to continue.
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -222,17 +195,7 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
                             ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: _isSubmitting ? null : _onDecline,
-                    child: Text(
-                      'No thanks',
-                      style: TextStyle(
-                        color: Colors.blueGrey.shade500,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+
                 ],
               ),
             ),

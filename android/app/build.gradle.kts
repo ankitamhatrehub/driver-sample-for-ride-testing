@@ -37,29 +37,17 @@ android {
     }
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId ="com.torkk.app"
+        applicationId ="com.torkk.app.driver"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-
+        manifestPlaceholders["appName"] = "Torkk Driver"
     }
 
-    flavorDimensions.add("app")
 
-    productFlavors {
-        create("customer") {
-            dimension = "app"
-            manifestPlaceholders["appName"] = "Torkk"
-        }
-        create("driver") {
-            dimension = "app"
-            applicationIdSuffix = ".driver"
-            manifestPlaceholders["appName"] = "Torkk Driver"
-        }
-    }
     signingConfigs {
         create("release") {
             val keyAliasVal = keystoreProperties["keyAlias"] as? String
@@ -77,7 +65,8 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            val releaseConfig = signingConfigs.getByName("release")
+            signingConfig = if (releaseConfig.storeFile != null) releaseConfig else signingConfigs.getByName("debug")
             isMinifyEnabled = false
             isShrinkResources = false
         }

@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+import 'package:rider_app/common/constants/app_colors.dart';
+import 'package:rider_app/common/theme/app_typography.dart';
+
+TextStyle coinsTitle() => AppTypography.bold.copyWith(
+  fontSize: 18,
+  height: 1.25,
+  letterSpacing: -0.3,
+);
+
+TextStyle coinsMuted() => AppTypography.regular.copyWith(
+  fontSize: 13,
+  height: 1.35,
+  color: AppColors.slate500,
+);

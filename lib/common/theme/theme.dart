@@ -1,45 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../constants/colors.dart';
+
+import '../constants/app_colors.dart';
+import 'app_typography.dart';
 
 class AppTheme {
-  static ThemeData getTheme({required bool isPink}) {
-    final primaryColor = isPink ? const Color(0xFFEC4899) : const Color(0xFF6366F1);
+  static ThemeData getTheme({required bool isPink, bool isDark = false}) {
+    final primaryColor = isPink ? AppColors.femalePink : AppColors.maleBlue;
+    final bgColor = isDark ? AppColors.backgroundDark : Colors.white;
+    final surfaceColor = isDark ? AppColors.surfaceDark : AppColors.slate50;
+    final textColor = isDark ? AppColors.textDark : AppColors.textPrimary;
 
     return ThemeData(
-      brightness: Brightness.light, // Change globally to Light Theme
-      scaffoldBackgroundColor: Colors.white,
-      fontFamily: GoogleFonts.poppins().fontFamily,
-      colorScheme: ColorScheme.light(
-        primary: primaryColor,
-        secondary: AppColors.secondary,
-        surface: Colors.white,
-        error: AppColors.error,
-      ),
+      brightness: isDark ? Brightness.dark : Brightness.light,
+      scaffoldBackgroundColor: bgColor,
+      fontFamily: AppTypography.fontFamily,
+      colorScheme: isDark
+          ? ColorScheme.dark(
+              primary: primaryColor,
+              secondary: AppColors.secondary,
+              surface: surfaceColor,
+              error: AppColors.error,
+            )
+          : ColorScheme.light(
+              primary: primaryColor,
+              secondary: AppColors.secondary,
+              surface: Colors.white,
+              error: AppColors.error,
+            ),
       useMaterial3: true,
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue.shade900,
+        backgroundColor: bgColor,
+        foregroundColor: textColor,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.blue.shade900),
+        iconTheme: IconThemeData(color: textColor),
       ),
-      textTheme: TextTheme(
-        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue.shade900, fontFamily: GoogleFonts.poppins().fontFamily),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue.shade900, fontFamily: GoogleFonts.poppins().fontFamily),
-        bodyLarge: TextStyle(fontSize: 16, color: Colors.black87, fontFamily: GoogleFonts.poppins().fontFamily),
-        bodyMedium: TextStyle(fontSize: 14, color: Colors.black54, fontFamily: GoogleFonts.poppins().fontFamily),
-      ),
+      textTheme: AppTypography.textTheme(textColor: textColor, isDark: isDark),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0xFFF1F5F9),
-        labelStyle: TextStyle(color: Colors.blueGrey.shade600),
+        fillColor: isDark ? AppColors.slate700 : AppColors.slate100,
+        labelStyle: TextStyle(color: isDark ? Colors.grey.shade400 : Colors.blueGrey.shade600),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.black12),
+          borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.black12),
+          borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -54,15 +60,15 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: GoogleFonts.poppins().fontFamily),
+          textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: AppTypography.fontFamily),
         ),
       ),
       cardTheme: CardThemeData(
-        color: const Color(0xFFF8FAFC),
+        color: surfaceColor,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: Colors.black12),
+          side: BorderSide(color: isDark ? Colors.white12 : Colors.black12),
         ),
       ),
     );

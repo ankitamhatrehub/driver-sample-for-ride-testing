@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+
+import 'package:rider_app/common/constants/app_colors.dart';
+import 'package:rider_app/common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/app_typography.dart';
+import 'package:rider_app/common/utils/screen_utils.dart';
+
+enum KycItemStatus { verified, pending, notStarted }
+
+class KycStatusRow extends StatelessWidget {
+  const KycStatusRow({
+    super.key,
+    required this.title,
+    required this.status,
+    this.onTap,
+  });
+
+  final String title;
+  final KycItemStatus status;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = switch (status) {
+      KycItemStatus.verified => AppColors.emerald500,
+      KycItemStatus.pending => const Color(0xFFEF4444),
+      KycItemStatus.notStarted => AppColors.secondaryTextColor,
+    };
+    final statusLabel = switch (status) {
+      KycItemStatus.verified => AppStrings.kycVerified,
+      KycItemStatus.pending => AppStrings.kycPending,
+      KycItemStatus.notStarted => AppStrings.kycNotStarted,
+    };
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(context.w(14)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(context.r(12)),
+          border: Border.all(color: const Color(0xFFF3F4F6)),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0A000000),
+              offset: Offset(0, 1),
+              blurRadius: 3,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            _statusMark(status == KycItemStatus.verified, context),
+            SizedBox(width: context.w(14)),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 12,
+                      height: 1.15,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  SizedBox(height: context.h(4)),
+                  Text(
+                    statusLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 10,
+                      height: 1.15,
+                      color: statusColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: AppColors.slate400,
+              size: context.w(22),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _statusMark(bool verified, BuildContext context) {
+    return Container(
+      width: 28,
+      height: 28,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: verified ? const Color(0xFFE8F8EE) : Colors.white,
+        border: Border.all(
+          color: verified ? AppColors.emerald500 : AppColors.slate300,
+        ),
+      ),
+      child: verified
+          ? Icon(Icons.check, size: context.w(16), color: AppColors.emerald500)
+          : null,
+    );
+  }
+}
