@@ -2,7 +2,7 @@
 class AppAssets {
   AppAssets._();
 
-  static const String appIcon = 'assets/app_icon.png';
+  static const String appIcon = 'assets/images/app_logo.png';
   static const String splashScreen = 'assets/images/splash_screen.png';
   static const String onboardingImage = 'assets/images/onboarding_image.png';
   static const String aadhaarImage = 'assets/images/aadhar_image.png';

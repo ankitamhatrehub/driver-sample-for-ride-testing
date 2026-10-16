@@ -162,7 +162,7 @@ class CoinsHomeScreen extends StatelessWidget {
                       SizedBox(height: context.h(22)),
                       Padding(
                         padding: EdgeInsets.only(top: context.h(8)),
-                        child: UnifiedButton(label: 'View', onPressed: onView),
+                        child: UnifiedButton(label: 'View', onPressed: onView,  backgroundColor: const Color(0xFF0F3FBF),),
                       ),
                     ],
                   ),

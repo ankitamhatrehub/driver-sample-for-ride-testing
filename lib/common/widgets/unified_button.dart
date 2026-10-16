@@ -43,7 +43,7 @@ class UnifiedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Theme.of(context).colorScheme.primary;
+    final themeColor = AppColors.otpInfoBorder;
     final color = variant == UnifiedButtonVariant.error
         ? (backgroundColor ?? AppColors.error)
         : (backgroundColor ?? themeColor);

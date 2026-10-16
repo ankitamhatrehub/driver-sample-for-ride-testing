@@ -59,15 +59,15 @@ class HomeHeader extends StatelessWidget {
                 ],
               ),
             ),
-            HomeGlassButton(
-              onTap: onNotifications,
-              icon: Icons.notifications_none_rounded,
-            ),
-            SizedBox(width: context.w(8)),
-            HomeGlassButton(
-              onTap: onHelp,
-              asset: AppAssets.questionMark,
-            ),
+            // HomeGlassButton(
+            //   onTap: onNotifications,
+            //   icon: Icons.notifications_none_rounded,
+            // ),
+            // SizedBox(width: context.w(8)),
+            // HomeGlassButton(
+            //   onTap: onHelp,
+            //   asset: AppAssets.questionMark,
+            // ),
           ],
         ),
       ),

@@ -120,7 +120,7 @@ class ProfileMenuItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
         child: Row(
           children: [
-            Icon(icon, size: context.w(20), color: color),
+            Icon(icon, size: context.w(20), color: AppColors.textPrimary),
             SizedBox(width: context.w(14)),
             Expanded(
               child: Text(
@@ -128,7 +128,7 @@ class ProfileMenuItem extends StatelessWidget {
                 style: AppTypography.regular.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: color,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),

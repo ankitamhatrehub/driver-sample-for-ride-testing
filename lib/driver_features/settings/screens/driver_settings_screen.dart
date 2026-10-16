@@ -35,7 +35,6 @@ class DriverSettingsScreen extends StatelessWidget {
               children: [
                 _SettingsRow(
                   icon: Icons.wb_sunny_outlined,
-                  iconColor: accent,
                   label: 'Appearance',
                   onTap: () => _open(context, const DriverAppearanceScreen()),
                 ),

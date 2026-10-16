@@ -260,7 +260,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
         gradient: const LinearGradient(
-          colors: [Color(0xFF7C3AED), Color(0xFFDB2777)],
+          colors: [Color(0xFFBA2879), Color(0xFF61217E), Color(0xFF0F3FBF)],
         ),
       ),
       child: Row(

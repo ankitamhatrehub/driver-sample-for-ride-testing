@@ -20,6 +20,7 @@ class ProfileEditButton extends StatelessWidget {
         label: AppStrings.edit,
         icon: Icons.edit,
         iconAtEnd: true,
+        backgroundColor: const Color(0xFF0F3FBF),
         onPressed: () {},
       ),
     );

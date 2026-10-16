@@ -189,7 +189,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           if (_showSos)
             Positioned(
               right: context.w(28),
-              bottom: context.h(33),
+              top: context.h(300),
               child: GestureDetector(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const SosScreen())),
                 child: Container(
@@ -694,12 +694,23 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       bottom: Column(
         children: [
           _fill(context, 'Done', () => _go(_Phase.rate)),
-          TextButton.icon(
+      SizedBox(
+        width: double.infinity,
+        child:TextButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const IssueCategoryScreen())),
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(
+                color: Color(0xFFEF4444),
+                width: 1,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
             icon: const Icon(Icons.warning_amber_rounded, color: Color(0xFFEF4444), size: 18),
             label: Text('Report an Issue', style: AppTypography.bold.copyWith(fontSize: 14, color: const Color(0xFFEF4444))),
           ),
-        ],
+      )],
       ),
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: context.w(20)),
@@ -731,7 +742,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           SizedBox(height: context.h(12)),
           Container(
             padding: EdgeInsets.all(context.w(12)),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(context.r(14)), gradient: LinearGradient(colors: [accent, const Color(0xFFDB2777)])),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(context.r(14)), gradient: LinearGradient(colors: [accent, const Color(0xFF61217E), Color(0xFF0F3FBF), Color(0xFFBA2879)])),
             child: const Row(
               children: [
                 Icon(Icons.card_giftcard_rounded, color: Colors.white),
@@ -786,7 +797,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: context.w(20)),
         children: [
-          Center(child: CircleAvatar(radius: context.w(28), backgroundColor: const Color(0xFFF3E8FF), child: Icon(Icons.person, color: accent))),
+          Center(child: CircleAvatar(radius: context.w(28), backgroundColor: const Color(0xFFF3E8FF), child: Icon(Icons.person, color: Color(0xFFBA2879)))),
           SizedBox(height: context.h(8)),
           Text('Rahul', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 16)),
           SizedBox(height: context.h(10)),
@@ -1004,7 +1015,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       padding: EdgeInsets.only(bottom: context.h(8)),
       child: Row(
         children: [
-          CircleAvatar(radius: 18, backgroundColor: const Color(0xFFF1F5F9), child: Icon(Icons.person, color: AppColors.slate400)),
+          CircleAvatar(radius: 18, backgroundColor: const Color(0xFFF1F5F9), child: Icon(Icons.person, color: AppColors.slate500)),
           SizedBox(width: context.w(8)),
           Expanded(
             child: Column(
@@ -1051,6 +1062,19 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     return Container(width: 32, height: 32, decoration: BoxDecoration(color: color, shape: BoxShape.circle), child: Icon(icon, color: Colors.white, size: 15));
   }
 
+  // Widget _place(BuildContext context, Color color, String label, String value) {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(vertical: context.h(3)),
+  //     child: Row(
+  //       children: [
+  //         Icon(Icons.circle, size: 8, color: color),
+  //         SizedBox(width: context.w(8)),
+  //         Text('$label  ', style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate400)),
+  //         Expanded(child: Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600))),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget _place(BuildContext context, Color color, String label, String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.h(3)),
@@ -1058,8 +1082,27 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         children: [
           Icon(Icons.circle, size: 8, color: color),
           SizedBox(width: context.w(8)),
-          Text('$label  ', style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate400)),
-          Expanded(child: Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600))),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$label  ',
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 11,
+                    color: AppColors.slate400,
+                  ),
+                ),
+                Text(
+                  value,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -1139,16 +1182,28 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     return SizedBox(
       width: double.infinity,
       height: context.h(48),
-      child: FilledButton.icon(
+      child: FilledButton(
         onPressed: onTap,
         style: FilledButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
         ),
-        icon: icon == null ? const SizedBox.shrink() : Icon(icon, color: Colors.white, size: 16),
-        label: Text(label, style: AppTypography.bold.copyWith(fontSize: 15, color: Colors.white, height: 1)),
-      ),
-    );
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+          Text(
+            label,
+            style: AppTypography.bold.copyWith(
+              fontSize: 15,
+              color: Colors.white,
+              height: 1,
+            ), ),
+              if (icon != null) ...[
+          const SizedBox(width: 8),
+      Icon(icon, color: Colors.white, size: 16),
+      ],]  ),
+    ));
   }
 
   Widget _outline(BuildContext context, String label, VoidCallback onTap) {

@@ -26,6 +26,7 @@ class BankInformationScreen extends StatelessWidget {
           label: AppStrings.editReplace,
           icon: Icons.sync_rounded,
           iconAtEnd: true,
+          backgroundColor: const Color(0xFF0F3FBF),
           onPressed: () {},
         ),
       ),

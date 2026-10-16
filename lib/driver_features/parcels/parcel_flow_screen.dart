@@ -1609,7 +1609,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(14)),
               gradient: LinearGradient(
-                colors: [accent, const Color(0xFFDB2777)],
+                colors: [Color(0xFF0F3FBF),Color(0xFF61217E),Color(0xFFBA2879)],
               ),
             ),
             child: const Row(
@@ -1693,7 +1693,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
               backgroundColor: const Color(0xFFF3E8FF),
               child: Icon(
                 Icons.person,
-                color: Theme.of(context).colorScheme.primary,
+                color: Color(0xFFBA2879)
               ),
             ),
           ),
@@ -2203,18 +2203,52 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
     );
   }
 
+  // Widget _fillButton(
+  //   BuildContext context,
+  //   String label,
+  //   VoidCallback onTap, {
+  //   IconData? icon,
+  // }) {
+  //   return Padding(
+  //     padding: EdgeInsets.fromLTRB(context.w(0), 0, 0, 0),
+  //     child: SizedBox(
+  //       width: double.infinity,
+  //       height: context.h(48),
+  //       child: FilledButton.icon(
+  //         onPressed: onTap,
+  //         style: FilledButton.styleFrom(
+  //           backgroundColor: Theme.of(context).colorScheme.primary,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(context.r(14)),
+  //           ),
+  //         ),
+  //         icon: icon == null
+  //             ? const SizedBox.shrink()
+  //             : Icon(icon, color: Colors.white, size: 16),
+  //         label: Text(
+  //           label,
+  //           style: AppTypography.bold.copyWith(
+  //             fontSize: 15,
+  //             height: 1,
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget _fillButton(
-    BuildContext context,
-    String label,
-    VoidCallback onTap, {
-    IconData? icon,
-  }) {
+      BuildContext context,
+      String label,
+      VoidCallback onTap, {
+        IconData? icon,
+      }) {
     return Padding(
       padding: EdgeInsets.fromLTRB(context.w(0), 0, 0, 0),
       child: SizedBox(
         width: double.infinity,
         height: context.h(48),
-        child: FilledButton.icon(
+        child: FilledButton(
           onPressed: onTap,
           style: FilledButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.primary,
@@ -2222,16 +2256,23 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
               borderRadius: BorderRadius.circular(context.r(14)),
             ),
           ),
-          icon: icon == null
-              ? const SizedBox.shrink()
-              : Icon(icon, color: Colors.white, size: 16),
-          label: Text(
-            label,
-            style: AppTypography.bold.copyWith(
-              fontSize: 15,
-              height: 1,
-              color: Colors.white,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: AppTypography.bold.copyWith(
+                  fontSize: 15,
+                  height: 1,
+                  color: Colors.white,
+                ),
+              ),
+              if (icon != null) ...[
+                SizedBox(width: context.w(8)),
+                Icon(icon, color: Colors.white, size: 16),
+              ],
+            ],
           ),
         ),
       ),
