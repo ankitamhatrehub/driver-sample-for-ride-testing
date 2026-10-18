@@ -10,6 +10,8 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/settings/widgets/settings_choice_card.dart';
 
+import '../../../common/constants/string_constants.dart';
+
 class DriverAppearanceScreen extends StatelessWidget {
   const DriverAppearanceScreen({super.key});
 
@@ -18,30 +20,30 @@ class DriverAppearanceScreen extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return ProfilePage(
-          title: 'Appearance',
+          title: AppStrings.appearance,
           child: ListView(
             padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
             children: [
               Text(
-                'Choose your appearance',
+                AppStrings.chooseYourAppearance,
                 style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
               ),
               SizedBox(height: context.h(14)),
               SettingsChoiceCard(
                 selected: state.appearanceLabel == 'Light Mode',
-                title: 'Light mode',
+                title: AppStrings.lightMode,
                 onTap: () => context.read<ThemeBloc>().add(const AppearanceSelected('Light Mode')),
                 leading: _mark(Icons.light_mode_rounded, const Color(0xFFF59E0B), const Color(0xFFFFF7ED)),
               ),
               SettingsChoiceCard(
                 selected: state.appearanceLabel == 'Dark Mode',
-                title: 'Dark mode',
+                title: AppStrings.darkMode,
                 onTap: () => context.read<ThemeBloc>().add(const AppearanceSelected('Dark Mode')),
                 leading: _mark(Icons.dark_mode_rounded, const Color(0xFF7C3AED), const Color(0xFFF3E8FF)),
               ),
               SettingsChoiceCard(
                 selected: state.appearanceLabel == 'Default',
-                title: 'System Default',
+                title: AppStrings.systemDefault,
                 onTap: () => context.read<ThemeBloc>().add(const AppearanceSelected('Default')),
                 leading: _mark(Icons.grid_view_rounded, const Color(0xFF7C3AED), const Color(0xFFF3E8FF)),
               ),

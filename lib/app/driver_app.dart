@@ -8,8 +8,12 @@ import 'package:rider_app/common/routes/app_router.dart';
 import 'package:rider_app/common/theme/theme.dart';
 import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 
+import '../common/utils/translations.dart';
 class DriverApp extends StatelessWidget {
-  const DriverApp({super.key, required this.themeRepository});
+  const DriverApp({
+    super.key,
+    required this.themeRepository,
+  });
 
   final ThemeRepository themeRepository;
 
@@ -18,20 +22,34 @@ class DriverApp extends StatelessWidget {
     return BlocProvider(
       create: (_) {
         final bloc = ThemeBloc(themeRepository);
+
         OnboardingSession.instance.publishAccent = (isPink) {
           bloc.add(AccentChanged(isPink: isPink));
         };
+
         return bloc;
       },
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
-          return MaterialApp.router(
-            title: 'Torkk Driver',
-            debugShowCheckedModeBanner: false,
-            themeMode: state.themeMode,
-            theme: AppTheme.getTheme(isPink: state.isPink, isDark: false),
-            darkTheme: AppTheme.getTheme(isPink: state.isPink, isDark: true),
-            routerConfig: AppRouter.router,
+          return ValueListenableBuilder<String>(
+            valueListenable: AppTranslations.currentLanguage,
+            builder: (context, language, child) {
+              return MaterialApp.router(
+                key: ValueKey(language),
+                title: 'Torkk Driver',
+                debugShowCheckedModeBanner: false,
+                themeMode: state.themeMode,
+                theme: AppTheme.getTheme(
+                  isPink: state.isPink,
+                  isDark: false,
+                ),
+                darkTheme: AppTheme.getTheme(
+                  isPink: state.isPink,
+                  isDark: true,
+                ),
+                routerConfig: AppRouter.router,
+              );
+            },
           );
         },
       ),

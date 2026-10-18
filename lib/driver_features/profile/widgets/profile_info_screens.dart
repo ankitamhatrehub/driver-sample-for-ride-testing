@@ -19,7 +19,7 @@ class PersonalInformationScreen extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(context.w(28), context.h(30), context.w(28), context.h(20)),
         children: [
           ProfileMenuCard(
-            items: const [
+            items: [
               ProfileValueRow(icon: Icons.person_outline, label: AppStrings.name, value: 'Rahul'),
               ProfileValueRow(icon: Icons.person_outline, label: AppStrings.gender, value: 'Male'),
               ProfileValueRow(icon: Icons.badge_outlined, label: AppStrings.driversId, value: '6767676767'),
@@ -47,7 +47,7 @@ class VehicleInformationScreen extends StatelessWidget {
           const _VehicleHeader(),
           SizedBox(height: context.h(12)),
           ProfileMenuCard(
-            items: const [
+            items: [
               ProfileValueRow(icon: Icons.confirmation_number_outlined, label: AppStrings.registrationNumber, value: 'MH12AB1234'),
               ProfileValueRow(icon: Icons.two_wheeler_outlined, label: AppStrings.vehicleModel, value: 'Honda Activa'),
               ProfileValueRow(icon: Icons.directions_car_outlined, label: AppStrings.vehicleType, value: 'Two Wheeler'),
@@ -127,13 +127,13 @@ class DocumentKycScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const rows = [
-      (Icons.verified_rounded, Color(0xFF16A34A), 'Aadhaar + PAN', AppStrings.verified, Color(0xFF16A34A)),
-      (Icons.verified_rounded, Color(0xFF16A34A), 'Driving License', AppStrings.verified, Color(0xFF16A34A)),
-      (Icons.radio_button_unchecked, Color(0xFFCBD5E1), 'Vehicle RC', AppStrings.pending, Color(0xFFEF4444)),
-      (Icons.radio_button_unchecked, Color(0xFFCBD5E1), 'Vehicle Photos', AppStrings.notStarted, AppColors.slate400),
-      (Icons.radio_button_unchecked, Color(0xFFCBD5E1), 'Face Verification', AppStrings.notStarted, AppColors.slate400),
-      (Icons.radio_button_unchecked, Color(0xFFCBD5E1), 'Profile Review & Submission', AppStrings.notStarted, AppColors.slate400),
+    final rows = [
+      (Icons.verified_rounded, const Color(0xFF16A34A), 'Aadhaar + PAN', AppStrings.verified, const Color(0xFF16A34A)),
+      (Icons.verified_rounded, const Color(0xFF16A34A), 'Driving License', AppStrings.verified, const Color(0xFF16A34A)),
+      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Vehicle RC', AppStrings.pending, const Color(0xFFEF4444)),
+      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Vehicle Photos', AppStrings.notStarted, AppColors.slate400),
+      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Face Verification', AppStrings.notStarted, AppColors.slate400),
+      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Profile Review & Submission', AppStrings.notStarted, AppColors.slate400),
     ];
     return ProfilePage(
       title: AppStrings.documentKyc,
@@ -247,7 +247,7 @@ class BankInformationScreen extends StatelessWidget {
           ),
           SizedBox(height: context.h(12)),
           ProfileMenuCard(
-            items: const [
+            items: [
               ProfileValueRow(icon: Icons.person_outline, label: AppStrings.accountHolderName, value: 'Rahul'),
               ProfileValueRow(icon: Icons.credit_card_outlined, label: AppStrings.accountNumber, value: '123456789012'),
               ProfileValueRow(icon: Icons.account_balance_outlined, label: AppStrings.ifscCode, value: 'HDFC0001234'),

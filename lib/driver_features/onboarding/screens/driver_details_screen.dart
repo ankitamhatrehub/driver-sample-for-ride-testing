@@ -121,7 +121,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
                     ),
                   ),
                   SizedBox(height: context.h(22)),
-                  const KycRequiredLabel(AppStrings.fullName),
+                   KycRequiredLabel(AppStrings.fullName),
                   SizedBox(height: context.h(8)),
                   AppTextField(
                     controller: widget.nameController,
@@ -130,7 +130,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
                     },
                   ),
                   SizedBox(height: context.h(16)),
-                  const KycRequiredLabel(AppStrings.gender),
+                   KycRequiredLabel(AppStrings.gender),
                   SizedBox(height: context.h(8)),
                   Row(
                     children: [
@@ -142,7 +142,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
                     ],
                   ),
                   SizedBox(height: context.h(16)),
-                  const KycRequiredLabel(AppStrings.dateOfBirth),
+                  KycRequiredLabel(AppStrings.dateOfBirth),
                   SizedBox(height: context.h(8)),
                   _dobField(),
                   SizedBox(height: context.h(16)),

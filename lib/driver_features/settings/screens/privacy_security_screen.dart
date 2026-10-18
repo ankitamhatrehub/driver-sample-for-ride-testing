@@ -8,6 +8,8 @@ import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/settings/screens/change_pin_screen.dart';
 import 'package:rider_app/driver_features/settings/screens/set_pin_screen.dart';
 
+import '../../../common/constants/string_constants.dart';
+
 class PrivacySecurityScreen extends StatefulWidget {
   const PrivacySecurityScreen({super.key});
 
@@ -18,6 +20,7 @@ class PrivacySecurityScreen extends StatefulWidget {
 class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
   bool _showProfile = false;
   bool _shareLocation = true;
+  bool _hasPin = false;
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     setState(() {
       _showProfile = prefs.getBool('show_profile_to_driver') ?? false;
       _shareLocation = prefs.getBool('location_sharing') ?? true;
+      _hasPin = (prefs.getString('account_pin') ?? '').length == 4;
     });
   }
 
@@ -43,16 +47,19 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     final prefs = await SharedPreferences.getInstance();
     final hasPin = (prefs.getString('account_pin') ?? '').length == 4;
     if (!mounted) return;
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => hasPin ? const ChangePinScreen() : const SetPinScreen()),
+    final result = await Navigator.of(context).push<bool>(
+      MaterialPageRoute<bool>(builder: (_) => hasPin ? const ChangePinScreen() : const SetPinScreen()),
     );
+    if (result == true) {
+      _load();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final accent = profileAccent(context);
     return ProfilePage(
-      title: 'Privacy & Security',
+      title: AppStrings.privacyPolicy,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
@@ -78,11 +85,11 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Set/Change Pin',
+                            AppStrings.setChangePin,
                             style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
                           ),
                           Text(
-                            'Secure your Account with a 4-digit Pin',
+                            _hasPin ? 'PIN is active. Tap to change PIN' : AppStrings.secureAccountPin,
                             style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
                           ),
                         ],
@@ -96,14 +103,14 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
           ),
           SizedBox(height: context.h(18)),
           Text(
-            'Privacy Settings',
+            AppStrings.privacySettings,
             style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.slate500),
           ),
           SizedBox(height: context.h(10)),
           _PrivacySwitch(
             icon: Icons.person_outline_rounded,
-            title: 'Show my profile to driver',
-            subtitle: 'Allow drivers to see your profile picture and name',
+            title: AppStrings.showMyProfileToDriver,
+            subtitle: AppStrings.showMyProfileToDriverSubtitle,
             value: _showProfile,
             onChanged: (value) {
               setState(() => _showProfile = value);
@@ -113,8 +120,8 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
           SizedBox(height: context.h(12)),
           _PrivacySwitch(
             icon: Icons.location_on_outlined,
-            title: 'Location sharing',
-            subtitle: 'Share your live location with drivers during rides',
+            title: AppStrings.locationSharing,
+            subtitle: AppStrings.locationSharingSubtitle,
             value: _shareLocation,
             onChanged: (value) {
               setState(() => _shareLocation = value);

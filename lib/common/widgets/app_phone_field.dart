@@ -10,18 +10,21 @@ class AppPhoneField extends StatelessWidget {
   const AppPhoneField({
     super.key,
     required this.controller,
-    this.hintText = AppStrings.phoneHint,
-    this.countryCode = AppStrings.countryCodeIndia,
+    this.hintText,
+    this.countryCode,
     this.maxLength = 10,
   });
 
   final TextEditingController controller;
-  final String hintText;
-  final String countryCode;
+  final String? hintText;
+  final String? countryCode;
   final int maxLength;
 
   @override
   Widget build(BuildContext context) {
+    final effHint = hintText ?? AppStrings.phoneHint;
+    final effCountryCode =
+        countryCode ?? AppStrings.countryCodeIndia;
     final radius = BorderRadius.circular(context.r(16));
     return Row(
       children: [
@@ -34,7 +37,7 @@ class AppPhoneField extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            countryCode,
+            effCountryCode,
             style: TextStyle(
               fontSize: context.sp(16),
               color: AppColors.textPrimary,
@@ -58,7 +61,7 @@ class AppPhoneField extends StatelessWidget {
                 letterSpacing: 1.5,
               ),
               decoration: InputDecoration(
-                hintText: hintText,
+                hintText: effHint,
                 hintStyle: TextStyle(
                   color: AppColors.slate400,
                   fontWeight: FontWeight.w600,

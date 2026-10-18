@@ -101,7 +101,7 @@ class _VehicleInsuranceScreenState extends State<VehicleInsuranceScreen> {
             SizedBox(height: context.h(10)),
             KycPreviewCard(onRetake: () {}),
             SizedBox(height: context.h(16)),
-            const KycPendingBanner(title: AppStrings.verificationPending),
+            KycPendingBanner(title: AppStrings.verificationPending),
             SizedBox(height: context.h(24)),
             UnifiedButton(label: AppStrings.continueAction, onPressed: widget.onSkip),
           ],

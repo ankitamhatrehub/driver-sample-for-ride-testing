@@ -19,11 +19,11 @@ class CircularBottomNav extends StatelessWidget {
     required this.onItemSelected,
   });
 
-  static const List<_NavItem> _items = [
+  static final List<_NavItem> _items = [
     _NavItem(AppStrings.navHome, Icons.home_rounded, Icons.home_outlined),
     _NavItem(AppStrings.navOrders, Icons.article_rounded, Icons.article_outlined),
-    _NavItem(AppStrings.navParcel, Icons.view_in_ar, Icons.view_in_ar_outlined),
-    _NavItem(AppStrings.navWallet, Icons.account_balance_wallet, Icons.account_balance_wallet_outlined),
+     _NavItem(AppStrings.navParcel, Icons.view_in_ar, Icons.view_in_ar_outlined),
+     _NavItem(AppStrings.navWallet, Icons.account_balance_wallet, Icons.account_balance_wallet_outlined),
     _NavItem(AppStrings.profile, Icons.person, Icons.person_outline),
   ];
 

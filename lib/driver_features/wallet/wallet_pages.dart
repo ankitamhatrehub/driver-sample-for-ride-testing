@@ -198,7 +198,7 @@ class TransactionHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (showEmpty) return const _EmptyTransactions();
     return ProfilePage(
-      title: 'Transaction History',
+      title: AppStrings.transactionHistory,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
@@ -270,7 +270,7 @@ class _EmptyTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfilePage(
-      title: 'Transaction History',
+      title: AppStrings.transactionHistory,
       bottom: Padding(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
         child: SizedBox(
@@ -435,7 +435,7 @@ class BankAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfilePage(
-      title: 'Bank Account',
+      title: AppStrings.bankAccount,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
@@ -477,6 +477,6 @@ class PayoutsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProfilePage(title: 'Payouts', child: SizedBox.shrink());
+    return ProfilePage(title: AppStrings.payouts, child: const SizedBox.shrink());
   }
 }

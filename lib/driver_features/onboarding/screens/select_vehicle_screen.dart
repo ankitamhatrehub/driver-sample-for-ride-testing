@@ -32,12 +32,12 @@ class SelectVehicleScreen extends StatefulWidget {
 class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
   bool _showError = false;
 
-  static const List<_VehicleOption> _vehicles = [
+  static final List<_VehicleOption> _vehicles = [
     _VehicleOption('Cab', AppStrings.vehicleCab, AppStrings.fourWheeler, AppAssets.cab),
     _VehicleOption('Cab EV', AppStrings.vehicleEvCab, AppStrings.fourWheeler, AppAssets.evCab),
     _VehicleOption('Cab XL', AppStrings.vehicleXlCab, AppStrings.fourWheeler, AppAssets.xlCab),
-    _VehicleOption('Auto', AppStrings.vehicleAuto, AppStrings.threeWheeler, AppAssets.auto),
-    _VehicleOption('Bike', AppStrings.vehicleBike, AppStrings.twoWheeler, AppAssets.bike),
+     _VehicleOption('Auto', AppStrings.vehicleAuto, AppStrings.threeWheeler, AppAssets.auto),
+     _VehicleOption('Bike', AppStrings.vehicleBike, AppStrings.twoWheeler, AppAssets.bike),
   ];
 
   void _select(_VehicleOption vehicle) {
@@ -193,14 +193,30 @@ class _VehicleCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: Image.asset(
-                vehicle.image,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) => Icon(
-                  Icons.directions_car_rounded,
-                  size: context.w(40),
-                  color: AppColors.secondaryTextColor,
+            // Expanded(
+            //   child: Image.asset(
+            //     vehicle.image,
+            //     fit: BoxFit.contain,
+            //     errorBuilder: (context, error, stackTrace) => Icon(
+            //       Icons.directions_car_rounded,
+            //       size: context.w(40),
+            //       color: AppColors.secondaryTextColor,
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
+              width: context.w(100),
+              height: context.h(85),
+              child: Transform.scale(
+                scale: vehicle.value == 'Bike' ? 1.7 : 1.1,
+                child: Image.asset(
+                  vehicle.image,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => Icon(
+                    Icons.directions_car_rounded,
+                    size: context.w(40),
+                    color: AppColors.secondaryTextColor,
+                  ),
                 ),
               ),
             ),

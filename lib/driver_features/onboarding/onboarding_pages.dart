@@ -117,15 +117,23 @@ class LanguagePage extends StatelessWidget {
       body: ListenableBuilder(
         listenable: _session,
         builder: (context, _) {
+          final current = _session.language;
+          final isEn = current == 'en' || current == 'English' || current.toLowerCase().contains('en');
+          final selectedCode = current.isEmpty ? 'en' : (isEn ? 'en' : 'hi');
+
           return LanguageSelectStep(
-            selectedLanguage: _session.language,
-            onLanguageSelected: (lang) {
-              _session.language = lang;
-              AppTranslations.changeLanguage(lang == 'English' ? 'en' : 'hi');
+            selectedLanguage: selectedCode,
+            onLanguageSelected: (code) {
+              final isTargetEn = code == 'en' || code == 'English' || code.toLowerCase().contains('en');
+              final targetCode = isTargetEn ? 'en' : 'hi';
+              _session.language = targetCode;
+              AppTranslations.changeLanguage(targetCode);
               _session.touch();
             },
             onContinue: () {
-              AppTranslations.changeLanguage(_session.language == 'English' ? 'en' : 'hi');
+              final isTargetEn = _session.language == 'en' || _session.language == 'English' || _session.language.toLowerCase().contains('en');
+              final targetCode = isTargetEn ? 'en' : 'hi';
+              AppTranslations.changeLanguage(targetCode);
               context.go(AppRoutes.welcome);
             },
           );

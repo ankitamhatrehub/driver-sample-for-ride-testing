@@ -180,11 +180,11 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
               ),
             ),
             SizedBox(height: context.h(28)),
-            const _IconInfoRow(icon: Icons.shield_outlined, text: AppStrings.dataSafeSecure),
+            _IconInfoRow(icon: Icons.shield_outlined, text: AppStrings.dataSafeSecure),
             SizedBox(height: context.h(12)),
-            const _IconInfoRow(icon: Icons.lock_outline, text: AppStrings.usedOnlyForIdentity),
+            _IconInfoRow(icon: Icons.lock_outline, text: AppStrings.usedOnlyForIdentity),
             SizedBox(height: context.h(12)),
-            const _IconInfoRow(icon: Icons.visibility_off_outlined, text: AppStrings.photoNotStored),
+            _IconInfoRow(icon: Icons.visibility_off_outlined, text: AppStrings.photoNotStored),
             SizedBox(height: context.h(60)),
             UnifiedButton(
               label: AppStrings.allowCameraAccess,
@@ -217,9 +217,9 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
                 style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.secondaryTextColor),
               ),
               SizedBox(height: context.h(50)),
-              const _SuccessLine(AppStrings.identityConfirmed),
-              const _SuccessLine(AppStrings.accountSecured),
-              const _SuccessLine(AppStrings.completeOnboardingNow),
+               _SuccessLine(AppStrings.identityConfirmed),
+              _SuccessLine(AppStrings.accountSecured),
+               _SuccessLine(AppStrings.completeOnboardingNow),
               const Spacer(),
               UnifiedButton(label: AppStrings.continueAction, onPressed: widget.onFinished),
             ],
@@ -446,7 +446,7 @@ class _VerifyingFace extends StatefulWidget {
 }
 
 class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProviderStateMixin {
-  static const _labels = [
+  static final _labels = [
     AppStrings.photoCaptured,
     AppStrings.analyzingFace,
     AppStrings.checkingLiveness,

@@ -8,6 +8,8 @@ import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/subscription/screens/subscription_screen.dart';
 import 'package:rider_app/driver_features/wallet/wallet_pages.dart';
 
+import '../../common/constants/string_constants.dart';
+
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key, this.onBack});
 
@@ -20,7 +22,7 @@ class WalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfilePage(
-      title: 'Wallet & Earning',
+      title: AppStrings.walletEarning,
       onBack: onBack,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
@@ -37,7 +39,7 @@ class WalletScreen extends StatelessWidget {
           SizedBox(height: context.h(18)),
           _actions(context),
           SizedBox(height: context.h(18)),
-          Text('Active Plan', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(AppStrings.activePlan, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
           SizedBox(height: context.h(8)),
           _activePlan(context),
         ],
@@ -70,12 +72,12 @@ class WalletScreen extends StatelessWidget {
 
   Widget _actions(BuildContext context) {
     final items = [
-      _Action(Icons.description_outlined, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), 'Transaction\nHistory', () => _open(context, const TransactionHistoryScreen())),
-      _Action(Icons.account_balance_outlined, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), 'Payouts', () => _open(context, const PayoutsScreen())),
-      _Action(Icons.account_balance_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), 'Bank\nAccount', () => _open(context, const BankAccountScreen())),
-      _Action(Icons.credit_card_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), 'Recharge /\nSubscription', () => _open(context, const SubscriptionScreen())),
-      _Action(Icons.currency_rupee_rounded, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), 'Earnings', () => _open(context, const EarningsScreen())),
-      _Action(Icons.toll_rounded, const Color(0xFFF59E0B), const Color(0xFFFEF3C7), 'Torkk Coins', () => _open(context, const CoinsScreen())),
+      _Action(Icons.description_outlined, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), AppStrings.transactionHistory, () => _open(context, const TransactionHistoryScreen())),
+      _Action(Icons.account_balance_outlined, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), AppStrings.payouts, () => _open(context, const PayoutsScreen())),
+      _Action(Icons.account_balance_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), AppStrings.BankAccount, () => _open(context, const BankAccountScreen())),
+      _Action(Icons.credit_card_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), AppStrings.rechargeSubscription, () => _open(context, const SubscriptionScreen())),
+      _Action(Icons.currency_rupee_rounded, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), AppStrings.earnings, () => _open(context, const EarningsScreen())),
+      _Action(Icons.toll_rounded, const Color(0xFFF59E0B), const Color(0xFFFEF3C7), AppStrings.torkkCoins, () => _open(context, const CoinsScreen())),
     ];
     return GridView.count(
       crossAxisCount: 4,
@@ -132,9 +134,9 @@ class WalletScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Standard Driver Plan', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
-                  Text('₹299 Per month', style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3, letterSpacing: -0.2)),
-                  Text('Valid till 24 Aug', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                  Text(AppStrings.standardDriverPlan, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+                  Text(AppStrings.perMonth, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3, letterSpacing: -0.2)),
+                  Text(AppStrings.validTill24Aug, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
                 ],
               ),
             ),
@@ -166,7 +168,7 @@ class _BalanceCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text('Available Cash', style: AppTypography.regular.copyWith(fontSize: 13, color: Colors.white70))),
+              Expanded(child: Text(AppStrings.availableCash, style: AppTypography.regular.copyWith(fontSize: 13, color: Colors.white70))),
               Container(
                 width: context.w(32),
                 height: context.w(32),
@@ -187,7 +189,7 @@ class _BalanceCard extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text("Today's Completed Jobs", style: AppTypography.regular.copyWith(fontSize: 13, color: Colors.white)),
+                  child: Text(AppStrings.todaysCompletedJobs, style: AppTypography.regular.copyWith(fontSize: 13, color: Colors.white)),
                 ),
                 Text('12', style: AppTypography.bold.copyWith(fontSize: 16, height: 1, color: Colors.white)),
                 SizedBox(width: context.w(8)),

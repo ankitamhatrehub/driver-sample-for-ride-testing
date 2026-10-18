@@ -17,24 +17,29 @@ class PrivacyPolicyScreen extends StatelessWidget {
       title: AppStrings.privacyPolicy,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
-        children: const [
+        children: [
           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.overview, 'This policy explains how Torkk collects and uses driver information.'),
+            ProfileSection(AppStrings.overview, AppStrings.privacyOverviewDescription,),
             ProfileSection(AppStrings.privacyPolicy, _kycAnswer, readMore: true),
-            ProfileSection('User Acceptance', 'By using the Torkk driver app you agree to this privacy policy.'),
-            ProfileSection('Definitions', 'Driver means a partner registered to receive ride or parcel requests on Torkk.'),
+            ProfileSection(AppStrings.userAcceptance, AppStrings.userAcceptanceDescription,),
+            ProfileSection(AppStrings.definitions,
+              AppStrings.definitionsDescription,),
           ]),
           ProfileAccordion(sections: [
-            ProfileSection('What Information do we collect ?', 'We collect the details you submit for KYC, your vehicle, and your bank account.'),
+            ProfileSection(AppStrings.informationCollectedQuestion,
+              AppStrings.informationCollectedDescription,),
+          ]),
+           ProfileAccordion(sections: [
+            ProfileSection(AppStrings.useOfInformationCollected,
+              AppStrings.useOfInformationCollectedDescription,),
           ]),
           ProfileAccordion(sections: [
-            ProfileSection('Use of Information Collected', 'We use this information to verify you, assign requests, and pay your earnings.'),
+            ProfileSection(AppStrings.thirdPartyDisclosure,
+              AppStrings.thirdPartyDisclosureDescription,),
           ]),
-          ProfileAccordion(sections: [
-            ProfileSection('How and when we disclose information to third parties', 'We share documents with verification partners only to complete KYC.'),
-          ]),
-          ProfileAccordion(sections: [
-            ProfileSection('Third parties providing services', 'Payment and identity partners process data only for the service they provide to Torkk.'),
+           ProfileAccordion(sections: [
+            ProfileSection(AppStrings.thirdPartyServices,
+              AppStrings.thirdPartyServicesDescription,),
           ]),
         ],
       ),

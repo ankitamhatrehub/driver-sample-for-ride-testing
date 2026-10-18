@@ -33,7 +33,13 @@ class KycStatusRow extends StatelessWidget {
     };
 
     return GestureDetector(
-      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap == null
+          ? null
+          : () {
+        debugPrint('KYC row tapped: $title');
+        onTap!();
+      },
       child: Container(
         padding: EdgeInsets.all(context.w(14)),
         decoration: BoxDecoration(

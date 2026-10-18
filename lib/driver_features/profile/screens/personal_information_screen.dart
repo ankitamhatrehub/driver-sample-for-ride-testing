@@ -15,7 +15,7 @@ class PersonalInformationScreen extends StatelessWidget {
       bottom: const ProfileEditButton(),
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(28), context.h(30), context.w(28), context.h(20)),
-        children: const [
+        children: [
           ProfileMenuCard(
             items: [
               ProfileValueRow(icon: Icons.person_outline, label: AppStrings.name, value: 'Rahul'),

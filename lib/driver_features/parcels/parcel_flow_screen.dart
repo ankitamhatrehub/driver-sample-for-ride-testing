@@ -12,6 +12,8 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
 
+import '../../common/constants/string_constants.dart';
+
 /// Sample parcel trip. No backend yet — each step is local.
 enum _Phase {
   request,
@@ -385,7 +387,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    'Parcel request',
+                    AppStrings.parcelRequest,
                     style: AppTypography.bold.copyWith(
                       fontSize: 18,
                       height: 1.2,
@@ -441,7 +443,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'PARCEL TYPE',
+                        AppStrings.parcelType,
                         style: AppTypography.regular.copyWith(
                           fontSize: 11,
                           color: AppColors.slate400,
@@ -522,7 +524,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                         ),
                       ),
                       child: Text(
-                        'Decline',
+                        AppStrings.decline,
                         style: AppTypography.bold.copyWith(
                           fontSize: 16,
                           color: const Color(0xFFEF4444),
@@ -545,7 +547,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                         ),
                       ),
                       child: Text(
-                        'Accept',
+                        AppStrings.accept,
                         style: AppTypography.bold.copyWith(
                           fontSize: 16,
                           color: Colors.white,
@@ -606,7 +608,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Pickup',
+                    AppStrings.pickup,
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
                       height: 1,
@@ -623,7 +625,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                   ),
                   SizedBox(height: context.h(16)),
                   Text(
-                    'Drop',
+                    AppStrings.drop,
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
                       height: 1,

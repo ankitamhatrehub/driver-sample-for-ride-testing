@@ -1,3 +1,5 @@
+import '../utils/translations.dart';
+
 /// Reusable UI strings used across multiple screens.
 ///
 /// Keeps copy centralized for easy i18n and consistency.
@@ -5,481 +7,555 @@ class AppStrings {
   AppStrings._();
 
   // ── App Identity ──────────────────────────────────────────────
-  static const String appName = 'Torkk Driver';
-  static const String appTitle = 'TORKK';
+  // static const String appName = 'Torkk Driver';
+  // static const String appTitle = 'TORKK';
+  static String get appName => AppTranslations.tr('appName');
+  static String get appTitle => AppTranslations.tr('appTitle');
 
   // ── Common Actions ────────────────────────────────────────────
-  static const String save = 'Save';
-  static const String cancel = 'Cancel';
-  static const String confirm = 'Confirm';
-  static const String submit = 'Submit';
-  static const String retry = 'Retry';
-  static const String done = 'Done';
-  static const String next = 'Next';
-  static const String back = 'Back';
-  static const String skip = 'Skip';
-  static const String close = 'Close';
-  static const String ok = 'OK';
-  static const String yes = 'Yes';
-  static const String no = 'No';
-  static const String loading = 'Loading...';
-  static const String noData = 'No data available';
+  static String get save => AppTranslations.tr('save');
+  static String get cancel => AppTranslations.tr('cancel');
+  static String get confirm => AppTranslations.tr('confirm');
+  static String get submit => AppTranslations.tr('submit');
+  static String get retry => AppTranslations.tr('retry');
+  static String get done => AppTranslations.tr('done');
+  static String get next => AppTranslations.tr('next');
+  static String get back => AppTranslations.tr('back');
+  static String get skip => AppTranslations.tr('skip');
+  static String get close => AppTranslations.tr('close');
+  static String get ok => AppTranslations.tr('ok');
+  static String get yes => AppTranslations.tr('yes');
+  static String get no => AppTranslations.tr('no');
+  static String get loading => AppTranslations.tr('loading');
+  static String get noData => AppTranslations.tr('noData');
 
   // ── Home / Dashboard ──────────────────────────────────────────
-  static const String goOnline = 'Go Online';
-  static const String goOffline = 'Go Offline';
-  static const String navHome = 'Home';
-  static const String navOrders = 'Orders';
-  static const String ordersSearchHint = 'Search your rides, parcels';
-  static const String ordersCurrent = 'Current';
-  static const String ordersCompleted = 'Completed';
-  static const String ordersCancelled = 'Cancelled';
-  static const String ordersScheduled = 'Scheduled';
-  static const String ordersOngoing = 'Ongoing';
-  static const String ordersOnline = 'Online';
-  static const String ordersEmpty = 'No orders in this tab';
-  static const String ordersRide = 'Ride';
-  static const String ordersParcel = 'Parcel';
-  static const String ordersCoinsHint = 'Complete more orders to get more benefits';
-  static const String ordersYouEarnedCoins = 'You earned';
-  static const String ordersCoins = 'coins';
-  static const String rideDetails = 'Ride Details';
-  static const String parcelDetails = 'Parcel Details';
-  static const String parcelType = 'Parcel Type';
-  static const String rateReceiver = 'Rate Receiver';
-  static const String rateReceiverHint = 'Help us maintain a safe and reliable service';
-  static const String fairDetails = 'Fair Details';
-  static const String fair = 'Fair';
-  static const String additionalWaitingCharge = 'Additional Waiting Charger';
-  static const String discountCoins = 'Discount/Toins';
-  static const String taxes = 'Taxes';
-  static const String otherCharges = 'Other Charges';
-  static const String totalFair = 'Total Fair';
-  static const String paymentStatus = 'Payment Status';
-  static const String paidCash = 'Paid Cash';
-  static const String passengers = 'passengers';
-  static const String driversId = 'Driver\'s ID';
-  static const String name = 'Name';
-  static const String personalInformation = 'Personal Information';
-  static const String vehicleInformation = 'Vehicle Information';
-  static const String documentKycStatus = 'Document / KYC Status';
-  static const String documentKyc = 'Document/KYC';
-  static const String bankInformation = 'Bank Information';
-  static const String subscriptionRecharge = 'Subscription/recharge';
-  static const String torkkCoins = 'Torkk Coins';
-  static const String notifications = 'Notifications';
-  static const String notification = 'Notification';
-  static const String settings = 'Settings';
-  static const String termsConditions = 'Terms & Conditions';
-  static const String faq = 'FAQ';
-  static const String faqs = 'FAQs';
-  static const String helpSupport = 'Help & Support';
-  static const String aboutTorkk = 'About Torkk';
-  static const String logout = 'Logout';
-  static const String logoutConfirm = 'Are you sure you want to logout from your account?';
-  static const String mobileNumber = 'Mobile Number';
-  static const String carModel = 'Car Model';
-  static const String changeRequest = 'Change Request';
-  static const String edit = 'Edit';
-  static const String editReplace = 'Edit / Replace';
-  static const String verified = 'Verified';
-  static const String pending = 'Pending';
-  static const String notStarted = 'Not Started';
-  static const String faqSubtitle = 'Find answers about verification, documents, rides, payments and your Torkk account';
-  static const String searchQuestions = 'Search Questions';
-  static const String answerHelpful = 'Was this answer helpful ?';
-  static const String myTickets = 'My Tickets';
-  static const String typeMessage = 'Type your message...';
-  static const String readMore = 'Read More';
-  static const String overview = 'Overview';
-  static const String navParcel = 'Parcel';
-  static const String navWallet = 'Wallet';
-  static const String searchingRides = 'Searching for rides...';
-  static const String noRidesAvailable = 'No rides available';
-  static const String todayEarnings = 'Today\'s Earnings';
-  static const String goodMorning = 'Good morning,';
-  static const String goodAfternoon = 'Good afternoon,';
-  static const String goodEvening = 'Good evening,';
-  static const String youAreOffline = 'You\'re Offline';
-  static const String youAreOnline = 'You\'re Online';
-  static const String goOnlineHint = 'Go online to start receiving ride requests.';
-  static const String readyForRequests = 'Ready to receive ride requests.';
-  static const String todayCompletedJobs = 'Today\'s Completed Jobs';
-  static const String planYourTime = 'Plan your time, earn more';
-  static const String planYourTimeSubtitle = 'Schedule your preferred driving hours.';
-  static const String currentLocation = 'Current Location';
-  static const String updateLocation = 'Update';
-  static const String goOnlineBody = 'You will receive new ride requests while you\'re online';
-  static const String goOfflineBody = 'You won\'t receive new ride requests while you\'re offline';
-  static const String gettingRideDetails = 'Getting ride details...';
-  static const String pleaseWait = 'Please wait';
-  static const String parcelDelivery = 'Parcel Delivery';
-  static const String unlockParcelTitle = 'Collect 100 coins to unlock Parcel Delivery';
-  static const String unlockParcelSubtitle =
-      'Collect 100 coins and become eligible to receive parcel delivery requests.';
-  static const String completeEarningTasks = 'Complete earning tasks';
-  static const String completeEarningTasksHint = 'Accept and complete rides to earn coins.';
-  static const String collect100Coins = 'Collect 100 coins';
-  static const String collect100CoinsHint = 'Reach 100 coins to unlock parcel delivery.';
-  static const String startDeliveringParcels = 'Start delivering parcels';
-  static const String startDeliveringParcelsHint =
-      'Once eligible, you can receive parcel requests on your bike.';
-  static const String earnByDeliveringParcels = 'Earn by delivering parcels with your eligible vehicles.';
-  static const String yourVehicles = 'Your Vehicles';
-  static const String canReceiveParcelRequests = 'Can receive parcel requests';
-  static const String parcelNotAvailable = 'Parcel not available for this vehicle';
-  static const String startReceivingParcelRequests = 'Start Receiving Parcel Requests';
-  static const String vehicleCar = 'Car';
-  static const String totalEarnings = 'Total Earnings';
-  static const String incentives = 'Incentives';
-
+  static String get goOnline => AppTranslations.tr('goOnline');
+  static String get goOffline => AppTranslations.tr('goOffline');
+  static String get navHome => AppTranslations.tr('navHome');
+  static String get navOrders => AppTranslations.tr('navOrders');
+  static String get ordersSearchHint => AppTranslations.tr('ordersSearchHint');
+  static String get ordersCurrent => AppTranslations.tr('ordersCurrent');
+  static String get ordersCompleted => AppTranslations.tr('ordersCompleted');
+  static String get ordersCancelled => AppTranslations.tr('ordersCancelled');
+  static String get ordersScheduled => AppTranslations.tr('ordersScheduled');
+  static String get ordersOngoing => AppTranslations.tr('ordersOngoing');
+  static String get ordersOnline => AppTranslations.tr('ordersOnline');
+  static String get ordersEmpty => AppTranslations.tr('ordersEmpty');
+  static String get ordersRide => AppTranslations.tr('ordersRide');
+  static String get ordersParcel => AppTranslations.tr('ordersParcel');
+  static String get ordersCoinsHint => AppTranslations.tr('ordersCoinsHint');
+  static String get ordersYouEarnedCoins => AppTranslations.tr('ordersYouEarnedCoins');
+  static String get ordersCoins => AppTranslations.tr('ordersCoins');
+  static String get rideDetails => AppTranslations.tr('rideDetails');
+  static String get parcelDetails => AppTranslations.tr('parcelDetails');
+  static String get parcelType => AppTranslations.tr('parcelType');
+  static String get rateReceiver => AppTranslations.tr('rateReceiver');
+  static String get rateReceiverHint => AppTranslations.tr('rateReceiverHint');
+  static String get fairDetails => AppTranslations.tr('fairDetails');
+  static String get fair => AppTranslations.tr('fair');
+  static String get additionalWaitingCharge => AppTranslations.tr('additionalWaitingCharge');
+  static String get discountCoins => AppTranslations.tr('discountCoins');
+  static String get taxes => AppTranslations.tr('taxes');
+  static String get otherCharges => AppTranslations.tr('otherCharges');
+  static String get totalFair => AppTranslations.tr('totalFair');
+  static String get paymentStatus => AppTranslations.tr('paymentStatus');
+  static String get paidCash => AppTranslations.tr('paidCash');
+  static String get passengers => AppTranslations.tr('passengers');
+  static String get driversId => AppTranslations.tr('driversId');
+  static String get name => AppTranslations.tr('name');
+  static String get personalInformation => AppTranslations.tr('personalInformation');
+  static String get vehicleInformation => AppTranslations.tr('vehicleInformation');
+  static String get documentKycStatus => AppTranslations.tr('documentKycStatus');
+  static String get documentKyc => AppTranslations.tr('documentKyc');
+  static String get bankInformation => AppTranslations.tr('bankInformation');
+  static String get subscriptionRecharge => AppTranslations.tr('subscriptionRecharge');
+  static String get torkkCoins => AppTranslations.tr('torkkCoins');
+  static String get notifications => AppTranslations.tr('notifications');
+  static String get notification => AppTranslations.tr('notification');
+  static String get settings => AppTranslations.tr('settings');
+  static String get termsConditions => AppTranslations.tr('termsConditions');
+  static String get faq => AppTranslations.tr('faq');
+  static String get faqs => AppTranslations.tr('faqs');
+  static String get helpSupport => AppTranslations.tr('helpSupport');
+  static String get aboutTorkk => AppTranslations.tr('aboutTorkk');
+  static String get logout => AppTranslations.tr('logout');
+  static String get logoutConfirm => AppTranslations.tr('logoutConfirm');
+  static String get mobileNumber => AppTranslations.tr('mobileNumber');
+  static String get carModel => AppTranslations.tr('carModel');
+  static String get changeRequest => AppTranslations.tr('changeRequest');
+  static String get edit => AppTranslations.tr('edit');
+  static String get editReplace => AppTranslations.tr('editReplace');
+  static String get verified => AppTranslations.tr('verified');
+  static String get pending => AppTranslations.tr('pending');
+  static String get notStarted => AppTranslations.tr('notStarted');
+  static String get faqSubtitle => AppTranslations.tr('faqSubtitle');
+  static String get searchQuestions => AppTranslations.tr('searchQuestions');
+  static String get answerHelpful => AppTranslations.tr('answerHelpful');
+  static String get myTickets => AppTranslations.tr('myTickets');
+  static String get typeMessage => AppTranslations.tr('typeMessage');
+  static String get readMore => AppTranslations.tr('readMore');
+  static String get overview => AppTranslations.tr('overview');
+  static String get navParcel => AppTranslations.tr('navParcel');
+  static String get navWallet => AppTranslations.tr('navWallet');
+  static String get searchingRides => AppTranslations.tr('searchingRides');
+  static String get noRidesAvailable => AppTranslations.tr('noRidesAvailable');
+  static String get todayEarnings => AppTranslations.tr('todayEarnings');
+  static String get goodMorning => AppTranslations.tr('goodMorning');
+  static String get goodAfternoon => AppTranslations.tr('goodAfternoon');
+  static String get goodEvening => AppTranslations.tr('goodEvening');
+  static String get youAreOffline => AppTranslations.tr('youAreOffline');
+  static String get youAreOnline => AppTranslations.tr('youAreOnline');
+  static String get goOnlineHint => AppTranslations.tr('goOnlineHint');
+  static String get readyForRequests => AppTranslations.tr('readyForRequests');
+  static String get todayCompletedJobs => AppTranslations.tr('todayCompletedJobs');
+  static String get planYourTime => AppTranslations.tr('planYourTime');
+  static String get planYourTimeSubtitle => AppTranslations.tr('planYourTimeSubtitle');
+  static String get currentLocation => AppTranslations.tr('currentLocation');
+  static String get updateLocation => AppTranslations.tr('updateLocation');
+  static String get goOnlineBody => AppTranslations.tr('goOnlineBody');
+  static String get goOfflineBody => AppTranslations.tr('goOfflineBody');
+  static String get gettingRideDetails => AppTranslations.tr('gettingRideDetails');
+  static String get pleaseWait => AppTranslations.tr('pleaseWait');
+  static String get parcelDelivery => AppTranslations.tr('parcelDelivery');
+  static String get unlockParcelTitle => AppTranslations.tr('unlockParcelTitle');
+  static String get unlockParcelSubtitle => AppTranslations.tr('unlockParcelSubtitle');
+  static String get completeEarningTasks => AppTranslations.tr('completeEarningTasks');
+  static String get completeEarningTasksHint => AppTranslations.tr('completeEarningTasksHint');
+  static String get collect100Coins => AppTranslations.tr('collect100Coins');
+  static String get collect100CoinsHint => AppTranslations.tr('collect100CoinsHint');
+  static String get startDeliveringParcels => AppTranslations.tr('startDeliveringParcels');
+  static String get startDeliveringParcelsHint => AppTranslations.tr('startDeliveringParcelsHint');
+  static String get earnByDeliveringParcels => AppTranslations.tr('earnByDeliveringParcels');
+  static String get yourVehicles => AppTranslations.tr('yourVehicles');
+  static String get canReceiveParcelRequests => AppTranslations.tr('canReceiveParcelRequests');
+  static String get parcelNotAvailable => AppTranslations.tr('parcelNotAvailable');
+  static String get startReceivingParcelRequests => AppTranslations.tr('startReceivingParcelRequests');
+  static String get vehicleCar => AppTranslations.tr('vehicleCar');
+  static String get totalEarnings => AppTranslations.tr('totalEarnings');
+  static String get incentives => AppTranslations.tr('incentives');
   // ── Navigation / Ride ─────────────────────────────────────────
-  static const String rideCancelled = 'Ride Cancelled';
-  static const String rideCompleted = 'Ride Completed';
-  static const String returnToHome = 'Return to Home';
-  static const String pickup = 'Pickup';
-  static const String dropoff = 'Drop-off';
-  static const String customer = 'Customer';
+  static String get rideCancelled =>
+      AppTranslations.tr('rideCancelled');
+
+  static String get rideCompleted =>
+      AppTranslations.tr('rideCompleted');
+
+  static String get returnToHome =>
+      AppTranslations.tr('returnToHome');
+
+  static String get pickup =>
+      AppTranslations.tr('pickup');
+
+  static String get dropoff =>
+      AppTranslations.tr('dropoff');
+
+  static String get customer =>
+      AppTranslations.tr('customer');
 
   // ── Profile ───────────────────────────────────────────────────
-  static const String profile = 'Profile';
-  static const String editProfile = 'Edit Profile';
-  static const String documents = 'Documents';
-  static const String bankDetails = 'Bank Details';
-  static const String vehicleDetails = 'Vehicle Details';
-  static const String notSpecified = 'Not specified';
+  static String get profile => AppTranslations.tr('profile');
+  static String get editProfile => AppTranslations.tr('editProfile');
+  static String get documents => AppTranslations.tr('documents');
+  static String get bankDetails => AppTranslations.tr('bankDetails');
+  static String get vehicleDetails => AppTranslations.tr('vehicleDetails');
+  static String get notSpecified => AppTranslations.tr('notSpecified');
+  static String get appearance => AppTranslations.tr('appearance');
+  static String get language => AppTranslations.tr('language');
+  static String get deleteAccount => AppTranslations.tr('deleteAccount');
+  static String get deleteAccountTitle => AppTranslations.tr('deleteAccountTitle');
+  static String get deleteAccountSubtitle => AppTranslations.tr('deleteAccountSubtitle');
+  static String get delete => AppTranslations.tr('delete');
+  static String get rechargeNow => AppTranslations.tr('rechargeNow');
+  static String get planExpiredTitle => AppTranslations.tr('planExpiredTitle');
+  static String get planExpiredSubtitle => AppTranslations.tr('planExpiredSubtitle');
+  static String get privacyOverviewDescription => AppTranslations.tr('privacyOverviewDescription');
+  static String get userAcceptance => AppTranslations.tr('userAcceptance');
+  static String get userAcceptanceDescription => AppTranslations.tr('userAcceptanceDescription');
+  static String get definitions => AppTranslations.tr('definitions');
+  static String get definitionsDescription => AppTranslations.tr('definitionsDescription');
+  static String get informationCollectedQuestion => AppTranslations.tr('informationCollectedQuestion');
+  static String get informationCollectedDescription => AppTranslations.tr('informationCollectedDescription');
+  static String get useOfInformationCollected => AppTranslations.tr('useOfInformationCollected');
+  static String get useOfInformationCollectedDescription => AppTranslations.tr('useOfInformationCollectedDescription');
+  static String get thirdPartyDisclosure => AppTranslations.tr('thirdPartyDisclosure');
+  static String get thirdPartyDisclosureDescription => AppTranslations.tr('thirdPartyDisclosureDescription');
+  static String get thirdPartyServices => AppTranslations.tr('thirdPartyServices');
+  static String get thirdPartyServicesDescription => AppTranslations.tr('thirdPartyServicesDescription');
+  static String get setChangePin => AppTranslations.tr('setChangePin');
+  static String get secureAccountPin => AppTranslations.tr('secureAccountPin');
+  static String get privacySettings => AppTranslations.tr('privacySettings');
+  static String get showMyProfileToDriver => AppTranslations.tr('showMyProfileToDriver');
+  static String get showMyProfileToDriverSubtitle => AppTranslations.tr('showMyProfileToDriverSubtitle');
+  static String get locationSharing => AppTranslations.tr('locationSharing');
+  static String get locationSharingSubtitle => AppTranslations.tr('locationSharingSubtitle');
+  static String get secureYourAccount => AppTranslations.tr('secureYourAccount');
+  static String get createPinSubtitle => AppTranslations.tr('createPinSubtitle');
+  static String get changePin => AppTranslations.tr('changePin');
+  static String get currentPin => AppTranslations.tr('currentPin');
+  static String get newPin => AppTranslations.tr('newPin');
+  static String get chooseYourAppearance => AppTranslations.tr('chooseYourAppearance');
+  static String get lightMode => AppTranslations.tr('lightMode');
+  static String get darkMode => AppTranslations.tr('darkMode');
+  static String get systemDefault => AppTranslations.tr('systemDefault');
+  static String get generalTerms => AppTranslations.tr('generalTerms');
+  static String get specialTerms => AppTranslations.tr('specialTerms');
+  static String get platform => AppTranslations.tr('platform');
+  static String get generalCovenants => AppTranslations.tr('generalCovenants');
+  static String get registration => AppTranslations.tr('registration');
+  static String get discloseInformationToThirdParties => AppTranslations.tr('discloseInformationToThirdParties');
+  static String get thirdPartiesProvidingServices => AppTranslations.tr('thirdPartiesProvidingServices');
+  static String get generalTermsDescription => AppTranslations.tr('generalTermsDescription');
+  static String get specialTermsDescription => AppTranslations.tr('specialTermsDescription');
+  static String get documentsVehicleDetailsDescription => AppTranslations.tr('documentsVehicleDetailsDescription');
+  static String get platformDescription => AppTranslations.tr('platformDescription');
+  static String get generalCovenantsDescription => AppTranslations.tr('generalCovenantsDescription');
+  static String get registrationDescription => AppTranslations.tr('registrationDescription');
+  static String get discloseInformationToThirdPartiesDescription => AppTranslations.tr('discloseInformationToThirdPartiesDescription');
+  static String get thirdPartiesProvidingServicesDescription => AppTranslations.tr('thirdPartiesProvidingServicesDescription');
 
   // ── Errors ────────────────────────────────────────────────────
-  static const String genericError = 'Something went wrong. Please try again.';
-  static const String networkError = 'Network error. Check your connection.';
-  static const String locationError = 'Unable to get location.';
+  static String get genericError => AppTranslations.tr('genericError');
+  static String get networkError => AppTranslations.tr('networkError');
+  static String get locationError => AppTranslations.tr('locationError');
 
   // ── Onboarding ────────────────────────────────────────────────
-  static const String continueAction = 'Continue';
-  static const String chooseLanguage = 'Choose your Language';
-  static const String chooseLanguageSubtitle =
-      'Select the language you prefer to continue with.';
-  static const String selectLanguageError = 'Please select a language to continue.';
-  static const String languageChangedLater =
-      'Language can be changed later from settings';
-  static const String welcome = 'Welcome';
-  static const String welcomeSubtitle =
-      "Enter your mobile number to begin, We'll verify the details automatically.";
-  static const String enterMobileHint = 'Enter mobile number';
-  static const String enterMobileError = 'Please enter a valid mobile number';
-  static const String otpVerification = 'OTP Verification';
-  static const String verifyYourNumber = 'Verify your number';
-  static const String otpSentPrefix = 'Enter the OTP sent to ';
-  static const String resendOtpIn = 'Resend OTP in ';
-  static const String didntReceiveCode = "Didn't receive the code?";
-  static const String resendOtp = 'Resend OTP';
-  static const String verifyAndContinue = 'Verify & Continue';
-  static const String changeMobileNumber = 'Change mobile number';
-  static const String incorrectOtp =
-      'Incorrect OTP. Please check the OTP and try again.';
-  static const String selectVehicleCategory = 'Select Vehicle Category';
-  static const String chooseVehicleType =
-      'Choose the type of vehicle you will use for rides and deliveries.';
-  static const String selectVehicleError = 'Please select a vehicle to continue.';
-  static const String vehicleCab = 'Cab';
-  static const String vehicleEvCab = 'EV Cab';
-  static const String vehicleXlCab = 'XL Cab';
-  static const String vehicleAuto = 'Auto';
-  static const String vehicleBike = 'Bike';
-  static const String fourWheeler = '4 Wheeler';
-  static const String threeWheeler = '3 Wheeler';
-  static const String twoWheeler = '2 Wheeler';
-  static const String kycVerification = 'KYC Verification';
-  static const String kycSubtitle =
-      'Complete all required verification steps to become a Torkk driver.';
-  static const String kycAadhaarPan = 'Aadhar + PAN';
-  static const String kycDrivingLicense = 'Driving License';
-  static const String kycVehicleRc = 'Vehicle RC';
-  static const String kycVehiclePhotos = 'Vehicle Photos';
-  static const String kycFaceVerification = 'Face Verification';
-  static const String kycBankDetails = 'Bank Details';
-  static const String kycProfileReview = 'Profile Review & Submission';
-  static const String driversDetails = "Driver's Details";
-  static const String uploadClearPhoto = 'Upload a clear photo';
-  static const String fullName = 'Full Name';
-  static const String gender = 'Gender';
-  static const String genderMale = 'Male';
-  static const String genderFemale = 'Female';
-  static const String genderOther = 'Other';
-  static const String dateOfBirth = 'Date of Birth';
-  static const String dobFormatHint = 'dd-mm-yyyy';
-  static const String emailOptional = 'Email (optional)';
-  static const String continueToFinalReview = 'Continue to Final Review';
-  static const String reviewYourDetails = 'Review your details';
-  static const String personalDetails = 'Personal Details';
-  static const String kycDocuments = 'KYC Documents';
-  static const String emailAddress = 'Email Address';
-  static const String driverDetailsRequired = 'Enter your name and date of birth to continue.';
-  static const String kycVerified = 'Verified';
-  static const String kycPending = 'Pending';
-  static const String kycNotStarted = 'Not Started';
-  static const String kycActivateHint =
-      'Complete all steps to activate your driver account.';
-  static const String verifyAadhaarPan = 'Verify Aadhaar & PAN';
-  static const String verifyAadhaarSubtitle =
-      'Your Aadhaar and PAN will be securely verified through DigiLocker.';
-  static const String continueWithDigilocker = 'Continue with DigiLocker';
-  static const String uploadManually = 'Upload Manually';
-  static const String dataSafeWithUs = 'Your data is safe with us';
-  static const String connectDigilocker = 'Connect DigiLocker';
-  static const String connectDigilockerSubtitle =
-      'DigiLocker will be used to retrieve and verify your required government documents';
-  static const String documentsWellAccess = "DOCUMENTS WE'LL ACCESS";
-  static const String aadhaarDoc = 'Aadhar';
-  static const String panDoc = 'PAN';
-  static const String drivingLicenseDoc = 'Driving License';
-  static const String whereAvailable = '(where available)';
-  static const String digilockerConsent =
-      'I consent to Torkk accessing the required documents from DigiLocker for verification purposes.';
-  static const String connectingDigilocker = 'Connecting to DigiLocker...';
-  static const String connectingDigilockerSubtitle =
-      'Please wait while we securely connect to your DigiLocker account.';
-  static const String awaitingAuthentication = 'Awaiting authentication';
-  static const String fetchingDocuments = 'Fetching your documents';
-  static const String verifyingDocuments = 'Verifying your documents';
-  static const String digilockerWaitHint =
-      "This may take a few moment. Please don't close the app";
-  static const String identityVerified = 'Identity Verified';
-  static const String identityVerifiedSubtitle =
-      'Your Aadhaar and PAN have been successfully verified through DigiLocker.';
-  static const String documentsSecurelyVerified =
-      'Your documents are securely verified through digilocker';
-  static const String digilockerTitle = 'DigiLocker';
-  static const String verificationFailed = 'Verification Failed';
-  static const String verificationFailedSubtitle =
-      "We couldn't verify your Aadhaar or PAN details.";
-  static const String documentNotFound = 'Document Not Found';
-  static const String documentNotFoundSubtitle =
-      "We couldn't find the required document in your DigiLocker account.";
-  static const String documentNotFoundHint =
-      'Make sure the document is available in your DigiLocker account and try again.';
-  static const String permissionDenied = 'Permission Denied';
-  static const String permissionDeniedSubtitle =
-      'DigiLocker permission was not granted. Please allow access to continue.';
-  static const String permissionDeniedHint =
-      'You need to give DigiLocker permission to access your documents securely.';
-  static const String authenticationFailed = 'DigiLocker Authentication Failed';
-  static const String authenticationFailedSubtitle =
-      "We couldn't authenticate your DigiLocker account.";
-  static const String authenticationFailedHint = 'Please check your credentials and try again.';
-  static const String vehicleDocsWillBeVerified =
-      'Vehicle RC, insurance and fitness certificate will be verified.';
-  static const String retryVerification = 'Retry Verification';
-  static const String tryAgain = 'Try Again';
-  static const String useAnotherMethod = 'Use Another Method';
-  static const String uploadManuallySubtitle =
-      'Upload a clear photo of your Aadhaar to continue.';
-  static const String aadhaarNumber = 'Aadhaar Number';
-  static const String uploadAadhaarPhoto = 'Aadhaar photo';
-  static const String panVerification = 'PAN Verification';
-  static const String panNumber = 'PAN Number';
-  static const String panGovHint = 'Your PAN will be verified with government records.';
-  static const String verifyPan = 'Verify PAN';
-  static const String aadhaarVerification = 'Aadhar Verification';
-  static const String uploadYourAadhaar = 'Upload your Aadhar';
-  static const String aadhaarCardNumber = 'Aadhar Card Number';
-  static const String aadhaarGovHint = 'Your Aadhar will be verified with government records.';
-  static const String verifyAadhaar = 'Verify Aadhar';
-  static const String verifyDrivingLicence = 'Verify your Driving Licence';
-  static const String verifyDrivingLicenceSubtitle =
-      'Verify your valid Driving Licence to continue.';
-  static const String verifyWithDigilocker = 'Verify with DigiLocker';
-  static const String verifyWithDigilockerSubtitle =
-      'Fast, secure and fetches your Driving Licence directly from DigiLocker.';
-  static const String orWord = 'OR';
-  static const String uploadDrivingLicense = 'Upload your Driving License';
-  static const String frontSide = 'Front Side';
-  static const String backSide = 'Back Side';
-  static const String tapToUpload = 'Tap to upload';
-  static const String drivingLicenceVerified = 'Driving Licence Verified';
-  static const String drivingLicenceVerifiedSubtitle =
-      'Your Driving License have been successfully verified through DigiLocker.';
-  static const String drivingLicenseDetails = 'Driving License Details';
-  static const String licenseNumber = 'License Number';
-  static const String vehicleClass = 'Vehicle Class';
-  static const String validity = 'Validity';
-  static const String drivingLicenseTitle = 'Driving License';
-  static const String preview = 'Preview';
-  static const String retake = 'Retake';
-  static const String expiryDate = 'Expiry Date';
-  static const String verificationPending = 'Verification pending';
-  static const String documentValidation = 'Document Validation';
-  static const String documentUnclear = 'The document is unclear';
-  static const String documentUnclearHint = 'Please capture a clear photo and try again.';
-  static const String drivingLicenseVerifiedManual = 'Driving License Verified';
-  static const String drivingLicenseVerifiedManualSubtitle =
-      'Your driving licence has been successfully verified. You can proceed to the next step.';
-  static const String drivingLicenseRejected = 'Driving License Rejected !';
-  static const String drivingLicenseRejectedSubtitle =
-      'We couldn\'t verify your driving licence. Please check the details and try again.';
-  static const String rejectionReason = 'Reason';
-  static const String documentImageUnclear = 'Document Image is Unclear';
-  static const String documentImageUnclearHint =
-      'The image does not meet our quality standards. Please upload a clear and readable version.';
-  static const String fixAndResubmit = 'Fix & Resubmit';
-  static const String drivingLicenseUnderReview = 'Driving License Under Review !';
-  static const String drivingLicenseUnderReviewSubtitle =
-      'Your driving licence is under review. This usually takes a few minutes to a few hours.';
-  static const String blurryImage = 'Blurry Image';
-  static const String blurryImageHint =
-      'The image is not clear. Please retake a sharper photo and try again.';
-  static const String verifyVehicleRc = 'Verify Vehicle RC';
-  static const String verifyVehicleRcSubtitle =
-      'Upload your vehicle Registration Certificate to verify the vehicle registered with Torkk.';
-  static const String registrationNumber = 'Registration Number';
-  static const String rcDocument = 'RC Document';
-  static const String rcDocumentHint = 'Upload a clear photo of Registration Certificate';
-  static const String rcClearHint =
-      'Make sure the document is clear, readable and all details are visible.';
-  static const String rcReadyHint = 'Your RC is ready for verification.';
-  static const String rcUploaded = 'Uploaded';
-  static const String replaceAction = 'Replace';
-  static const String vehicleNumber = 'Vehicle number';
-  static const String vehicleModel = 'Vehicle model';
-  static const String vehicleType = 'Vehicle type';
-  static const String insuranceExpiryDate = 'Insurance Expiry Date';
-  static const String rcExtractedHint =
-      'Vehicle details extracted from your RC document and verified.';
-  static const String uploadVehiclePhoto = 'Upload your Vehicle Photo';
-  static const String vehiclePhotos = 'Vehicle Photos';
-  static const String vehiclePhotosSubtitle = 'Take photos of your vehicle';
-  static const String captureFrontHint =
-      'Capture the complete front of your vehicle. Make sure the vehicle and number plate are clearly visible.';
-  static const String gallery = 'Gallery';
-  static const String camera = 'Camera';
-  static const String flip = 'Flip';
-  static const String wrongImageUploaded = 'Wrong image uploaded';
-  static const String wrongImageHint = 'Please check the image and try again.';
-  static const String vehiclePhotosVerified = 'Vehicle Photos — Verified';
-  static const String vehiclePhotosVerifiedSubtitle =
-      'Both vehicle photos have been successfully verified.';
-  static const String frontPhoto = 'Front Photo';
-  static const String backPhoto = 'Back Photo';
-  static const String actionRequiredPhotos = 'Action Required for Vehicle Photos';
-  static const String actionRequiredPhotosHint =
-      '1 Photo needs to be retaken. Please fix the issue below to continue.';
-  static const String verificationFailedLabel = 'Verification Failed';
-  static const String vehicleInsurance = 'Vehicle Insurance';
-  static const String uploadInsurance = 'Upload your Insurance';
-  static const String permitIfApplicable = 'Permit (if applicable)';
-  static const String commercialPermit = 'Commercial Permit';
-  static const String uploadPermit = 'Upload Permit Document';
-  static const String bankPayoutDetails = 'Bank & Payout Details';
-  static const String informationSecure = 'Your information is secure.';
-  static const String accountHolderName = 'Account Holder Name';
-  static const String accountNumber = 'Account Number';
-  static const String confirmAccountNumber = 'Confirm Account Number';
-  static const String ifscCode = 'IFSC Code';
-  static const String findIfsc = 'Find IFSC';
-  static const String bankName = 'Bank Name';
-  static const String updateDetails = 'Update details';
-  static const String saveAndVerify = 'Save & Verify';
-  static const String verifyingBank = 'Verifying your bank details';
-  static const String verifyingBankSubtitle =
-      'Please wait while we verify your bank account with our secure partner.';
-  static const String bankDetailsSubmitted = 'Bank details submitted';
-  static const String verifyingAccountWithBank = 'Verifying account with bank';
-  static const String bankVerifyWait = 'This may take a few seconds...';
-  static const String confirmingAccountDetails = 'Confirming account details';
-  static const String bankEncryptedHint = 'Your details are encrypted and securely verified.';
-  static const String bankDetailsVerified = 'Bank details verified';
-  static const String bankDetailsVerifiedSubtitle =
-      'Your bank account has been successfully verified and linked to your Torkk account.';
-  static const String bankAccountDetails = 'Bank Account Details';
-  static const String bankReadyHint = 'Your bank account is verified and ready to receive payments.';
-  static const String bankVerificationFailed = 'Bank Verification Failed';
-  static const String bankVerificationFailedSubtitle =
-      "We couldn't verify your bank account. Please check the details and try again.";
-  static const String reason = 'Reason';
-  static const String incorrectAccountOrIfsc = 'Incorrect account number or IFSC';
-  static const String accountInactive = 'Account is inactive';
-  static const String verifyYourIdentity = 'Verify your identity';
-  static const String verifyIdentitySubtitle = 'Take a quick selfie to confirm your identity';
-  static const String identityRealPerson = 'Helps us confirm that you are a real person';
-  static const String identityRequired = 'Required to complete your onboarding';
-  static const String identityQuick = 'Takes less than a minute';
-  static const String startFaceVerification = 'Start Face Verification';
-  static const String beforeYouStart = 'Before you start';
-  static const String beforeYouStartSubtitle = 'Follow these simple steps to get the best result.';
-  static const String faceInFrame = 'Position your face inside the frame.';
-  static const String faceVisible = 'Make sure your face is clearly visible.';
-  static const String removeCoverings = 'Remove your helmet, sunglasses, mask or anything covering your face.';
-  static const String wellLit = 'Make sure you are in a well-lit area.';
-  static const String allowCameraAccess = 'Allow Camera Access';
-  static const String allowCameraSubtitle =
-      'We need access to your camera to verify your identity.';
-  static const String dataSafeSecure = 'Your data is safe and secure';
-  static const String usedOnlyForIdentity = 'Used only for identity verification';
-  static const String photoNotStored = 'We do not store your photo after verification';
-  static const String faceDetected = 'Face Detected';
-  static const String noFaceDetected = 'No Face Detected';
-  static const String verifyingYourFace = 'Verifying your face';
-  static const String verifyingFaceSubtitle = 'Please wait while we verify your identity.';
-  static const String photoCaptured = 'Photo captured';
-  static const String analyzingFace = 'Analyzing face';
-  static const String checkingLiveness = 'Checking liveness';
-  static const String finalizingVerification = 'Finalizing verification';
-  static const String identityVerifiedFace = 'Identity verified';
-  static const String identityVerifiedFaceSubtitle = 'Your face has been successfully verified.';
-  static const String identityConfirmed = 'Identity confirmed';
-  static const String accountSecured = 'Account secured';
-  static const String completeOnboardingNow = 'You can now complete your onboarding';
-  static const String faceVerificationFailed = 'Face Verification Failed';
-  static const String faceVerificationFailedSubtitle =
-      "We couldn't verify your identity. Please try again in good lighting.";
-  static const String faceNotDetectedReason = 'Face not detected';
-  static const String faceNotDetectedHint =
-      'Make sure you are looking at the camera and your face is inside the frame.';
-  static const String otpSentTitle = 'OTP sent';
-  static const String otpSentMessage = 'OTP sent successfully.';
-  static const String termsPrefix = 'By continuing, you agree to our ';
-  static const String termsOfService = 'Terms of Service';
-  static const String andWord = ' and ';
-  static const String tagline = 'Earn Fair. Drive Safe';
-  static const String english = 'English';
-  static const String englishSubtitle = 'Click here to select english';
-  static const String hindi = 'हिंदी';
-  static const String hindiSubtitle = 'हिंदी चुनने के लिए यहाँ क्लिक करें';
-  static const String countryCodeIndia = '+91';
-  static const String phoneHint = '00000 00000';
-  static const String agreeWith = 'I agree with ';
-  static const String privacyPolicy = 'Privacy Policy';
-  static const String termsAndConditions = 'Terms & Conditions';
-  static const String driverAgreement = 'Driver Agreement';
-  static const String applicationSubmitted = 'Application Submitted';
-  static const String applicationSubmittedSubtitle =
-      'Thankyou ! Your application has been\nsubmitted successfully';
-  static const String applicationApproved = 'Application Approved';
-  static const String applicationApprovedSubtitle =
-      'Welcome to Torkk !\nYou can now start driving and earning.';
-  static const String currentStatus = 'Current Status';
-  static const String underReview = 'Under Review';
-  static const String underReviewHint =
-      'We are verifying your details. This usually takes 1-2 business days';
-  static const String applicationApprovedStatus = 'Approved';
-  static const String applicationApprovedHint =
-      'Your documents are verified and your account is active.';
-  static const String applicationSubmittedStep = 'Application submitted';
-  static const String underReviewStep = 'Under review';
-  static const String underReviewNotify = "We'll notify you once it's approved";
-  static const String startDrivingWithTorkk = 'Start driving with Torkk';
-  static const String goHome = 'Go Home';
-  static const String actionRequired = 'Action Required';
-  static const String actionRequiredSubtitle =
-      "We couldn't approve your application yet.\nPlease review the details below.";
-  static const String applicationRejected = 'Application Rejected';
-  static const String applicationRejectedSubtitle =
-      "We couldn't approve your application.\nReview it for approval";
-  static const String actionRequiredBanner =
-      'Some of your documents could not be verified. Please check and resubmit.';
-  static const String documentsNeedAttention = 'Documents need attention';
-  static const String documentsNeedAttentionHint =
-      'Please review your documents and upload a clear image.';
-  static const String uploadAndResubmit = 'Upload & Resubmit';
-  static const String makeCorrections = 'Make Corrections';
+  static String get continueAction => AppTranslations.tr('continueAction');
+  static String get chooseLanguage => AppTranslations.tr('chooseLanguage');
+  static String get chooseLanguageSubtitle => AppTranslations.tr('chooseLanguageSubtitle');
+  static String get selectLanguageError => AppTranslations.tr('selectLanguageError');
+  static String get languageChangedLater => AppTranslations.tr('languageChangedLater');
+  static String get welcome => AppTranslations.tr('welcome');
+  static String get welcomeSubtitle => AppTranslations.tr('welcomeSubtitle');
+  static String get enterMobileHint => AppTranslations.tr('enterMobileHint');
+  static String get enterMobileError => AppTranslations.tr('enterMobileError');
+  static String get otpVerification => AppTranslations.tr('otpVerification');
+  static String get verifyYourNumber => AppTranslations.tr('verifyYourNumber');
+  static String get otpSentPrefix => AppTranslations.tr('otpSentPrefix');
+  static String get resendOtpIn => AppTranslations.tr('resendOtpIn');
+  static String get didntReceiveCode => AppTranslations.tr('didntReceiveCode');
+  static String get resendOtp => AppTranslations.tr('resendOtp');
+  static String get verifyAndContinue => AppTranslations.tr('verifyAndContinue');
+  static String get changeMobileNumber => AppTranslations.tr('changeMobileNumber');
+  static String get incorrectOtp => AppTranslations.tr('incorrectOtp');
+
+// ── Vehicle Selection ─────────────────────────────────────────
+  static String get selectVehicleCategory => AppTranslations.tr('selectVehicleCategory');
+  static String get chooseVehicleType => AppTranslations.tr('chooseVehicleType');
+  static String get selectVehicleError => AppTranslations.tr('selectVehicleError');
+  static String get vehicleCab => AppTranslations.tr('vehicleCab');
+  static String get vehicleEvCab => AppTranslations.tr('vehicleEvCab');
+  static String get vehicleXlCab => AppTranslations.tr('vehicleXlCab');
+  static String get vehicleAuto => AppTranslations.tr('vehicleAuto');
+  static String get vehicleBike => AppTranslations.tr('vehicleBike');
+  static String get fourWheeler => AppTranslations.tr('fourWheeler');
+  static String get threeWheeler => AppTranslations.tr('threeWheeler');
+  static String get twoWheeler => AppTranslations.tr('twoWheeler');
+
+// ── KYC Verification ──────────────────────────────────────────
+  static String get kycVerification => AppTranslations.tr('kycVerification');
+  static String get kycSubtitle => AppTranslations.tr('kycSubtitle');
+  static String get kycAadhaarPan => AppTranslations.tr('kycAadhaarPan');
+  static String get kycDrivingLicense => AppTranslations.tr('kycDrivingLicense');
+  static String get kycVehicleRc => AppTranslations.tr('kycVehicleRc');
+  static String get kycVehiclePhotos => AppTranslations.tr('kycVehiclePhotos');
+  static String get kycFaceVerification => AppTranslations.tr('kycFaceVerification');
+  static String get kycBankDetails => AppTranslations.tr('kycBankDetails');
+  static String get kycProfileReview => AppTranslations.tr('kycProfileReview');
+  static String get driversDetails => AppTranslations.tr('driversDetails');
+  static String get uploadClearPhoto => AppTranslations.tr('uploadClearPhoto');
+  static String get fullName => AppTranslations.tr('fullName');
+  static String get gender => AppTranslations.tr('gender');
+  static String get genderMale => AppTranslations.tr('genderMale');
+  static String get genderFemale => AppTranslations.tr('genderFemale');
+  static String get genderOther => AppTranslations.tr('genderOther');
+  static String get dateOfBirth => AppTranslations.tr('dateOfBirth');
+  static String get dobFormatHint => AppTranslations.tr('dobFormatHint');
+  static String get emailOptional => AppTranslations.tr('emailOptional');
+  static String get continueToFinalReview => AppTranslations.tr('continueToFinalReview');
+  static String get reviewYourDetails => AppTranslations.tr('reviewYourDetails');
+  static String get personalDetails => AppTranslations.tr('personalDetails');
+  static String get kycDocuments => AppTranslations.tr('kycDocuments');
+  static String get emailAddress => AppTranslations.tr('emailAddress');
+  static String get driverDetailsRequired => AppTranslations.tr('driverDetailsRequired');
+  static String get kycVerified => AppTranslations.tr('kycVerified');
+  static String get kycPending => AppTranslations.tr('kycPending');
+  static String get kycNotStarted => AppTranslations.tr('kycNotStarted');
+  static String get kycActivateHint => AppTranslations.tr('kycActivateHint');
+  static String get all => AppTranslations.tr('all');
+  static String get accept => AppTranslations.tr('accept');
+  static String get decline => AppTranslations.tr('decline');
+  static String get parcelRequest => AppTranslations.tr('parcelRequest');
+  static String get drop => AppTranslations.tr('drop');
+
+// ── Aadhaar / PAN / DigiLocker ────────────────────────────────
+  static String get verifyAadhaarPan => AppTranslations.tr('verifyAadhaarPan');
+  static String get verifyAadhaarSubtitle => AppTranslations.tr('verifyAadhaarSubtitle');
+  static String get continueWithDigilocker => AppTranslations.tr('continueWithDigilocker');
+  static String get uploadManually => AppTranslations.tr('uploadManually');
+  static String get dataSafeWithUs => AppTranslations.tr('dataSafeWithUs');
+  static String get connectDigilocker => AppTranslations.tr('connectDigilocker');
+  static String get connectDigilockerSubtitle => AppTranslations.tr('connectDigilockerSubtitle');
+  static String get documentsWellAccess => AppTranslations.tr('documentsWellAccess');
+  static String get aadhaarDoc => AppTranslations.tr('aadhaarDoc');
+  static String get panDoc => AppTranslations.tr('panDoc');
+  static String get drivingLicenseDoc => AppTranslations.tr('drivingLicenseDoc');
+  static String get whereAvailable => AppTranslations.tr('whereAvailable');
+  static String get digilockerConsent => AppTranslations.tr('digilockerConsent');
+  static String get connectingDigilocker => AppTranslations.tr('connectingDigilocker');
+  static String get connectingDigilockerSubtitle => AppTranslations.tr('connectingDigilockerSubtitle');
+  static String get awaitingAuthentication => AppTranslations.tr('awaitingAuthentication');
+  static String get fetchingDocuments => AppTranslations.tr('fetchingDocuments');
+  static String get verifyingDocuments => AppTranslations.tr('verifyingDocuments');
+  static String get digilockerWaitHint => AppTranslations.tr('digilockerWaitHint');
+  static String get identityVerified => AppTranslations.tr('identityVerified');
+  static String get identityVerifiedSubtitle => AppTranslations.tr('identityVerifiedSubtitle');
+  static String get documentsSecurelyVerified => AppTranslations.tr('documentsSecurelyVerified');
+  static String get digilockerTitle => AppTranslations.tr('digilockerTitle');
+  static String get verificationFailed => AppTranslations.tr('verificationFailed');
+  static String get verificationFailedSubtitle => AppTranslations.tr('verificationFailedSubtitle');
+  static String get documentNotFound => AppTranslations.tr('documentNotFound');
+  static String get documentNotFoundSubtitle => AppTranslations.tr('documentNotFoundSubtitle');
+  static String get documentNotFoundHint => AppTranslations.tr('documentNotFoundHint');
+  static String get permissionDenied => AppTranslations.tr('permissionDenied');
+  static String get permissionDeniedSubtitle => AppTranslations.tr('permissionDeniedSubtitle');
+  static String get permissionDeniedHint => AppTranslations.tr('permissionDeniedHint');
+  static String get authenticationFailed => AppTranslations.tr('authenticationFailed');
+  static String get authenticationFailedSubtitle => AppTranslations.tr('authenticationFailedSubtitle');
+  static String get authenticationFailedHint => AppTranslations.tr('authenticationFailedHint');
+  static String get vehicleDocsWillBeVerified => AppTranslations.tr('vehicleDocsWillBeVerified');
+  static String get retryVerification => AppTranslations.tr('retryVerification');
+  static String get tryAgain => AppTranslations.tr('tryAgain');
+  static String get useAnotherMethod => AppTranslations.tr('useAnotherMethod');
+  static String get uploadManuallySubtitle => AppTranslations.tr('uploadManuallySubtitle');
+  static String get aadhaarNumber => AppTranslations.tr('aadhaarNumber');
+  static String get uploadAadhaarPhoto => AppTranslations.tr('uploadAadhaarPhoto');
+  static String get panVerification => AppTranslations.tr('panVerification');
+  static String get panNumber => AppTranslations.tr('panNumber');
+  static String get panGovHint => AppTranslations.tr('panGovHint');
+  static String get verifyPan => AppTranslations.tr('verifyPan');
+  // ── Aadhaar Verification ──────────────────────────────────────
+  static String get aadhaarVerification => AppTranslations.tr('aadhaarVerification');
+  static String get uploadYourAadhaar => AppTranslations.tr('uploadYourAadhaar');
+  static String get aadhaarCardNumber => AppTranslations.tr('aadhaarCardNumber');
+  static String get aadhaarGovHint => AppTranslations.tr('aadhaarGovHint');
+  static String get verifyAadhaar => AppTranslations.tr('verifyAadhaar');
+
+// ── Driving Licence Verification ──────────────────────────────
+  static String get verifyDrivingLicence => AppTranslations.tr('verifyDrivingLicence');
+  static String get verifyDrivingLicenceSubtitle => AppTranslations.tr('verifyDrivingLicenceSubtitle');
+  static String get verifyWithDigilocker => AppTranslations.tr('verifyWithDigilocker');
+  static String get verifyWithDigilockerSubtitle => AppTranslations.tr('verifyWithDigilockerSubtitle');
+  static String get orWord => AppTranslations.tr('orWord');
+  static String get uploadDrivingLicense => AppTranslations.tr('uploadDrivingLicense');
+  static String get frontSide => AppTranslations.tr('frontSide');
+  static String get backSide => AppTranslations.tr('backSide');
+  static String get tapToUpload => AppTranslations.tr('tapToUpload');
+  static String get drivingLicenceVerified => AppTranslations.tr('drivingLicenceVerified');
+  static String get drivingLicenceVerifiedSubtitle => AppTranslations.tr('drivingLicenceVerifiedSubtitle');
+  static String get drivingLicenseDetails => AppTranslations.tr('drivingLicenseDetails');
+  static String get licenseNumber => AppTranslations.tr('licenseNumber');
+  static String get vehicleClass => AppTranslations.tr('vehicleClass');
+  static String get validity => AppTranslations.tr('validity');
+  static String get drivingLicenseTitle => AppTranslations.tr('drivingLicenseTitle');
+  static String get preview => AppTranslations.tr('preview');
+  static String get retake => AppTranslations.tr('retake');
+  static String get expiryDate => AppTranslations.tr('expiryDate');
+  static String get verificationPending => AppTranslations.tr('verificationPending');
+  static String get documentValidation => AppTranslations.tr('documentValidation');
+  static String get documentUnclear => AppTranslations.tr('documentUnclear');
+  static String get documentUnclearHint => AppTranslations.tr('documentUnclearHint');
+  static String get drivingLicenseVerifiedManual => AppTranslations.tr('drivingLicenseVerifiedManual');
+  static String get drivingLicenseVerifiedManualSubtitle => AppTranslations.tr('drivingLicenseVerifiedManualSubtitle');
+  static String get drivingLicenseRejected => AppTranslations.tr('drivingLicenseRejected');
+  static String get drivingLicenseRejectedSubtitle => AppTranslations.tr('drivingLicenseRejectedSubtitle');
+  static String get rejectionReason => AppTranslations.tr('rejectionReason');
+  static String get documentImageUnclear => AppTranslations.tr('documentImageUnclear');
+  static String get documentImageUnclearHint => AppTranslations.tr('documentImageUnclearHint');
+  static String get fixAndResubmit => AppTranslations.tr('fixAndResubmit');
+  static String get drivingLicenseUnderReview => AppTranslations.tr('drivingLicenseUnderReview');
+  static String get drivingLicenseUnderReviewSubtitle => AppTranslations.tr('drivingLicenseUnderReviewSubtitle');
+  static String get blurryImage => AppTranslations.tr('blurryImage');
+  static String get blurryImageHint => AppTranslations.tr('blurryImageHint');
+  static String get walletEarning => AppTranslations.tr('walletEarning');
+  static String get availableCash => AppTranslations.tr('availableCash');
+  static String get todaysCompletedJobs => AppTranslations.tr('todaysCompletedJobs');
+  static String get activePlan => AppTranslations.tr('activePlan');
+  static String get standardDriverPlan => AppTranslations.tr('standardDriverPlan');
+  static String get perMonth => AppTranslations.tr('perMonth');
+  static String get validTill24Aug => AppTranslations.tr('validTill24Aug');
+  static String get transactionHistory => AppTranslations.tr('transactionHistory');
+  static String get payouts => AppTranslations.tr('payouts');
+  static String get BankAccount => AppTranslations.tr('BankAccount');
+  static String get rechargeSubscription => AppTranslations.tr('rechargeSubscription');
+  static String get earnings => AppTranslations.tr('earnings');
+  static String get bankAccount => AppTranslations.tr('bankAccount');
+  static String get howToEarnCoins => AppTranslations.tr('howToEarnCoins');
+  static String get coinHistory => AppTranslations.tr('coinHistory');
+  static String get youHaveScratchCard => AppTranslations.tr('youHaveScratchCard');
+  static String get scratchNowSeeWhatYouWin => AppTranslations.tr('scratchNowSeeWhatYouWin');
+  static String get completeEligibleJobs => AppTranslations.tr('completeEligibleJobs');
+  static String get scratchCard => AppTranslations.tr('scratchCard');
+  static String get totalEarned => AppTranslations.tr('totalEarned');
+  static String get totalRedeemed => AppTranslations.tr('totalRedeemed');
+  static String get yourCoinBalance => AppTranslations.tr('yourCoinBalance');
+  static String get torkkCoin => AppTranslations.tr('torkkCoin');
+  static String get view => AppTranslations.tr('view');
+  static String get earnTorkkCoins => AppTranslations.tr('earnTorkkCoins');
+  static String get completeRidesDeliveriesToEarnCoins => AppTranslations.tr('completeRidesDeliveriesToEarnCoins');
+  static String get completeEligibleJob => AppTranslations.tr('completeEligibleJob');
+  static String get oneEligibleJobOneScratchCard => AppTranslations.tr('oneEligibleJobOneScratchCard');
+  static String get scratchYourCard => AppTranslations.tr('scratchYourCard');
+  static String get findOutWhatYouWon => AppTranslations.tr('findOutWhatYouWon');
+  static String get getYourReward => AppTranslations.tr('getYourReward');
+  static String get rewardsCreditedAutomatically => AppTranslations.tr('rewardsCreditedAutomatically');
+  static String get howItWorks => AppTranslations.tr('howItWorks');
+
+// ── Vehicle RC Verification ───────────────────────────────────
+  static String get verifyVehicleRc => AppTranslations.tr('verifyVehicleRc');
+  static String get verifyVehicleRcSubtitle => AppTranslations.tr('verifyVehicleRcSubtitle');
+  static String get registrationNumber => AppTranslations.tr('registrationNumber');
+  static String get rcDocument => AppTranslations.tr('rcDocument');
+  static String get rcDocumentHint => AppTranslations.tr('rcDocumentHint');
+  static String get rcClearHint => AppTranslations.tr('rcClearHint');
+  static String get rcReadyHint => AppTranslations.tr('rcReadyHint');
+  static String get rcUploaded => AppTranslations.tr('rcUploaded');
+  static String get replaceAction => AppTranslations.tr('replaceAction');
+  static String get vehicleNumber => AppTranslations.tr('vehicleNumber');
+  static String get vehicleModel => AppTranslations.tr('vehicleModel');
+  static String get vehicleType => AppTranslations.tr('vehicleType');
+  static String get insuranceExpiryDate => AppTranslations.tr('insuranceExpiryDate');
+  static String get rcExtractedHint => AppTranslations.tr('rcExtractedHint');
+
+// ── Vehicle Photos ────────────────────────────────────────────
+  static String get uploadVehiclePhoto => AppTranslations.tr('uploadVehiclePhoto');
+  static String get vehiclePhotos => AppTranslations.tr('vehiclePhotos');
+  static String get vehiclePhotosSubtitle => AppTranslations.tr('vehiclePhotosSubtitle');
+  static String get captureFrontHint => AppTranslations.tr('captureFrontHint');
+  static String get gallery => AppTranslations.tr('gallery');
+  static String get camera => AppTranslations.tr('camera');
+  static String get flip => AppTranslations.tr('flip');
+  static String get wrongImageUploaded => AppTranslations.tr('wrongImageUploaded');
+  static String get wrongImageHint => AppTranslations.tr('wrongImageHint');
+  static String get vehiclePhotosVerified => AppTranslations.tr('vehiclePhotosVerified');
+  static String get vehiclePhotosVerifiedSubtitle => AppTranslations.tr('vehiclePhotosVerifiedSubtitle');
+  static String get frontPhoto => AppTranslations.tr('frontPhoto');
+  static String get backPhoto => AppTranslations.tr('backPhoto');
+  static String get actionRequiredPhotos => AppTranslations.tr('actionRequiredPhotos');
+  static String get actionRequiredPhotosHint => AppTranslations.tr('actionRequiredPhotosHint');
+  static String get verificationFailedLabel => AppTranslations.tr('verificationFailedLabel');
+
+// ── Insurance / Permit ────────────────────────────────────────
+  static String get vehicleInsurance => AppTranslations.tr('vehicleInsurance');
+  static String get uploadInsurance => AppTranslations.tr('uploadInsurance');
+  static String get permitIfApplicable => AppTranslations.tr('permitIfApplicable');
+  static String get commercialPermit => AppTranslations.tr('commercialPermit');
+  static String get uploadPermit => AppTranslations.tr('uploadPermit');
+
+// ── Bank / Payout Details ─────────────────────────────────────
+  static String get bankPayoutDetails => AppTranslations.tr('bankPayoutDetails');
+  static String get informationSecure => AppTranslations.tr('informationSecure');
+  static String get accountHolderName => AppTranslations.tr('accountHolderName');
+  static String get accountNumber => AppTranslations.tr('accountNumber');
+  static String get confirmAccountNumber => AppTranslations.tr('confirmAccountNumber');
+  static String get ifscCode => AppTranslations.tr('ifscCode');
+  static String get findIfsc => AppTranslations.tr('findIfsc');
+  static String get bankName => AppTranslations.tr('bankName');
+  static String get updateDetails => AppTranslations.tr('updateDetails');
+  static String get saveAndVerify => AppTranslations.tr('saveAndVerify');
+  static String get verifyingBank => AppTranslations.tr('verifyingBank');
+  static String get verifyingBankSubtitle => AppTranslations.tr('verifyingBankSubtitle');
+  static String get bankDetailsSubmitted => AppTranslations.tr('bankDetailsSubmitted');
+  static String get verifyingAccountWithBank => AppTranslations.tr('verifyingAccountWithBank');
+  static String get bankVerifyWait => AppTranslations.tr('bankVerifyWait');
+  static String get confirmingAccountDetails => AppTranslations.tr('confirmingAccountDetails');
+  static String get bankEncryptedHint => AppTranslations.tr('bankEncryptedHint');
+  static String get bankDetailsVerified => AppTranslations.tr('bankDetailsVerified');
+  static String get bankDetailsVerifiedSubtitle => AppTranslations.tr('bankDetailsVerifiedSubtitle');
+  static String get bankAccountDetails => AppTranslations.tr('bankAccountDetails');
+  static String get bankReadyHint => AppTranslations.tr('bankReadyHint');
+  static String get bankVerificationFailed => AppTranslations.tr('bankVerificationFailed');
+  static String get bankVerificationFailedSubtitle => AppTranslations.tr('bankVerificationFailedSubtitle');
+  static String get reason => AppTranslations.tr('reason');
+  static String get incorrectAccountOrIfsc => AppTranslations.tr('incorrectAccountOrIfsc');
+  static String get accountInactive => AppTranslations.tr('accountInactive');
+
+// ── Face Verification ─────────────────────────────────────────
+  static String get verifyYourIdentity => AppTranslations.tr('verifyYourIdentity');
+  static String get verifyIdentitySubtitle => AppTranslations.tr('verifyIdentitySubtitle');
+  static String get identityRealPerson => AppTranslations.tr('identityRealPerson');
+  static String get identityRequired => AppTranslations.tr('identityRequired');
+  static String get identityQuick => AppTranslations.tr('identityQuick');
+  static String get startFaceVerification => AppTranslations.tr('startFaceVerification');
+  static String get beforeYouStart => AppTranslations.tr('beforeYouStart');
+  static String get beforeYouStartSubtitle => AppTranslations.tr('beforeYouStartSubtitle');
+  static String get faceInFrame => AppTranslations.tr('faceInFrame');
+  static String get faceVisible => AppTranslations.tr('faceVisible');
+  static String get removeCoverings => AppTranslations.tr('removeCoverings');
+  static String get wellLit => AppTranslations.tr('wellLit');
+  static String get allowCameraAccess => AppTranslations.tr('allowCameraAccess');
+  static String get allowCameraSubtitle => AppTranslations.tr('allowCameraSubtitle');
+  static String get dataSafeSecure => AppTranslations.tr('dataSafeSecure');
+  static String get usedOnlyForIdentity => AppTranslations.tr('usedOnlyForIdentity');
+  static String get photoNotStored => AppTranslations.tr('photoNotStored');
+  static String get faceDetected => AppTranslations.tr('faceDetected');
+  static String get noFaceDetected => AppTranslations.tr('noFaceDetected');
+  static String get verifyingYourFace => AppTranslations.tr('verifyingYourFace');
+  static String get verifyingFaceSubtitle => AppTranslations.tr('verifyingFaceSubtitle');
+  static String get photoCaptured => AppTranslations.tr('photoCaptured');
+  static String get analyzingFace => AppTranslations.tr('analyzingFace');
+  static String get checkingLiveness => AppTranslations.tr('checkingLiveness');
+  static String get finalizingVerification => AppTranslations.tr('finalizingVerification');
+  static String get identityVerifiedFace => AppTranslations.tr('identityVerifiedFace');
+  static String get identityVerifiedFaceSubtitle => AppTranslations.tr('identityVerifiedFaceSubtitle');
+  static String get identityConfirmed => AppTranslations.tr('identityConfirmed');
+  static String get accountSecured => AppTranslations.tr('accountSecured');
+  static String get completeOnboardingNow => AppTranslations.tr('completeOnboardingNow');
+  static String get faceVerificationFailed => AppTranslations.tr('faceVerificationFailed');
+  static String get faceVerificationFailedSubtitle => AppTranslations.tr('faceVerificationFailedSubtitle');
+  static String get faceNotDetectedReason => AppTranslations.tr('faceNotDetectedReason');
+  static String get faceNotDetectedHint => AppTranslations.tr('faceNotDetectedHint');
+
+// ── OTP / Legal / Language ────────────────────────────────────
+  static String get otpSentTitle => AppTranslations.tr('otpSentTitle');
+  static String get otpSentMessage => AppTranslations.tr('otpSentMessage');
+  static String get termsPrefix => AppTranslations.tr('termsPrefix');
+  static String get termsOfService => AppTranslations.tr('termsOfService');
+  static String get andWord => AppTranslations.tr('andWord');
+  static String get tagline => AppTranslations.tr('tagline');
+  static String get english => AppTranslations.tr('english');
+  static String get englishSubtitle => AppTranslations.tr('englishSubtitle');
+  static String get hindi => AppTranslations.tr('hindi');
+  static String get hindiSubtitle => AppTranslations.tr('hindiSubtitle');
+  static String get countryCodeIndia => AppTranslations.tr('countryCodeIndia');
+  static String get phoneHint => AppTranslations.tr('phoneHint');
+  static String get agreeWith => AppTranslations.tr('agreeWith');
+  static String get privacyPolicy => AppTranslations.tr('privacyPolicy');
+  static String get termsAndConditions => AppTranslations.tr('termsAndConditions');
+  static String get driverAgreement => AppTranslations.tr('driverAgreement');
+
+// ── Application Status ────────────────────────────────────────
+  static String get applicationSubmitted => AppTranslations.tr('applicationSubmitted');
+  static String get applicationSubmittedSubtitle => AppTranslations.tr('applicationSubmittedSubtitle');
+  static String get applicationApproved => AppTranslations.tr('applicationApproved');
+  static String get applicationApprovedSubtitle => AppTranslations.tr('applicationApprovedSubtitle');
+  static String get currentStatus => AppTranslations.tr('currentStatus');
+  static String get underReview => AppTranslations.tr('underReview');
+  static String get underReviewHint => AppTranslations.tr('underReviewHint');
+  static String get applicationApprovedStatus => AppTranslations.tr('applicationApprovedStatus');
+  static String get applicationApprovedHint => AppTranslations.tr('applicationApprovedHint');
+  static String get applicationSubmittedStep => AppTranslations.tr('applicationSubmittedStep');
+  static String get underReviewStep => AppTranslations.tr('underReviewStep');
+  static String get underReviewNotify => AppTranslations.tr('underReviewNotify');
+  static String get startDrivingWithTorkk => AppTranslations.tr('startDrivingWithTorkk');
+  static String get goHome => AppTranslations.tr('goHome');
+  static String get actionRequired => AppTranslations.tr('actionRequired');
+  static String get actionRequiredSubtitle => AppTranslations.tr('actionRequiredSubtitle');
+  static String get applicationRejected => AppTranslations.tr('applicationRejected');
+  static String get applicationRejectedSubtitle => AppTranslations.tr('applicationRejectedSubtitle');
+  static String get actionRequiredBanner => AppTranslations.tr('actionRequiredBanner');
+  static String get documentsNeedAttention => AppTranslations.tr('documentsNeedAttention');
+  static String get documentsNeedAttentionHint => AppTranslations.tr('documentsNeedAttentionHint');
+  static String get uploadAndResubmit => AppTranslations.tr('uploadAndResubmit');
+  static String get makeCorrections => AppTranslations.tr('makeCorrections');
 }

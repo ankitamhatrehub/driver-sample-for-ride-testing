@@ -13,7 +13,7 @@ Future<bool> showAppConfirmDialog(
   required String title,
   required String subtitle,
   required String confirmLabel,
-  String cancelLabel = AppStrings.cancel,
+  String? cancelLabel,
   Color? accent,
 }) {
   final color = accent ?? Theme.of(context).colorScheme.primary;
@@ -42,14 +42,14 @@ class AppConfirmDialog extends StatelessWidget {
     required this.confirmLabel,
     required this.onCancel,
     required this.onConfirm,
-    this.cancelLabel = AppStrings.cancel,
+    this.cancelLabel,
     required this.accent,
   });
 
   final Widget icon;
   final String title;
   final String subtitle;
-  final String cancelLabel;
+  final String? cancelLabel;
   final String confirmLabel;
   final VoidCallback onCancel;
   final VoidCallback onConfirm;
@@ -84,14 +84,14 @@ class AppConfirmCard extends StatelessWidget {
     required this.confirmLabel,
     required this.onCancel,
     required this.onConfirm,
-    this.cancelLabel = AppStrings.cancel,
+    this.cancelLabel,
     required this.accent,
   });
 
   final Widget icon;
   final String title;
   final String subtitle;
-  final String cancelLabel;
+  final String? cancelLabel;
   final String confirmLabel;
   final VoidCallback onCancel;
   final VoidCallback onConfirm;
@@ -99,6 +99,7 @@ class AppConfirmCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effCancel = cancelLabel ?? AppStrings.cancel;
     return Container(
       width: context.w(321),
       padding: EdgeInsets.fromLTRB(context.w(16), context.h(28), context.w(16), context.h(28)),
@@ -138,7 +139,7 @@ class AppConfirmCard extends StatelessWidget {
           SizedBox(height: context.h(18)),
           Row(
             children: [
-              Expanded(child: _DialogAction(label: cancelLabel, filled: false, color: accent, onTap: onCancel)),
+              Expanded(child: _DialogAction(label: effCancel, filled: false, color: accent, onTap: onCancel)),
               SizedBox(width: context.w(8)),
               Expanded(child: _DialogAction(label: confirmLabel, filled: true, color: accent, onTap: onConfirm)),
             ],
