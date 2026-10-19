@@ -140,7 +140,7 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
               onChanged: (_) => setState(() {}),
             ),
             SizedBox(height: context.h(12)),
-            const OnboardingInfoBanner(message: AppStrings.aadhaarGovHint),
+            OnboardingInfoBanner(message: AppStrings.aadhaarGovHint),
             const Spacer(),
             UnifiedButton(
               label: AppStrings.verifyAadhaar,

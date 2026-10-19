@@ -63,9 +63,9 @@ class _PanVerificationScreenState extends State<PanVerificationScreen> {
               onChanged: (_) => setState(() {}),
             ),
             SizedBox(height: context.h(12)),
-            const OnboardingInfoBanner(message: AppStrings.panGovHint),
+            OnboardingInfoBanner(message: AppStrings.panGovHint),
             SizedBox(height: context.h(12)),
-            const KycPendingBanner(title: AppStrings.verificationPending),
+            KycPendingBanner(title: AppStrings.verificationPending),
             const Spacer(),
             UnifiedButton(
               label: AppStrings.verifyPan,

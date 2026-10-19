@@ -75,7 +75,7 @@ class KycVerificationScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: context.w(28), right: context.w(28), bottom: context.h(50)),
-            child: const OnboardingInfoBanner(message: AppStrings.kycActivateHint),
+            child: OnboardingInfoBanner(message: AppStrings.kycActivateHint),
           ),
         ],
       ),
@@ -101,13 +101,22 @@ class KycVerificationScreen extends StatelessWidget {
     }
 
     return [
-      _KycItem(AppStrings.kycAadhaarPan, statusFor(0), onAadhaarTap),
-      _KycItem(AppStrings.kycDrivingLicense, statusFor(1), onDlTap),
-      _KycItem(AppStrings.kycVehicleRc, statusFor(2), onRcTap),
-      _KycItem(AppStrings.kycVehiclePhotos, statusFor(3), onVehiclePhotosTap),
-      _KycItem(AppStrings.kycFaceVerification, statusFor(4), onFaceTap),
-      _KycItem(AppStrings.kycBankDetails, statusFor(5), onBankTap),
-      _KycItem(AppStrings.kycProfileReview, statusFor(6), onProfileTap),
+      _KycItem(AppStrings.kycAadhaarPan, statusFor(0), (nextIndex == 0 || aadhaarVerified) ? onAadhaarTap : null,
+      ),
+      _KycItem(AppStrings.kycDrivingLicense, statusFor(1),       (nextIndex == 1 || dlVerified) ? onDlTap : null,
+      ),
+      _KycItem(AppStrings.kycVehicleRc, statusFor(2),       (nextIndex == 2 || rcVerified) ? onRcTap : null,
+      ),
+      _KycItem(AppStrings.kycVehiclePhotos, statusFor(3), (nextIndex == 3 || vehiclePhotosVerified)
+          ? onVehiclePhotosTap
+          : null,
+      ),
+      _KycItem(AppStrings.kycFaceVerification, statusFor(4),       (nextIndex == 4 || faceVerified) ? onFaceTap : null,
+      ),
+      _KycItem(AppStrings.kycBankDetails, statusFor(5),       (nextIndex == 5 || bankVerified) ? onBankTap : null,
+      ),
+      _KycItem(AppStrings.kycProfileReview, statusFor(6),       (nextIndex == 6 || profileSubmitted) ? onProfileTap : null,
+      ),
     ];
   }
 }
@@ -117,5 +126,5 @@ class _KycItem {
 
   final String title;
   final KycItemStatus status;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 }

@@ -26,6 +26,7 @@ class BankInformationScreen extends StatelessWidget {
           label: AppStrings.editReplace,
           icon: Icons.sync_rounded,
           iconAtEnd: true,
+          backgroundColor: const Color(0xFF0F3FBF),
           onPressed: () {},
         ),
       ),
@@ -67,7 +68,7 @@ class BankInformationScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: context.h(12)),
-          const ProfileMenuCard(
+          ProfileMenuCard(
             items: [
               ProfileValueRow(icon: Icons.person_outline, label: AppStrings.accountHolderName, value: 'Rahul'),
               ProfileValueRow(icon: Icons.credit_card_outlined, label: AppStrings.accountNumber, value: '6767676767'),

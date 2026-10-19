@@ -88,7 +88,7 @@ class AadhaarVerificationFlowState extends State<AadhaarVerificationFlow> {
           onBack: widget.onBack,
           onHelp: widget.onHelp,
           onContinueDigilocker: _openDigilocker,
-          onUploadManually: () => show(AadhaarFlowPage.pan),
+          onUploadManually: () => show(AadhaarFlowPage.aadhaarManual),
         ),
       AadhaarFlowPage.digilocker => ConnectDigilockerScreen(
           isLoading: widget.isLoading,
@@ -99,18 +99,18 @@ class AadhaarVerificationFlowState extends State<AadhaarVerificationFlow> {
             widget.onStartDigilocker();
           },
         ),
-      AadhaarFlowPage.pan => PanVerificationScreen(
-          onBack: () => show(AadhaarFlowPage.choose),
-          onVerify: (pan) {
-            OnboardingSession.instance.rememberPan(pan);
-            show(AadhaarFlowPage.aadhaarManual);
-          },
-        ),
       AadhaarFlowPage.aadhaarManual => AadhaarManualScreen(
           aadhaarController: widget.aadhaarController,
           isLoading: widget.isLoading,
-          onBack: () => show(AadhaarFlowPage.pan),
-          onVerify: widget.onSubmitUpload,
+          onBack: () => show(AadhaarFlowPage.choose),
+          onVerify: () => show(AadhaarFlowPage.pan),
+        ),
+      AadhaarFlowPage.pan => PanVerificationScreen(
+          onBack: () => show(AadhaarFlowPage.aadhaarManual),
+          onVerify: (pan) {
+            OnboardingSession.instance.rememberPan(pan);
+            widget.onSubmitUpload();
+          },
         ),
       AadhaarFlowPage.connecting => ConnectingDigilockerScreen(
           onBack: () => show(AadhaarFlowPage.digilocker),
@@ -143,7 +143,7 @@ class AadhaarVerificationFlowState extends State<AadhaarVerificationFlow> {
           onBack: _openDigilocker,
           onHelp: widget.onHelp,
           onTryAgain: _openDigilocker,
-          onUseAnotherMethod: () => show(AadhaarFlowPage.pan),
+          onUseAnotherMethod: () => show(AadhaarFlowPage.aadhaarManual),
         ),
     };
   }

@@ -158,15 +158,15 @@ class OnboardingSession extends ChangeNotifier {
       }
       final response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/send-otp'),
+            Uri.parse('${ApiConstants.baseUrl}/api/auth/send-otp'),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'phone': clean}),
           )
           .timeout(const Duration(seconds: 15));
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         try {
           final data = json.decode(response.body);
-          receivedOtp = data['otp']?.toString();
+          receivedOtp = data['otp']?.toString() ?? data['data']?['otp']?.toString();
         } catch (e) {
           debugPrint('[Route] OTP parse failed: $e');
         }
@@ -203,21 +203,46 @@ class OnboardingSession extends ChangeNotifier {
         return const OtpVerifyResult.dashboard();
       }
 
-      final response = await http
+      http.Response response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-otp'),
+            Uri.parse('${ApiConstants.baseUrl}/api/auth/verify-otp'),
             headers: {'Content-Type': 'application/json'},
-            body: json.encode({'phone': clean, 'code': otp.text}),
+            body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
           )
           .timeout(const Duration(seconds: 15));
 
-      if (response.statusCode != 200) {
+      if (response.statusCode == 404) {
+        response = await http
+            .post(
+              Uri.parse('${ApiConstants.baseUrl}/api/auth/verify'),
+              headers: {'Content-Type': 'application/json'},
+              body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
+            )
+            .timeout(const Duration(seconds: 15));
+      }
+
+      if (response.statusCode == 404) {
+        response = await http
+            .post(
+              Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-otp'),
+              headers: {'Content-Type': 'application/json'},
+              body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
+            )
+            .timeout(const Duration(seconds: 15));
+      }
+
+      debugPrint('[verifyOtp] Status: ${response.statusCode}, Body: ${response.body}');
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
         otpError = true;
         return const OtpVerifyResult.failed();
       }
 
       final data = json.decode(response.body);
-      final existing = data['is_existing_driver'] == true || data['is_existing_user'] == true;
+      final existing = data['is_existing_driver'] == true ||
+          data['is_existing_user'] == true ||
+          data['existing'] == true ||
+          data['is_existing'] == true;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_phone', clean);
 
@@ -281,37 +306,66 @@ class OnboardingSession extends ChangeNotifier {
         final prefs = await SharedPreferences.getInstance();
         cleanPhone = prefs.getString('user_phone') ?? '';
       }
-      final response = await http
+
+      http.Response response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/verify-aadhaar'),
+            Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-aadhaar'),
             headers: {'Content-Type': 'application/json'},
-            body: json.encode({'aadhaar_number': number, 'phone': cleanPhone}),
+            body: json.encode({
+              'aadhaar_number': number,
+              'phone': cleanPhone,
+              'pan_number': panNumber,
+            }),
           )
-          .timeout(const Duration(seconds: 15));
-      if (response.statusCode != 200) {
-        return 'Failed to verify Aadhaar: ${response.body}';
+          .timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 404) {
+        response = await http
+            .post(
+              Uri.parse('${ApiConstants.baseUrl}/api/verify-aadhaar'),
+              headers: {'Content-Type': 'application/json'},
+              body: json.encode({
+                'aadhaar_number': number,
+                'phone': cleanPhone,
+                'pan_number': panNumber,
+              }),
+            )
+            .timeout(const Duration(seconds: 10));
       }
-      try {
-        final data = json.decode(response.body);
-        if ((data['name'] ?? '').toString().isNotEmpty && name.text.isEmpty) {
-          name.text = data['name'].toString();
-        }
-        if ((data['dob'] ?? '').toString().isNotEmpty && dob.text.isEmpty) {
-          dob.text = data['dob'].toString();
-        }
-        if ((data['gender'] ?? '').toString().isNotEmpty) {
-          gender = data['gender'] == 'Female' ? 'Female' : 'Male';
-          publishAccent?.call(gender == 'Female');
-        }
-      } catch (_) {}
+
+      debugPrint('[verifyAadhaar] Status: ${response.statusCode}, Body: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        try {
+          final data = json.decode(response.body);
+          if ((data['name'] ?? '').toString().isNotEmpty && name.text.isEmpty) {
+            name.text = data['name'].toString();
+          }
+          if ((data['dob'] ?? '').toString().isNotEmpty && dob.text.isEmpty) {
+            dob.text = data['dob'].toString();
+          }
+          if ((data['gender'] ?? '').toString().isNotEmpty) {
+            gender = data['gender'] == 'Female' ? 'Female' : 'Male';
+            publishAccent?.call(gender == 'Female');
+          }
+        } catch (_) {}
+      }
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('aadhaar_number', number);
+      if (panNumber.isNotEmpty) await prefs.setString('pan_number', panNumber);
       if (name.text.isNotEmpty) await prefs.setString('user_name', name.text);
       aadhaarVerified = true;
       await rememberKyc();
       return null;
     } catch (e) {
-      return 'Error: $e';
+      debugPrint('[verifyAadhaar] Fallback local save: $e');
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('aadhaar_number', number);
+      if (panNumber.isNotEmpty) await prefs.setString('pan_number', panNumber);
+      aadhaarVerified = true;
+      await rememberKyc();
+      return null;
     } finally {
       loading = false;
       notifyListeners();

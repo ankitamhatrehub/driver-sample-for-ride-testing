@@ -4,6 +4,8 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 
+import '../../../common/constants/string_constants.dart';
+
 class HowItWorksCard extends StatelessWidget {
   const HowItWorksCard({super.key, this.showTitle = true});
 
@@ -11,27 +13,27 @@ class HowItWorksCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const steps = [
+    final steps = [
       (
         Icons.badge_outlined,
-        Color(0xFF7C3AED),
-        Color(0xFFF3E8FF),
-        'Complete an eligible job',
-        'One eligible job = one scratch card',
+        const Color(0xFF7C3AED),
+        const Color(0xFFF3E8FF),
+      AppStrings.completeEligibleJob,
+      AppStrings.oneEligibleJobOneScratchCard,
       ),
       (
         Icons.paid_rounded,
-        Color(0xFFF59E0B),
-        Color(0xFFFEF3C7),
-        'Scratch your card',
-        "Find out what you've won",
+        const Color(0xFFF59E0B),
+        const Color(0xFFFEF3C7),
+      AppStrings.scratchYourCard,
+      AppStrings.findOutWhatYouWon,
       ),
       (
         Icons.card_giftcard_rounded,
-        Color(0xFFF43F5E),
-        Color(0xFFFFF1F2),
-        'Get your reward',
-        'Coins or other rewards will be credited automatically',
+        const Color(0xFFF43F5E),
+        const Color(0xFFFFF1F2),
+      AppStrings.getYourReward,
+      AppStrings.rewardsCreditedAutomatically,
       ),
     ];
     return Column(
@@ -39,7 +41,7 @@ class HowItWorksCard extends StatelessWidget {
       children: [
         if (showTitle) ...[
           Text(
-            'How it works ?',
+            AppStrings.howItWorks,
             style: AppTypography.regular.copyWith(fontSize: 12, fontWeight: FontWeight.w600),
           ),
           SizedBox(height: context.h(8)),

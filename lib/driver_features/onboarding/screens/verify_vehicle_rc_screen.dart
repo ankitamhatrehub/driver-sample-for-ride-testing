@@ -177,7 +177,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const KycRequiredLabel(AppStrings.registrationNumber),
+            KycRequiredLabel(AppStrings.registrationNumber),
             SizedBox(height: context.h(8)),
             AppTextField(
               controller: _numberController,
@@ -185,7 +185,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
               onChanged: (_) => setState(() {}),
             ),
             SizedBox(height: context.h(16)),
-            const KycRequiredLabel(AppStrings.rcDocument),
+            KycRequiredLabel(AppStrings.rcDocument),
             SizedBox(height: context.h(4)),
             Text(
               AppStrings.rcDocumentHint,
@@ -216,7 +216,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
               ],
             ),
             SizedBox(height: context.h(14)),
-            const OnboardingInfoBanner(message: AppStrings.rcClearHint),
+            OnboardingInfoBanner(message: AppStrings.rcClearHint),
             SizedBox(height: context.h(24)),
             UnifiedButton(
               label: AppStrings.continueAction,
@@ -250,7 +250,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
               ],
             ),
             SizedBox(height: context.h(16)),
-            const KycPendingBanner(
+            KycPendingBanner(
               title: AppStrings.verificationPending,
               subtitle: AppStrings.rcReadyHint,
             ),
@@ -278,15 +278,15 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const KycRequiredLabel(AppStrings.registrationNumber),
+            KycRequiredLabel(AppStrings.registrationNumber),
             SizedBox(height: context.h(8)),
             AppTextField(controller: _numberController),
             SizedBox(height: context.h(16)),
-            const KycRequiredLabel(AppStrings.rcDocument),
+            KycRequiredLabel(AppStrings.rcDocument),
             SizedBox(height: context.h(8)),
             _UploadedFile(path: _frontPath, onReplace: () => _go(_RcPage.form)),
             SizedBox(height: context.h(16)),
-            const KycRequiredLabel(AppStrings.vehicleDetails),
+             KycRequiredLabel(AppStrings.vehicleDetails),
             SizedBox(height: context.h(8)),
             Container(
               decoration: BoxDecoration(

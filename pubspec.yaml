@@ -48,7 +48,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/app_icon.png"
+  image_path: "assets/images/app_logo.png"
   min_sdk_android: 21
 
 flutter:
@@ -56,7 +56,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/app_icon.png
+    - assets/images/app_logo.png
     - assets/welcome_car_city.png
     - assets/car_porsche.png
     - assets/car_toyota.png

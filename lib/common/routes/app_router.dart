@@ -21,7 +21,7 @@ class AppRouter {
 
   static GoRouter _create() {
     final router = GoRouter(
-      initialLocation: AppRoutes.applicationStatus,
+      initialLocation: AppRoutes.splash,
       debugLogDiagnostics: true,
       observers: [_RouteDebugObserver()],
       redirect: (context, state) {

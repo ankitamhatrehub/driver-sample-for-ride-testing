@@ -12,6 +12,8 @@ import 'package:rider_app/driver_features/settings/screens/driver_appearance_scr
 import 'package:rider_app/driver_features/settings/screens/privacy_security_screen.dart';
 import 'package:rider_app/driver_features/settings/screens/settings_language_screen.dart';
 
+import '../../../common/constants/string_constants.dart';
+
 class DriverSettingsScreen extends StatelessWidget {
   const DriverSettingsScreen({super.key, this.onClose});
 
@@ -21,7 +23,7 @@ class DriverSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = profileAccent(context);
     return ProfilePage(
-      title: 'Settings',
+      title: AppStrings.settings,
       onBack: onClose,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(20)),
@@ -35,26 +37,25 @@ class DriverSettingsScreen extends StatelessWidget {
               children: [
                 _SettingsRow(
                   icon: Icons.wb_sunny_outlined,
-                  iconColor: accent,
-                  label: 'Appearance',
+                  label: AppStrings.appearance,
                   onTap: () => _open(context, const DriverAppearanceScreen()),
                 ),
                 const _SettingsDivider(),
                 _SettingsRow(
                   icon: Icons.verified_user_outlined,
-                  label: 'Privacy & Security',
+                  label: AppStrings.privacyPolicy,
                   onTap: () => _open(context, const PrivacySecurityScreen()),
                 ),
                 const _SettingsDivider(),
                 _SettingsRow(
                   icon: Icons.language_rounded,
-                  label: 'Language',
+                  label: AppStrings.language,
                   onTap: () => _open(context, const SettingsLanguageScreen()),
                 ),
                 const _SettingsDivider(),
                 _SettingsRow(
                   icon: Icons.delete_outline_rounded,
-                  label: 'Delete Account',
+                  label: AppStrings.deleteAccount,
                   onTap: () => _deleteAccount(context),
                 ),
               ],
@@ -78,9 +79,9 @@ class DriverSettingsScreen extends StatelessWidget {
         color: accent,
         background: accent.withValues(alpha: 0.12),
       ),
-      title: 'Delete Account ?',
-      subtitle: 'This will permanently delete your account ,profile and all your data',
-      confirmLabel: 'Delete',
+      title: AppStrings.deleteAccountTitle,
+      subtitle: AppStrings.deleteAccountSubtitle,
+      confirmLabel: AppStrings.delete,
       accent: accent,
     );
     if (!confirmed || !context.mounted) return;

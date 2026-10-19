@@ -6,6 +6,8 @@ import 'package:rider_app/driver_features/coins/widgets/coins_text.dart';
 import 'package:rider_app/driver_features/coins/widgets/how_it_works_card.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 
+import '../../../common/constants/string_constants.dart';
+
 class HowToEarnScreen extends StatelessWidget {
   const HowToEarnScreen({super.key, required this.onBack});
 
@@ -14,7 +16,7 @@ class HowToEarnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfilePage(
-      title: 'How to Earn Coins',
+      title: AppStrings.howToEarnCoins,
       onBack: onBack,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(20)),
@@ -41,12 +43,12 @@ class HowToEarnScreen extends StatelessWidget {
               ],
             ),
           ),
-          Text('Earn Torkk Coins', textAlign: TextAlign.center, style: coinsTitle()),
+          Text(AppStrings.earnTorkkCoins, textAlign: TextAlign.center, style: coinsTitle()),
           SizedBox(height: context.h(6)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(48)),
             child: Text(
-              'Complete rides, deliveries to earn coins.',
+              AppStrings.completeRidesDeliveriesToEarnCoins,
               textAlign: TextAlign.center,
               style: coinsMuted(),
             ),

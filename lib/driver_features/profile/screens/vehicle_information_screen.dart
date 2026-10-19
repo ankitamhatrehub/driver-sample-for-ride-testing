@@ -19,7 +19,7 @@ class VehicleInformationScreen extends StatelessWidget {
         children: [
           const VehicleHeader(),
           SizedBox(height: context.h(12)),
-          const ProfileMenuCard(
+          ProfileMenuCard(
             items: [
               ProfileValueRow(
                 icon: Icons.two_wheeler_outlined,
@@ -34,7 +34,7 @@ class VehicleInformationScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: context.h(12)),
-          const ProfileMenuCard(
+          ProfileMenuCard(
             items: [
               ProfileValueRow(
                 icon: Icons.article_outlined,
@@ -54,7 +54,7 @@ class VehicleInformationScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: context.h(12)),
-          const ProfileMenuCard(
+          ProfileMenuCard(
             items: [
               ProfileValueRow(
                 icon: Icons.article_outlined,

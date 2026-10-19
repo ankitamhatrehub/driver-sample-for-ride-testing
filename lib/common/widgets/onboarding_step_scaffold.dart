@@ -55,7 +55,7 @@ class OnboardingStepScaffold extends StatelessWidget {
                   ?headerAction,
                   if (onHelp != null)
                     GestureDetector(
-                      onTap: onHelp,
+                      // onTap: onHelp,
                       child: Image.asset(
                         AppAssets.helpButton,
                         width: context.w(40),

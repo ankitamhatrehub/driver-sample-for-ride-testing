@@ -22,7 +22,7 @@ class ConnectingDigilockerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const steps = [
+    final steps = [
       AppStrings.connectingDigilocker,
       AppStrings.awaitingAuthentication,
       AppStrings.fetchingDocuments,
@@ -90,7 +90,7 @@ class ConnectingDigilockerScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const OnboardingInfoBanner(message: AppStrings.digilockerWaitHint),
+              OnboardingInfoBanner(message: AppStrings.digilockerWaitHint),
             ],
           ),
         ),
@@ -109,7 +109,7 @@ class _TickSequence extends StatefulWidget {
 }
 
 class _TickSequenceState extends State<_TickSequence> {
-  static const _steps = [
+  static final _steps = [
     AppStrings.awaitingAuthentication,
     AppStrings.fetchingDocuments,
     AppStrings.verifyingDocuments,

@@ -8,6 +8,8 @@ import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/coins/widgets/coin_tiles.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 
+import '../../../common/constants/string_constants.dart';
+
 class CoinsHomeScreen extends StatelessWidget {
   const CoinsHomeScreen({
     super.key,
@@ -25,7 +27,7 @@ class CoinsHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfilePage(
-      title: 'Torkk Coin',
+      title: AppStrings.torkkCoin,
       onBack: onBack,
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(28), context.h(28), context.w(28), context.h(20)),
@@ -52,7 +54,7 @@ class CoinsHomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Coin Balance',
+                          AppStrings.yourCoinBalance,
                           style: AppTypography.regular.copyWith(fontSize: 13, color: Colors.white70),
                         ),
                         Text(
@@ -75,12 +77,12 @@ class CoinsHomeScreen extends StatelessWidget {
           SizedBox(height: context.h(34)),
           Row(
             children: [
-              const Expanded(
-                child: CoinMoneyCard(label: 'Total Earned', value: '+ ₹680.00', color: Color(0xFF16A34A)),
+              Expanded(
+                child: CoinMoneyCard(label:AppStrings.totalEarned, value: '+ ₹680.00', color: const Color(0xFF16A34A)),
               ),
               SizedBox(width: context.w(10)),
-              const Expanded(
-                child: CoinMoneyCard(label: 'Total Redeemed', value: '₹3,420.00', color: Color(0xFFEF4444)),
+              Expanded(
+                child: CoinMoneyCard(label: AppStrings.totalRedeemed, value: '₹3,420.00', color: Color(0xFFEF4444)),
               ),
             ],
           ),
@@ -98,7 +100,7 @@ class CoinsHomeScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Scratch Card',
+                        AppStrings.scratchCard,
                         style: AppTypography.regular.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -121,8 +123,7 @@ class CoinsHomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: context.h(4)),
                 Text(
-                  'Complete eligible jobs to get scratch cards and win exciting rewards.',
-                  style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+                  AppStrings.completeEligibleJobs,                  style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
                 ),
                 SizedBox(height: context.h(4)),
                 Container(
@@ -147,11 +148,11 @@ class CoinsHomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'You have 1 Scratch Card!',
+                                  AppStrings.youHaveScratchCard,
                                   style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                                 ),
                                 Text(
-                                  'Scratch now and see what you win.',
+                                  AppStrings.scratchNowSeeWhatYouWin,
                                   style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500),
                                 ),
                               ],
@@ -162,7 +163,7 @@ class CoinsHomeScreen extends StatelessWidget {
                       SizedBox(height: context.h(22)),
                       Padding(
                         padding: EdgeInsets.only(top: context.h(8)),
-                        child: UnifiedButton(label: 'View', onPressed: onView),
+                        child: UnifiedButton(label:AppStrings.view, onPressed: onView,  backgroundColor: const Color(0xFF0F3FBF),),
                       ),
                     ],
                   ),
@@ -175,7 +176,7 @@ class CoinsHomeScreen extends StatelessWidget {
             icon: Icons.toll_rounded,
             color: const Color(0xFFF59E0B),
             background: const Color(0xFFFEF3C7),
-            label: 'Coin History',
+            label: AppStrings.coinHistory,
             onTap: onHistory,
           ),
           SizedBox(height: context.h(10)),
@@ -183,7 +184,7 @@ class CoinsHomeScreen extends StatelessWidget {
             icon: Icons.help_outline_rounded,
             color: const Color(0xFFEF4444),
             background: const Color(0xFFFEE2E2),
-            label: 'How to Earn Coins',
+            label: AppStrings.howToEarnCoins,
             onTap: onHowTo,
           ),
         ],

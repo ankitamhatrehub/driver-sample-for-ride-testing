@@ -143,7 +143,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
             SizedBox(height: context.h(14)),
             Row(
               children: [
-                const Expanded(child: KycRequiredLabel(AppStrings.ifscCode)),
+                Expanded(child: KycRequiredLabel(AppStrings.ifscCode)),
                 Text(AppStrings.findIfsc, style: AppTypography.bold.copyWith(fontSize: 12, color: AppColors.green600)),
               ],
             ),
@@ -154,7 +154,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
             SizedBox(height: context.h(8)),
             AppTextField(controller: _bank),
             SizedBox(height: context.h(14)),
-            const KycPendingBanner(title: AppStrings.verificationPending),
+            KycPendingBanner(title: AppStrings.verificationPending),
             SizedBox(height: context.h(24)),
             UnifiedButton(
               label: AppStrings.saveAndVerify,
@@ -227,7 +227,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
               last: true,
             ),
             const Spacer(),
-            const OnboardingInfoBanner(message: AppStrings.bankEncryptedHint),
+            OnboardingInfoBanner(message: AppStrings.bankEncryptedHint),
             SizedBox(height: context.h(16)),
             UnifiedButton(
               label: AppStrings.continueAction,

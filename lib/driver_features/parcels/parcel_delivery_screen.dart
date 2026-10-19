@@ -97,10 +97,10 @@ class _StepsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const steps = [
+    final steps = [
       _Step(Icons.home_rounded, AppStrings.completeEarningTasks, AppStrings.completeEarningTasksHint, false),
-      _Step(Icons.monetization_on_rounded, AppStrings.collect100Coins, AppStrings.collect100CoinsHint, true),
-      _Step(Icons.inventory_2_rounded, AppStrings.startDeliveringParcels, AppStrings.startDeliveringParcelsHint, false),
+       _Step(Icons.monetization_on_rounded, AppStrings.collect100Coins, AppStrings.collect100CoinsHint, true),
+       _Step(Icons.inventory_2_rounded, AppStrings.startDeliveringParcels, AppStrings.startDeliveringParcelsHint, false),
     ];
     return Container(
       decoration: BoxDecoration(

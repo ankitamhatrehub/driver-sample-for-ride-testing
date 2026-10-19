@@ -4,7 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/widgets/app_snackbar.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+
+import '../../../common/constants/string_constants.dart';
 
 class SetPinScreen extends StatefulWidget {
   const SetPinScreen({super.key});
@@ -22,7 +25,14 @@ class _SetPinScreenState extends State<SetPinScreen> {
     if (_pin.length < 4) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('account_pin', _pin);
-    if (mounted) Navigator.of(context).pop();
+    if (mounted) {
+      AppSnackBar.showSuccess(
+        context,
+        title: 'PIN Set Successfully',
+        message: 'Your 4-digit PIN is active now.',
+      );
+      Navigator.of(context).pop(true);
+    }
   }
 
   void _backspace() {
@@ -46,14 +56,14 @@ class _SetPinScreenState extends State<SetPinScreen> {
           ),
           SizedBox(height: context.h(16)),
           Text(
-            'Secure your account',
+            AppStrings.secureYourAccount,
             style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3),
           ),
           SizedBox(height: context.h(6)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(48)),
             child: Text(
-              'Create a 4-digit PIN to keep your account safe & Secure',
+              AppStrings.createPinSubtitle,
               textAlign: TextAlign.center,
               style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.slate500),
             ),
