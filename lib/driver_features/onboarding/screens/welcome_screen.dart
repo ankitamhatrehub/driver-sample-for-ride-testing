@@ -15,6 +15,7 @@ class WelcomeScreen extends StatefulWidget {
   final ValueChanged<bool> onTermsChanged;
   final VoidCallback onContinue;
   final bool isLoading;
+  final bool keyboardOpen;
 
   const WelcomeScreen({
     super.key,
@@ -23,6 +24,7 @@ class WelcomeScreen extends StatefulWidget {
     required this.onTermsChanged,
     required this.onContinue,
     required this.isLoading,
+    required this.keyboardOpen,
   });
 
   @override
@@ -64,25 +66,33 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final headerHeight = widget.keyboardOpen
+            ? context.h(120)
+            : context.h(333);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const OnboardingHeaderImage(),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              context.w(20),
-              context.h(20),
-              context.w(24),
-              context.h(16),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
+        return SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    height: headerHeight,
+                    child: const OnboardingHeaderImage(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      context.w(20),
+                      context.h(20),
+                      context.w(24),
+                      context.h(16),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -112,7 +122,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 borderRadius: BorderRadius.circular(
                                   context.r(12),
                                 ),
-                                border: Border.all(color: AppColors.fieldBorder),
+                                border: Border.all(
+                                  color: AppColors.fieldBorder,
+                                ),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withValues(alpha: 0.05),
@@ -175,23 +187,35 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ],
                     ),
                   ),
-                ),
-                if (!keyboardOpen) ...[
-                  _termsAgreement(
-                    () => widget.onTermsChanged(!widget.termsAccepted),
+                  if (!widget.keyboardOpen) const Spacer(),
+                  if (!widget.keyboardOpen) ...[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: context.w(20)),
+                      child: _termsAgreement(
+                        () => widget.onTermsChanged(!widget.termsAccepted),
+                      ),
+                    ),
+                    SizedBox(height: context.h(14)),
+                  ],
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      context.w(20),
+                      0,
+                      context.w(24),
+                      context.h(16),
+                    ),
+                    child: UnifiedButton(
+                      label: AppStrings.continueAction,
+                      isLoading: widget.isLoading,
+                      onPressed: _continue,
+                    ),
                   ),
-                  SizedBox(height: context.h(14)),
                 ],
-                UnifiedButton(
-                  label: AppStrings.continueAction,
-                  isLoading: widget.isLoading,
-                  onPressed: _continue,
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -220,4 +244,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-

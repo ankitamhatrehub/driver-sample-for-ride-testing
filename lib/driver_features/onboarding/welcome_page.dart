@@ -11,6 +11,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final session = OnboardingSession.instance;
+    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -26,6 +27,7 @@ class WelcomePage extends StatelessWidget {
               session.touch();
             },
             isLoading: session.loading,
+            keyboardOpen: keyboardOpen,
             onContinue: () async {
               final error = await session.sendOtp();
               if (!context.mounted) return;
