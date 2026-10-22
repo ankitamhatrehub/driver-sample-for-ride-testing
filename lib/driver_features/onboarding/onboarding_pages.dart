@@ -24,11 +24,8 @@ import 'package:rider_app/driver_features/onboarding/screens/vehicle_photos_scre
 import 'package:rider_app/driver_features/onboarding/screens/verify_driving_license_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/verify_otp_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/verify_vehicle_rc_screen.dart';
-import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/bank_details_step.dart';
-import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/document_entry_step.dart';
-import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/submit_documents_step.dart';
-import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/vehicle_select_step.dart';
 import 'package:rider_app/common/widgets/app_splash_screen.dart';
+import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
 
 OnboardingSession get _session => OnboardingSession.instance;
 
@@ -57,13 +54,10 @@ void _snack(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 
-void _help(BuildContext context, Widget sheet) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (_) => sheet,
-  );
+void _openAiChat(BuildContext context) {
+  Navigator.of(
+    context,
+  ).push(MaterialPageRoute<void>(builder: (_) => const DriverLiveChatScreen()));
 }
 
 class SplashPage extends StatelessWidget {
@@ -145,7 +139,7 @@ class OtpPage extends StatelessWidget {
               context.go(AppRoutes.welcome);
             },
             onResendOtp: () async {
-               _session.clearOtp();
+              _session.clearOtp();
               final error = await _session.sendOtp();
               if (context.mounted && error != null) _snack(context, error);
             },
@@ -185,7 +179,7 @@ class VehiclePage extends StatelessWidget {
               ? () =>
                     _leave(context, AppRoutes.vehicleDetails, AppRoutes.welcome)
               : null,
-          onHelp: () => _help(context, const SelectVehicleFaqBottomSheet()),
+          onHelp: () => _openAiChat(context),
           onSelected: (value) {
             _session.vehicleType = value;
             _session.touch();
@@ -219,7 +213,7 @@ class KycPage extends StatelessWidget {
           profileSubmitted: false,
           onBack: () =>
               _leave(context, AppRoutes.kyc, AppRoutes.vehicleDetails),
-          onHelp: () => _help(context, const KycFaqBottomSheet()),
+          onHelp: () => _openAiChat(context),
           onAadhaarTap: () => context.go(AppRoutes.kycAadhaar),
           onDlTap: () => context.go(AppRoutes.kycDrivingLicence),
           onRcTap: () => context.go(AppRoutes.kycRc),
@@ -245,7 +239,7 @@ class AadhaarPage extends StatelessWidget {
           isLoading: _session.loading,
           aadhaarController: _session.aadhaar,
           onBack: () => context.go(AppRoutes.kyc),
-          onHelp: () => _help(context, const AadhaarFaqBottomSheet()),
+          onHelp: () => _openAiChat(context),
           onStartDigilocker: () async {
             final error = await launchDigilocker(context);
             if (context.mounted && error != null) _snack(context, error);
@@ -285,7 +279,7 @@ class DrivingLicencePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return VerifyDrivingLicenseScreen(
       onBack: () => context.go(AppRoutes.kyc),
-      onHelp: () => _help(context, const DlFaqBottomSheet()),
+      onHelp: () => _openAiChat(context),
       onFinished: () async {
         final prefs = await SharedPreferences.getInstance();
         final number = prefs.getString('driving_licence_number') ?? '';
@@ -305,7 +299,7 @@ class VehicleRcPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return VerifyVehicleRcScreen(
       onBack: () => context.go(AppRoutes.kyc),
-      onHelp: () => _help(context, const RcFaqBottomSheet()),
+      onHelp: () => _openAiChat(context),
       onFinished: () async {
         final prefs = await SharedPreferences.getInstance();
         final number = prefs.getString('rc_number') ?? '';
@@ -325,7 +319,7 @@ class VehiclePhotosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return VehiclePhotosScreen(
       onBack: () => context.go(AppRoutes.kyc),
-      onHelp: () => _help(context, const KycFaqBottomSheet()),
+      onHelp: () => _openAiChat(context),
       onFinished: () {
         _session.photosVerified = true;
         _session.rememberKyc();
@@ -342,7 +336,7 @@ class VehicleInsurancePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return VehicleInsuranceScreen(
       onBack: () => context.go(AppRoutes.kycPhotos),
-      onHelp: () => _help(context, const KycFaqBottomSheet()),
+      onHelp: () => _openAiChat(context),
       onSkip: () => context.go(AppRoutes.kyc),
     );
   }
@@ -371,7 +365,7 @@ class BankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BankPayoutScreen(
       onBack: () => _leave(context, AppRoutes.kycBank, AppRoutes.kyc),
-      onHelp: () => _help(context, const PaymentFaqBottomSheet()),
+      onHelp: () => _openAiChat(context),
       onFinished: (details) {
         _session.rememberBank(details);
         _session.bankVerified = true;

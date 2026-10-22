@@ -37,9 +37,9 @@ class KycStatusRow extends StatelessWidget {
       onTap: onTap == null
           ? null
           : () {
-        debugPrint('KYC row tapped: $title');
-        onTap!();
-      },
+              debugPrint('KYC row tapped: $title');
+              onTap!();
+            },
       child: Container(
         padding: EdgeInsets.all(context.w(14)),
         decoration: BoxDecoration(
@@ -87,11 +87,27 @@ class KycStatusRow extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: AppColors.slate400,
-              size: context.w(22),
-            ),
+            if (status == KycItemStatus.notStarted)
+              Container(
+                width: context.w(30),
+                height: context.w(30),
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF3F4F6),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.lock_outline_rounded,
+                  color: AppColors.slate400,
+                  size: context.w(16),
+                ),
+              )
+            else
+              Icon(
+                Icons.chevron_right,
+                color: AppColors.slate400,
+                size: context.w(22),
+              ),
           ],
         ),
       ),

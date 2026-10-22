@@ -35,7 +35,11 @@ class OnboardingStepScaffold extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: context.h(20), left: context.w(16), right: context.w(16)),
+              padding: EdgeInsets.only(
+                top: context.h(20),
+                left: context.w(16),
+                right: context.w(16),
+              ),
               child: Row(
                 children: [
                   IconButton(
@@ -49,14 +53,18 @@ class OnboardingStepScaffold extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
-                      style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
+                      style: AppTypography.bold.copyWith(
+                        fontSize: 20,
+                        height: 1.2,
+                      ),
                     ),
                   ),
                   ?headerAction,
                   if (onHelp != null)
-                    GestureDetector(
-                      // onTap: onHelp,
-                      child: Image.asset(
+                    IconButton(
+                      tooltip: 'Help',
+                      onPressed: onHelp,
+                      icon: Image.asset(
                         AppAssets.helpButton,
                         width: context.w(40),
                         height: context.w(40),
@@ -68,7 +76,11 @@ class OnboardingStepScaffold extends StatelessWidget {
             ),
             if (subtitle != null)
               Padding(
-                padding: EdgeInsets.only(left: 56,right: context.w(60), bottom: context.h(12)),
+                padding: EdgeInsets.only(
+                  left: 56,
+                  right: context.w(60),
+                  bottom: context.h(12),
+                ),
                 child: SizedBox(
                   width: context.w(281),
                   child: Text(
