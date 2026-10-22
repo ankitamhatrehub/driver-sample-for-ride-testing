@@ -34,7 +34,6 @@ class OnboardingSession extends ChangeNotifier {
   final bankIfsc = TextEditingController();
   final bankName = TextEditingController();
 
-  String language = '';
   String gender = AppStrings.genderMale;
   String vehicleType = 'Bike';
   String? photoPath;

@@ -17,7 +17,6 @@ import 'package:rider_app/driver_features/onboarding/screens/bank_payout_screen.
 import 'package:rider_app/driver_features/onboarding/screens/driver_details_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/face_verification_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/kyc_verification_screen.dart';
-import 'package:rider_app/driver_features/onboarding/screens/language_selection.dart';
 import 'package:rider_app/driver_features/onboarding/screens/review_details_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/select_vehicle_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/vehicle_insurance_screen.dart';
@@ -25,7 +24,6 @@ import 'package:rider_app/driver_features/onboarding/screens/vehicle_photos_scre
 import 'package:rider_app/driver_features/onboarding/screens/verify_driving_license_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/verify_otp_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/verify_vehicle_rc_screen.dart';
-import 'package:rider_app/driver_features/onboarding/screens/welcome_screen.dart';
 import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/bank_details_step.dart';
 import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/document_entry_step.dart';
 import 'package:rider_app/driver_features/onboarding/legacy/screens/steps/submit_documents_step.dart';
@@ -80,7 +78,11 @@ class SplashPage extends StatelessWidget {
         AccentChanged(isPink: gender == AppStrings.genderFemale),
       );
       _session.gender = gender;
-      context.go(gender == AppStrings.genderFemale ? AppRoutes.dashboardFemale : AppRoutes.dashboardMale);
+      context.go(
+        gender == AppStrings.genderFemale
+            ? AppRoutes.dashboardFemale
+            : AppRoutes.dashboardMale,
+      );
       return;
     }
     final where = await KycResume.destination();
@@ -104,74 +106,6 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppSplashScreen(onFinished: () => _next(context));
-  }
-}
-
-class LanguagePage extends StatelessWidget {
-  const LanguagePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListenableBuilder(
-        listenable: _session,
-        builder: (context, _) {
-          final current = _session.language;
-          final isEn = current == 'en' || current == 'English' || current.toLowerCase().contains('en');
-          final selectedCode = current.isEmpty ? 'en' : (isEn ? 'en' : 'hi');
-
-          return LanguageSelectStep(
-            selectedLanguage: selectedCode,
-            onLanguageSelected: (code) {
-              final isTargetEn = code == 'en' || code == 'English' || code.toLowerCase().contains('en');
-              final targetCode = isTargetEn ? 'en' : 'hi';
-              _session.language = targetCode;
-              AppTranslations.changeLanguage(targetCode);
-              _session.touch();
-            },
-            onContinue: () {
-              final isTargetEn = _session.language == 'en' || _session.language == 'English' || _session.language.toLowerCase().contains('en');
-              final targetCode = isTargetEn ? 'en' : 'hi';
-              AppTranslations.changeLanguage(targetCode);
-              context.go(AppRoutes.welcome);
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      body: ListenableBuilder(
-        listenable: _session,
-        builder: (context, _) {
-          return WelcomeScreen(
-            phoneController: _session.phone,
-            termsAccepted: _session.termsAccepted,
-            onTermsChanged: (value) {
-              _session.termsAccepted = value;
-              _session.touch();
-            },
-            isLoading: _session.loading,
-            onContinue: () async {
-              final error = await _session.sendOtp();
-              if (!context.mounted) return;
-              if (error != null) _snack(context, error);
-              context.go(AppRoutes.otp);
-            },
-          );
-        },
-      ),
-    );
   }
 }
 
@@ -246,7 +180,10 @@ class VehiclePage extends StatelessWidget {
         return SelectVehicleScreen(
           selectedVehicle: _session.vehicleType,
           isLoading: _session.loading,
-          onBack: _session.returnToReview ? () => _leave(context, AppRoutes.vehicleDetails, AppRoutes.welcome) : null,
+          onBack: _session.returnToReview
+              ? () =>
+                    _leave(context, AppRoutes.vehicleDetails, AppRoutes.welcome)
+              : null,
           onHelp: () => _help(context, const SelectVehicleFaqBottomSheet()),
           onSelected: (value) {
             _session.vehicleType = value;
@@ -279,7 +216,8 @@ class KycPage extends StatelessWidget {
           faceVerified: _session.faceVerified,
           bankVerified: _session.bankVerified,
           profileSubmitted: false,
-          onBack: () => _leave(context, AppRoutes.kyc, AppRoutes.vehicleDetails),
+          onBack: () =>
+              _leave(context, AppRoutes.kyc, AppRoutes.vehicleDetails),
           onHelp: () => _help(context, const KycFaqBottomSheet()),
           onAadhaarTap: () => context.go(AppRoutes.kycAadhaar),
           onDlTap: () => context.go(AppRoutes.kycDrivingLicence),
@@ -326,7 +264,8 @@ class AadhaarPage extends StatelessWidget {
             _session.touch();
             context.go(AppRoutes.kyc);
           },
-          alreadyVerified: _session.aadhaarVerified && !_session.playDigilockerSuccess,
+          alreadyVerified:
+              _session.aadhaarVerified && !_session.playDigilockerSuccess,
           playSuccess: _session.playDigilockerSuccess,
           onSuccessPlayed: () {
             _session.playDigilockerSuccess = false;
@@ -528,7 +467,9 @@ class _ReviewPageState extends State<ReviewPage> {
           aadhaarNumber: _session.aadhaar.text.trim(),
           panNumber: _session.panNumber.trim(),
           licenceNumber: _session.dlNumber.text.trim(),
-          vehicleType: _session.vehicleChosen ? _vehicleLabel(_session.vehicleType) : '',
+          vehicleType: _session.vehicleChosen
+              ? _vehicleLabel(_session.vehicleType)
+              : '',
           registrationNumber: _session.rcNumber.text.trim(),
           photosUploaded: _session.photosVerified,
           faceVerified: _session.faceVerified,
@@ -541,9 +482,11 @@ class _ReviewPageState extends State<ReviewPage> {
           bankDone: _session.bankVerified,
           isLoading: _session.loading,
           onBack: () => context.go(AppRoutes.driverDetails),
-          onEditPersonal: () => _openFromReview(context, AppRoutes.driverDetails),
+          onEditPersonal: () =>
+              _openFromReview(context, AppRoutes.driverDetails),
           onEditKyc: () => _openFromReview(context, AppRoutes.kyc),
-          onEditVehicle: () => _openFromReview(context, AppRoutes.vehicleDetails),
+          onEditVehicle: () =>
+              _openFromReview(context, AppRoutes.vehicleDetails),
           onEditBank: () => _openFromReview(context, AppRoutes.kycBank),
           onSubmit: () async {
             final error = await _session.submitApplication();
