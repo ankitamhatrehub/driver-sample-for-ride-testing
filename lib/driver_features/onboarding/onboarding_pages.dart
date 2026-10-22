@@ -145,6 +145,7 @@ class OtpPage extends StatelessWidget {
               context.go(AppRoutes.welcome);
             },
             onResendOtp: () async {
+               _session.clearOtp();
               final error = await _session.sendOtp();
               if (context.mounted && error != null) _snack(context, error);
             },
