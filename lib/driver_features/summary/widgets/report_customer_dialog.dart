@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 void showReportCustomerDialog({
   required BuildContext context,
@@ -185,9 +185,7 @@ void showReportCustomerDialog({
                           );
                           try {
                             await http.post(
-                              Uri.parse(
-                                '${ApiConstants.baseUrl}/api/driver/report-issue',
-                              ),
+                              Uri.parse(AppUrls.reportIssue),
                               headers: {'Content-Type': 'application/json'},
                               body: jsonEncode({
                                 'phone': driverPhone,

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 // --- LIVE CHAT SCREEN USING GEMINI API ---
 class DriverLiveChatScreen extends StatefulWidget {
@@ -48,7 +48,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
 
     try {
       final uri = Uri.parse(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${ApiConstants.geminiApiKey}',
+        AppUrls.geminiGenerateContent(AppUrls.geminiApiKey),
       );
 
       final contents = [];

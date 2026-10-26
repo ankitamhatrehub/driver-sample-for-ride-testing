@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/service/ride_alert_service.dart';
 
 class FCMService {
@@ -87,7 +87,7 @@ class FCMService {
     debugPrint('FCM Token: $token');
     try {
       final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}/api/fcm-token'),
+        Uri.parse(AppUrls.fcmToken),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'phone': phone,
@@ -107,7 +107,7 @@ class FCMService {
     if (phone == null || phone.isEmpty) return;
     try {
       await http.post(
-        Uri.parse('${ApiConstants.baseUrl}/api/driver/online-status'),
+        Uri.parse(AppUrls.onlineStatus),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'phone': phone,

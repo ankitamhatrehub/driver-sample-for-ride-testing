@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/driver_features/profile/screens/driver_profile_screen.dart';
 import 'package:rider_app/driver_features/wallet/wallet_screen.dart';
 import 'package:rider_app/driver_features/earnings/screens/driver_earnings_screen.dart';
@@ -250,9 +250,7 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
                   final phone = prefs.getString('phone') ?? '';
                   try {
                     await http.post(
-                      Uri.parse(
-                        '${ApiConstants.baseUrl}/api/driver/set-payment-method',
-                      ),
+                      Uri.parse(AppUrls.setPaymentMethod),
                       headers: {'Content-Type': 'application/json'},
                       body: jsonEncode({
                         'phone': phone,

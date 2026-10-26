@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 void showLocationDetailBottomSheet({
   required BuildContext context,
@@ -110,7 +111,7 @@ void showLocationDetailBottomSheet({
                             lat != 0.0 &&
                             lng != 0.0) {
                           final mapUrl = Uri.parse(
-                            'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+                            AppUrls.googleMapsSearch(lat: lat, lng: lng),
                           );
                           if (await canLaunchUrl(mapUrl)) {
                             await launchUrl(

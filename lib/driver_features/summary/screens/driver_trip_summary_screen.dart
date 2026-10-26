@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/driver_features/profile/screens/driver_support_screen.dart';
 import 'package:rider_app/driver_features/chat/screens/driver_customer_chat_screen.dart';
@@ -82,7 +82,10 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
     try {
       final response = await http.get(
         Uri.parse(
-          '${ApiConstants.baseUrl}/api/driver/ride?ride_id=${widget.rideId}&driver_phone=${widget.driverPhone}',
+          AppUrls.rideDetail(
+            rideId: widget.rideId,
+            driverPhone: widget.driverPhone,
+          ),
         ),
       );
       if (response.statusCode == 200) {
@@ -274,7 +277,11 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
                       border: Border.all(color: const Color(0xFFE2E8F0)),
                     ),
                     child: Image.network(
-                      'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=$upiAddress&pn=${Uri.encodeComponent(widget.customerName)}&am=${widget.estimatedFare}&cu=INR',
+                      AppUrls.upiQrCode(
+                        upiAddress: upiAddress,
+                        customerName: widget.customerName,
+                        amount: widget.estimatedFare,
+                      ),
                       fit: BoxFit.contain,
                       errorBuilder: (_, error, stackTrace) => const Icon(
                         Icons.qr_code_2_rounded,

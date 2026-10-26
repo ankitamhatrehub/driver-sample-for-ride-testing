@@ -55,101 +55,99 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: widget.onBack == null
+            ? null
+            : IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+                onPressed: widget.onBack,
+              ),
+        titleSpacing: widget.onBack == null ? context.w(20) : 0,
+        centerTitle: false,
+        toolbarHeight: context.h(64),
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: widget.onBack == null
-              ? null
-              : IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
-                  onPressed: widget.onBack,
-                ),
-          titleSpacing: widget.onBack == null ? context.w(20) : 0,
-          centerTitle: false,
-          toolbarHeight: context.h(64),
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.transparent,
-          elevation: 0,
-          title: Text(
-            AppStrings.selectVehicleCategory,
-            style: AppTypography.bold.copyWith(fontSize: 20, height: 1.15),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: context.w(16)),
-              child: GestureDetector(
-                onTap: widget.onHelp,
-                child: Image.asset(
-                  AppAssets.helpButton,
-                  width: context.w(40),
-                  height: context.w(40),
-                  fit: BoxFit.contain,
-                ),
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          AppStrings.selectVehicleCategory,
+          style: AppTypography.bold.copyWith(fontSize: 20, height: 1.15),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: context.w(16)),
+            child: GestureDetector(
+              onTap: widget.onHelp,
+              child: Image.asset(
+                AppAssets.helpButton,
+                width: context.w(40),
+                height: context.w(40),
+                fit: BoxFit.contain,
               ),
             ),
-          ],
-        ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppStrings.chooseVehicleType,
-                style: AppTypography.bold.copyWith(
-                  color: AppColors.textPrimary,
-                  fontSize: 14,
-                  height: 1.35,
-                ),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppStrings.chooseVehicleType,
+              style: AppTypography.bold.copyWith(
+                color: AppColors.textPrimary,
+                fontSize: 14,
+                height: 1.35,
               ),
-              SizedBox(height: context.h(20)),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: _vehicles.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: context.h(12),
-                    crossAxisSpacing: context.w(12),
-                    childAspectRatio: 1.05,
-                  ),
-                  itemBuilder: (context, index) {
-                    final vehicle = _vehicles[index];
-                    return _VehicleCard(
-                      vehicle: vehicle,
-                      selected: widget.selectedVehicle == vehicle.value,
-                      onTap: () => _select(vehicle),
-                    );
-                  },
+            ),
+            SizedBox(height: context.h(20)),
+            Expanded(
+              child: GridView.builder(
+                itemCount: _vehicles.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: context.h(12),
+                  crossAxisSpacing: context.w(12),
+                  childAspectRatio: 1.05,
                 ),
+                itemBuilder: (context, index) {
+                  final vehicle = _vehicles[index];
+                  return _VehicleCard(
+                    vehicle: vehicle,
+                    selected: widget.selectedVehicle == vehicle.value,
+                    onTap: () => _select(vehicle),
+                  );
+                },
               ),
-              if (_showError) ...[
-                SizedBox(height: context.h(8)),
-                Row(
-                  children: [
-                    Icon(Icons.info, color: AppColors.error, size: context.w(18)),
-                    SizedBox(width: context.w(8)),
-                    Expanded(
-                      child: Text(
-                        AppStrings.selectVehicleError,
-                        style: AppTypography.regular.copyWith(
-                          color: AppColors.error,
-                          fontSize: 13,
-                        ),
+            ),
+            if (_showError) ...[
+              SizedBox(height: context.h(8)),
+              Row(
+                children: [
+                  Icon(Icons.info, color: AppColors.error, size: context.w(18)),
+                  SizedBox(width: context.w(8)),
+                  Expanded(
+                    child: Text(
+                      AppStrings.selectVehicleError,
+                      style: AppTypography.regular.copyWith(
+                        color: AppColors.error,
+                        fontSize: 13,
                       ),
                     ),
-                  ],
-                ),
-              ],
-              SizedBox(height: context.h(12)),
-              UnifiedButton(
-                label: AppStrings.continueAction,
-                isLoading: widget.isLoading,
-                onPressed: _continue,
+                  ),
+                ],
               ),
             ],
-          ),
+            SizedBox(height: context.h(12)),
+            UnifiedButton(
+              label: AppStrings.continueAction,
+              isLoading: widget.isLoading,
+              onPressed: _continue,
+            ),
+          ],
         ),
       ),
     );
@@ -180,61 +178,63 @@ class _VehicleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
-        decoration: BoxDecoration(
-          color: selected ? const Color(0xFFF6F3FB) : Colors.white,
-          borderRadius: BorderRadius.circular(context.r(16)),
-          border: Border.all(
-            color: selected ? AppColors.primary : AppColors.fieldBorder,
-            width: selected ? 1.6 : 1,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+          decoration: BoxDecoration(
+            color: selected ? const Color(0xFFF6F3FB) : Colors.white,
+            borderRadius: BorderRadius.circular(context.r(16)),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.fieldBorder,
+              width: selected ? 1.6 : 1,
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Expanded(
-            //   child: Image.asset(
-            //     vehicle.image,
-            //     fit: BoxFit.contain,
-            //     errorBuilder: (context, error, stackTrace) => Icon(
-            //       Icons.directions_car_rounded,
-            //       size: context.w(40),
-            //       color: AppColors.secondaryTextColor,
-            //     ),
-            //   ),
-            // ),
-            SizedBox(
-              width: context.w(100),
-              height: context.h(85),
-              child: Transform.scale(
-                scale: vehicle.value == 'Bike' ? 1.7 : 1.1,
-                child: Image.asset(
-                  vehicle.image,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.directions_car_rounded,
-                    size: context.w(40),
-                    color: AppColors.secondaryTextColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Expanded(
+              //   child: Image.asset(
+              //     vehicle.image,
+              //     fit: BoxFit.contain,
+              //     errorBuilder: (context, error, stackTrace) => Icon(
+              //       Icons.directions_car_rounded,
+              //       size: context.w(40),
+              //       color: AppColors.secondaryTextColor,
+              //     ),
+              //   ),
+              // ),
+              SizedBox(
+                width: context.w(100),
+                height: context.h(85),
+                child: Transform.scale(
+                  scale: vehicle.value == 'Bike' ? 1.7 : 1.1,
+                  child: Image.asset(
+                    vehicle.image,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => Icon(
+                      Icons.directions_car_rounded,
+                      size: context.w(40),
+                      color: AppColors.secondaryTextColor,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: context.h(8)),
-            Text(
-              vehicle.label,
-              style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2),
-            ),
-            SizedBox(height: context.h(2)),
-            Text(
-              vehicle.subtitle,
-              style: AppTypography.regular.copyWith(
-                fontSize: 12,
-                height: 1.2,
-                color: AppColors.secondaryTextColor,
+              SizedBox(height: context.h(8)),
+              Text(
+                vehicle.label,
+                style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2),
               ),
-            ),
-          ],
+              SizedBox(height: context.h(2)),
+              Text(
+                vehicle.subtitle,
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  height: 1.2,
+                  color: AppColors.secondaryTextColor,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

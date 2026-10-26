@@ -36,113 +36,126 @@ class _ConnectDigilockerScreenState extends State<ConnectDigilockerScreen> {
       subtitle: AppStrings.connectDigilockerSubtitle,
       onBack: widget.onBack,
       onHelp: widget.onHelp,
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          context.w(24),
-          context.h(0),
-          context.w(24),
-          context.h(16),
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: context.h(50)),
-            Image.asset(
-              AppAssets.connectDigilockerImage,
-              height: context.h(120),
-              width: context.w(280),
-              fit: BoxFit.contain,
-            ),
-            SizedBox(height: context.h(50)),
-            Container(
-              width: context.w(310),
-              padding: EdgeInsets.all(context.w(14)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(context.r(16)),
-                border: Border.all(color: const Color(0xFFF1F5F9)),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x0A000000),
-                    offset: Offset(2, 0),
-                    blurRadius: 2,
-                  ),
-                ],
-              ),
-              child: Column(
-                spacing: context.h(8),
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      AppStrings.documentsWellAccess,
-                      style: AppTypography.bold.copyWith(
-                        fontSize: 11,
-                        letterSpacing: 0.4,
-                        color: AppColors.secondaryTextColor,
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  context.w(24),
+                  context.h(0),
+                  context.w(24),
+                  context.h(16),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: context.h(50)),
+                    Image.asset(
+                      AppAssets.connectDigilockerImage,
+                      height: context.h(120),
+                      width: context.w(280),
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(height: context.h(50)),
+                    Container(
+                      width: context.w(310),
+                      padding: EdgeInsets.all(context.w(14)),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(context.r(16)),
+                        border: Border.all(color: const Color(0xFFF1F5F9)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0A000000),
+                            offset: Offset(2, 0),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        spacing: context.h(8),
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              AppStrings.documentsWellAccess,
+                              style: AppTypography.bold.copyWith(
+                                fontSize: 11,
+                                letterSpacing: 0.4,
+                                color: AppColors.secondaryTextColor,
+                              ),
+                            ),
+                          ),
+                          _DocAccessTile(
+                            icon: AppAssets.aadhaarCardIcon,
+                            background: const Color(0xFFFFF7ED),
+                            label: AppStrings.aadhaarDoc,
+                          ),
+                          _DocAccessTile(
+                            icon: AppAssets.panCardIcon,
+                            background: AppColors.blueLight,
+                            label: AppStrings.panDoc,
+                          ),
+                          _DocAccessTile(
+                            icon: AppAssets.drivingLicenceIcon,
+                            background: const Color(0xFFFAF5FF),
+                            label: AppStrings.drivingLicenseDoc,
+                            suffix: AppStrings.whereAvailable,
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  _DocAccessTile(
-                    icon: AppAssets.aadhaarCardIcon,
-                    background: const Color(0xFFFFF7ED),
-                    label: AppStrings.aadhaarDoc,
-                  ),
-                  _DocAccessTile(
-                    icon: AppAssets.panCardIcon,
-                    background: AppColors.blueLight,
-                    label: AppStrings.panDoc,
-                  ),
-                  _DocAccessTile(
-                    icon: AppAssets.drivingLicenceIcon,
-                    background: const Color(0xFFFAF5FF),
-                    label: AppStrings.drivingLicenseDoc,
-                    suffix: AppStrings.whereAvailable,
-                  ),
-                ],
-              ),
-            ),
 
-            const Spacer(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Checkbox(
-                  value: _consent,
-                  checkColor: Colors.white,
-                  side: const BorderSide(color: AppColors.textPrimary, width: 1.4),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(context.r(4)),
-                  ),
-                  fillColor: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.selected)) {
-                      return AppColors.textPrimary;
-                    }
-                    return Colors.transparent;
-                  }),
-                  onChanged: (value) => setState(() => _consent = value ?? false),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: context.h(12)),
-                    child: Text(
-                      AppStrings.digilockerConsent,
-                      style: AppTypography.regular.copyWith(
-                        fontSize: 13,
-                        height: 1.35,
-                      ),
+                    const Spacer(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Checkbox(
+                          value: _consent,
+                          checkColor: Colors.white,
+                          side: const BorderSide(
+                            color: AppColors.textPrimary,
+                            width: 1.4,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(context.r(4)),
+                          ),
+                          fillColor: WidgetStateProperty.resolveWith((states) {
+                            if (states.contains(WidgetState.selected)) {
+                              return AppColors.textPrimary;
+                            }
+                            return Colors.transparent;
+                          }),
+                          onChanged: (value) =>
+                              setState(() => _consent = value ?? false),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: context.h(12)),
+                            child: Text(
+                              AppStrings.digilockerConsent,
+                              style: AppTypography.regular.copyWith(
+                                fontSize: 13,
+                                height: 1.35,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                    SizedBox(height: context.h(8)),
+                    UnifiedButton(
+                      label: AppStrings.continueAction,
+                      enabled: _consent,
+                      isLoading: widget.isLoading,
+                      onPressed: widget.onContinue,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-            SizedBox(height: context.h(8)),
-            UnifiedButton(
-              label: AppStrings.continueAction,
-              enabled: _consent,
-              isLoading: widget.isLoading,
-              onPressed: widget.onContinue,
-            ),
-          ],
+          ),
         ),
       ),
     );

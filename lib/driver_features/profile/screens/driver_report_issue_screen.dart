@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 // --- REPORT ISSUE SCREEN ---
 class DriverReportIssueScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
     final prefs = await SharedPreferences.getInstance();
     final phone = prefs.getString('user_phone') ?? '';
 
-    final urlString = '${ApiConstants.baseUrl}/api/driver/report-issue';
+    final urlString = AppUrls.reportIssue;
     debugPrint('[DEBUG REPORT ISSUE] Submitting to URL: $urlString');
     debugPrint(
       '[DEBUG REPORT ISSUE] Payload: phone=$phone, type=$_selectedIssueType, desc=$desc',

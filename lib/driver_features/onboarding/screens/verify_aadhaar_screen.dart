@@ -43,11 +43,11 @@ class VerifyAadhaarScreen extends StatelessWidget {
               onPressed: onContinueDigilocker,
             ),
             SizedBox(height: context.h(12)),
-            OnboardingOutlineButton(
-              label: AppStrings.uploadManually,
-              onPressed: onUploadManually,
-            ),
-            SizedBox(height: context.h(33)),
+            // OnboardingOutlineButton(
+            //   label: AppStrings.uploadManually,
+            //   onPressed: onUploadManually,
+            // ),
+            // SizedBox(height: context.h(33)),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

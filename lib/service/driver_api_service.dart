@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 class DriverApiService {
-  static const String baseUrl = '${ApiConstants.baseUrl}/api';
+  static const String baseUrl = AppUrls.apiBase;
 
   /// Reusable persistent HTTP client with connection pooling
   static final http.Client _client = http.Client();
@@ -17,7 +17,7 @@ class DriverApiService {
     String city = '',
   }) async {
     final uri = Uri.parse(
-      '$baseUrl/driver/active-rides?driver_phone=${Uri.encodeComponent(driverPhone)}&city=${Uri.encodeComponent(city)}',
+      AppUrls.activeRides(driverPhone: driverPhone, city: city),
     );
     final response = await _client.get(uri).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
@@ -31,7 +31,7 @@ class DriverApiService {
     required String driverPhone,
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/accept-ride'),
+      Uri.parse(AppUrls.acceptRide),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
     ).timeout(const Duration(seconds: 5));
@@ -45,7 +45,7 @@ class DriverApiService {
     required String driverPhone,
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/start-ride'),
+      Uri.parse(AppUrls.startRide),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
     ).timeout(const Duration(seconds: 5));
@@ -61,7 +61,7 @@ class DriverApiService {
   }) async {
     debugPrint('[DEBUG PICKUP API] Calling pickup-customer API for ride: $rideId, code: $rideCode');
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/pickup-customer'),
+      Uri.parse(AppUrls.pickupCustomer),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone, 'ride_code': rideCode}),
     ).timeout(const Duration(seconds: 5));
@@ -84,7 +84,7 @@ class DriverApiService {
     String paymentMethod = 'cash',
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/complete-ride'),
+      Uri.parse(AppUrls.completeRide),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'ride_id': rideId,
@@ -106,7 +106,7 @@ class DriverApiService {
     required String paymentMethod,
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/set-payment-method'),
+      Uri.parse(AppUrls.setPaymentMethod),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'ride_id': rideId,
@@ -126,7 +126,7 @@ class DriverApiService {
   }) async {
     try {
       final response = await _client.post(
-        Uri.parse('$baseUrl/driver/update-location'),
+        Uri.parse(AppUrls.updateLocation),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'phone': driverPhone,
@@ -144,7 +144,7 @@ class DriverApiService {
 
   static Future<List<dynamic>> fetchTrips(String driverPhone) async {
     debugPrint('[DEBUG FETCH TRIPS] Fetching trips for driver: $driverPhone');
-    final uri = Uri.parse('$baseUrl/driver/trips?phone=${Uri.encodeComponent(driverPhone)}');
+    final uri = Uri.parse(AppUrls.driverTrips(driverPhone));
     debugPrint('[DEBUG FETCH TRIPS] Request URI: $uri');
     
     final response = await _client.get(uri).timeout(const Duration(seconds: 5));
@@ -176,7 +176,7 @@ class DriverApiService {
 
   static Future<Map<String, dynamic>> fetchEarnings(String driverPhone) async {
     debugPrint('[DEBUG FETCH EARNINGS] Fetching earnings for driver: $driverPhone');
-    final uri = Uri.parse('$baseUrl/driver/earnings?phone=${Uri.encodeComponent(driverPhone)}');
+    final uri = Uri.parse(AppUrls.driverEarnings(driverPhone));
     debugPrint('[DEBUG FETCH EARNINGS] Request URI: $uri');
     
     final response = await _client.get(uri).timeout(const Duration(seconds: 5));
@@ -193,7 +193,7 @@ class DriverApiService {
 
   static Future<Map<String, dynamic>> fetchWallet(String driverPhone) async {
     final response = await _client.get(
-      Uri.parse('$baseUrl/driver/wallet?phone=${Uri.encodeComponent(driverPhone)}'),
+      Uri.parse(AppUrls.driverWallet(driverPhone)),
     ).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -203,7 +203,7 @@ class DriverApiService {
 
   static Future<Map<String, dynamic>> fetchProfile(String driverPhone) async {
     final response = await _client.get(
-      Uri.parse('$baseUrl/driver/profile?phone=${Uri.encodeComponent(driverPhone)}'),
+      Uri.parse(AppUrls.driverProfile(driverPhone)),
     ).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -216,11 +216,10 @@ class DriverApiService {
 
   static Future<Map<String, dynamic>> fetchRideDetail({
     required int rideId,
-    
     required String driverPhone,
   }) async {
     final response = await _client.get(
-      Uri.parse('$baseUrl/driver/ride?ride_id=$rideId&driver_phone=${Uri.encodeComponent(driverPhone)}'),
+      Uri.parse(AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone)),
     ).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -233,7 +232,7 @@ class DriverApiService {
     required String base64Image,
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/upload-profile-photo'),
+      Uri.parse(AppUrls.uploadProfilePhoto),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'phone': driverPhone,
@@ -253,7 +252,7 @@ class DriverApiService {
     required String vehicleType,
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/update-vehicle-type'),
+      Uri.parse(AppUrls.updateVehicleType),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'phone': driverPhone,
@@ -285,7 +284,7 @@ class DriverApiService {
     String? upiId,
   }) async {
     final response = await _client.post(
-      Uri.parse('$baseUrl/driver/update-profile'),
+      Uri.parse(AppUrls.updateProfile),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'phone': phone,

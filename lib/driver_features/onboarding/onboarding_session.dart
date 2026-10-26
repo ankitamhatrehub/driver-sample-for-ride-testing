@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/driver_features/onboarding/kyc_resume.dart';
 import 'package:rider_app/driver_features/onboarding/screens/application_status_screen.dart';
@@ -59,6 +59,7 @@ class OnboardingSession extends ChangeNotifier {
   DateTime? submittedAt;
   ApplicationOutcome outcome = ApplicationOutcome.underReview;
 
+  String? token;
   String? digilockerClientId;
   String? digilockerUrl;
 
@@ -67,6 +68,8 @@ class OnboardingSession extends ChangeNotifier {
   void touch() => notifyListeners();
 
   Future<void> loadProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('auth_token') ?? prefs.getString('token');
     final saved = await KycResume.progress();
     aadhaarVerified = saved.aadhaar;
     dlVerified = saved.drivingLicence;
@@ -157,7 +160,7 @@ class OnboardingSession extends ChangeNotifier {
       }
       final response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/auth/send-otp'),
+            Uri.parse(AppUrls.sendOtp),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'phone': clean}),
           )
@@ -187,6 +190,7 @@ class OnboardingSession extends ChangeNotifier {
     loading = true;
     otpError = false;
     notifyListeners();
+    print('[verifyOtp] Verifying OTP for $clean');
     try {
       if (clean == '9999999999' && otp.text == '123456') {
         final prefs = await SharedPreferences.getInstance();
@@ -204,16 +208,16 @@ class OnboardingSession extends ChangeNotifier {
 
       http.Response response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/auth/verify-otp'),
+            Uri.parse(AppUrls.verifyOtp),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
           )
           .timeout(const Duration(seconds: 15));
-
+print('[verifyOtp] Status: ${response.statusCode}, Body: ${response.body}');
       if (response.statusCode == 404) {
         response = await http
             .post(
-              Uri.parse('${ApiConstants.baseUrl}/api/auth/verify'),
+              Uri.parse(AppUrls.verifyAuthFallback),
               headers: {'Content-Type': 'application/json'},
               body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
             )
@@ -223,7 +227,7 @@ class OnboardingSession extends ChangeNotifier {
       if (response.statusCode == 404) {
         response = await http
             .post(
-              Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-otp'),
+              Uri.parse(AppUrls.verifyDriverOtpFallback),
               headers: {'Content-Type': 'application/json'},
               body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
             )
@@ -236,16 +240,33 @@ class OnboardingSession extends ChangeNotifier {
         otpError = true;
         return const OtpVerifyResult.failed();
       }
-
+print('dg - 07 [verifyOtp] OTP verified successfully for $clean');
       final data = json.decode(response.body);
+      final extractedToken = (data['token'] ??
+              data['access_token'] ??
+              data['auth_token'] ??
+              data['jwt'] ??
+              data['data']?['token'] ??
+              data['data']?['access_token'])
+          ?.toString();
+print('dg - 08 [verifyOtp] Extracted token: $extractedToken');
+     
       final existing = data['is_existing_driver'] == true ||
           data['is_existing_user'] == true ||
           data['existing'] == true ||
           data['is_existing'] == true;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_phone', clean);
+print('dg - 09 [verifyOtp] Saved user phone: $clean');
+      if (extractedToken != null && extractedToken.isNotEmpty) {
+        token = extractedToken;
+        await prefs.setString('auth_token', extractedToken);
+        await prefs.setString('token', extractedToken);
+        debugPrint('[verifyOtp] Saved auth token');
+      }
 
       if (existing) {
+        print('dg - 10 [verifyOtp] Existing driver detected, applying profile data');
         gender = (data['gender'] ?? 'Male').toString();
         if (gender.isEmpty) gender = 'Male';
         name.text = (data['name'] ?? '').toString();
@@ -264,10 +285,12 @@ class OnboardingSession extends ChangeNotifier {
         clearOtp();
         return const OtpVerifyResult.dashboard();
       }
-
+print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
       await KycResume.markVerified();
       clearOtp();
+       print('dg - 12 [verifyOtp] KYC marked as verified, proceeding to vehicle selection');
       return const OtpVerifyResult.vehicle();
+     
     } catch (e) {
       return OtpVerifyResult.error('Network error: $e');
     } finally {
@@ -308,7 +331,7 @@ class OnboardingSession extends ChangeNotifier {
 
       http.Response response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-aadhaar'),
+            Uri.parse(AppUrls.verifyAadhaar),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({
               'aadhaar_number': number,
@@ -321,7 +344,7 @@ class OnboardingSession extends ChangeNotifier {
       if (response.statusCode == 404) {
         response = await http
             .post(
-              Uri.parse('${ApiConstants.baseUrl}/api/verify-aadhaar'),
+              Uri.parse(AppUrls.verifyAadhaarFallback),
               headers: {'Content-Type': 'application/json'},
               body: json.encode({
                 'aadhaar_number': number,
@@ -437,7 +460,7 @@ class OnboardingSession extends ChangeNotifier {
       final clean = phone.text.replaceAll(' ', '').replaceAll('-', '');
       final response = await http
           .post(
-            Uri.parse('${ApiConstants.baseUrl}/api/driver/register'),
+            Uri.parse(AppUrls.driverRegister),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({
               'phone': clean,
@@ -467,6 +490,17 @@ class OnboardingSession extends ChangeNotifier {
         if (response.statusCode == 200) {
           final body = json.decode(response.body);
           if (body['driver_id'] != null) await prefs.setInt('driver_id', body['driver_id']);
+          final regToken = (body['token'] ??
+                  body['access_token'] ??
+                  body['auth_token'] ??
+                  body['jwt'] ??
+                  body['data']?['token'])
+              ?.toString();
+          if (regToken != null && regToken.isNotEmpty) {
+            token = regToken;
+            await prefs.setString('auth_token', regToken);
+            await prefs.setString('token', regToken);
+          }
         }
       } catch (_) {}
       await KycResume.clear();

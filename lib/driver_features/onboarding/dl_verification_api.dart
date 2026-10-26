@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 /// Details returned after the licence number and date of birth are checked.
 class DrivingLicenceDetails {
@@ -70,7 +70,7 @@ Future<DrivingLicenceDetails> verifyDrivingLicence({
 }) async {
   final response = await http
       .post(
-        Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-dl'),
+        Uri.parse(AppUrls.verifyDl),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'id_number': idNumber, 'dob': dob}),
       )

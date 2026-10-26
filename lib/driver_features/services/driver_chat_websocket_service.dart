@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import '../../common/constants/api_constants.dart';
+import '../../common/constants/app_urls.dart';
 
 class DriverChatWebSocketService {
   WebSocketChannel? _channel;
@@ -14,13 +14,8 @@ class DriverChatWebSocketService {
 
   void connect({required String driverPhone, String rideId = '0'}) {
     try {
-      final baseUrl = ApiConstants.baseUrl;
-      final wsBase = baseUrl
-          .replaceFirst('http://', 'ws://')
-          .replaceFirst('https://', 'wss://');
-
       final uri = Uri.parse(
-        '$wsBase/ws/chat?phone=${Uri.encodeComponent(driverPhone)}&ride_id=$rideId',
+        AppUrls.chatWebSocket(phone: driverPhone, rideId: rideId),
       );
 
       _channel = WebSocketChannel.connect(uri);

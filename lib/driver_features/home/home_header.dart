@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:rider_app/common/constants/app_colors.dart';
-import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
-import 'package:rider_app/driver_features/home/home_glass_button.dart';
+
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -59,15 +57,7 @@ class HomeHeader extends StatelessWidget {
                 ],
               ),
             ),
-            // HomeGlassButton(
-            //   onTap: onNotifications,
-            //   icon: Icons.notifications_none_rounded,
-            // ),
-            // SizedBox(width: context.w(8)),
-            // HomeGlassButton(
-            //   onTap: onHelp,
-            //   asset: AppAssets.questionMark,
-            // ),
+            
           ],
         ),
       ),

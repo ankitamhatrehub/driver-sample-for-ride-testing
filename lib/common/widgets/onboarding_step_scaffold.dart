@@ -28,74 +28,72 @@ class OnboardingStepScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: context.h(35),
+              left: context.w(16),
+              right: context.w(16),
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                  onPressed: onBack,
+                ),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 20,
+                      height: 1.2,
+                    ),
+                  ),
+                ),
+                ?headerAction,
+                if (onHelp != null)
+                  IconButton(
+                    tooltip: 'Help',
+                    onPressed: onHelp,
+                    icon: Image.asset(
+                      AppAssets.helpButton,
+                      width: context.w(40),
+                      height: context.w(40),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          if (subtitle != null)
             Padding(
               padding: EdgeInsets.only(
-                top: context.h(20),
-                left: context.w(16),
-                right: context.w(16),
+                left: 56,
+                right: context.w(60),
+                bottom: context.h(12),
               ),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
-                      color: Colors.black,
-                      size: 20,
-                    ),
-                    onPressed: onBack,
+              child: SizedBox(
+                width: context.w(281),
+                child: Text(
+                  subtitle!,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 14,
+                    height: 1.4,
+                    color: AppColors.secondaryTextColor,
                   ),
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: AppTypography.bold.copyWith(
-                        fontSize: 20,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  ?headerAction,
-                  if (onHelp != null)
-                    IconButton(
-                      tooltip: 'Help',
-                      onPressed: onHelp,
-                      icon: Image.asset(
-                        AppAssets.helpButton,
-                        width: context.w(40),
-                        height: context.w(40),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                ],
+                ),
               ),
             ),
-            if (subtitle != null)
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 56,
-                  right: context.w(60),
-                  bottom: context.h(12),
-                ),
-                child: SizedBox(
-                  width: context.w(281),
-                  child: Text(
-                    subtitle!,
-                    style: AppTypography.regular.copyWith(
-                      fontSize: 14,
-                      height: 1.4,
-                      color: AppColors.secondaryTextColor,
-                    ),
-                  ),
-                ),
-              ),
-            Expanded(child: body),
-          ],
-        ),
+          Expanded(child: body),
+        ],
       ),
     );
   }

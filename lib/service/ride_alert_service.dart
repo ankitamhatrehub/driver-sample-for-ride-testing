@@ -7,7 +7,7 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 /// Keeps polling for rides while the driver is online, even if the UI is closed.
 /// Shows a high-priority local notification with the custom ride alert sound.
@@ -163,9 +163,7 @@ Future<void> _onBackgroundStart(ServiceInstance service) async {
         return;
       }
 
-      final uri = Uri.parse(
-        '${ApiConstants.baseUrl}/api/driver/active-rides?driver_phone=${Uri.encodeComponent(phone)}',
-      );
+      final uri = Uri.parse(AppUrls.activeRides(driverPhone: phone));
       final response = await http.get(uri).timeout(const Duration(seconds: 5));
       if (response.statusCode != 200) return;
 

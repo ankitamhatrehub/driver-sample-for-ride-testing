@@ -12,7 +12,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:rider_app/driver_features/profile/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/service/location_consent_service.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/driver_features/notifications/screens/driver_notifications_screen.dart';
@@ -197,7 +197,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
       destLng = _asDouble(_ride?['drop_lng']) ?? 77.2197;
     }
     final uri = Uri.parse(
-      'https://www.google.com/maps/dir/?api=1&destination=$destLat,$destLng&travelmode=driving',
+      AppUrls.googleMapsNavigation(destLat: destLat, destLng: destLng),
     );
     try {
       if (await canLaunchUrl(uri)) {
@@ -518,11 +518,13 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
     // 1) Google Directions
     try {
       final url = Uri.parse(
-        'https://maps.googleapis.com/maps/api/directions/json'
-        '?origin=${origin.latitude},${origin.longitude}'
-        '&destination=${destination.latitude},${destination.longitude}'
-        '&mode=driving'
-        '&key=$_mapsApiKey',
+        AppUrls.googleDirections(
+          originLat: origin.latitude,
+          originLng: origin.longitude,
+          destLat: destination.latitude,
+          destLng: destination.longitude,
+          apiKey: _mapsApiKey,
+        ),
       );
       final response = await http.get(url).timeout(const Duration(seconds: 12));
       if (response.statusCode == 200) {
@@ -555,10 +557,12 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
     // 2) OSRM road route fallback (works when Maps key blocks Directions)
     try {
       final url = Uri.parse(
-        'https://router.project-osrm.org/route/v1/driving/'
-        '${origin.longitude},${origin.latitude};'
-        '${destination.longitude},${destination.latitude}'
-        '?overview=full&geometries=polyline',
+        AppUrls.osrmRoute(
+          originLat: origin.latitude,
+          originLng: origin.longitude,
+          destLat: destination.latitude,
+          destLng: destination.longitude,
+        ),
       );
       final response = await http.get(url).timeout(const Duration(seconds: 12));
       if (response.statusCode == 200) {
@@ -1077,7 +1081,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
     // Set is_dropped = 1 on the backend so customer receives payment screen
     try {
       await http.post(
-        Uri.parse('${ApiConstants.baseUrl}/api/driver/reached'),
+        Uri.parse(AppUrls.reached),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'ride_id': _rideId}),
       );

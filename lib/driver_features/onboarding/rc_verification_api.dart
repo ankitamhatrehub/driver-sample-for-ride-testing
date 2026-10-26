@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:rider_app/common/constants/api_constants.dart';
+import 'package:rider_app/common/constants/app_urls.dart';
 
 /// Vehicle details returned after the registration number is checked.
 class VehicleRcDetails {
@@ -56,7 +56,7 @@ class RcVerificationException implements Exception {
 Future<VehicleRcDetails> verifyVehicleRc({required String idNumber}) async {
   final response = await http
       .post(
-        Uri.parse('${ApiConstants.baseUrl}/api/driver/verify-rc'),
+        Uri.parse(AppUrls.verifyRc),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'id_number': idNumber}),
       )
