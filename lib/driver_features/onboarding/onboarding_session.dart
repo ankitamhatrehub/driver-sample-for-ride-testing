@@ -206,7 +206,7 @@ class OnboardingSession extends ChangeNotifier {
         return const OtpVerifyResult.dashboard();
       }
 
-      http.Response response = await http
+      final response = await http
           .post(
             Uri.parse(AppUrls.verifyOtp),
             headers: {'Content-Type': 'application/json'},
@@ -214,26 +214,6 @@ class OnboardingSession extends ChangeNotifier {
           )
           .timeout(const Duration(seconds: 15));
 print('[verifyOtp] Status: ${response.statusCode}, Body: ${response.body}');
-      if (response.statusCode == 404) {
-        response = await http
-            .post(
-              Uri.parse(AppUrls.verifyAuthFallback),
-              headers: {'Content-Type': 'application/json'},
-              body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
-            )
-            .timeout(const Duration(seconds: 15));
-      }
-
-      if (response.statusCode == 404) {
-        response = await http
-            .post(
-              Uri.parse(AppUrls.verifyDriverOtpFallback),
-              headers: {'Content-Type': 'application/json'},
-              body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
-            )
-            .timeout(const Duration(seconds: 15));
-      }
-
       debugPrint('[verifyOtp] Status: ${response.statusCode}, Body: ${response.body}');
 
       if (response.statusCode != 200 && response.statusCode != 201) {

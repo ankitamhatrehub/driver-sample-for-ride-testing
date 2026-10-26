@@ -135,12 +135,6 @@ Future<String?> _download() async {
         prefs.getString('token') ??
         prefs.getString('access_token') ??
         '';
-    final enteredPhone = session.phone.text
-        .replaceAll(' ', '')
-        .replaceAll('-', '');
-    final cleanPhone = enteredPhone.isNotEmpty
-        ? enteredPhone
-        : (prefs.getString('user_phone') ?? '');
 
     final headers = <String, String>{
       'Content-Type': 'application/json',
@@ -148,16 +142,39 @@ Future<String?> _download() async {
     };
 
     if (token.isNotEmpty) headers['Authorization'] = 'Bearer $token';
+    final clientId = session.digilockerClientId ?? '';
+    debugPrint('[DigiLocker][_download] token present: ${token.isNotEmpty}');
+    debugPrint('[DigiLocker][_download] client_id: "$clientId"');
+    debugPrint('[DigiLocker][_download] token claims: ${_jwtClaims(token)}');
+    if (clientId.isEmpty) {
+      session.loading = false;
+      session.touch();
+      return 'DigiLocker session was not initialized. Please try again.';
+    }
+    final enteredPhone = session.phone.text
+        .replaceAll(' ', '')
+        .replaceAll('-', '');
+    var mobile = enteredPhone.isNotEmpty
+        ? enteredPhone
+        : (prefs.getString('user_phone') ?? '');
+    if (mobile.length > 10) mobile = mobile.substring(mobile.length - 10);
     final requestBody = <String, dynamic>{
-      'client_id': session.digilockerClientId,
-      if (token.isNotEmpty) 'token': token,
-      if (cleanPhone.isNotEmpty) 'phone': cleanPhone,
+      'client_id': clientId,
+      'number': mobile,
     };
 
     final downloadUri = Uri.parse(AppUrls.digilockerDownload);
+    debugPrint('[DigiLocker][_download] POST $downloadUri');
+    debugPrint(
+      '[DigiLocker][_download] headers: ${headers.keys.toList()} '
+      '(Authorization: ${headers.containsKey('Authorization')})',
+    );
+    debugPrint('[DigiLocker][_download] body: ${json.encode(requestBody)}');
     final response = await http
         .post(downloadUri, headers: headers, body: json.encode(requestBody))
         .timeout(const Duration(seconds: 15));
+    debugPrint('[DigiLocker][_download] status: ${response.statusCode}');
+    debugPrint('[DigiLocker][_download] response body: ${response.body}');
     session.loading = false;
     session.touch();
     if (!_isSuccessful(response.statusCode)) {
@@ -175,17 +192,31 @@ Future<String?> _download() async {
     if (body['success'] != true) {
       return 'Failed to fetch details: ${body['message']}';
     }
-    final data = body['data'];
-    if (data is Map<String, dynamic>) {
-      await session.applyDigilockerDownload(data);
-    } else if (data is Map) {
-      await session.applyDigilockerDownload(Map<String, dynamic>.from(data));
-    }
+    final rawData = body['data'];
+    final data = rawData is Map ? Map<String, dynamic>.from(rawData) : body;
+    await session.applyDigilockerDownload(data);
     return null;
-  } catch (e) {
+  } catch (e, st) {
+    debugPrint('[DigiLocker][_download] exception: $e\n$st');
     session.loading = false;
     session.touch();
     return 'Network error: $e';
+  }
+}
+
+/// Debug helper: decodes the JWT payload (no signature check) to show its role.
+String _jwtClaims(String token) {
+  try {
+    final parts = token.split('.');
+    if (parts.length != 3) return 'not a JWT';
+    final payload = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
+    final map = json.decode(payload) as Map;
+    return map.entries
+        .where((e) => e.key != 'phone' && e.key != 'sub')
+        .map((e) => '${e.key}=${e.value}')
+        .join(', ');
+  } catch (e) {
+    return 'unreadable ($e)';
   }
 }
 

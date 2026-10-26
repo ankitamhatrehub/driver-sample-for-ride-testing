@@ -20,9 +20,7 @@ class AppUrls {
   // Authentication & Verification Endpoints
   // ---------------------------------------------------------------------------
   static const String sendOtp = '$apiBase/auth/send-otp';
-  static const String verifyOtp = '$apiBase/auth/verify-otp';
-  static const String verifyAuthFallback = '$apiBase/auth/verify';
-  static const String verifyDriverOtpFallback = '$apiBase/driver/verify-otp';
+  static const String verifyOtp = '$apiBase/driver/auth/verify-otp';
 
   static const String verifyAadhaar = '$apiBase/driver/verify-aadhaar';
   static const String verifyAadhaarFallback = '$apiBase/verify-aadhaar';
@@ -33,7 +31,8 @@ class AppUrls {
   // DigiLocker KYC Endpoints
   // ---------------------------------------------------------------------------
   static const String digilockerStart = '$apiBase/kyc/digilocker/start';
-  static const String digilockerDownload = '$apiBase/kyc/digilocker/download';
+  static const String digilockerDownload =
+      '$apiBase/kyc/driver/digilocker/fetch';
 
   // ---------------------------------------------------------------------------
   // Driver Registration & Profile Endpoints
