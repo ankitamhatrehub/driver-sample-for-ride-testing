@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/widgets/animated_progress_steps.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_page.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_text.dart';
@@ -27,7 +29,7 @@ class PaymentProcessingScreen extends StatelessWidget {
                   width: context.w(72),
                   height: context.w(80),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3E8FF),
+                    color: context.adaptiveTint(const Color(0xFFF3E8FF)),
                     borderRadius: BorderRadius.circular(context.r(16)),
                   ),
                   child: Icon(
@@ -55,7 +57,7 @@ class PaymentProcessingScreen extends StatelessWidget {
           SizedBox(height: context.h(18)),
           Text('Processing Payment...', textAlign: TextAlign.center, style: subscriptionTitle()),
           SizedBox(height: context.h(8)),
-          Text('Please do not close the app', textAlign: TextAlign.center, style: subscriptionMuted()),
+          Text('Please do not close the app', textAlign: TextAlign.center, style: subscriptionMuted(context).copyWith(color: context.legible(AppColors.slate600))),
           SizedBox(height: context.h(40)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(28)),
@@ -80,18 +82,18 @@ class PaymentProcessingScreen extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(context.w(20), 0, context.w(20), context.h(16)),
             padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
             decoration: BoxDecoration(
-              color: const Color(0xFFEFF6FF),
+              color: context.adaptiveTint(const Color(0xFFEFF6FF)),
               borderRadius: BorderRadius.circular(context.r(14)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.info, color: const Color(0xFF3B82F6), size: context.w(18)),
+                Icon(Icons.info, color: context.legible(Color(0xFF3B82F6)), size: context.w(18)),
                 SizedBox(width: context.w(8)),
                 Expanded(
                   child: Text(
                     "This may take a few moments. Please don't close the app",
-                    style: subscriptionMuted(),
+                    style: subscriptionMuted(context).copyWith(color: context.torkk.textBody),
                   ),
                 ),
               ],

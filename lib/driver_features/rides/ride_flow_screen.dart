@@ -12,6 +12,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/dashboard/ride_details_loading_dialog.dart';
 import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Sample ride shown after the driver goes online. No backend yet.
 enum _Phase {
@@ -227,7 +228,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         child: Container(
           padding: EdgeInsets.fromLTRB(context.w(14), context.h(12), context.w(4), context.h(12)),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.torkk.surface,
             borderRadius: BorderRadius.circular(context.r(20)),
             boxShadow: const [BoxShadow(color: Color(0x1A000000), blurRadius: 16, offset: Offset(0, 4))],
           ),
@@ -242,7 +243,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
               ),
               SizedBox(width: context.w(12)),
               Expanded(child: _metric('4.2 km', 'Distance')),
-              Container(width: 1, height: context.h(28), color: const Color(0xFFE2E8F0)),
+              Container(width: 1, height: context.h(28), color: context.adaptiveTint(const Color(0xFFE2E8F0))),
               SizedBox(width: context.w(14)),
               Expanded(child: _metric('18 min', 'Est. duration')),
               IconButton(onPressed: () => _go(_navNext), icon: const Icon(Icons.close, color: Color(0xFF94A3B8))),
@@ -257,7 +258,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       width: context.w(378),
       padding: EdgeInsets.fromLTRB(context.w(20), context.h(28), context.w(20), context.h(80)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(32))),
         boxShadow: const [BoxShadow(color: Color(0x40000000), offset: Offset(0, -11), blurRadius: 16.8)],
       ),
@@ -281,14 +282,14 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Good morning,', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+              Text('Good morning,', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
               Text('Rahul Sharma', style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3)),
             ],
           ),
         ),
         Icon(Icons.notifications_none_rounded, size: context.w(22)),
         SizedBox(width: context.w(8)),
-        CircleAvatar(radius: context.w(16), backgroundColor: accent, child: Icon(Icons.person, color: Colors.white, size: context.w(16))),
+        CircleAvatar(radius: context.w(16), backgroundColor: accent, child: Icon(Icons.person, color: Theme.of(context).colorScheme.onPrimary, size: context.w(16))),
       ],
     );
   }
@@ -327,7 +328,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       width: context.w(378),
       padding: EdgeInsets.fromLTRB(context.w(20), context.h(28), context.w(20), context.h(28)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(32))),
         boxShadow: const [
           BoxShadow(color: Color(0x40000000), offset: Offset(0, -3), blurRadius: 11.1),
@@ -341,7 +342,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           SizedBox(height: context.h(14)),
           Row(
             children: [
-              Icon(Icons.local_taxi_rounded, color: AppColors.textPrimary, size: context.w(22)),
+              Icon(Icons.local_taxi_rounded, color: context.torkk.textPrimary, size: context.w(22)),
               SizedBox(width: context.w(8)),
               Text('CAB', style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2, letterSpacing: -0.2)),
               const Spacer(),
@@ -366,7 +367,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
               children: [
                 Expanded(child: _requestStat('4.2 km', 'Distance')),
                 SizedBox(width: context.w(10)),
-                Container(width: 1, height: context.h(28), color: const Color(0xFFE2E8F0)),
+                Container(width: 1, height: context.h(28), color: context.adaptiveTint(const Color(0xFFE2E8F0))),
                 SizedBox(width: context.w(10)),
                 Expanded(child: _requestStat('18 min', 'Est. duration')),
               ],
@@ -390,7 +391,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       children: [
         CircleAvatar(
           radius: context.w(22),
-          backgroundColor: const Color(0xFFF1F5F9),
+          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
           child: Icon(Icons.person, color: AppColors.slate400, size: context.w(24)),
         ),
         SizedBox(width: context.w(10)),
@@ -404,13 +405,13 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: context.w(8), vertical: context.h(3)),
-                    decoration: BoxDecoration(color: const Color(0xFFF1F5F9), borderRadius: BorderRadius.circular(context.r(20))),
+                    decoration: BoxDecoration(color: context.torkk.surfaceMuted, borderRadius: BorderRadius.circular(context.r(20))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.people_alt_outlined, size: context.w(12), color: AppColors.slate500),
+                        Icon(Icons.people_alt_outlined, size: context.w(12), color: context.torkk.textSecondary),
                         SizedBox(width: context.w(4)),
-                        Text('3 passengers', style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500)),
+                        Text('3 passengers', style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary)),
                       ],
                     ),
                   ),
@@ -451,7 +452,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       height: context.w(40),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Icon(icon, color: color, size: context.w(18)),
     );
@@ -468,7 +469,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
             child: Column(
               children: [
                 Container(width: context.w(10), height: context.w(10), decoration: const BoxDecoration(color: Color(0xFF22C55E), shape: BoxShape.circle)),
-                Container(width: 2, height: context.h(36), color: const Color(0xFFE2E8F0)),
+                Container(width: 2, height: context.h(36), color: context.adaptiveTint(const Color(0xFFE2E8F0))),
                 Container(width: context.w(10), height: context.w(10), decoration: const BoxDecoration(color: Color(0xFFEF4444), shape: BoxShape.circle)),
               ],
             ),
@@ -526,7 +527,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           backgroundColor: accent,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(16))),
         ),
-        child: Text('Accept', style: AppTypography.bold.copyWith(fontSize: 16, color: Colors.white, height: 1)),
+        child: Text('Accept', style: AppTypography.bold.copyWith(fontSize: 16, color: Theme.of(context).colorScheme.onPrimary, height: 1)),
       ),
     );
   }
@@ -554,8 +555,8 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
             height: context.h(28),
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: context.w(10)),
-            decoration: BoxDecoration(color: const Color(0xFFEFF6FF), borderRadius: BorderRadius.circular(context.r(8))),
-            child: Text(chip, style: AppTypography.bold.copyWith(fontSize: 12, height: 16 / 12, color: const Color(0xFF2563EB))),
+            decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFEFF6FF)), borderRadius: BorderRadius.circular(context.r(8))),
+            child: Text(chip, style: AppTypography.bold.copyWith(fontSize: 12, height: 16 / 12, color: context.legible(Color(0xFF2563EB)))),
           ),
       ],
     );
@@ -612,11 +613,11 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(vertical: context.h(10)),
-          decoration: BoxDecoration(color: const Color(0xFFFFF1F2), borderRadius: BorderRadius.circular(context.r(12))),
+          decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFFFF1F2)), borderRadius: BorderRadius.circular(context.r(12))),
           child: Column(
             children: [
-              Text(_waitLabel, style: AppTypography.bold.copyWith(fontSize: 22, color: const Color(0xFFEF4444), letterSpacing: -0.3)),
-              Text('Customer has been notified', style: AppTypography.regular.copyWith(fontSize: 12, color: const Color(0xFFEF4444))),
+              Text(_waitLabel, style: AppTypography.bold.copyWith(fontSize: 22, color: context.legible(Color(0xFFEF4444)), letterSpacing: -0.3)),
+              Text('Customer has been notified', style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(Color(0xFFEF4444)))),
             ],
           ),
         ),
@@ -669,7 +670,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
             SizedBox(height: context.h(8)),
             Text(
               'Ask the customer for their 4-digit ride OTP.',
-              style: AppTypography.regular.copyWith(fontSize: 14.5, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 14.5, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(28)),
             _RideOtpBoxes(controller: _otp, focusNode: _otpFocus, length: 4),
@@ -727,14 +728,14 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                 Container(
                   width: context.w(72),
                   height: context.w(72),
-                  decoration: const BoxDecoration(color: Color(0xFFDCFCE7), shape: BoxShape.circle),
-                  child: Icon(Icons.check_rounded, color: const Color(0xFF16A34A), size: context.w(36)),
+                  decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFDCFCE7)), shape: BoxShape.circle),
+                  child: Icon(Icons.check_rounded, color: context.legible(Color(0xFF16A34A)), size: context.w(36)),
                 ),
               ],
             ),
           ),
           Text('Ride Completed !', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 20, letterSpacing: -0.3)),
-          Text('Great job', textAlign: TextAlign.center, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text('Great job', textAlign: TextAlign.center, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(16)),
           _money(context, "Driver's Earning", '₹ 85'),
           SizedBox(height: context.h(8)),
@@ -743,20 +744,20 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           Container(
             padding: EdgeInsets.all(context.w(12)),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(context.r(14)), gradient: LinearGradient(colors: [accent, const Color(0xFF61217E), Color(0xFF0F3FBF), Color(0xFFBA2879)])),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.card_giftcard_rounded, color: Colors.white),
+                Icon(Icons.card_giftcard_rounded, color: Theme.of(context).colorScheme.onPrimary),
                 SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('You earned 200 coins', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+                      Text('You earned 200 coins', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.w700)),
                       Text('Get your reward unlocked!', style: TextStyle(color: Colors.white70, fontSize: 12)),
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right_rounded, color: Colors.white),
+                Icon(Icons.chevron_right_rounded, color: Theme.of(context).colorScheme.onPrimary),
               ],
             ),
           ),
@@ -768,7 +769,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   OutlineInputBorder _commentBorder(BuildContext context) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(context.r(16)),
-      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+      borderSide: BorderSide(color: context.torkk.border),
     );
   }
 
@@ -797,7 +798,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: context.w(20)),
         children: [
-          Center(child: CircleAvatar(radius: context.w(28), backgroundColor: const Color(0xFFF3E8FF), child: Icon(Icons.person, color: Color(0xFFBA2879)))),
+          Center(child: CircleAvatar(radius: context.w(28), backgroundColor: context.adaptiveTint(const Color(0xFFF3E8FF)), child: Icon(Icons.person, color: context.legible(Color(0xFFBA2879))))),
           SizedBox(height: context.h(8)),
           Text('Rahul', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 16)),
           SizedBox(height: context.h(10)),
@@ -823,7 +824,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: _pickedTags.contains(tag) ? accent.withValues(alpha: 0.12) : const Color(0xFFF8FAFC),
+                      color: _pickedTags.contains(tag) ? accent.withValues(alpha: 0.12) : context.adaptiveTint(Color(0xFFF8FAFC)),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(tag, style: AppTypography.regular.copyWith(fontSize: 12, fontWeight: FontWeight.w600)),
@@ -844,7 +845,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                 maxLines: null,
                 textAlignVertical: TextAlignVertical.top,
                 onChanged: (_) => setState(() {}),
-                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.textPrimary),
+                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textPrimary),
                 decoration: InputDecoration(
                   hintText: 'Add a comment (Optional)',
                   hintStyle: AppTypography.regular.copyWith(
@@ -855,7 +856,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                     color: const Color(0xFF94A3B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: context.torkk.surface,
                   counterText: '',
                   contentPadding: EdgeInsets.all(context.w(12)),
                   border: _commentBorder(context),
@@ -878,7 +879,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
 
   Widget _rewardPage(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: context.torkk.surfaceMuted,
       body: SafeArea(
         child: Stack(
           children: [
@@ -892,7 +893,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: context.w(28)),
                 padding: EdgeInsets.fromLTRB(context.w(16), context.h(16), context.w(16), context.h(16)),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(context.r(20))),
+                decoration: BoxDecoration(color: context.torkk.surface, borderRadius: BorderRadius.circular(context.r(20))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -905,7 +906,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                     Text('You earned\n200 Torkk Coins !', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 18, letterSpacing: -0.3)),
                     Image.asset(AppAssets.giftCard, width: context.w(120), height: context.w(120)),
                     Text('Scratch & Win', style: AppTypography.bold.copyWith(fontSize: 16)),
-                    Text('Exciting reward await you.', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                    Text('Exciting reward await you.', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                     SizedBox(height: context.h(12)),
                     _fill(context, 'Scratch Card', _close),
                     SizedBox(height: context.h(8)),
@@ -939,13 +940,13 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
               Container(
                 width: context.w(72),
                 height: context.w(72),
-                decoration: const BoxDecoration(color: Color(0xFFFEE2E2), shape: BoxShape.circle),
-                child: Icon(icon, color: const Color(0xFFEF4444), size: 32),
+                decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFFEE2E2)), shape: BoxShape.circle),
+                child: Icon(icon, color: context.legible(Color(0xFFEF4444)), size: 32),
               ),
               SizedBox(height: context.h(16)),
               Text(title, textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 18, letterSpacing: -0.3)),
               SizedBox(height: context.h(6)),
-              Text(body, textAlign: TextAlign.center, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+              Text(body, textAlign: TextAlign.center, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
             ],
           ),
         ),
@@ -966,7 +967,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(20)))),
       builder: (sheetContext) {
         return StatefulBuilder(
@@ -979,7 +980,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                 children: [
                   Align(alignment: Alignment.centerRight, child: IconButton(onPressed: () => Navigator.pop(sheetContext), icon: const Icon(Icons.close))),
                   Text('Cancel ride ?', style: AppTypography.bold.copyWith(fontSize: 18, letterSpacing: -0.3)),
-                  Text('Are you sure you want to cancel the ride?', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+                  Text('Are you sure you want to cancel the ride?', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
                   SizedBox(height: context.h(10)),
                   Text('Cancellation Reason?', style: AppTypography.bold.copyWith(fontSize: 14)),
                   for (var i = 0; i < reasons.length; i++)
@@ -1015,7 +1016,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       padding: EdgeInsets.only(bottom: context.h(8)),
       child: Row(
         children: [
-          CircleAvatar(radius: 18, backgroundColor: const Color(0xFFF1F5F9), child: Icon(Icons.person, color: AppColors.slate500)),
+          CircleAvatar(radius: 18, backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)), child: Icon(Icons.person, color: context.torkk.textSecondary)),
           SizedBox(width: context.w(8)),
           Expanded(
             child: Column(
@@ -1026,7 +1027,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                   children: [
                     Icon(Icons.people_alt_outlined, size: 14, color: AppColors.slate400),
                     const SizedBox(width: 4),
-                    Text('$passengers passengers', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                    Text('$passengers passengers', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                     const SizedBox(width: 6),
                     _pill(Icons.thumb_up_alt_rounded, '1', const Color(0xFF16A34A)),
                     const SizedBox(width: 4),
@@ -1122,7 +1123,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: warn ? const Color(0xFFFFF7ED) : Colors.white,
+        color: warn ? context.adaptiveTint(const Color(0xFFFFF7ED)) : context.torkk.surface,
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 8)],
       ),
@@ -1136,7 +1137,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2)),
-                if (body.isNotEmpty) Text(body, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                if (body.isNotEmpty) Text(body, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
               ],
             ),
           ),
@@ -1148,10 +1149,10 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   Widget _money(BuildContext context, String label, String value) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(context.r(12)), border: Border.all(color: const Color(0xFFE8EDF5))),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(context.r(12)), border: Border.all(color: context.torkk.border)),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500))),
+          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
           Text(value, style: AppTypography.bold.copyWith(fontSize: 14)),
         ],
       ),
@@ -1160,7 +1161,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
 
   Widget _page(BuildContext context, {required String title, required VoidCallback onBack, required Widget child, Widget? bottom}) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -1176,7 +1177,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     );
   }
 
-  Widget _back(VoidCallback onTap) => IconButton(onPressed: onTap, icon: const Icon(Icons.arrow_back_ios_new, size: 18, color: AppColors.textPrimary));
+  Widget _back(VoidCallback onTap) => IconButton(onPressed: onTap, icon: Icon(Icons.arrow_back_ios_new, size: 18, color: context.torkk.textPrimary));
 
   Widget _fill(BuildContext context, String label, VoidCallback onTap, {IconData? icon}) {
     return SizedBox(
@@ -1196,12 +1197,12 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
             label,
             style: AppTypography.bold.copyWith(
               fontSize: 15,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onPrimary,
               height: 1,
             ), ),
               if (icon != null) ...[
           const SizedBox(width: 8),
-      Icon(icon, color: Colors.white, size: 16),
+      Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 16),
       ],]  ),
     ));
   }
@@ -1305,7 +1306,7 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
                     height: boxSize,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.torkk.surface,
                       borderRadius: BorderRadius.circular(context.r(14)),
                       border: Border.all(
                         color: isActive ? AppColors.primary : AppColors.fieldBorder,
@@ -1469,13 +1470,14 @@ Future<BitmapDescriptor> _redPin() {
   }, logical: 32);
 }
 
+/// Map marker bitmap: always drawn on white, so its text colors are fixed.
 Future<BitmapDescriptor> _distanceLabel() {
   return _markerImage(120, (canvas) {
     final rect = RRect.fromRectAndRadius(const Rect.fromLTWH(4, 4, 78, 40), const Radius.circular(6));
     canvas.drawRRect(rect.shift(const Offset(0, 1)), Paint()..color = const Color(0x1A000000));
     canvas.drawRRect(rect, Paint()..color = Colors.white);
-    _paintLine(canvas, '4.8 km', const Offset(12, 8), const TextStyle(color: Color(0xFF1E293B), fontSize: 13, fontWeight: FontWeight.w700, height: 1));
-    _paintLine(canvas, '12 min', const Offset(12, 24), const TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w500, height: 1));
+    _paintLine(canvas, '4.8 km', const Offset(12, 8), TextStyle(color: Color.fromARGB(255, 30, 41, 59), fontSize: 13, fontWeight: FontWeight.w700, height: 1));
+    _paintLine(canvas, '12 min', const Offset(12, 24), TextStyle(color: Color.fromARGB(255, 100, 116, 139), fontSize: 11, fontWeight: FontWeight.w500, height: 1));
   }, logical: 60);
 }
 

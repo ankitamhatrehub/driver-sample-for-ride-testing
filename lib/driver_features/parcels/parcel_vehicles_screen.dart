@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Bike and auto can take parcels. Cars cannot.
 bool parcelAllowedForVehicle(String vehicleType) {
@@ -22,7 +23,7 @@ class ParcelVehiclesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -32,7 +33,7 @@ class ParcelVehiclesScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: onBack,
-                    icon: const Icon(Icons.arrow_back_ios_new, size: 18, color: AppColors.textPrimary),
+                    icon: Icon(Icons.arrow_back_ios_new, size: 18, color: context.torkk.textPrimary),
                   ),
                   Text(
                     AppStrings.navParcel,
@@ -56,7 +57,7 @@ class ParcelVehiclesScreen extends StatelessWidget {
                   Text(
                     AppStrings.earnByDeliveringParcels,
                     textAlign: TextAlign.center,
-                    style: AppTypography.regular.copyWith(fontSize: 14, height: 1.4, color: AppColors.slate500),
+                    style: AppTypography.regular.copyWith(fontSize: 14, height: 1.4, color: context.torkk.textSecondary),
                   ),
                   SizedBox(height: context.h(22)),
                   Text(
@@ -103,7 +104,7 @@ class ParcelVehiclesScreen extends StatelessWidget {
                   ),
                   child: Text(
                     AppStrings.startReceivingParcelRequests,
-                    style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: Colors.white, letterSpacing: -0.2),
+                    style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: Theme.of(context).colorScheme.onPrimary, letterSpacing: -0.2),
                   ),
                 ),
               ),
@@ -152,9 +153,9 @@ class _VehicleTile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -162,7 +163,7 @@ class _VehicleTile extends StatelessWidget {
             width: context.w(40),
             height: context.w(40),
             decoration: BoxDecoration(
-              color: enabled ? accent.withValues(alpha: 0.1) : const Color(0xFFF1F5F9),
+              color: enabled ? accent.withValues(alpha: 0.1) : context.adaptiveTint(Color(0xFFF1F5F9)),
               borderRadius: BorderRadius.circular(context.r(12)),
             ),
             child: Icon(icon, color: color, size: context.w(20)),
@@ -178,12 +179,12 @@ class _VehicleTile extends StatelessWidget {
                     fontSize: 15,
                     height: 1.2,
                     letterSpacing: -0.2,
-                    color: enabled ? AppColors.textPrimary : AppColors.slate400,
+                    color: enabled ? context.legible(AppColors.textPrimary) : AppColors.slate400,
                   ),
                 ),
                 Text(
                   subtitle,
-                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: AppColors.slate500),
+                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: context.torkk.textSecondary),
                 ),
               ],
             ),

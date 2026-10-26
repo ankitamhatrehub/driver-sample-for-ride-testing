@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../constants/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Rounded filled field. Pass [hintText] and [controller] from the screen.
 class AppTextField extends StatelessWidget {
@@ -39,10 +40,10 @@ class AppTextField extends StatelessWidget {
       height: context.h(48),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: AppColors.fieldFill,
+        color: context.torkk.surfaceMuted,
         borderRadius: radius,
         border: Border.all(
-          color: hasError ? AppColors.error : AppColors.fieldBorder,
+          color: hasError ? AppColors.error : context.torkk.border,
         ),
         boxShadow: [
           BoxShadow(
@@ -66,7 +67,7 @@ class AppTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: AppTypography.regular.copyWith(color: AppColors.slate400),
           filled: true,
-          fillColor: AppColors.fieldFill,
+          fillColor: context.torkk.surfaceMuted,
           counterText: '',
           isDense: true,
           contentPadding: EdgeInsets.symmetric(horizontal: context.w(16)),

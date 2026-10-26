@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/home/home_brand.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomeStatusCard extends StatelessWidget {
   const HomeStatusCard({
@@ -29,8 +29,8 @@ class HomeStatusCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: isOnline
-              ? const [Color(0xFFF8F6FE), Color(0x82CEE9DC)]
-              : const [Color(0xFFF8F6FE), Color(0xFFFEF6F7)],
+              ? [context.adaptiveTint(Color(0xFFF8F6FE)), context.adaptiveTint(Color(0x82CEE9DC))]
+              : [context.adaptiveTint(Color(0xFFF8F6FE)), context.adaptiveTint(Color(0xFFFEF6F7))],
         ),
         border: Border.all(color: female ? const Color(0xB2FBCFE8) : const Color(0xB2F3E8FF)),
         boxShadow: const [
@@ -47,7 +47,7 @@ class HomeStatusCard extends StatelessWidget {
                 height: context.w(28),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isOnline ? const Color(0xFFDCFCE7) : const Color(0xFFFEE2E2),
+                  color: isOnline ? context.adaptiveTint(Color(0xFFDCFCE7)) : context.adaptiveTint(Color(0xFFFEE2E2)),
                   shape: BoxShape.circle,
                 ),
                 child: Container(
@@ -71,7 +71,7 @@ class HomeStatusCard extends StatelessWidget {
               style: AppTypography.regular.copyWith(
                 fontSize: 13,
                 height: 1.35,
-                color: AppColors.slate500,
+                color: context.torkk.textSecondary,
               ),
             ),
           ),
@@ -96,7 +96,7 @@ class HomeStatusCard extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(text: '$lead ', style: style.copyWith(color: AppColors.textPrimary)),
+          TextSpan(text: '$lead ', style: style.copyWith(color: context.torkk.textPrimary)),
           WidgetSpan(
             alignment: PlaceholderAlignment.middle,
             child: ShaderMask(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SosButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -16,7 +17,7 @@ class SosButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: context.torkk.surface,
           elevation: 16,
           insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           child: Padding(
@@ -37,21 +38,21 @@ class SosButton extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 18),
-                const Text(
+                Text(
                   'Emergency SOS Activated',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF0F172A),
+                    color: context.torkk.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
+                Text(
                   'Your live location and emergency packet are being broadcasted to the dispatch team and your registered emergency contacts.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF64748B),
+                    color: context.torkk.textSecondary,
                     height: 1.4,
                   ),
                 ),

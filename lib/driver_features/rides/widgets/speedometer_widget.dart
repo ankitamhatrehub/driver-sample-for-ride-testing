@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Floating card displaying real-time GPS speed in km/h.
 class SpeedometerWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class SpeedometerWidget extends StatelessWidget {
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -32,19 +33,19 @@ class SpeedometerWidget extends StatelessWidget {
         children: [
           Text(
             '$speedKmH',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF0F172A),
+              color: context.torkk.textPrimary,
               height: 1.1,
             ),
           ),
-          const Text(
+          Text(
             'km/h',
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF64748B),
+              color: context.torkk.textSecondary,
             ),
           ),
         ],

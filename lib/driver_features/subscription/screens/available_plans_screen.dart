@@ -7,6 +7,7 @@ import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/subscription/models/subscription_plan.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_page.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_text.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class AvailablePlansScreen extends StatelessWidget {
   const AvailablePlansScreen({
@@ -58,7 +59,7 @@ class AvailablePlansScreen extends StatelessWidget {
                       children: [
                         Icon(Icons.check_circle, color: const Color(0xFF16A34A), size: context.w(16)),
                         SizedBox(width: context.w(10)),
-                        Expanded(child: Text(benefit, style: subscriptionMuted())),
+                        Expanded(child: Text(benefit, style: subscriptionMuted(context))),
                       ],
                     ),
                   ),
@@ -73,7 +74,7 @@ class AvailablePlansScreen extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: context.h(10)),
                 padding: EdgeInsets.all(context.w(14)),
                 decoration: BoxDecoration(
-                  color: selected == i ? accent.withValues(alpha: 0.06) : Colors.white,
+                  color: selected == i ? accent.withValues(alpha: 0.06) : context.torkk.surface,
                   borderRadius: BorderRadius.circular(context.r(14)),
                   border: Border.all(
                     color: selected == i ? accent : const Color(0xFFE8EDF5),
@@ -92,7 +93,7 @@ class AvailablePlansScreen extends StatelessWidget {
                       '₹ ${subscriptionPlans[i].price}',
                       style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2),
                     ),
-                    Text(' / ${subscriptionPlans[i].unit}', style: subscriptionMuted()),
+                    Text(' / ${subscriptionPlans[i].unit}', style: subscriptionMuted(context)),
                   ],
                 ),
               ),

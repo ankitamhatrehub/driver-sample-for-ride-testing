@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- PRIVACY SCREEN (Figma Settings -> Privacy) ---
 class DriverPrivacyScreen extends StatelessWidget {
@@ -9,8 +10,7 @@ class DriverPrivacyScreen extends StatelessWidget {
     required String title,
     required VoidCallback onTap,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     return Column(
       children: [
@@ -29,11 +29,7 @@ class DriverPrivacyScreen extends StatelessWidget {
                     color: textColor,
                   ),
                 ),
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: textColor,
-                  size: 26,
-                ),
+                Icon(Icons.chevron_right_rounded, color: textColor, size: 26),
               ],
             ),
           ),
@@ -41,7 +37,7 @@ class DriverPrivacyScreen extends StatelessWidget {
         Divider(
           height: 1,
           thickness: 1,
-          color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+          color: context.torkk.border,
         ),
       ],
     );
@@ -125,9 +121,8 @@ class DriverPrivacyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -140,11 +135,11 @@ class DriverPrivacyScreen extends StatelessWidget {
           child: GestureDetector(
             onTap: () => Navigator.maybePop(context),
             child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF475569),
+              decoration: BoxDecoration(
+                color: context.themed(light: const Color(0xFF475569), dark: context.torkk.surfaceMuted),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.close, color: Colors.white, size: 20),
+              child: Icon(Icons.close, color: context.themed(light: Colors.white, dark: context.torkk.textPrimary), size: 20),
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:rider_app/common/utils/translations.dart';
 import 'package:rider_app/driver_features/onboarding/screens/language_selection.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class LanguagePage extends StatelessWidget {
   const LanguagePage({super.key});
@@ -11,7 +12,7 @@ class LanguagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: ValueListenableBuilder<String>(
         valueListenable: AppTranslations.currentLanguage,
         builder: (context, currentLanguage, _) {

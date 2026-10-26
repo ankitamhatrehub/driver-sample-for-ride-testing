@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/driver_features/profile/screens/driver_profile_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CustomDriverDrawer extends StatelessWidget {
   final String profilePhotoUrl;
@@ -32,8 +33,8 @@ class CustomDriverDrawer extends StatelessWidget {
       elevation: 0,
       width: 283,
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: context.torkk.surface,
           borderRadius: BorderRadius.horizontal(right: Radius.circular(32)),
         ),
         child: Material(
@@ -73,13 +74,13 @@ class CustomDriverDrawer extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Text(
+                    Text(
                       'MENU',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 0.5,
-                        color: Color(0xFF1F2937),
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                   ],
@@ -204,22 +205,22 @@ class CustomDriverDrawer extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   children: [
-                    const Text(
+                    Text(
                       'Documents',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    Text(
                       'Uploaded Documents',
-                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                      style: TextStyle(fontSize: 12, color: context.torkk.textSecondary),
                     ),
                     const SizedBox(height: 16),
 
-                    _buildDocumentItem(
+                    _buildDocumentItem(context, 
                       'Aadhar Card',
                       driverProfile['aadhaar_number'] != null &&
                               driverProfile['aadhaar_number']
@@ -232,7 +233,7 @@ class CustomDriverDrawer extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const DriverProfileScreen()));
                       },
                     ),
-                    _buildDocumentItem(
+                    _buildDocumentItem(context, 
                       'PAN Card',
                       driverProfile['pan_number'] != null &&
                               driverProfile['pan_number'].toString().isNotEmpty
@@ -243,7 +244,7 @@ class CustomDriverDrawer extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const DriverProfileScreen()));
                       },
                     ),
-                    _buildDocumentItem(
+                    _buildDocumentItem(context, 
                       'Drivers Licence',
                       driverProfile['driving_licence_number'] != null &&
                               driverProfile['driving_licence_number']
@@ -256,7 +257,7 @@ class CustomDriverDrawer extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const DriverProfileScreen()));
                       },
                     ),
-                    _buildDocumentItem(
+                    _buildDocumentItem(context, 
                       'RC',
                       driverProfile['rc_number'] != null &&
                               driverProfile['rc_number'].toString().isNotEmpty
@@ -272,7 +273,7 @@ class CustomDriverDrawer extends StatelessWidget {
                     const Divider(color: Colors.black54),
                     const SizedBox(height: 16),
 
-                    _buildLinkItem('Performance Metrics', onTap: () {
+                    _buildLinkItem(context, 'Performance Metrics', onTap: () {
                       onClose();
                       if (onPerformanceTap != null) {
                         onPerformanceTap!();
@@ -282,12 +283,12 @@ class CustomDriverDrawer extends StatelessWidget {
                         );
                       }
                     }),
-                    _buildLinkItem('Rewards & Coins', onTap: () {
+                    _buildLinkItem(context, 'Rewards & Coins', onTap: () {
                       onClose();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Rewards coming soon!')));
                     }),
 
-                    _buildLinkItem('All Trip Activity', onTap: () {
+                    _buildLinkItem(context, 'All Trip Activity', onTap: () {
                       onClose();
                       if (onTripsTap != null) {
                         onTripsTap!();
@@ -297,7 +298,7 @@ class CustomDriverDrawer extends StatelessWidget {
                         );
                       }
                     }),
-                    _buildLinkItem('Help & Support', onTap: () {
+                    _buildLinkItem(context, 'Help & Support', onTap: () {
                       onClose();
                       if (onSupportTap != null) {
                         onSupportTap!();
@@ -307,7 +308,7 @@ class CustomDriverDrawer extends StatelessWidget {
                         );
                       }
                     }),
-                    _buildLinkItem('Settings', onTap: () {
+                    _buildLinkItem(context, 'Settings', onTap: () {
                       onClose();
                       Navigator.push(context, MaterialPageRoute(builder: (_) => const DriverProfileScreen()));
                     }),
@@ -324,7 +325,7 @@ class CustomDriverDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildDocumentItem(
+  Widget _buildDocumentItem(BuildContext context, 
     String title,
     String subtitle, {
     VoidCallback? onTap,
@@ -341,10 +342,10 @@ class CustomDriverDrawer extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1F2937),
+                    color: context.torkk.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -354,7 +355,7 @@ class CustomDriverDrawer extends StatelessWidget {
                     fontSize: 11,
                     color: subtitle == 'Uploaded'
                         ? Colors.green
-                        : Colors.black54,
+                        : context.themed(light: Colors.black54, dark: context.torkk.textSecondary),
                     fontWeight: subtitle == 'Uploaded'
                         ? FontWeight.bold
                         : FontWeight.normal,
@@ -362,14 +363,14 @@ class CustomDriverDrawer extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(Icons.chevron_right, color: Colors.black87),
+            Icon(Icons.chevron_right, color: context.torkk.textPrimary),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildLinkItem(String title, {VoidCallback? onTap}) {
+  Widget _buildLinkItem(BuildContext context, String title, {VoidCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -379,13 +380,13 @@ class CustomDriverDrawer extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1F2937),
+                color: context.torkk.textPrimary,
               ),
             ),
-            const Icon(Icons.chevron_right, color: Colors.black87),
+            Icon(Icons.chevron_right, color: context.torkk.textPrimary),
           ],
         ),
       ),

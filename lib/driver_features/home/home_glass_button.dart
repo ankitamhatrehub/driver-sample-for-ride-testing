@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomeGlassButton extends StatelessWidget {
   const HomeGlassButton({
@@ -44,7 +44,7 @@ class HomeGlassButton extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: const Color(0x33FFFFFF),
                 border: Border.all(
-                  color: const Color(0xFFF1F5F9),
+                  color: context.torkk.border,
                   width: context.w(1.07),
                 ),
               ),
@@ -58,7 +58,7 @@ class HomeGlassButton extends StatelessWidget {
                   : Icon(
                       icon,
                       size: context.w(20),
-                      color: AppColors.textPrimary,
+                      color: context.torkk.textPrimary,
                     ),
             ),
           ),

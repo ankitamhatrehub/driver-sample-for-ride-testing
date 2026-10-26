@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/widgets/custom_button.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER RIDE REQUESTS SCREEN ---
 class DriverRequestsScreen extends StatelessWidget {
@@ -19,7 +20,7 @@ class DriverRequestsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
+                color: context.torkk.surfaceMuted,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Column(

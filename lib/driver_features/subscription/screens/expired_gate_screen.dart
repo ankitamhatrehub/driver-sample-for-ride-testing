@@ -28,7 +28,7 @@ class ExpiredGateScreen extends StatelessWidget {
           Text(
             AppStrings.planExpiredSubtitle,
             textAlign: TextAlign.center,
-            style: subscriptionMuted(),
+            style: subscriptionMuted(context),
           ),
           const Spacer(),
         ],

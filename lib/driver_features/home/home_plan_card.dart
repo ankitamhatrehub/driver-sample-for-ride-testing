@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/home/home_brand.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomePlanCard extends StatelessWidget {
   const HomePlanCard({super.key, required this.accent, required this.female});
@@ -32,7 +32,7 @@ class HomePlanCard extends StatelessWidget {
             width: context.w(32),
             height: context.w(32),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.torkk.surface,
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
             child: Icon(Icons.calendar_month_rounded, color: accent, size: context.w(16)),
@@ -53,7 +53,7 @@ class HomePlanCard extends StatelessWidget {
                   AppStrings.planYourTimeSubtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.regular.copyWith(fontSize: 11, height: 1.2, color: AppColors.gray500),
+                  style: AppTypography.regular.copyWith(fontSize: 11, height: 1.2, color: context.torkk.textSecondary),
                 ),
               ],
             ),

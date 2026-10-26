@@ -50,7 +50,7 @@ class HowToEarnScreen extends StatelessWidget {
             child: Text(
               AppStrings.completeRidesDeliveriesToEarnCoins,
               textAlign: TextAlign.center,
-              style: coinsMuted(),
+              style: coinsMuted(context),
             ),
           ),
           SizedBox(height: context.h(22)),

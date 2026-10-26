@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SettingsChoiceCard extends StatelessWidget {
   const SettingsChoiceCard({
@@ -28,11 +28,17 @@ class SettingsChoiceCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: context.h(12)),
-        padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.w(14),
+          vertical: context.h(14),
+        ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: BorderRadius.circular(context.r(16)),
-          border: Border.all(color: selected ? accent : const Color(0xFFE8EDF5), width: selected ? 1.4 : 1),
+          border: Border.all(
+            color: selected ? accent : context.torkk.border,
+            width: selected ? 1.4 : 1,
+          ),
         ),
         child: Row(
           children: [
@@ -44,19 +50,26 @@ class SettingsChoiceCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTypography.regular.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: context.torkk.textPrimary,
+                    ),
                   ),
                   if (subtitle != null)
                     Text(
                       subtitle!,
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 12,
+                        color: context.torkk.textSecondary,
+                      ),
                     ),
                 ],
               ),
             ),
             Icon(
               selected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: selected ? accent : AppColors.slate300,
+              color: selected ? accent : context.torkk.textDisabled,
               size: context.w(22),
             ),
           ],

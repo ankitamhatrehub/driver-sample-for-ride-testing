@@ -8,6 +8,7 @@ import 'package:rider_app/driver_features/onboarding/widgets/kyc_form_widgets.da
 import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Insurance step. Upload and verification come later. Skip continues onboarding.
 class VehicleInsuranceScreen extends StatefulWidget {
@@ -62,7 +63,7 @@ class _VehicleInsuranceScreenState extends State<VehicleInsuranceScreen> {
         onPressed: widget.onSkip,
         child: Text(
           AppStrings.skip,
-          style: AppTypography.bold.copyWith(fontSize: 15, color: AppColors.primary),
+          style: AppTypography.bold.copyWith(fontSize: 15, color: context.legible(AppColors.primary)),
         ),
       ),
       body: SingleChildScrollView(
@@ -117,7 +118,7 @@ class _VehicleInsuranceScreenState extends State<VehicleInsuranceScreen> {
         AppTextField(controller: controller, hintText: AppStrings.expiryDate),
         IconButton(
           onPressed: () => _pickDate(controller),
-          icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: AppColors.secondaryTextColor),
+          icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: context.torkk.textSecondary),
         ),
       ],
     );

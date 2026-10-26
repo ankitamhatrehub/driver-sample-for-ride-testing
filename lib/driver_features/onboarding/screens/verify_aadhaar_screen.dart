@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -54,7 +55,7 @@ class VerifyAadhaarScreen extends StatelessWidget {
                 SizedBox(width: context.w(10)),
                 Text(
                   AppStrings.dataSafeWithUs,
-                  style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.green700),
+                  style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.green700)),
                 ),
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Centered card shown on the home screen while a ride's details are loading.
 class RideDetailsLoadingOverlay extends StatelessWidget {
@@ -22,7 +23,7 @@ class RideDetailsLoadingOverlay extends StatelessWidget {
           width: context.w(230),
           padding: EdgeInsets.fromLTRB(context.w(20), context.h(28), context.w(20), context.h(22)),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.torkk.surface,
             borderRadius: BorderRadius.circular(context.r(20)),
             boxShadow: const [
               BoxShadow(color: Color(0x24000000), offset: Offset(0, 8), blurRadius: 24),

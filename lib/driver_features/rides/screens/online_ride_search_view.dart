@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import '../widgets/widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 export '../widgets/widgets.dart';
 
@@ -302,19 +303,19 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                             widget.profilePhotoUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (_, _, _) => Container(
-                              color: Colors.grey.shade200,
-                              child: const Icon(
+                              color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                              child: Icon(
                                 Icons.person,
-                                color: Color(0xFF334155),
+                                color: context.torkk.textBody,
                                 size: 24,
                               ),
                             ),
                           )
                         : Container(
-                            color: Colors.grey.shade200,
-                            child: const Icon(
+                            color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                            child: Icon(
                               Icons.person,
-                              color: Color(0xFF334155),
+                              color: context.torkk.textBody,
                               size: 24,
                             ),
                           ),
@@ -340,7 +341,7 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                 MediaQuery.of(context).padding.bottom + 12,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.torkk.surface,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(24),
                 ),
@@ -379,12 +380,12 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        const Text(
+                        Text(
                           'searching',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF64748B),
+                            color: context.torkk.textSecondary,
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -406,7 +407,7 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                 maxHeight: MediaQuery.of(context).size.height * 0.58,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: context.torkk.surfaceMuted,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(28),
                 ),

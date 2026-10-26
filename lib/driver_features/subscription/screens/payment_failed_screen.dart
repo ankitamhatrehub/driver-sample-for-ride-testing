@@ -60,7 +60,7 @@ class PaymentFailedScreen extends StatelessWidget {
           Text(
             "We couldn't process your payment.\nPlease try again",
             textAlign: TextAlign.center,
-            style: subscriptionMuted(),
+            style: subscriptionMuted(context),
           ),
           SizedBox(height: context.h(18)),
           const SubscriptionWarningBox(

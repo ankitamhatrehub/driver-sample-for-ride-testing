@@ -21,6 +21,7 @@ import 'package:rider_app/driver_features/chat/screens/driver_customer_chat_scre
 import 'package:rider_app/driver_features/summary/screens/driver_trip_summary_screen.dart';
 import 'package:rider_app/common/constants/map_styles.dart';
 import '../widgets/widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 export '../widgets/widgets.dart';
 
 // --- DRIVER NAVIGATION / TRIP PROGRESS SCREEN ---
@@ -1469,19 +1470,19 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                         _driverPhotoUrl,
                                         fit: BoxFit.cover,
                                         errorBuilder: (_, error, stackTrace) => Container(
-                                          color: Colors.grey.shade200,
-                                          child: const Icon(
+                                          color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                                          child: Icon(
                                             Icons.person,
-                                            color: Color(0xFF334155),
+                                            color: context.torkk.textBody,
                                             size: 24,
                                           ),
                                         ),
                                       )
                                     : Container(
-                                        color: Colors.grey.shade200,
-                                        child: const Icon(
+                                        color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                                        child: Icon(
                                           Icons.person,
-                                          color: Color(0xFF334155),
+                                          color: context.torkk.textBody,
                                           size: 24,
                                         ),
                                       ),
@@ -1529,7 +1530,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                 Container(
                                   width: 18,
                                   height: 18,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     color: Colors.white,
                                     shape: BoxShape.circle,
                                   ),
@@ -1649,7 +1650,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                               MediaQuery.of(context).padding.bottom + 12,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: context.torkk.surface,
                               borderRadius: const BorderRadius.vertical(
                                 top: Radius.circular(24),
                               ),
@@ -1677,28 +1678,28 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.format_list_bulleted_rounded,
-                                      color: Color(0xFF334155),
+                                      color: context.torkk.textBody,
                                       size: 24,
                                     ),
                                     Column(
                                       children: [
                                         Text(
                                           _dynamicEtaText,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w800,
-                                            color: Color(0xFF0F172A),
+                                            color: context.torkk.textPrimary,
                                           ),
                                         ),
                                         const SizedBox(height: 2),
                                         Text(
                                           _dynamicInstructionText,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w500,
-                                            color: Color(0xFF64748B),
+                                            color: context.torkk.textSecondary,
                                           ),
                                         ),
                                       ],
@@ -1728,7 +1729,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                         right: 0,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF8FAFC),
+                            color: context.torkk.surfaceMuted,
                             borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(28),
                             ),
@@ -1752,15 +1753,15 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFE2E8F0),
+                                    color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Text(
                                     _formattedWaitingTime,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF334155),
+                                      color: context.torkk.textBody,
                                       letterSpacing: 0.5,
                                     ),
                                   ),
@@ -1788,7 +1789,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 24,
                                 ),
-                                color: const Color(0xFFE2E8F0),
+                                color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                               ),
                               _buildBottomNav(),
                             ],

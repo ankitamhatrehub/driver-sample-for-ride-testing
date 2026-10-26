@@ -6,6 +6,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SelectVehicleScreen extends StatefulWidget {
   final String selectedVehicle;
@@ -56,19 +57,19 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: widget.onBack == null
             ? null
             : IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+                icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
                 onPressed: widget.onBack,
               ),
         titleSpacing: widget.onBack == null ? context.w(20) : 0,
         centerTitle: false,
         toolbarHeight: context.h(64),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         title: Text(
@@ -98,7 +99,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
             Text(
               AppStrings.chooseVehicleType,
               style: AppTypography.bold.copyWith(
-                color: AppColors.textPrimary,
+                color: context.torkk.textPrimary,
                 fontSize: 14,
                 height: 1.35,
               ),
@@ -127,13 +128,13 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
               SizedBox(height: context.h(8)),
               Row(
                 children: [
-                  Icon(Icons.info, color: AppColors.error, size: context.w(18)),
+                  Icon(Icons.info, color: context.legible(AppColors.error), size: context.w(18)),
                   SizedBox(width: context.w(8)),
                   Expanded(
                     child: Text(
                       AppStrings.selectVehicleError,
                       style: AppTypography.regular.copyWith(
-                        color: AppColors.error,
+                        color: context.legible(AppColors.error),
                         fontSize: 13,
                       ),
                     ),
@@ -182,7 +183,7 @@ class _VehicleCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
           decoration: BoxDecoration(
-            color: selected ? const Color(0xFFF6F3FB) : Colors.white,
+            color: selected ? context.adaptiveTint(const Color(0xFFF6F3FB)) : context.torkk.surface,
             borderRadius: BorderRadius.circular(context.r(16)),
             border: Border.all(
               color: selected ? AppColors.primary : AppColors.fieldBorder,
@@ -214,7 +215,7 @@ class _VehicleCard extends StatelessWidget {
                     errorBuilder: (context, error, stackTrace) => Icon(
                       Icons.directions_car_rounded,
                       size: context.w(40),
-                      color: AppColors.secondaryTextColor,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                 ),
@@ -230,7 +231,7 @@ class _VehicleCard extends StatelessWidget {
                 style: AppTypography.regular.copyWith(
                   fontSize: 12,
                   height: 1.2,
-                  color: AppColors.secondaryTextColor,
+                  color: context.torkk.textSecondary,
                 ),
               ),
             ],

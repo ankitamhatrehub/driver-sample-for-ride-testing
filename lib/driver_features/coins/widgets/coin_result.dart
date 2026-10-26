@@ -5,6 +5,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/coins/widgets/coin_bottom_button.dart';
 import 'package:rider_app/driver_features/coins/widgets/coins_text.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CoinConfettiImage extends StatelessWidget {
   const CoinConfettiImage({super.key, required this.asset, required this.size});
@@ -117,7 +118,7 @@ class CoinResultPage extends StatelessWidget {
             Container(
               width: context.w(72),
               height: context.w(72),
-              decoration: const BoxDecoration(color: Color(0xFFFEE2E2), shape: BoxShape.circle),
+              decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFFEE2E2)), shape: BoxShape.circle),
               alignment: Alignment.center,
               child: Container(
                 width: context.w(48),
@@ -130,7 +131,7 @@ class CoinResultPage extends StatelessWidget {
           Text(title, textAlign: TextAlign.center, style: coinsTitle()),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(32)),
-            child: Text(body, textAlign: TextAlign.center, style: coinsMuted()),
+            child: Text(body, textAlign: TextAlign.center, style: coinsMuted(context)),
           ),
           const Spacer(),
         ],

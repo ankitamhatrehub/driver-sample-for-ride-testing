@@ -5,6 +5,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/orders/order_details_screen.dart';
 import 'package:rider_app/driver_features/rides/scheduled_ride_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum _OrderTab { current, completed, cancelled, scheduled }
 
@@ -64,7 +65,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     final accent = Theme.of(context).colorScheme.primary;
     final visible = _visible;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +76,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 children: [
                   IconButton(
                     onPressed: widget.onBack,
-                    icon: const Icon(Icons.arrow_back_ios_new, size: 18, color: AppColors.textPrimary),
+                    icon: Icon(Icons.arrow_back_ios_new, size: 18, color: context.torkk.textPrimary),
                   ),
                   Text(
                     AppStrings.navOrders,
@@ -98,15 +99,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         hintStyle: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.slate400),
                         prefixIcon: const Icon(Icons.search, color: AppColors.slate400),
                         filled: true,
-                        fillColor: const Color(0xFFF8FAFC),
+                        fillColor: context.torkk.surfaceMuted,
                         contentPadding: EdgeInsets.symmetric(vertical: context.h(12)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(context.r(14)),
-                          borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                          borderSide: BorderSide(color: context.torkk.border),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(context.r(14)),
-                          borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                          borderSide: BorderSide(color: context.torkk.border),
                         ),
                       ),
                     ),
@@ -126,7 +127,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               child: _loading
                   ? const Center(child: CircularProgressIndicator())
                   : _error != null
-                      ? Center(child: Text(_error!, style: AppTypography.regular.copyWith(color: AppColors.slate500)))
+                      ? Center(child: Text(_error!, style: AppTypography.regular.copyWith(color: context.torkk.textSecondary)))
                       : RefreshIndicator(
                           onRefresh: _load,
                           child: ListView(
@@ -138,7 +139,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   child: Center(
                                     child: Text(
                                       AppStrings.ordersEmpty,
-                                      style: AppTypography.regular.copyWith(color: AppColors.slate500),
+                                      style: AppTypography.regular.copyWith(color: context.torkk.textSecondary),
                                     ),
                                   ),
                                 )
@@ -169,11 +170,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
         width: context.w(44),
         height: context.w(44),
         decoration: BoxDecoration(
-          color: const Color(0xFFF8FAFC),
+          color: context.torkk.surfaceMuted,
           borderRadius: BorderRadius.circular(context.r(14)),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: context.torkk.border),
         ),
-        child: const Icon(Icons.tune_rounded, color: AppColors.slate500),
+        child: Icon(Icons.tune_rounded, color: context.torkk.textSecondary),
       ),
     );
   }
@@ -188,7 +189,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Container(
       padding: EdgeInsets.all(context.w(4)),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
+        color: context.torkk.surfaceMuted,
         borderRadius: BorderRadius.circular(context.r(14)),
       ),
       child: Row(
@@ -209,7 +210,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: _tab == tab.$1 ? Colors.white : AppColors.slate500,
+                      color: _tab == tab.$1 ? Theme.of(context).colorScheme.onPrimary : AppColors.slate500,
                     ),
                   ),
                 ),
@@ -229,7 +230,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     for (final entry in groups.entries) {
       widgets.add(Padding(
         padding: EdgeInsets.only(top: context.h(8), bottom: context.h(8)),
-        child: Text(entry.key, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+        child: Text(entry.key, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
       ));
       for (final trip in entry.value) {
         widgets.add(Padding(
@@ -331,7 +332,7 @@ class _OrderCard extends StatelessWidget {
                 width: context.w(40),
                 height: context.w(40),
                 decoration: BoxDecoration(
-                  color: parcel ? const Color(0xFFFFFBEB) : const Color(0xFFFAF5FF),
+                  color: parcel ? context.adaptiveTint(Color(0xFFFFFBEB)) : context.adaptiveTint(Color(0xFFFAF5FF)),
                   borderRadius: BorderRadius.circular(context.r(12)),
                 ),
                 child: Icon(
@@ -376,13 +377,13 @@ class _OrderCard extends StatelessWidget {
           ],
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.h(10)),
-            child: const Divider(height: 1, color: Color(0xFFF1F5F9)),
+            child: Divider(height: 1, color: context.torkk.border),
           ),
-          Text(_timeLabel(trip), style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text(_timeLabel(trip), style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(4)),
           Text(
             _route(trip),
-            style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+            style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: context.torkk.textPrimary),
           ),
         ],
       ),
@@ -398,7 +399,7 @@ class _OrderCard extends StatelessWidget {
         children: [
           Text(
             AppStrings.parcelType,
-            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: context.torkk.textSecondary),
           ),
           Text(
             '$type • $weight',
@@ -409,7 +410,7 @@ class _OrderCard extends StatelessWidget {
     }
     return Text(
       _subtitle(trip, false),
-      style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: AppColors.slate500),
+      style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: context.torkk.textSecondary),
     );
   }
 }

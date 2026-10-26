@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/driver_features/home/widgets/widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class DriverHomeTab extends StatelessWidget {
   final bool isOnline;
@@ -55,11 +56,10 @@ class DriverHomeTab extends StatelessWidget {
     final double displayEarnings = todayEarnings;
     final double displayIncentives = incentives;
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF111827);
-    final subtextColor = isDark ? Colors.grey.shade400 : const Color(0xFF6B7280);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final borderColor = isDark ? Colors.white12 : const Color(0xFFE5E7EB);
+    final textColor = context.themed(light: const Color(0xFF111827), dark: context.torkk.textPrimary);
+    final subtextColor = context.themed(light: const Color(0xFF6B7280), dark: context.torkk.textSecondary);
+    final cardBg = context.torkk.surface;
+    final borderColor = context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.border);
 
     return SafeArea(
       child: ListView(
@@ -258,10 +258,9 @@ class DriverHomeTab extends StatelessWidget {
     required double amount,
     required Color color,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF111827);
-    final subtextColor = isDark ? Colors.grey.shade400 : const Color(0xFF6B7280);
-    final borderColor = isDark ? Colors.white12 : const Color(0xFFE5E7EB);
+    final textColor = context.themed(light: const Color(0xFF111827), dark: context.torkk.textPrimary);
+    final subtextColor = context.themed(light: const Color(0xFF6B7280), dark: context.torkk.textSecondary);
+    final borderColor = context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.border);
     final initialLetter =
         name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'C';
 

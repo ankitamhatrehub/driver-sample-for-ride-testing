@@ -9,6 +9,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum TicketStatus { underReview, resolved, closed }
 
@@ -128,7 +129,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: context.w(18), vertical: context.h(8)),
                       decoration: BoxDecoration(
-                        color: _tab == i ? accent : const Color(0xFFF1F5F9),
+                        color: _tab == i ? accent : context.adaptiveTint(Color(0xFFF1F5F9)),
                         borderRadius: BorderRadius.circular(context.r(10)),
                       ),
                       child: Text(
@@ -136,7 +137,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                         style: AppTypography.regular.copyWith(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: _tab == i ? Colors.white : AppColors.slate500,
+                          color: _tab == i ? Theme.of(context).colorScheme.onPrimary : context.torkk.textSecondary,
                         ),
                       ),
                     ),
@@ -274,15 +275,15 @@ class TicketFullDetailsScreen extends StatelessWidget {
         children: [
           _ticketCard(context, ticket),
           SizedBox(height: context.h(14)),
-          _pair('Created', ticket.created),
-          _pair('Last Updated', ticket.updated),
-          _pair('Issue', ticket.issue, bold: true),
-          _pair('Category', ticket.category, bold: true),
+          _pair(context, 'Created', ticket.created),
+          _pair(context, 'Last Updated', ticket.updated),
+          _pair(context, 'Issue', ticket.issue, bold: true),
+          _pair(context, 'Category', ticket.category, bold: true),
           SizedBox(height: context.h(8)),
-          Text('Description', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text('Description', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           Text(ticket.description, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
           SizedBox(height: context.h(12)),
-          Text('Attachments', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text('Attachments', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(8)),
           Row(
             children: [
@@ -301,7 +302,7 @@ class TicketFullDetailsScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(context.r(10)),
-                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                    border: Border.all(color: context.torkk.border),
                   ),
                   child: Text('+${ticket.photos.length - 2}', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
                 ),
@@ -312,12 +313,12 @@ class TicketFullDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _pair(String label, String value, {bool bold = false}) {
+  Widget _pair(BuildContext context, String label, String value, {bool bold = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500))),
+          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
           Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: bold ? FontWeight.w700 : FontWeight.w500)),
         ],
       ),
@@ -353,7 +354,7 @@ class _FollowUpScreenState extends State<FollowUpScreen> {
         children: [
           Text(
             'Add additional information to follow up on this ticket.',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(12)),
           _ticketCard(context, widget.ticket),
@@ -384,7 +385,7 @@ class IssueCategoryScreen extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(4), context.w(20), context.h(20)),
         children: [
-          Text('Choose the category that best match your issue', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text('Choose the category that best match your issue', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(12)),
           for (final item in _categories)
             _choice(
@@ -436,7 +437,7 @@ class IssueProblemScreen extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(4), context.w(20), context.h(20)),
         children: [
-          Text('Choose the issue you are facing', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text('Choose the issue you are facing', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(12)),
           for (final item in _problems)
             _choice(
@@ -499,7 +500,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
         children: [
           Text(
             'Add clear photos to help us understand the issue (Optional)',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(14)),
           Wrap(
@@ -529,7 +530,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
           SizedBox(height: context.h(16)),
           Container(
             padding: EdgeInsets.all(context.w(12)),
-            decoration: BoxDecoration(color: const Color(0xFFF5F3FF), borderRadius: BorderRadius.circular(context.r(12))),
+            decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFF5F3FF)), borderRadius: BorderRadius.circular(context.r(12))),
             child: Row(
               children: [
                 Icon(Icons.photo_camera_outlined, color: profileAccent(context), size: context.w(18)),
@@ -537,7 +538,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
                 Expanded(
                   child: Text(
                     'Take photos of the location , parcel or any relevant details.',
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                   ),
                 ),
               ],
@@ -555,7 +556,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
         width: context.w(96),
         height: context.w(96),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F3FF),
+          color: context.adaptiveTint(const Color(0xFFF5F3FF)),
           borderRadius: BorderRadius.circular(context.r(12)),
           border: Border.all(color: const Color(0xFFE9D5FF)),
         ),
@@ -625,7 +626,7 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
         children: [
           Text(
             'Add any additional information to help us resolve the issue.',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(14)),
           Text('Quick notes (optional)', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
@@ -638,7 +639,7 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
                 padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.r(12)),
-                  border: Border.all(color: const Color(0xFFE8EDF5)),
+                  border: Border.all(color: context.torkk.border),
                 ),
                 child: Row(
                   children: [
@@ -683,8 +684,8 @@ class IssueSubmittedScreen extends StatelessWidget {
             child: Container(
               width: context.w(72),
               height: context.w(72),
-              decoration: const BoxDecoration(color: Color(0xFFDCFCE7), shape: BoxShape.circle),
-              child: Icon(Icons.check_rounded, color: const Color(0xFF16A34A), size: context.w(36)),
+              decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFDCFCE7)), shape: BoxShape.circle),
+              child: Icon(Icons.check_rounded, color: context.legible(Color(0xFF16A34A)), size: context.w(36)),
             ),
           ),
           SizedBox(height: context.h(16)),
@@ -692,20 +693,20 @@ class IssueSubmittedScreen extends StatelessWidget {
           Text(
             'Your request has been submitted successfully',
             textAlign: TextAlign.center,
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(18)),
           Container(
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Column(
               children: [
                 Row(
                   children: [
-                    Expanded(child: Text('Ticket ID', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500))),
+                    Expanded(child: Text('Ticket ID', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary))),
                     Text('# tk2345', style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
                     IconButton(
                       onPressed: () => Clipboard.setData(const ClipboardData(text: 'tk2345')),
@@ -713,8 +714,8 @@ class IssueSubmittedScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                _line('Issue', ticket.issue),
-                _line('Category', ticket.category),
+                _line(context, 'Issue', ticket.issue),
+                _line(context, 'Category', ticket.category),
               ],
             ),
           ),
@@ -724,7 +725,7 @@ class IssueSubmittedScreen extends StatelessWidget {
             children: [
               Icon(Icons.info, size: 16, color: profileAccent(context)),
               SizedBox(width: context.w(6)),
-              Text("We'll notify you once there is an update.", style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+              Text("We'll notify you once there is an update.", style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
             ],
           ),
         ],
@@ -732,12 +733,12 @@ class IssueSubmittedScreen extends StatelessWidget {
     );
   }
 
-  Widget _line(String label, String value) {
+  Widget _line(BuildContext context, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500))),
+          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
           Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
         ],
       ),
@@ -753,15 +754,15 @@ Widget _ticketCard(BuildContext context, SupportTicket ticket, {VoidCallback? on
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
           Container(
             width: context.w(36),
             height: context.w(36),
-            decoration: BoxDecoration(color: const Color(0xFFF3E8FF), borderRadius: BorderRadius.circular(context.r(10))),
-            child: Icon(Icons.confirmation_number_outlined, color: const Color(0xFF7C3AED), size: context.w(18)),
+            decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFF3E8FF)), borderRadius: BorderRadius.circular(context.r(10))),
+            child: Icon(Icons.confirmation_number_outlined, color: context.legible(Color(0xFF7C3AED)), size: context.w(18)),
           ),
           SizedBox(width: context.w(10)),
           Expanded(
@@ -769,7 +770,7 @@ Widget _ticketCard(BuildContext context, SupportTicket ticket, {VoidCallback? on
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(ticket.orderId, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
-                Text(ticket.title, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                Text(ticket.title, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                 Text(ticket.date, style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate400)),
               ],
             ),
@@ -819,7 +820,7 @@ Widget _timeline(BuildContext context, TicketStatus status) {
                   size: context.w(18),
                 ),
                 if (i < steps.length - 1)
-                  Container(width: 2, height: context.h(28), color: const Color(0xFFDCFCE7)),
+                  Container(width: 2, height: context.h(28), color: context.adaptiveTint(const Color(0xFFDCFCE7))),
               ],
             ),
             SizedBox(width: context.w(10)),
@@ -831,7 +832,7 @@ Widget _timeline(BuildContext context, TicketStatus status) {
                   children: [
                     Text(steps[i].$1, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
                     if (steps[i].$2.isNotEmpty)
-                      Text(steps[i].$2, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                      Text(steps[i].$2, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                   ],
                 ),
               ),
@@ -847,20 +848,20 @@ Widget _metaCard(BuildContext context, SupportTicket ticket) {
     padding: EdgeInsets.all(context.w(14)),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(context.r(16)),
-      border: Border.all(color: const Color(0xFFE8EDF5)),
+      border: Border.all(color: context.torkk.border),
     ),
     child: Column(
       children: [
         Row(
           children: [
-            Expanded(child: Text('Issue', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500))),
+            Expanded(child: Text('Issue', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
             Text(ticket.issue, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
           ],
         ),
         SizedBox(height: context.h(8)),
         Row(
           children: [
-            Expanded(child: Text('Category', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500))),
+            Expanded(child: Text('Category', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
             Text(ticket.category, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
           ],
         ),
@@ -886,7 +887,7 @@ Widget _choice(
         padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(14)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(14)),
-          border: Border.all(color: const Color(0xFFE8EDF5)),
+          border: Border.all(color: context.torkk.border),
         ),
         child: Row(
           children: [
@@ -917,8 +918,8 @@ Widget _commentBox(BuildContext context, TextEditingController controller, VoidC
       hintStyle: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.slate400),
       counterText: '${controller.text.length}/200',
       contentPadding: EdgeInsets.all(context.w(12)),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(context.r(12)), borderSide: const BorderSide(color: Color(0xFFE2E8F0))),
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(context.r(12)), borderSide: const BorderSide(color: Color(0xFFE2E8F0))),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(context.r(12)), borderSide: BorderSide(color: context.torkk.border)),
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(context.r(12)), borderSide: BorderSide(color: context.torkk.border)),
     ),
   );
 }
@@ -935,7 +936,7 @@ Widget _filled(BuildContext context, String label, VoidCallback onTap) {
           backgroundColor: profileAccent(context),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
         ),
-        child: Text(label, style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: Colors.white)),
+        child: Text(label, style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: Theme.of(context).colorScheme.onPrimary)),
       ),
     ),
   );

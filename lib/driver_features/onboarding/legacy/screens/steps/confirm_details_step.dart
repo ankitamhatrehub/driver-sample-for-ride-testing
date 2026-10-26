@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/common/widgets/bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ConfirmDetailsStep extends StatefulWidget {
   final Color primaryColor;
@@ -71,10 +72,10 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
               const SizedBox(height: 4),
               Text(
                 value,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1E293B),
+                  color: context.torkk.textPrimary,
                 ),
               ),
             ],
@@ -94,40 +95,40 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF475569),
+            color: context.torkk.textBody,
           ),
         ),
         const SizedBox(height: 6),
         TextField(
           controller: controller,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF0F172A),
+            color: context.torkk.textPrimary,
           ),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, size: 20, color: const Color(0xFF6366F1)),
+            prefixIcon: Icon(icon, size: 20, color: context.legible(Color(0xFF6366F1))),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 14,
               vertical: 12,
             ),
             filled: true,
-            fillColor: const Color(0xFFF8FAFC),
+            fillColor: context.torkk.surfaceMuted,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+              borderSide: BorderSide(color: context.torkk.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+              borderSide: BorderSide(color: context.torkk.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(
-                color: Color(0xFF6366F1),
+              borderSide: BorderSide(
+                color: context.legible(Color(0xFF6366F1)),
                 width: 1.8,
               ),
             ),
@@ -144,7 +145,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(28),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.surface,
         elevation: 16,
         insetPadding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -171,7 +172,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -180,7 +181,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF0F172A),
+                            color: context.torkk.textPrimary,
                           ),
                         ),
                         SizedBox(height: 2),
@@ -188,7 +189,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                           'Update your submitted info',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF64748B),
+                            color: context.torkk.textSecondary,
                           ),
                         ),
                       ],
@@ -199,14 +200,14 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFF1F5F9),
+                      decoration: BoxDecoration(
+                        color: context.torkk.surfaceMuted,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.close_rounded,
                         size: 18,
-                        color: Color(0xFF64748B),
+                        color: context.torkk.textSecondary,
                       ),
                     ),
                   ),
@@ -271,7 +272,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        foregroundColor: const Color(0xFF475569),
+                        foregroundColor: context.legible(Color(0xFF475569)),
                       ),
                       child: const Text(
                         'Cancel',
@@ -353,12 +354,12 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Confirm Your Details',
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF1E293B),
+              color: context.torkk.textPrimary,
             ),
           ),
           const SizedBox(height: 24),
@@ -367,9 +368,9 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
             child: Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: context.torkk.surfaceMuted,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.black12),
+                border: Border.all(color: context.torkk.border),
               ),
               child: ListView(
                 children: [

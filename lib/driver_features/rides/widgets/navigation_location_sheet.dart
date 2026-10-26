@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 void showLocationDetailBottomSheet({
   required BuildContext context,
@@ -17,8 +18,8 @@ void showLocationDetailBottomSheet({
     builder: (context) {
       return Container(
         padding: const EdgeInsets.all(24),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: context.torkk.surface,
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
         ),
         child: Column(
@@ -49,10 +50,10 @@ void showLocationDetailBottomSheet({
                 const SizedBox(width: 10),
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0F172A),
+                    color: context.torkk.textPrimary,
                   ),
                 ),
                 const Spacer(),
@@ -90,10 +91,10 @@ void showLocationDetailBottomSheet({
             const SizedBox(height: 6),
             SelectableText(
               address.isNotEmpty ? address : 'No address provided',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF334155),
+                color: context.torkk.textBody,
                 height: 1.4,
               ),
             ),

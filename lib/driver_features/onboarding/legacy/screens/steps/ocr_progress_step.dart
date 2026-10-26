@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class OcrProgressStep extends StatelessWidget {
   final Color primaryColor;
@@ -27,7 +28,7 @@ class OcrProgressStep extends StatelessWidget {
                   width: 200,
                   height: 130,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
+                    color: context.torkk.surfaceMuted,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: primaryColor.withValues(alpha: 0.4),
@@ -70,12 +71,12 @@ class OcrProgressStep extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 40),
-            const Text(
+            Text(
               'Extracting Data...',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1E293B),
+                color: context.torkk.textPrimary,
               ),
             ),
             const SizedBox(height: 8),

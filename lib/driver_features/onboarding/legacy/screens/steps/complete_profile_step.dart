@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/common/widgets/custom_text_field.dart';
 import 'package:rider_app/common/widgets/bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CompleteProfileStep extends StatelessWidget {
   final Color primaryColor;
@@ -28,12 +29,12 @@ class CompleteProfileStep extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Complete Your Profile',
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF1E293B),
+              color: context.torkk.textPrimary,
             ),
           ),
           const SizedBox(height: 24),
@@ -87,7 +88,7 @@ class CompleteProfileStep extends StatelessWidget {
                 child: Text(
                   'I agree to Terms & Conditions and Privacy Policy',
                   style: TextStyle(
-                    color: Colors.blueGrey.shade600,
+                    color: context.themed(light: Colors.blueGrey.shade600, dark: context.torkk.textSecondary),
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),

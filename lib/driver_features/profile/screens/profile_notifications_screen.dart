@@ -7,6 +7,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/screens/notification_preferences_screen.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ProfileNotificationsScreen extends StatelessWidget {
   const ProfileNotificationsScreen({super.key});
@@ -35,7 +36,7 @@ class ProfileNotificationsScreen extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
           Material(
-            color: const Color(0xFFF5F3FF),
+            color: context.adaptiveTint(const Color(0xFFF5F3FF)),
             borderRadius: BorderRadius.circular(context.r(16)),
             child: InkWell(
               onTap: () {
@@ -56,11 +57,11 @@ class ProfileNotificationsScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Notification Preferences',
-                            style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2),
+                            style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2, letterSpacing: -0.2),
                           ),
                           Text(
                             'Choose what you want to be notified about',
-                            style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                            style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                           ),
                         ],
                       ),
@@ -74,7 +75,7 @@ class ProfileNotificationsScreen extends StatelessWidget {
           SizedBox(height: context.h(18)),
           Text(
             'Recent Notifications',
-            style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(10)),
           for (var i = 0; i < items.length; i++) ...[
@@ -104,7 +105,7 @@ class _EmptyNotifications extends StatelessWidget {
               Container(
                 width: context.w(120),
                 height: context.w(120),
-                decoration: const BoxDecoration(color: Color(0xFFFFF7ED), shape: BoxShape.circle),
+                decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFFFF7ED)), shape: BoxShape.circle),
               ),
               Image.asset(AppAssets.notification, width: context.w(88), height: context.w(88)),
               Positioned(
@@ -157,7 +158,7 @@ class _NoticeCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -173,7 +174,7 @@ class _NoticeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item.title, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
-                Text(item.subtitle, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                Text(item.subtitle, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
               ],
             ),
           ),

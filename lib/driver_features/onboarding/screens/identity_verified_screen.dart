@@ -6,6 +6,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class IdentityVerifiedScreen extends StatelessWidget {
   final VoidCallback onContinue;
@@ -15,7 +16,7 @@ class IdentityVerifiedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(24), context.h(48), context.w(24), context.h(16)),
@@ -35,7 +36,7 @@ class IdentityVerifiedScreen extends StatelessWidget {
               Text(
                 AppStrings.identityVerifiedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 14),
+                style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 14),
               ),
               const Spacer(),
               Row(
@@ -45,7 +46,7 @@ class IdentityVerifiedScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       AppStrings.documentsSecurelyVerified,
-                      style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.green700),
+                      style: AppTypography.regular.copyWith(fontSize: 13, color: context.legible(AppColors.green700)),
                     ),
                   ),
                 ],

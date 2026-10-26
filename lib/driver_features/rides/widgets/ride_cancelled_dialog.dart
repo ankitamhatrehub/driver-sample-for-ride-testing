@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Dialog shown to the driver when a customer cancels an ongoing ride.
 class RideCancelledDialog extends StatelessWidget {
@@ -15,7 +16,7 @@ class RideCancelledDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(28),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       elevation: 16,
       insetPadding: const EdgeInsets.symmetric(
         horizontal: 28,
@@ -41,21 +42,21 @@ class RideCancelledDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 18),
-            const Text(
+            Text(
               'Ride Cancelled',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF0F172A),
+                color: context.torkk.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'This ride has been cancelled by the customer. Your navigation will be closed.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: Color(0xFF64748B),
+                color: context.torkk.textSecondary,
                 height: 1.4,
               ),
             ),

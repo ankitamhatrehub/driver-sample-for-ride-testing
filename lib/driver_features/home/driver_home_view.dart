@@ -9,6 +9,7 @@ import 'package:rider_app/driver_features/home/home_location_card.dart';
 import 'package:rider_app/driver_features/home/home_plan_card.dart';
 import 'package:rider_app/driver_features/home/home_stats_card.dart';
 import 'package:rider_app/driver_features/home/home_status_card.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Home map and cards shown when the driver is not in an active ride search.
 class DriverHomeView extends StatefulWidget {
@@ -92,12 +93,12 @@ class _DriverHomeViewState extends State<DriverHomeView> {
           left: 0,
           right: 0,
           height: context.h(160),
-          child: const DecoratedBox(
+          child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xF2FFFFFF), Color(0x00FFFFFF)],
+                colors: [context.adaptiveTint(Color(0xF2FFFFFF)), context.adaptiveTint(Color(0x00FFFFFF))],
               ),
             ),
           ),
@@ -125,7 +126,7 @@ class _DriverHomeViewState extends State<DriverHomeView> {
           bottom: 0,
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFFFFFFF),
+              color: context.torkk.surface,
               borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(26))),
             ),
             child: ListView(

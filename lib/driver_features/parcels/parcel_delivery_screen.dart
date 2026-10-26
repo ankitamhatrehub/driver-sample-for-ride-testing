@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Shown on the Parcel tab until the driver is eligible for parcel requests.
 class ParcelDeliveryScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class ParcelDeliveryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -27,7 +27,7 @@ class ParcelDeliveryScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: onBack,
-                    icon: const Icon(Icons.arrow_back_ios_new, size: 18, color: AppColors.textPrimary),
+                    icon: Icon(Icons.arrow_back_ios_new, size: 18, color: context.torkk.textPrimary),
                   ),
                   Text(
                     AppStrings.parcelDelivery,
@@ -58,7 +58,7 @@ class ParcelDeliveryScreen extends StatelessWidget {
                   Text(
                     AppStrings.unlockParcelSubtitle,
                     textAlign: TextAlign.center,
-                    style: AppTypography.regular.copyWith(fontSize: 14, height: 1.4, color: AppColors.slate500),
+                    style: AppTypography.regular.copyWith(fontSize: 14, height: 1.4, color: context.torkk.textSecondary),
                   ),
                   SizedBox(height: context.h(22)),
                   _StepsCard(accent: accent),
@@ -78,7 +78,7 @@ class ParcelDeliveryScreen extends StatelessWidget {
                   ),
                   child: Text(
                     AppStrings.continueAction,
-                    style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: Colors.white, letterSpacing: -0.2),
+                    style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: Theme.of(context).colorScheme.onPrimary, letterSpacing: -0.2),
                   ),
                 ),
               ),
@@ -104,9 +104,9 @@ class _StepsCard extends StatelessWidget {
     ];
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -143,7 +143,7 @@ class _StepRow extends StatelessWidget {
       height: context.h(64),
       padding: EdgeInsets.symmetric(horizontal: context.w(14)),
       decoration: BoxDecoration(
-        border: showDivider ? const Border(top: BorderSide(color: Color(0xFFF1F5F9))) : null,
+        border: showDivider ? Border(top: BorderSide(color: context.torkk.border)) : null,
       ),
       child: Row(
         children: [
@@ -172,7 +172,7 @@ class _StepRow extends StatelessWidget {
                   step.subtitle,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.2, color: AppColors.slate500),
+                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.2, color: context.torkk.textSecondary),
                 ),
               ],
             ),

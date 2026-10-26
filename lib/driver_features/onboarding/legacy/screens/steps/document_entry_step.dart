@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../../common/widgets/bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class DocumentEntryStep extends StatelessWidget {
   final VoidCallback onBack;
@@ -69,11 +70,11 @@ class DocumentEntryStep extends StatelessWidget {
                   height: 140,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
+                    color: context.torkk.surfaceMuted,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: imagePath != null
-                          ? const Color(0xFF2563EB)
+                          ? context.legible(Color(0xFF2563EB))
                           : const Color(0xFFE2E8F0),
                       width: imagePath != null ? 2 : 1,
                     ),
@@ -128,10 +129,10 @@ class DocumentEntryStep extends StatelessWidget {
               // Title & Subtitle
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF111827),
+                  color: context.torkk.textPrimary,
                   letterSpacing: -0.5,
                 ),
               ),
@@ -139,8 +140,8 @@ class DocumentEntryStep extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   subtitle!,
-                  style: const TextStyle(
-                    color: Color(0xFF6B7280),
+                  style: TextStyle(
+                    color: context.torkk.textSecondary,
                     fontSize: 15,
                     height: 1.3,
                   ),
@@ -158,9 +159,9 @@ class DocumentEntryStep extends StatelessWidget {
                     horizontal: 16,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.torkk.surface,
                     border: Border.all(
-                      color: const Color(0xFF2563EB),
+                      color: context.legible(Color(0xFF2563EB)),
                       width: 1.5,
                     ),
                     borderRadius: BorderRadius.circular(16),
@@ -179,17 +180,17 @@ class DocumentEntryStep extends StatelessWidget {
                         height: 44,
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFEFF6FF),
+                          color: context.adaptiveTint(const Color(0xFFEFF6FF)),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Image.asset(
                           'assets/digilocker.png',
                           fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) =>
-                              const Center(
+                              Center(
                             child: Icon(
                               Icons.cloud_done_rounded,
-                              color: Color(0xFF2563EB),
+                              color: context.legible(Color(0xFF2563EB)),
                               size: 26,
                             ),
                           ),
@@ -199,13 +200,13 @@ class DocumentEntryStep extends StatelessWidget {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'Automatically Fill\nfrom Digilocker',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF111827),
+                                color: context.torkk.textPrimary,
                                 height: 1.25,
                               ),
                             ),
@@ -230,8 +231,8 @@ class DocumentEntryStep extends StatelessWidget {
 
               // Or Divider
               Row(
-                children: const [
-                  Expanded(child: Divider(color: Color(0xFFE2E8F0))),
+                children: [
+                  Expanded(child: Divider(color: context.torkk.border)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
@@ -243,7 +244,7 @@ class DocumentEntryStep extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(child: Divider(color: Color(0xFFE2E8F0))),
+                  Expanded(child: Divider(color: context.torkk.border)),
                 ],
               ),
 
@@ -252,8 +253,8 @@ class DocumentEntryStep extends StatelessWidget {
               // Input 1 Field Label
               Text(
                 input1Hint,
-                style: const TextStyle(
-                  color: Color(0xFF374151),
+                style: TextStyle(
+                  color: context.torkk.textBody,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
@@ -261,10 +262,10 @@ class DocumentEntryStep extends StatelessWidget {
               const SizedBox(height: 8),
               TextField(
                 controller: input1Controller,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF111827),
+                  color: context.torkk.textPrimary,
                 ),
                 decoration: InputDecoration(
                   filled: true,
@@ -279,8 +280,8 @@ class DocumentEntryStep extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                        color: Color(0xFF2563EB), width: 1.5),
+                    borderSide: BorderSide(
+                        color: context.legible(Color(0xFF2563EB)), width: 1.5),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -294,8 +295,8 @@ class DocumentEntryStep extends StatelessWidget {
                 const SizedBox(height: 18),
                 Text(
                   input2Hint!,
-                  style: const TextStyle(
-                    color: Color(0xFF374151),
+                  style: TextStyle(
+                    color: context.torkk.textBody,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -303,10 +304,10 @@ class DocumentEntryStep extends StatelessWidget {
                 const SizedBox(height: 8),
                 TextField(
                   controller: input2Controller,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF111827),
+                    color: context.torkk.textPrimary,
                   ),
                   decoration: InputDecoration(
                     filled: true,
@@ -321,8 +322,8 @@ class DocumentEntryStep extends StatelessWidget {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                          color: Color(0xFF2563EB), width: 1.5),
+                      borderSide: BorderSide(
+                          color: context.legible(Color(0xFF2563EB)), width: 1.5),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -405,7 +406,7 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: context.torkk.surface,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
@@ -420,17 +421,17 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 20,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chat_bubble_outline_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 22,
                     ),
                     onPressed: () {},
@@ -443,12 +444,12 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 children: [
-                  const Text(
+                  Text(
                     'FAQ',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -474,10 +475,10 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
                                 Expanded(
                                   child: Text(
                                     item['q']!,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF111827),
+                                      color: context.torkk.textPrimary,
                                       height: 1.3,
                                     ),
                                   ),
@@ -487,7 +488,7 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
                                   isExpanded
                                       ? Icons.keyboard_arrow_up_rounded
                                       : Icons.keyboard_arrow_down_rounded,
-                                  color: const Color(0xFF6B7280),
+                                  color: context.torkk.textSecondary,
                                   size: 24,
                                 ),
                               ],
@@ -497,15 +498,15 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
                         if (isExpanded) ...[
                           Text(
                             item['a']!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xFF6B7280),
+                              color: context.torkk.textSecondary,
                               height: 1.4,
                             ),
                           ),
                           const SizedBox(height: 12),
                         ],
-                        const Divider(color: Color(0xFFE5E7EB), height: 1),
+                        Divider(color: context.torkk.border, height: 1),
                       ],
                     );
                   }),
@@ -557,7 +558,7 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: context.torkk.surface,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
@@ -572,17 +573,17 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 20,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chat_bubble_outline_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 22,
                     ),
                     onPressed: () {},
@@ -595,19 +596,19 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 children: [
-                  const Text(
+                  Text(
                     'FAQ',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       height: 1.2,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
+                  Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: Color(0xFF6B7280)),
+                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {
@@ -632,10 +633,10 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
                                 Expanded(
                                   child: Text(
                                     item['q']!,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF111827),
+                                      color: context.torkk.textPrimary,
                                       height: 1.3,
                                     ),
                                   ),
@@ -645,7 +646,7 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
                                   isOpen
                                       ? Icons.keyboard_arrow_up_rounded
                                       : Icons.keyboard_arrow_down_rounded,
-                                  color: const Color(0xFF111827),
+                                  color: context.torkk.textPrimary,
                                   size: 24,
                                 ),
                               ],
@@ -655,15 +656,15 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
                         if (isOpen) ...[
                           Text(
                             item['a']!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
-                              color: Color(0xFF4B5563),
+                              color: context.torkk.textBody,
                               height: 1.45,
                             ),
                           ),
                           const SizedBox(height: 14),
                         ],
-                        const Divider(color: Color(0xFFE5E7EB), height: 1),
+                        Divider(color: context.torkk.border, height: 1),
                       ],
                     );
                   }),
@@ -740,7 +741,7 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: context.torkk.surface,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
@@ -755,17 +756,17 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 20,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chat_bubble_outline_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 22,
                     ),
                     onPressed: () {},
@@ -778,19 +779,19 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 children: [
-                  const Text(
+                  Text(
                     'FAQ',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       height: 1.2,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
+                  Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: Color(0xFF6B7280)),
+                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {
@@ -815,10 +816,10 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
                                 Expanded(
                                   child: Text(
                                     item['q']!,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF111827),
+                                      color: context.torkk.textPrimary,
                                       height: 1.3,
                                     ),
                                   ),
@@ -828,7 +829,7 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
                                   isOpen
                                       ? Icons.keyboard_arrow_up_rounded
                                       : Icons.keyboard_arrow_down_rounded,
-                                  color: const Color(0xFF111827),
+                                  color: context.torkk.textPrimary,
                                   size: 24,
                                 ),
                               ],
@@ -838,15 +839,15 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
                         if (isOpen) ...[
                           Text(
                             item['a']!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
-                              color: Color(0xFF4B5563),
+                              color: context.torkk.textBody,
                               height: 1.45,
                             ),
                           ),
                           const SizedBox(height: 14),
                         ],
-                        const Divider(color: Color(0xFFE5E7EB), height: 1),
+                        Divider(color: context.torkk.border, height: 1),
                       ],
                     );
                   }),

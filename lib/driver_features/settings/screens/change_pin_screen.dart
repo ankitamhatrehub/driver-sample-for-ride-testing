@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/app_snackbar.dart';
@@ -86,9 +87,20 @@ class _ChangePinScreenState extends State<ChangePinScreen> {
     return ProfilePage(
       title: AppStrings.changePin,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(16), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(16),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
-          Text(AppStrings.currentPin, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
+          Text(
+            AppStrings.currentPin,
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           AppTextField(
             controller: _current,
@@ -99,7 +111,13 @@ class _ChangePinScreenState extends State<ChangePinScreen> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           SizedBox(height: context.h(16)),
-          Text(AppStrings.newPin, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
+          Text(
+            AppStrings.newPin,
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           AppTextField(
             controller: _next,
@@ -109,7 +127,13 @@ class _ChangePinScreenState extends State<ChangePinScreen> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           SizedBox(height: context.h(16)),
-          Text('Confirm New PIN', style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
+          Text(
+            'Confirm New PIN',
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           AppTextField(
             controller: _confirm,
@@ -122,12 +146,19 @@ class _ChangePinScreenState extends State<ChangePinScreen> {
             SizedBox(height: context.h(14)),
             Row(
               children: [
-                Icon(Icons.error_outline_rounded, color: AppColors.error, size: context.w(18)),
+                Icon(
+                  Icons.error_outline_rounded,
+                  color: context.legible(AppColors.error),
+                  size: context.w(18),
+                ),
                 SizedBox(width: context.w(8)),
                 Expanded(
                   child: Text(
                     _errorMessage!,
-                    style: AppTypography.regular.copyWith(color: AppColors.error, fontSize: 13),
+                    style: AppTypography.regular.copyWith(
+                      color: context.legible(AppColors.error),
+                      fontSize: 13,
+                    ),
                   ),
                 ),
               ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 
 class HomeHeader extends StatelessWidget {
@@ -41,7 +41,7 @@ class HomeHeader extends StatelessWidget {
                     _greeting,
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
-                      color: AppColors.gray500,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                   Text(

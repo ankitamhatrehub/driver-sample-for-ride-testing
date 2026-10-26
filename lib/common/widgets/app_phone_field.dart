@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Indian mobile field with a fixed +91 prefix.
 class AppPhoneField extends StatelessWidget {
@@ -32,7 +33,7 @@ class AppPhoneField extends StatelessWidget {
           width: context.w(76),
           height: context.h(54),
           decoration: BoxDecoration(
-            color: AppColors.slate200,
+            color: context.torkk.border,
             borderRadius: radius,
           ),
           alignment: Alignment.center,
@@ -40,7 +41,7 @@ class AppPhoneField extends StatelessWidget {
             effCountryCode,
             style: TextStyle(
               fontSize: context.sp(16),
-              color: AppColors.textPrimary,
+              color: context.torkk.textPrimary,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -55,7 +56,7 @@ class AppPhoneField extends StatelessWidget {
               maxLength: maxLength,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               style: TextStyle(
-                color: AppColors.textPrimary,
+                color: context.torkk.textPrimary,
                 fontWeight: FontWeight.w700,
                 fontSize: context.sp(18),
                 letterSpacing: 1.5,
@@ -69,7 +70,7 @@ class AppPhoneField extends StatelessWidget {
                   fontSize: context.sp(18),
                 ),
                 filled: true,
-                fillColor: AppColors.slate200,
+                fillColor: context.torkk.border,
                 border: OutlineInputBorder(borderRadius: radius, borderSide: BorderSide.none),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: radius,
@@ -77,7 +78,7 @@ class AppPhoneField extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: radius,
-                  borderSide: const BorderSide(color: AppColors.blue600, width: 2),
+                  borderSide: BorderSide(color: context.legible(AppColors.blue600), width: 2),
                 ),
                 counterText: '',
                 contentPadding: EdgeInsets.symmetric(

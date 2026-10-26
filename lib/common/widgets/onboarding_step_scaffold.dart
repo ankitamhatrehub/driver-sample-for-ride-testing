@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Shared header for onboarding steps.
 ///
@@ -29,7 +29,7 @@ class OnboardingStepScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,9 +42,9 @@ class OnboardingStepScaffold extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_ios_new,
-                    color: Colors.black,
+                    color: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
                     size: 20,
                   ),
                   onPressed: onBack,
@@ -87,7 +87,7 @@ class OnboardingStepScaffold extends StatelessWidget {
                   style: AppTypography.regular.copyWith(
                     fontSize: 14,
                     height: 1.4,
-                    color: AppColors.secondaryTextColor,
+                    color: context.torkk.textSecondary,
                   ),
                 ),
               ),

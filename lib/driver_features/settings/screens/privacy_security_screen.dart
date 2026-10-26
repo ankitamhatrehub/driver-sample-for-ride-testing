@@ -9,6 +9,8 @@ import 'package:rider_app/driver_features/settings/screens/change_pin_screen.dar
 import 'package:rider_app/driver_features/settings/screens/set_pin_screen.dart';
 
 import '../../../common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/common/widgets/app_switch.dart';
 
 class PrivacySecurityScreen extends StatefulWidget {
   const PrivacySecurityScreen({super.key});
@@ -48,7 +50,9 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     final hasPin = (prefs.getString('account_pin') ?? '').length == 4;
     if (!mounted) return;
     final result = await Navigator.of(context).push<bool>(
-      MaterialPageRoute<bool>(builder: (_) => hasPin ? const ChangePinScreen() : const SetPinScreen()),
+      MaterialPageRoute<bool>(
+        builder: (_) => hasPin ? const ChangePinScreen() : const SetPinScreen(),
+      ),
     );
     if (result == true) {
       _load();
@@ -61,23 +65,38 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     return ProfilePage(
       title: AppStrings.privacyPolicy,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           Material(
-            color: const Color(0xFFF5F3FF),
+            color: context.adaptiveTint(const Color(0xFFF5F3FF)),
             borderRadius: BorderRadius.circular(context.r(16)),
             child: InkWell(
               onTap: _openPin,
               borderRadius: BorderRadius.circular(context.r(16)),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.w(14),
+                  vertical: context.h(14),
+                ),
                 child: Row(
                   children: [
                     Container(
                       width: context.w(40),
                       height: context.w(40),
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(context.r(12))),
-                      child: Icon(Icons.lock_outline_rounded, color: accent, size: context.w(20)),
+                      decoration: BoxDecoration(
+                        color: context.torkk.surface,
+                        borderRadius: BorderRadius.circular(context.r(12)),
+                      ),
+                      child: Icon(
+                        Icons.lock_outline_rounded,
+                        color: accent,
+                        size: context.w(20),
+                      ),
                     ),
                     SizedBox(width: context.w(12)),
                     Expanded(
@@ -86,16 +105,28 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
                         children: [
                           Text(
                             AppStrings.setChangePin,
-                            style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+                            style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, 
+                              fontSize: 14,
+                              height: 1.2,
+                            ),
                           ),
                           Text(
-                            _hasPin ? 'PIN is active. Tap to change PIN' : AppStrings.secureAccountPin,
-                            style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                            _hasPin
+                                ? 'PIN is active. Tap to change PIN'
+                                : AppStrings.secureAccountPin,
+                            style: AppTypography.regular.copyWith(
+                              fontSize: 12,
+                              color: context.torkk.textSecondary,
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: AppColors.slate400, size: context.w(22)),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.slate400,
+                      size: context.w(22),
+                    ),
                   ],
                 ),
               ),
@@ -104,7 +135,11 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
           SizedBox(height: context.h(18)),
           Text(
             AppStrings.privacySettings,
-            style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(10)),
           _PrivacySwitch(
@@ -151,12 +186,14 @@ class _PrivacySwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = profileAccent(context);
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(12),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -164,34 +201,36 @@ class _PrivacySwitch extends StatelessWidget {
             width: context.w(40),
             height: context.w(40),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(12)),
             ),
-            child: Icon(icon, color: AppColors.slate500, size: context.w(20)),
+            child: Icon(
+              icon,
+              color: context.torkk.textSecondary,
+              size: context.w(20),
+            ),
           ),
           SizedBox(width: context.w(10)),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+                Text(
+                  title,
+                  style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+                ),
                 Text(
                   subtitle,
-                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: AppColors.slate500),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    height: 1.3,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
               ],
             ),
           ),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-            thumbColor: const WidgetStatePropertyAll(Colors.white),
-            trackColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) return accent;
-              return const Color(0xFFE5E7EB);
-            }),
-            trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
-          ),
+          AppSwitch(value: value, onChanged: onChanged),
         ],
       ),
     );

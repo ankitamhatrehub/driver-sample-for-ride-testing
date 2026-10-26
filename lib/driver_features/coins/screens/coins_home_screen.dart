@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
@@ -9,6 +8,7 @@ import 'package:rider_app/driver_features/coins/widgets/coin_tiles.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 
 import '../../../common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CoinsHomeScreen extends StatelessWidget {
   const CoinsHomeScreen({
@@ -43,7 +43,7 @@ class CoinsHomeScreen extends StatelessWidget {
                   end: Alignment.centerRight,
                   colors: [Color(0xFF0F3FBF), Color(0xFF61217E), Color(0xFFBA2879)],
                 ),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: context.torkk.border),
               ),
               child: Row(
                 children: [
@@ -91,7 +91,7 @@ class CoinsHomeScreen extends StatelessWidget {
             padding: EdgeInsets.all(context.w(16)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFF1F5F9)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +107,7 @@ class CoinsHomeScreen extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: context.w(8), vertical: context.h(3)),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFECFDF5),
+                        color: context.adaptiveTint(const Color(0xFFECFDF5)),
                         borderRadius: BorderRadius.circular(context.r(9999)),
                       ),
                       child: Text(
@@ -115,7 +115,7 @@ class CoinsHomeScreen extends StatelessWidget {
                         style: AppTypography.regular.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFF16A34A),
+                          color: context.legible(Color(0xFF16A34A)),
                         ),
                       ),
                     ),
@@ -123,7 +123,7 @@ class CoinsHomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: context.h(4)),
                 Text(
-                  AppStrings.completeEligibleJobs,                  style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+                  AppStrings.completeEligibleJobs,                  style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
                 ),
                 SizedBox(height: context.h(4)),
                 Container(
@@ -131,10 +131,10 @@ class CoinsHomeScreen extends StatelessWidget {
                   padding: EdgeInsets.all(context.w(16)),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(context.r(14)),
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Color(0xFFEEF2FF), Color(0xFFF5F3FF), Color(0xFFF3E8FF)],
+                      colors: [context.adaptiveTint(Color(0xFFEEF2FF)), context.adaptiveTint(Color(0xFFF5F3FF)), context.adaptiveTint(Color(0xFFF3E8FF))],
                     ),
                   ),
                   child: Column(
@@ -153,7 +153,7 @@ class CoinsHomeScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   AppStrings.scratchNowSeeWhatYouWin,
-                                  style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500),
+                                  style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
                                 ),
                               ],
                             ),

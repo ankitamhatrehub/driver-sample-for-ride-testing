@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- EMERGENCY CONTACT SCREEN ---
 class DriverEmergencyContactScreen extends StatefulWidget {
@@ -78,11 +79,8 @@ class _DriverEmergencyContactScreenState
     TextEditingController controller, {
     String hint = '',
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final fillColor = isDark
-        ? const Color(0xFF1E293B)
-        : const Color(0xFFE2E8F0).withValues(alpha: 0.6);
+    final textColor = context.torkk.textPrimary;
+    final fillColor = context.themed(light: const Color(0xFFE2E8F0), dark: context.torkk.surface).withValues(alpha: 0.6);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +100,7 @@ class _DriverEmergencyContactScreenState
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
-              color: isDark ? Colors.grey.shade500 : Colors.grey.shade400,
+              color: context.themed(light: Colors.grey.shade400, dark: context.torkk.textSecondary),
             ),
             filled: true,
             fillColor: fillColor,
@@ -120,8 +118,8 @@ class _DriverEmergencyContactScreenState
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(24),
-              borderSide: const BorderSide(
-                color: Color(0xFF1D4ED8),
+              borderSide: BorderSide(
+                color: context.legible(Color(0xFF1D4ED8)),
                 width: 1.5,
               ),
             ),
@@ -134,9 +132,8 @@ class _DriverEmergencyContactScreenState
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -149,11 +146,11 @@ class _DriverEmergencyContactScreenState
           child: GestureDetector(
             onTap: () => Navigator.maybePop(context),
             child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF475569),
+              decoration: BoxDecoration(
+                color: context.themed(light: const Color(0xFF475569), dark: context.torkk.surfaceMuted),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.close, color: Colors.white, size: 20),
+              child: Icon(Icons.close, color: context.themed(light: Colors.white, dark: context.torkk.textPrimary), size: 20),
             ),
           ),
         ),
@@ -186,7 +183,7 @@ class _DriverEmergencyContactScreenState
                 'Whom you would contact in emergency',
                 style: TextStyle(
                   fontSize: 13,
-                  color: isDark ? Colors.grey.shade400 : const Color(0xFF64748B),
+                  color: context.torkk.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -227,8 +224,10 @@ class _DriverEmergencyContactScreenState
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _saveContacts,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1D4ED8),
+                  style: ElevatedButton.styleFrom(foregroundColor: onColorFor(
+                      context.torkk.actionFill(const Color(0xFF1D4ED8)),
+                    ),
+                    backgroundColor: context.torkk.actionFill(const Color(0xFF1D4ED8)),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),

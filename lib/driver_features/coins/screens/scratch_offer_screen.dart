@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/coins/widgets/how_it_works_card.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ScratchOfferScreen extends StatelessWidget {
   const ScratchOfferScreen({super.key, required this.onBack, required this.onScratch});
@@ -27,10 +27,10 @@ class ScratchOfferScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: context.h(18)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(18)),
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xFFF5F3FF), Colors.white],
+                colors: [context.adaptiveTint(Color(0xFFF5F3FF)), context.torkk.surface],
               ),
             ),
             child: Column(
@@ -44,7 +44,7 @@ class ScratchOfferScreen extends StatelessWidget {
                 SizedBox(height: context.h(4)),
                 Text(
                   'Win up to 500 coins, discounts',
-                  style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                  style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                 ),
                 SizedBox(height: context.h(20)),
                 Padding(

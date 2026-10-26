@@ -7,6 +7,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/app_snackbar.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final TextEditingController otpController;
@@ -120,12 +121,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
+              color: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
               size: 20,
             ),
             onPressed: widget.onBack,
@@ -135,7 +136,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
           ),
           titleSpacing: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: context.torkk.background,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
         ),
@@ -167,7 +168,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               Text(
                                 '${AppStrings.otpSentPrefix}$_maskedPhone',
                                 style: AppTypography.regular.copyWith(
-                                  color: AppColors.secondaryTextColor,
+                                  color: context.torkk.textSecondary,
                                   fontSize: 14.5,
                                 ),
                               ),
@@ -205,7 +206,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                     children: [
                                       Icon(
                                         Icons.info,
-                                        color: AppColors.error,
+                                        color: context.legible(AppColors.error),
                                         size: context.w(18),
                                       ),
                                       SizedBox(width: context.w(8)),
@@ -213,7 +214,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                         child: Text(
                                           AppStrings.incorrectOtp,
                                           style: AppTypography.regular.copyWith(
-                                            color: AppColors.error,
+                                            color: context.legible(AppColors.error),
                                             fontSize: 13,
                                           ),
                                         ),
@@ -227,7 +228,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                     child: Text(
                                       '${AppStrings.resendOtpIn}$_countdownLabel',
                                       style: AppTypography.regular.copyWith(
-                                        color: AppColors.secondaryTextColor,
+                                        color: context.torkk.textSecondary,
                                         fontSize: 13,
                                       ),
                                     ),
@@ -249,7 +250,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                       Text(
                                         AppStrings.didntReceiveCode,
                                         style: AppTypography.regular.copyWith(
-                                          color: AppColors.secondaryTextColor,
+                                          color: context.torkk.textSecondary,
                                           fontSize: 12,
                                         ),
                                       ),
@@ -283,7 +284,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                     child: Text(
                                       AppStrings.changeMobileNumber,
                                       style: AppTypography.regular.copyWith(
-                                        color: Colors.black,
+                                        color: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
                                         fontSize: 14.5,
                                       ),
                                     ),
@@ -417,11 +418,11 @@ class _OtpBoxesState extends State<_OtpBoxes> {
                     height: boxSize,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.torkk.surface,
                       borderRadius: BorderRadius.circular(context.r(14)),
                       border: Border.all(
                         color: showErrorBorder
-                            ? AppColors.error
+                            ? context.legible(AppColors.error)
                             : isActive
                             ? AppColors.primary
                             : AppColors.fieldBorder,

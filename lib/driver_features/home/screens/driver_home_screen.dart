@@ -28,6 +28,7 @@ import 'package:rider_app/driver_features/trips/screens/driver_history_screen.da
 import 'package:rider_app/driver_features/wallet/wallet_screen.dart';
 import 'package:rider_app/driver_features/notifications/screens/driver_notifications_screen.dart';
 import '../widgets/widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 export '../widgets/widgets.dart';
 
@@ -801,7 +802,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           canPop: false,
           child: Scaffold(
             key: _scaffoldKey,
-            backgroundColor: Colors.white,
+            backgroundColor: context.torkk.background,
             bottomNavigationBar: CircularBottomNav(
               currentIndex: _currentIndex,
               onItemSelected: (idx) {

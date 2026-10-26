@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CoinMoneyCard extends StatelessWidget {
   const CoinMoneyCard({super.key, required this.label, required this.value, required this.color});
@@ -17,14 +18,14 @@ class CoinMoneyCard extends StatelessWidget {
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(6)),
           Text(
@@ -67,7 +68,7 @@ class CoinLinkRow extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(14)),
-          border: Border.all(color: const Color(0xFFE8EDF5)),
+          border: Border.all(color: context.torkk.border),
         ),
         child: Row(
           children: [
@@ -117,7 +118,7 @@ class CoinInfoTile extends StatelessWidget {
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -140,7 +141,7 @@ class CoinInfoTile extends StatelessWidget {
               ),
               Text(
                 subtitle,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
               ),
             ],
           ),

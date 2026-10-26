@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/service/driver_chat_websocket_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER-CUSTOMER IN-APP CHAT SCREEN ---
 class DriverCustomerChatScreen extends StatefulWidget {
@@ -82,7 +83,7 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
         : 'C';
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       appBar: AppBar(
         backgroundColor: const Color(0xFF1D4ED8),
         elevation: 0,
@@ -160,7 +161,7 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
                     decoration: BoxDecoration(
                       color: isDriver
                           ? const Color(0xFF1D4ED8)
-                          : const Color(0xFFE2E8F0),
+                          : context.adaptiveTint(Color(0xFFE2E8F0)),
                       borderRadius: BorderRadius.circular(20).copyWith(
                         bottomRight: isDriver
                             ? const Radius.circular(4)
@@ -175,7 +176,7 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
                       style: TextStyle(
                         color: isDriver
                             ? Colors.white
-                            : const Color(0xFF0F172A),
+                            : context.torkk.textPrimary,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -187,7 +188,7 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: const BoxDecoration(color: Colors.white),
+            decoration: BoxDecoration(color: context.torkk.surface),
             child: SafeArea(
               child: Row(
                 children: [
@@ -195,7 +196,7 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE2E8F0),
+                        color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                         borderRadius: BorderRadius.circular(28),
                       ),
                       child: Row(
@@ -203,14 +204,14 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
                           Expanded(
                             child: TextField(
                               controller: _messageController,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 15,
-                                color: Color(0xFF0F172A),
+                                color: context.torkk.textPrimary,
                               ),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 hintText: 'Send new message',
                                 hintStyle: TextStyle(
-                                  color: Color(0xFF64748B),
+                                  color: context.torkk.textSecondary,
                                   fontSize: 14,
                                 ),
                                 border: InputBorder.none,

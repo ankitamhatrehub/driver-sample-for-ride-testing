@@ -3,6 +3,7 @@ import '../constants/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../utils/screen_utils.dart';
 import 'bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum UnifiedButtonVariant { filled, outline, error }
 
@@ -43,23 +44,26 @@ class UnifiedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = AppColors.otpInfoBorder;
+    final themeColor = context.torkk.actionFill(AppColors.otpInfoBorder);
     final color = variant == UnifiedButtonVariant.error
         ? (backgroundColor ?? AppColors.error)
         : (backgroundColor ?? themeColor);
-    final labelColor = foregroundColor ??
-        (_outline ? AppColors.textPrimary : Colors.white);
+    final labelColor =
+        foregroundColor ??
+        (_outline
+            ? context.torkk.textPrimary
+            : (context.isDarkTheme ? onColorFor(color) : Colors.white));
     final button = Container(
       width: double.infinity,
       height: context.h(52),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: _outline
-            ? (backgroundColor ?? Colors.white)
+            ? (backgroundColor ?? context.torkk.surface)
             : (_canTap ? color : color.withValues(alpha: 0.45)),
         borderRadius: BorderRadius.circular(context.r(14)),
         border: _outline
-            ? Border.all(color: borderColor ?? AppColors.slate300, width: 1)
+            ? Border.all(color: borderColor ?? context.torkk.border, width: 1)
             : null,
       ),
       child: isLoading

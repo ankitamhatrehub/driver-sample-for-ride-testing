@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -50,7 +50,7 @@ class ProfileHeader extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.photo_camera_rounded,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   size: context.w(13),
                 ),
               ),
@@ -66,7 +66,7 @@ class ProfileHeader extends StatelessWidget {
               style: AppTypography.bold.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
+                color:  Theme.of(context).colorScheme.onSurface,
               ),
             ),
             SizedBox(width: context.w(10)),
@@ -76,7 +76,7 @@ class ProfileHeader extends StatelessWidget {
                 vertical: context.h(3),
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFDCFCE7),
+                color: context.adaptiveTint(const Color(0xFFDCFCE7)),
                 borderRadius: BorderRadius.circular(context.r(20)),
               ),
               child: Row(
@@ -96,7 +96,7 @@ class ProfileHeader extends StatelessWidget {
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: const Color(0xFF16A34A),
+                      color: context.legible(Color(0xFF16A34A)),
                     ),
                   ),
                 ],
@@ -109,7 +109,7 @@ class ProfileHeader extends StatelessWidget {
           AppStrings.driversId,
           style: AppTypography.regular.copyWith(
             fontSize: 12,
-            color: AppColors.slate500,
+            color: context.torkk.textSecondary,
           ),
         ),
       ],

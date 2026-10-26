@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../constants/colors.dart';
 import 'package:rider_app/service/location_consent_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum OnlineLocationChoice { always, whileInUse, thisTime }
 
@@ -16,7 +17,7 @@ Future<OnlineLocationChoice?> showOnlineLocationConsentDialog(
     isScrollControlled: true,
     isDismissible: false,
     enableDrag: false,
-    backgroundColor: Colors.white,
+    backgroundColor: context.torkk.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
@@ -50,7 +51,7 @@ class _OnlineLocationConsentSheetState
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.black12,
+                  color: context.torkk.border,
                   borderRadius: BorderRadius.circular(99),
                 ),
               ),
@@ -72,12 +73,12 @@ class _OnlineLocationConsentSheetState
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Location needed to go online',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF0F172A),
+                color: context.torkk.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
@@ -87,7 +88,7 @@ class _OnlineLocationConsentSheetState
               style: TextStyle(
                 fontSize: 14,
                 height: 1.45,
-                color: Colors.blueGrey.shade600,
+                color: context.torkk.textSecondary,
               ),
             ),
             const SizedBox(height: 16),
@@ -121,7 +122,7 @@ class _OnlineLocationConsentSheetState
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFEFF6FF),
+                color: context.adaptiveTint(const Color(0xFFEFF6FF)),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -158,10 +159,10 @@ class _OnlineLocationConsentSheetState
             Center(
               child: TextButton(
                 onPressed: () => Navigator.of(context).pop(null),
-                child: const Text(
+                child: Text(
                   'Cancel (Stay Offline)',
                   style: TextStyle(
-                    color: Colors.blueGrey,
+                    color: context.themed(light: Colors.blueGrey, dark: context.torkk.textSecondary),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -199,10 +200,10 @@ class _ChoiceOption extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? AppColors.primary.withValues(alpha: 0.06)
-              : Colors.grey.shade50,
+              : context.torkk.surfaceMuted,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: selected ? AppColors.primary : Colors.grey.shade200,
+            color: selected ? AppColors.primary : context.torkk.border,
             width: selected ? 2 : 1,
           ),
         ),
@@ -231,8 +232,8 @@ class _ChoiceOption extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                             color: selected
-                                ? AppColors.primary
-                                : const Color(0xFF0F172A),
+                                ? context.legible(AppColors.primary)
+                                : context.torkk.textPrimary,
                           ),
                         ),
                       ),
@@ -244,15 +245,15 @@ class _ChoiceOption extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFDCFCE7),
+                            color: context.adaptiveTint(const Color(0xFFDCFCE7)),
                             borderRadius: BorderRadius.circular(99),
                           ),
-                          child: const Text(
+                          child: Text(
                             'RECOMMENDED',
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF166534),
+                              color: context.legible(Color(0xFF166534)),
                             ),
                           ),
                         ),
@@ -265,7 +266,7 @@ class _ChoiceOption extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12.5,
                       height: 1.35,
-                      color: Colors.blueGrey.shade600,
+                      color: context.themed(light: Colors.blueGrey.shade600, dark: context.torkk.textSecondary),
                     ),
                   ),
                 ],
@@ -366,7 +367,7 @@ Future<bool?> _showLocationActionDialog({
     context: context,
     builder: (ctx) => Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       surfaceTintColor: Colors.transparent,
       elevation: 12,
       insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
@@ -387,19 +388,19 @@ Future<bool?> _showLocationActionDialog({
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF0F172A),
+                color: context.torkk.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13.5,
-                color: Color(0xFF64748B),
+                color: context.torkk.textSecondary,
                 height: 1.45,
               ),
             ),
@@ -452,14 +453,14 @@ Future<bool?> _showLocationActionDialog({
                   onPressed: () => Navigator.pop(ctx, false),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    side: const BorderSide(
-                      color: Color(0xFFCBD5E1),
+                    side: BorderSide(
+                      color: context.torkk.border,
                       width: 1.2,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
-                    foregroundColor: const Color(0xFF475569),
+                    foregroundColor: context.torkk.textBody,
                   ),
                   child: Text(
                     cancelText,
@@ -488,7 +489,7 @@ Future<bool?> _showLocationActionDialog({
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          foregroundColor: const Color(0xFF475569),
+                          foregroundColor: context.torkk.textBody,
                         ),
                         child: Text(
                           cancelText,

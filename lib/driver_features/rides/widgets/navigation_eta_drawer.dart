@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Bottom drawer displayed during active navigation showing dynamic GPS ETA,
 /// instructions, and quick chat access.
@@ -28,7 +29,7 @@ class NavigationEtaDrawer extends StatelessWidget {
           MediaQuery.of(context).padding.bottom + 12,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(24),
           ),
@@ -55,28 +56,28 @@ class NavigationEtaDrawer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(
+                Icon(
                   Icons.format_list_bulleted_rounded,
-                  color: Color(0xFF334155),
+                  color: context.torkk.textBody,
                   size: 24,
                 ),
                 Column(
                   children: [
                     Text(
                       etaText,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       instructionText,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF64748B),
+                        color: context.torkk.textSecondary,
                       ),
                     ),
                   ],

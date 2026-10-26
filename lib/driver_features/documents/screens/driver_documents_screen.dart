@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER DOCUMENTS SCREEN (Figma Docs) ---
 class DriverDocumentsScreen extends StatefulWidget {
@@ -37,9 +38,8 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
     required String subtitle,
     required VoidCallback onTap,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final subTextColor = isDark ? Colors.grey.shade400 : const Color(0xFF64748B);
+    final textColor = context.torkk.textPrimary;
+    final subTextColor = context.torkk.textSecondary;
 
     return Column(
       children: [
@@ -84,7 +84,7 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
         Divider(
           height: 1,
           thickness: 1,
-          color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+          color: context.torkk.border,
           indent: 24,
           endIndent: 24,
         ),
@@ -94,9 +94,8 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -150,7 +149,7 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
                 'Uploaded Documents',
                 style: TextStyle(
                   fontSize: 13,
-                  color: isDark ? Colors.grey.shade400 : const Color(0xFF64748B),
+                  color: context.torkk.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),
               ),

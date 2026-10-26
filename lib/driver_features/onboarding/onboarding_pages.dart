@@ -26,6 +26,7 @@ import 'package:rider_app/driver_features/onboarding/screens/verify_otp_screen.d
 import 'package:rider_app/driver_features/onboarding/screens/verify_vehicle_rc_screen.dart';
 import 'package:rider_app/common/widgets/app_splash_screen.dart';
 import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 OnboardingSession get _session => OnboardingSession.instance;
 
@@ -109,7 +110,7 @@ class OtpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       resizeToAvoidBottomInset: true,
       body: ListenableBuilder(
         listenable: _session,

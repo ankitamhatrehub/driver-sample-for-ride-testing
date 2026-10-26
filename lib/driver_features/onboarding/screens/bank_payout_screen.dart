@@ -12,6 +12,7 @@ import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_info_banner.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum _BankPage { form, verifying, verified, failed }
 
@@ -105,17 +106,17 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
               decoration: BoxDecoration(
-                color: const Color(0xFFF0FDF4),
+                color: context.adaptiveTint(const Color(0xFFF0FDF4)),
                 borderRadius: BorderRadius.circular(context.r(12)),
                 border: Border.all(color: const Color(0xFFBBF7D0)),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.lock_outline, color: AppColors.green600, size: context.w(16)),
+                  Icon(Icons.lock_outline, color: context.legible(AppColors.green600), size: context.w(16)),
                   SizedBox(width: context.w(8)),
                   Text(
                     AppStrings.informationSecure,
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.green600),
+                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.green600)),
                   ),
                 ],
               ),
@@ -182,8 +183,8 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
                 children: [
                   CircleAvatar(
                     radius: context.w(36),
-                    backgroundColor: const Color(0xFFF5F3FF),
-                    child: Icon(Icons.account_balance, color: AppColors.primary, size: context.w(32)),
+                    backgroundColor: context.adaptiveTint(const Color(0xFFF5F3FF)),
+                    child: Icon(Icons.account_balance, color: context.legible(AppColors.primary), size: context.w(32)),
                   ),
                   if (_bankDone < 3)
                     Positioned(
@@ -192,7 +193,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
                       child: SizedBox(
                         width: context.w(18),
                         height: context.w(18),
-                        child: const CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                        child: CircularProgressIndicator(strokeWidth: 2, color: context.legible(AppColors.primary)),
                       ),
                     ),
                 ],
@@ -204,7 +205,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
             Text(
               AppStrings.verifyingBankSubtitle,
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(24)),
             _BankStep(
@@ -245,7 +246,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
 
   Widget _verified(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(24), context.h(36), context.w(24), context.h(16)),
@@ -267,7 +268,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
               Text(
                 AppStrings.bankDetailsVerifiedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.secondaryTextColor),
+                style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
               ),
               SizedBox(height: context.h(20)),
               Text(AppStrings.bankAccountDetails, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
@@ -275,7 +276,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.r(12)),
-                  border: Border.all(color: AppColors.fieldBorder),
+                  border: Border.all(color: context.torkk.border),
                 ),
                 child: Column(
                   children: [
@@ -295,17 +296,17 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.all(context.w(12)),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF0FDF4),
+                  color: context.adaptiveTint(const Color(0xFFF0FDF4)),
                   borderRadius: BorderRadius.circular(context.r(12)),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.check_circle, color: AppColors.green600, size: context.w(16)),
+                    Icon(Icons.check_circle, color: context.legible(AppColors.green600), size: context.w(16)),
                     SizedBox(width: context.w(8)),
                     Expanded(
                       child: Text(
                         AppStrings.bankReadyHint,
-                        style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.green600),
+                        style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.green600)),
                       ),
                     ),
                   ],
@@ -332,7 +333,7 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
 
   Widget _failed(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(24), context.h(48), context.w(24), context.h(16)),
@@ -349,21 +350,21 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
               Text(
                 AppStrings.bankVerificationFailedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.secondaryTextColor),
+                style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
               ),
               SizedBox(height: context.h(20)),
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(context.w(14)),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFEF2F2),
+                  color: context.adaptiveTint(const Color(0xFFFEF2F2)),
                   borderRadius: BorderRadius.circular(context.r(12)),
                   border: Border.all(color: const Color(0xFFFECACA)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppStrings.reason, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+                    Text(AppStrings.reason, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2)),
                     SizedBox(height: context.h(8)),
                     _Reason(AppStrings.incorrectAccountOrIfsc),
                     SizedBox(height: context.h(6)),
@@ -439,13 +440,13 @@ class _BankStep extends StatelessWidget {
                   style: AppTypography.regular.copyWith(
                     fontSize: 13,
                     fontWeight: active || done ? FontWeight.w700 : FontWeight.w400,
-                    color: done || active ? AppColors.textPrimary : AppColors.secondaryTextColor,
+                    color: done || active ? context.legible(AppColors.textPrimary) : context.legible(AppColors.secondaryTextColor),
                   ),
                 ),
                 if (note != null)
                   Text(
                     note!,
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                   ),
               ],
             ),
@@ -465,10 +466,10 @@ class _Reason extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.cancel, color: AppColors.error, size: context.w(16)),
+        Icon(Icons.cancel, color: context.legible(AppColors.error), size: context.w(16)),
         SizedBox(width: context.w(8)),
         Expanded(
-          child: Text(text, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.error)),
+          child: Text(text, style: AppTypography.regular.copyWith(fontSize: 13, color: context.legible(AppColors.error))),
         ),
       ],
     );

@@ -13,6 +13,7 @@ import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
 
 import '../../common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Sample parcel trip. No backend yet — each step is local.
 enum _Phase {
@@ -105,12 +106,12 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
               left: 0,
               right: 0,
               height: context.h(150),
-              child: const DecoratedBox(
+              child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xF2FFFFFF), Color(0x00FFFFFF)],
+                    colors: [context.adaptiveTint(Color(0xF2FFFFFF)), context.adaptiveTint(Color(0x00FFFFFF))],
                   ),
                 ),
               ),
@@ -299,7 +300,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 'Good morning,',
                 style: AppTypography.regular.copyWith(
                   fontSize: 13,
-                  color: AppColors.slate500,
+                  color: context.torkk.textSecondary,
                 ),
               ),
               Text(
@@ -315,14 +316,14 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
         ),
         Icon(
           Icons.notifications_none_rounded,
-          color: AppColors.textPrimary,
+          color: context.torkk.textPrimary,
           size: context.w(22),
         ),
         SizedBox(width: context.w(10)),
         CircleAvatar(
           radius: context.w(16),
           backgroundColor: accent,
-          child: Icon(Icons.person, color: Colors.white, size: context.w(18)),
+          child: Icon(Icons.person, color: Theme.of(context).colorScheme.onPrimary, size: context.w(18)),
         ),
       ],
     );
@@ -338,7 +339,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
         context.h(20),
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(context.r(24)),
         ),
@@ -367,7 +368,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           0,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(context.r(32)),
           ),
@@ -417,7 +418,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 context.h(10),
               ),
               decoration: BoxDecoration(
-                color: const Color(0xCCF8FAFC),
+                color: context.torkk.surfaceMuted.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(context.r(12)),
                 border: Border.all(color: const Color(0xB2F1F5F9)),
               ),
@@ -487,7 +488,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 context.h(10),
               ),
               decoration: BoxDecoration(
-                color: const Color(0xCCF8FAFC),
+                color: context.torkk.surfaceMuted.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(context.r(12)),
                 border: Border.all(color: const Color(0xB2F1F5F9)),
               ),
@@ -498,7 +499,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                   Container(
                     width: 1,
                     height: context.h(28),
-                    color: const Color(0xFFE2E8F0),
+                    color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                   ),
                   SizedBox(width: context.w(10)),
                   Expanded(child: _parcelStat('18 min', 'Est. duration')),
@@ -550,7 +551,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                         AppStrings.accept,
                         style: AppTypography.bold.copyWith(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           height: 1,
                         ),
                       ),
@@ -590,7 +591,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                   Container(
                     width: 2,
                     height: context.h(36),
-                    color: const Color(0xFFE2E8F0),
+                    color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                   ),
                   Container(
                     width: context.w(10),
@@ -705,7 +706,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           context.h(80),
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(context.r(32)),
           ),
@@ -766,7 +767,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: context.w(10)),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEFF6FF),
+                      color: context.adaptiveTint(const Color(0xFFEFF6FF)),
                       borderRadius: BorderRadius.circular(context.r(8)),
                     ),
                     child: Text(
@@ -775,7 +776,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                         fontSize: 12,
                         height: 16 / 12,
                         letterSpacing: 0,
-                        color: const Color(0xFF2563EB),
+                        color: context.legible(Color(0xFF2563EB)),
                       ),
                     ),
                   ),
@@ -789,7 +790,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 children: [
                   CircleAvatar(
                     radius: context.w(16),
-                    backgroundColor: const Color(0xFFF1F5F9),
+                    backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
                     child: Icon(
                       Icons.person,
                       size: context.w(18),
@@ -921,7 +922,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Icon(icon, color: color, size: context.w(16)),
     );
@@ -962,7 +963,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             style: AppTypography.regular.copyWith(
               fontSize: 13,
               height: 1.4,
-              color: AppColors.slate500,
+              color: context.torkk.textSecondary,
             ),
           ),
           SizedBox(height: context.h(22)),
@@ -973,7 +974,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 children: [
                   CircleAvatar(
                     radius: context.w(18),
-                    backgroundColor: const Color(0xFFF1F5F9),
+                    backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
                     child: Icon(
                       Icons.person,
                       color: AppColors.slate400,
@@ -1094,7 +1095,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             Container(
               width: 2,
               height: context.h(36),
-              color: const Color(0xFFE2E8F0),
+              color: context.adaptiveTint(const Color(0xFFE2E8F0)),
             ),
             Container(
               width: context.w(10),
@@ -1168,7 +1169,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             SizedBox(height: context.h(8)),
             Text(
               sender ? 'Ask the Sender for their 4-digit OTP.' : 'Ask the Receiver for their 4-digit OTP.',
-              style: AppTypography.regular.copyWith(fontSize: 14.5, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 14.5, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(28)),
             _ParcelOtpBoxes(controller: _otp, focusNode: _otpFocus, length: 4),
@@ -1210,9 +1211,9 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           Container(
             padding: EdgeInsets.symmetric(vertical: context.h(12)),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(14)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Row(
               children: [
@@ -1226,7 +1227,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 Container(
                   width: 1,
                   height: context.h(36),
-                  color: const Color(0xFFE2E8F0),
+                  color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                 ),
                 Expanded(
                   child: _mini(
@@ -1259,7 +1260,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.r(12)),
-                  border: Border.all(color: const Color(0xFFE8EDF5)),
+                  border: Border.all(color: context.torkk.border),
                 ),
                 child: Row(
                   children: [
@@ -1286,7 +1287,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             style: AppTypography.regular.copyWith(
               fontSize: 13,
               height: 1.2,
-              color: AppColors.slate500,
+              color: context.torkk.textSecondary,
             ),
           ),
           SizedBox(height: context.h(12)),
@@ -1316,7 +1317,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                           style: AppTypography.regular.copyWith(
                             fontSize: 12,
                             height: 1,
-                            color: AppColors.slate500,
+                            color: context.torkk.textSecondary,
                           ),
                         ),
                       ],
@@ -1368,16 +1369,16 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             'Capture proof to complete delivery.',
             style: AppTypography.regular.copyWith(
               fontSize: 13,
-              color: AppColors.slate500,
+              color: context.torkk.textSecondary,
             ),
           ),
           SizedBox(height: context.h(12)),
           Container(
             padding: EdgeInsets.all(context.w(12)),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.torkk.surface,
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Column(
               children: [
@@ -1396,7 +1397,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                             style: AppTypography.bold.copyWith(fontSize: 14, height: 1, color: Theme.of(context).colorScheme.primary),
                           ),
                           style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: Color(0xFFE2E8F0)),
+                            side: BorderSide(color: context.torkk.border),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(12))),
                           ),
                         ),
@@ -1410,10 +1411,10 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.zero,
-                          side: const BorderSide(color: Color(0xFFE2E8F0)),
+                          side: BorderSide(color: context.torkk.border),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(12))),
                         ),
-                        child: Icon(Icons.more_horiz, color: AppColors.slate500, size: context.w(20)),
+                        child: Icon(Icons.more_horiz, color: context.torkk.textSecondary, size: context.w(20)),
                       ),
                     ),
                   ],
@@ -1425,15 +1426,15 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(14)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Row(
               children: [
                 CircleAvatar(
                   radius: context.w(18),
-                  backgroundColor: const Color(0xFFE2E8F0),
+                  backgroundColor: context.adaptiveTint(const Color(0xFFE2E8F0)),
                   child: Icon(Icons.person, color: AppColors.slate400, size: context.w(18)),
                 ),
                 SizedBox(width: context.w(10)),
@@ -1478,7 +1479,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             width: context.w(168),
             padding: EdgeInsets.fromLTRB(context.w(10), context.h(10), context.w(10), context.h(8)),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.torkk.surface,
               borderRadius: BorderRadius.circular(context.r(4)),
             ),
             child: Column(
@@ -1507,7 +1508,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                   style: AppTypography.regular.copyWith(fontSize: 8, height: 1, letterSpacing: 0.2),
                 ),
                 SizedBox(height: context.h(6)),
-                Container(height: 1, color: const Color(0xFFE2E8F0)),
+                Container(height: 1, color: context.adaptiveTint(const Color(0xFFE2E8F0))),
               ],
             ),
           ),
@@ -1538,7 +1539,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 style: AppTypography.bold.copyWith(fontSize: 14, height: 1, color: const Color(0xFFEF4444)),
               ),
               style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.white,
+                backgroundColor: context.torkk.surface,
                 side: const BorderSide(color: Color(0xFFEF4444)),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(16))),
               ),
@@ -1573,7 +1574,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                       width: context.w(72),
                       height: context.w(72),
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(color: Color(0xFFF8FAFC), shape: BoxShape.circle),
+                      decoration: BoxDecoration(color: context.torkk.surfaceMuted, shape: BoxShape.circle),
                       child: Icon(Icons.inventory_2_rounded, color: const Color(0xFFE8A15A), size: context.w(36)),
                     ),
                   ],
@@ -1590,7 +1591,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           Text(
             'Successfully delivered to',
             textAlign: TextAlign.center,
-            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: context.torkk.textSecondary),
           ),
           Text(
             'Amit Verma',
@@ -1648,7 +1649,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
   OutlineInputBorder _commentBorder(BuildContext context) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(context.r(16)),
-      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+      borderSide: BorderSide(color: context.torkk.border),
     );
   }
 
@@ -1691,10 +1692,10 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           Center(
             child: CircleAvatar(
               radius: context.w(28),
-              backgroundColor: const Color(0xFFF3E8FF),
+              backgroundColor: context.adaptiveTint(const Color(0xFFF3E8FF)),
               child: Icon(
                 Icons.person,
-                color: Color(0xFFBA2879)
+                color: context.legible(Color(0xFFBA2879))
               ),
             ),
           ),
@@ -1753,7 +1754,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                           ? Theme.of(
                               context,
                             ).colorScheme.primary.withValues(alpha: 0.1)
-                          : const Color(0xFFF8FAFC),
+                          : context.adaptiveTint(Color(0xFFF8FAFC)),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -1780,7 +1781,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 maxLines: null,
                 textAlignVertical: TextAlignVertical.top,
                 onChanged: (_) => setState(() {}),
-                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.textPrimary),
+                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textPrimary),
                 decoration: InputDecoration(
                   hintText: 'Add a comment (Optional)',
                   hintStyle: AppTypography.regular.copyWith(
@@ -1791,7 +1792,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                     color: const Color(0xFF94A3B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: context.torkk.surface,
                   counterText: '',
                   contentPadding: EdgeInsets.all(context.w(12)),
                   border: _commentBorder(context),
@@ -1836,7 +1837,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(context.r(20)),
@@ -1877,7 +1878,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                     "Tell us why you're cancelling.",
                     style: AppTypography.regular.copyWith(
                       fontSize: 13,
-                      color: AppColors.slate500,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                   SizedBox(height: context.h(12)),
@@ -1952,7 +1953,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
           children: [
             CircleAvatar(
               radius: context.w(14),
-              backgroundColor: const Color(0xFFF1F5F9),
+              backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
               child: Icon(
                 Icons.person,
                 size: context.w(16),
@@ -2000,7 +2001,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 8)],
       ),
@@ -2020,7 +2021,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                   body,
                   style: AppTypography.regular.copyWith(
                     fontSize: 12,
-                    color: AppColors.slate500,
+                    color: context.torkk.textSecondary,
                   ),
                 ),
               ],
@@ -2037,7 +2038,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2069,12 +2070,12 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
             height: context.w(32),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: const Color(0xFFEDE9FE),
+              color: context.adaptiveTint(const Color(0xFFEDE9FE)),
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
             child: Icon(
               icon,
-              color: const Color(0xFF7C3AED),
+              color: context.legible(Color(0xFF7C3AED)),
               size: context.w(16),
             ),
           ),
@@ -2114,7 +2115,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
       padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(12)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -2148,7 +2149,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
     bool showTitle = true,
   }) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -2196,10 +2197,10 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
   Widget _backButton(VoidCallback onTap) {
     return IconButton(
       onPressed: onTap,
-      icon: const Icon(
+      icon: Icon(
         Icons.arrow_back_ios_new,
         size: 18,
-        color: AppColors.textPrimary,
+        color: context.torkk.textPrimary,
       ),
     );
   }
@@ -2266,12 +2267,12 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 style: AppTypography.bold.copyWith(
                   fontSize: 15,
                   height: 1,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
               if (icon != null) ...[
                 SizedBox(width: context.w(8)),
-                Icon(icon, color: Colors.white, size: 16),
+                Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 16),
               ],
             ],
           ),
@@ -2392,7 +2393,7 @@ class _ParcelOtpBoxesState extends State<_ParcelOtpBoxes> {
                     height: boxSize,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.torkk.surface,
                       borderRadius: BorderRadius.circular(context.r(14)),
                       border: Border.all(
                         color: isActive ? AppColors.primary : AppColors.fieldBorder,
@@ -2534,7 +2535,7 @@ class _PersonPage extends StatelessWidget {
     final addressTitle = sender ? 'Pickup Address' : 'Drop Address';
     final address = sender ? 'Sector 18, Noida' : 'DLF Mall of India';
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -2550,10 +2551,10 @@ class _PersonPage extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new,
                       size: 18,
-                      color: AppColors.textPrimary,
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   Text(
@@ -2580,12 +2581,12 @@ class _PersonPage extends StatelessWidget {
                     padding: EdgeInsets.all(context.w(12)),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(context.r(14)),
-                      border: Border.all(color: const Color(0xFFE8EDF5)),
+                      border: Border.all(color: context.torkk.border),
                     ),
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor: const Color(0xFFF1F5F9),
+                          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
                           child: Icon(Icons.person, color: AppColors.slate400),
                         ),
                         SizedBox(width: context.w(10)),
@@ -2597,7 +2598,7 @@ class _PersonPage extends StatelessWidget {
                                 role,
                                 style: AppTypography.regular.copyWith(
                                   fontSize: 12,
-                                  color: AppColors.slate500,
+                                  color: context.torkk.textSecondary,
                                 ),
                               ),
                               Text(
@@ -2617,7 +2618,7 @@ class _PersonPage extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFDCFCE7),
+                            color: context.adaptiveTint(const Color(0xFFDCFCE7)),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -2625,7 +2626,7 @@ class _PersonPage extends StatelessWidget {
                             style: AppTypography.regular.copyWith(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
-                              color: const Color(0xFF16A34A),
+                              color: context.legible(Color(0xFF16A34A)),
                             ),
                           ),
                         ),
@@ -2637,7 +2638,7 @@ class _PersonPage extends StatelessWidget {
                     'Contact Information',
                     style: AppTypography.regular.copyWith(
                       fontSize: 13,
-                      color: AppColors.slate500,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                   SizedBox(height: context.h(8)),
@@ -2661,26 +2662,26 @@ class _PersonPage extends StatelessWidget {
                     addressTitle,
                     style: AppTypography.regular.copyWith(
                       fontSize: 13,
-                      color: AppColors.slate500,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                   SizedBox(height: context.h(8)),
                   Container(
                     padding: EdgeInsets.all(context.w(12)),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF0FDF4),
+                      color: context.adaptiveTint(const Color(0xFFF0FDF4)),
                       borderRadius: BorderRadius.circular(context.r(14)),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.location_on, color: Color(0xFF16A34A)),
+                        Icon(Icons.location_on, color: context.legible(Color(0xFF16A34A))),
                         SizedBox(width: context.w(8)),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               address,
-                              style: AppTypography.bold.copyWith(
+                              style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, 
                                 fontSize: 14,
                                 height: 1.2,
                               ),
@@ -2689,7 +2690,7 @@ class _PersonPage extends StatelessWidget {
                               'Noida',
                               style: AppTypography.regular.copyWith(
                                 fontSize: 12,
-                                color: AppColors.slate500,
+                                color: context.torkk.textSecondary,
                               ),
                             ),
                           ],
@@ -2717,7 +2718,7 @@ class _PersonPage extends StatelessWidget {
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [

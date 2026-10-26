@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/app_colors.dart';
 import '../utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Radio-style option card used for language and similar single-choice lists.
 class AppSelectionTile extends StatelessWidget {
@@ -20,7 +21,7 @@ class AppSelectionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = selected ? AppColors.blue700 : AppColors.slate200;
+    final borderColor = selected ? AppColors.blue700 : context.torkk.border;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -29,7 +30,7 @@ class AppSelectionTile extends StatelessWidget {
           vertical: context.h(18),
         ),
         decoration: BoxDecoration(
-          color: selected ? AppColors.slate50 : Colors.white,
+          color: selected ? context.torkk.surfaceMuted : context.torkk.surface,
           border: Border.all(
             color: borderColor,
             width: selected ? 1.8 : 1.2,
@@ -53,7 +54,7 @@ class AppSelectionTile extends StatelessWidget {
                     style: TextStyle(
                       fontSize: context.sp(16),
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   SizedBox(height: context.h(4)),
@@ -61,7 +62,7 @@ class AppSelectionTile extends StatelessWidget {
                     subtitle,
                     style: TextStyle(
                       fontSize: context.sp(13),
-                      color: AppColors.gray600,
+                      color: context.torkk.textBody,
                     ),
                   ),
                 ],

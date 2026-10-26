@@ -6,6 +6,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
@@ -72,11 +73,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   contentPadding: EdgeInsets.symmetric(horizontal: context.w(16), vertical: context.h(12)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(context.r(24)),
-                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                    borderSide: BorderSide(color: context.torkk.border),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(context.r(24)),
-                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                    borderSide: BorderSide(color: context.torkk.border),
                   ),
                 ),
               ),
@@ -88,7 +89,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 width: context.w(44),
                 height: context.w(44),
                 decoration: BoxDecoration(color: accent, shape: BoxShape.circle),
-                child: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+                child: Icon(Icons.send_rounded, color: Theme.of(context).colorScheme.onPrimary, size: 18),
               ),
             ),
           ],
@@ -124,9 +125,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
                   decoration: BoxDecoration(
-                    color: mine ? accent.withValues(alpha: 0.12) : Colors.white,
+                    color: mine ? accent.withValues(alpha: 0.12) : context.torkk.surface,
                     borderRadius: BorderRadius.circular(context.r(16)),
-                    border: mine ? null : Border.all(color: const Color(0xFFE8EDF5)),
+                    border: mine ? null : Border.all(color: context.torkk.border),
                   ),
                   child: Text(message.text, style: AppTypography.regular.copyWith(fontSize: 13, height: 1.35)),
                 ),
@@ -178,7 +179,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(context.r(14)),
-                        border: Border.all(color: const Color(0xFFE8EDF5)),
+                        border: Border.all(color: context.torkk.border),
                       ),
                       child: Row(
                         children: [

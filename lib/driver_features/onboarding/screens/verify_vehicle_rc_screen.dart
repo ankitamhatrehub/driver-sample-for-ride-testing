@@ -17,6 +17,7 @@ import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_info_banner.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum _RcPage { form, unclear, preview, extracted }
 
@@ -57,7 +58,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
   Future<void> _pickSide({required bool front}) async {
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(16)))),
       builder: (context) {
         return SafeArea(
@@ -65,12 +66,12 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.photo_camera_outlined, color: AppColors.primary),
+                leading: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary)),
                 title: Text(AppStrings.camera, style: AppTypography.bold.copyWith(fontSize: 15)),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
-                leading: const Icon(Icons.photo_outlined, color: AppColors.primary),
+                leading: Icon(Icons.photo_outlined, color: context.legible(AppColors.primary)),
                 title: Text(AppStrings.gallery, style: AppTypography.bold.copyWith(fontSize: 15)),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
@@ -189,7 +190,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
             SizedBox(height: context.h(4)),
             Text(
               AppStrings.rcDocumentHint,
-              style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(10)),
             Row(
@@ -291,7 +292,7 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(context.r(12)),
-                border: Border.all(color: AppColors.fieldBorder),
+                border: Border.all(color: context.torkk.border),
               ),
               child: Column(
                 children: [
@@ -321,17 +322,17 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
               width: double.infinity,
               padding: EdgeInsets.all(context.w(12)),
               decoration: BoxDecoration(
-                color: const Color(0xFFF0FDF4),
+                color: context.adaptiveTint(const Color(0xFFF0FDF4)),
                 borderRadius: BorderRadius.circular(context.r(12)),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.check_circle, color: AppColors.green600, size: context.w(16)),
+                  Icon(Icons.check_circle, color: context.legible(AppColors.green600), size: context.w(16)),
                   SizedBox(width: context.w(8)),
                   Expanded(
                     child: Text(
                       AppStrings.rcExtractedHint,
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.green600),
+                      style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.green600)),
                     ),
                   ),
                 ],
@@ -372,7 +373,7 @@ class _RcUploadTile extends StatelessWidget {
           height: context.h(148),
           padding: EdgeInsets.symmetric(horizontal: context.w(8), vertical: context.h(16)),
           decoration: BoxDecoration(
-            color: const Color(0xFFFAF5FF),
+            color: context.adaptiveTint(const Color(0xFFFAF5FF)),
             borderRadius: BorderRadius.circular(radius),
           ),
           child: reading
@@ -381,13 +382,13 @@ class _RcUploadTile extends StatelessWidget {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(icon, color: AppColors.primary, size: context.w(28)),
+                        Icon(icon, color: context.legible(AppColors.primary), size: context.w(28)),
                         SizedBox(height: context.h(10)),
-                        Text(label, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2)),
+                        Text(label, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 13, height: 1.2)),
                         SizedBox(height: context.h(2)),
                         Text(
                           AppStrings.tapToUpload,
-                          style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+                          style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                         ),
                       ],
                     )
@@ -447,9 +448,9 @@ class _UploadedFile extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.fieldFill,
+            color: context.torkk.surfaceMuted,
             borderRadius: BorderRadius.circular(context.r(6)),
-            border: Border.all(color: AppColors.fieldBorder),
+            border: Border.all(color: context.torkk.border),
           ),
           child: path == null
               ? Icon(Icons.badge_outlined, size: context.w(18), color: AppColors.slate400)
@@ -464,11 +465,11 @@ class _UploadedFile extends StatelessWidget {
             children: [
               Text(AppStrings.rcDocument, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2)),
               if (name.isNotEmpty)
-                Text(name, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor)),
+                Text(name, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
               if (size.isNotEmpty)
                 Text(
                   '$size • ${AppStrings.rcUploaded}',
-                  style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.secondaryTextColor),
+                  style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
                 ),
             ],
           ),
@@ -477,9 +478,9 @@ class _UploadedFile extends StatelessWidget {
           onTap: onReplace,
           child: Row(
             children: [
-              Icon(Icons.edit_outlined, size: context.w(14), color: AppColors.primary),
+              Icon(Icons.edit_outlined, size: context.w(14), color: context.legible(AppColors.primary)),
               SizedBox(width: context.w(4)),
-              Text(AppStrings.replaceAction, style: AppTypography.bold.copyWith(fontSize: 13, color: AppColors.primary)),
+              Text(AppStrings.replaceAction, style: AppTypography.bold.copyWith(fontSize: 13, color: context.legible(AppColors.primary))),
             ],
           ),
         ),

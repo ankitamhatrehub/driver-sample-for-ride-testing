@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ReviewDetailsScreen extends StatelessWidget {
   const ReviewDetailsScreen({
@@ -69,15 +70,15 @@ class ReviewDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+            icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
             onPressed: onBack,
           ),
           titleSpacing: 0,
           centerTitle: false,
-          backgroundColor: Colors.white,
+          backgroundColor: context.torkk.background,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           title: Text(
@@ -217,8 +218,8 @@ class ReviewDetailsScreen extends StatelessWidget {
       width: double.infinity,
       height: context.h(63),
       padding: EdgeInsets.symmetric(horizontal: context.w(14)),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Color(0xFFF1F5F9))),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: context.torkk.border)),
       ),
       child: Row(
         children: [
@@ -243,7 +244,7 @@ class ReviewDetailsScreen extends StatelessWidget {
                   style: AppTypography.regular.copyWith(
                     fontSize: 12,
                     height: 1.2,
-                    color: AppColors.secondaryTextColor,
+                    color: context.torkk.textSecondary,
                   ),
                 ),
                 Text(
@@ -269,9 +270,9 @@ class ReviewDetailsScreen extends StatelessWidget {
 
   BoxDecoration _cardDecoration(BuildContext context) {
     return BoxDecoration(
-      color: Colors.white,
+      color: context.torkk.surface,
       borderRadius: BorderRadius.circular(context.r(16)),
-      border: Border.all(color: const Color(0xFFF3F4F6)),
+      border: Border.all(color: context.torkk.border),
       boxShadow: const [
         BoxShadow(color: Color(0x0A000000), offset: Offset(0, 1), blurRadius: 3),
       ],

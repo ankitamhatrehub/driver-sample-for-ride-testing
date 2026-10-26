@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
@@ -9,6 +8,7 @@ import 'package:rider_app/driver_features/subscription/models/subscription_plan.
 import 'package:rider_app/driver_features/subscription/widgets/payment_method_tile.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_page.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_plan_card.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SubscriptionPaymentScreen extends StatelessWidget {
   const SubscriptionPaymentScreen({
@@ -43,7 +43,7 @@ class SubscriptionPaymentScreen extends StatelessWidget {
                 style: AppTypography.regular.copyWith(
                   fontSize: 11,
                   height: 1.35,
-                  color: AppColors.textPrimary,
+                  color: context.torkk.textPrimary,
                 ),
               ),
             ],

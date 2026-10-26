@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/widgets/bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 
 /// Top header row of the driver dashboard containing:
@@ -34,7 +35,6 @@ class HomeHeaderRow extends StatelessWidget {
     final Color avatarRingColor =
         isFemale ? const Color(0xFFEC4899) : const Color(0xFF1D4ED8);
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +111,7 @@ class HomeHeaderRow extends StatelessWidget {
                 color: avatarRingColor, // Dynamic ring color
                 width: 2.5,
               ),
-              color: isDark ? const Color(0xFF334155) : Colors.grey.shade200,
+              color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
             ),
             child: ClipOval(
               child: profileImageUrl.isNotEmpty

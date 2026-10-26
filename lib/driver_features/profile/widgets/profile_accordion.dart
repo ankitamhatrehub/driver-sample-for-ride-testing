@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ProfileSection {
   const ProfileSection(this.title, this.body, {this.readMore = false});
@@ -33,12 +34,12 @@ class _ProfileAccordionState extends State<ProfileAccordion> {
       margin: EdgeInsets.only(bottom: context.h(10)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         children: [
           for (var i = 0; i < widget.sections.length; i++) ...[
-            if (i > 0) const Divider(height: 1, color: Color(0xFFF1F5F9)),
+            if (i > 0) Divider(height: 1, color: context.torkk.border),
             InkWell(
               onTap: () => setState(() {
                 _open = _open == i ? null : i;
@@ -69,7 +70,7 @@ class _ProfileAccordionState extends State<ProfileAccordion> {
                         widget.sections[i].body,
                         maxLines: widget.sections[i].readMore && !_readMore ? 4 : null,
                         overflow: widget.sections[i].readMore && !_readMore ? TextOverflow.ellipsis : null,
-                        style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.slate500),
+                        style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary),
                       ),
                       if (widget.sections[i].readMore && !_readMore)
                         GestureDetector(

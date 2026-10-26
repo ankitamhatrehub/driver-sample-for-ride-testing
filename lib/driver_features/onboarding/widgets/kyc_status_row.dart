@@ -4,6 +4,7 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum KycItemStatus { verified, pending, notStarted }
 
@@ -43,9 +44,9 @@ class KycStatusRow extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(context.w(14)),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: BorderRadius.circular(context.r(12)),
-          border: Border.all(color: const Color(0xFFF3F4F6)),
+          border: Border.all(color: context.torkk.border),
           boxShadow: const [
             BoxShadow(
               color: Color(0x0A000000),
@@ -70,7 +71,7 @@ class KycStatusRow extends StatelessWidget {
                     style: AppTypography.bold.copyWith(
                       fontSize: 12,
                       height: 1.15,
-                      color: AppColors.textPrimary,
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   SizedBox(height: context.h(4)),
@@ -92,8 +93,8 @@ class KycStatusRow extends StatelessWidget {
                 width: context.w(30),
                 height: context.w(30),
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF3F4F6),
+                decoration: BoxDecoration(
+                  color: context.torkk.surfaceMuted,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -121,7 +122,7 @@ class KycStatusRow extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: verified ? const Color(0xFFE8F8EE) : Colors.white,
+        color: verified ? context.adaptiveTint(Color(0xFFE8F8EE)) : context.torkk.surface,
         border: Border.all(
           color: verified ? AppColors.emerald500 : AppColors.slate300,
         ),

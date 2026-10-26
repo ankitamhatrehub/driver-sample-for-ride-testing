@@ -7,6 +7,7 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Sample scheduled ride. No backend yet.
 enum _Step { offer, ready, trip, details }
@@ -96,7 +97,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
           0,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(context.r(32)),
           ),
@@ -154,7 +155,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
               children: [
                 Icon(
                   Icons.local_taxi_outlined,
-                  color: AppColors.slate500,
+                  color: context.torkk.textSecondary,
                   size: context.w(18),
                 ),
                 SizedBox(width: context.w(8)),
@@ -200,7 +201,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
   Widget _ready(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -281,7 +282,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                     style: AppTypography.regular.copyWith(
                       fontSize: 13,
                       height: 1.4,
-                      color: AppColors.slate500,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                   SizedBox(height: context.h(20)),
@@ -289,7 +290,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                     padding: EdgeInsets.all(context.w(14)),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(context.r(14)),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: context.torkk.border),
                     ),
                     child: Column(
                       children: [
@@ -338,7 +339,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                     'Back to Ride',
                     style: AppTypography.bold.copyWith(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       height: 1,
                     ),
                   ),
@@ -420,7 +421,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                   context.h(80),
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.torkk.surface,
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(context.r(32)),
                   ),
@@ -507,7 +508,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
     return Container(
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(context.r(16)),
         boxShadow: const [
           BoxShadow(
@@ -539,14 +540,14 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                   vertical: context.h(3),
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFF7ED),
+                  color: context.adaptiveTint(const Color(0xFFFFF7ED)),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   'Tomorrow at 6:30 am',
                   style: AppTypography.bold.copyWith(
                     fontSize: 10,
-                    color: const Color(0xFFF97316),
+                    color: context.legible(Color(0xFFF97316)),
                     height: 1,
                   ),
                 ),
@@ -558,7 +559,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
             'Scheduled Ride Request',
             style: AppTypography.regular.copyWith(
               fontSize: 12,
-              color: AppColors.slate500,
+              color: context.torkk.textSecondary,
             ),
           ),
           SizedBox(height: context.h(6)),
@@ -638,7 +639,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
   Widget _details(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -678,9 +679,9 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                   Container(
                     padding: EdgeInsets.all(context.w(14)),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF8FAFC),
+                      color: context.torkk.surfaceMuted,
                       borderRadius: BorderRadius.circular(context.r(16)),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: context.torkk.border),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -707,14 +708,14 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                                 vertical: context.h(4),
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFFFF7ED),
+                                color: context.adaptiveTint(const Color(0xFFFFF7ED)),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
                                 'Scheduled in 1 hour',
                                 style: AppTypography.bold.copyWith(
                                   fontSize: 11,
-                                  color: const Color(0xFFF97316),
+                                  color: context.legible(Color(0xFFF97316)),
                                   height: 1,
                                 ),
                               ),
@@ -726,7 +727,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                           'Ride  •  4 Seater',
                           style: AppTypography.regular.copyWith(
                             fontSize: 13,
-                            color: AppColors.slate500,
+                            color: context.torkk.textSecondary,
                           ),
                         ),
                         SizedBox(height: context.h(6)),
@@ -763,7 +764,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                     padding: EdgeInsets.all(context.w(12)),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(context.r(14)),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: context.torkk.border),
                     ),
                     child: Row(
                       children: [
@@ -815,9 +816,9 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                     colors: [accent, const Color(0xFF6366F1)],
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(Icons.card_giftcard_rounded, color: Colors.white),
+                    Icon(Icons.card_giftcard_rounded, color: Theme.of(context).colorScheme.onPrimary),
                     SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -826,7 +827,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                           Text(
                             'You earned 200 coins',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
                             ),
@@ -841,7 +842,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: Colors.white),
+                    Icon(Icons.chevron_right_rounded, color: Theme.of(context).colorScheme.onPrimary),
                   ],
                 ),
               ),
@@ -862,9 +863,9 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
               vertical: context.h(8),
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.torkk.surface,
               borderRadius: BorderRadius.circular(context.r(14)),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Row(
               children: [
@@ -935,7 +936,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
       children: [
         CircleAvatar(
           radius: context.w(16),
-          backgroundColor: const Color(0xFFF1F5F9),
+          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
           child: Icon(
             Icons.person,
             size: context.w(16),
@@ -1021,9 +1022,9 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
-      child: Icon(icon, size: context.w(16), color: const Color(0xFF2563EB)),
+      child: Icon(icon, size: context.w(16), color: context.legible(Color(0xFF2563EB))),
     );
   }
 
@@ -1079,7 +1080,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
     return Container(
       height: context.h(64),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: context.torkk.surfaceMuted,
         borderRadius: BorderRadius.circular(context.r(14)),
       ),
       child: Row(
@@ -1088,7 +1089,7 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
           Container(
             width: 1,
             height: context.h(28),
-            color: const Color(0xFFE2E8F0),
+            color: context.adaptiveTint(const Color(0xFFE2E8F0)),
           ),
           Expanded(child: _stat('18 min', 'Est. duration')),
         ],
@@ -1212,12 +1213,12 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
         ),
         icon: icon == null
             ? const SizedBox.shrink()
-            : Icon(icon, size: 16, color: Colors.white),
+            : Icon(icon, size: 16, color: Theme.of(context).colorScheme.onPrimary),
         label: Text(
           label,
           style: AppTypography.bold.copyWith(
             fontSize: 14,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onPrimary,
             height: 1,
           ),
         ),

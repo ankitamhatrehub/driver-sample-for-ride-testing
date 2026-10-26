@@ -4,6 +4,8 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/common/widgets/app_switch.dart';
 
 class NotificationPreferencesScreen extends StatefulWidget {
   const NotificationPreferencesScreen({super.key});
@@ -75,7 +77,7 @@ class _PreferenceTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -83,7 +85,7 @@ class _PreferenceTile extends StatelessWidget {
             width: context.w(40),
             height: context.w(40),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(12)),
             ),
             child: Icon(icon, color: value ? accent : AppColors.slate400, size: context.w(20)),
@@ -99,21 +101,12 @@ class _PreferenceTile extends StatelessWidget {
                 ),
                 Text(
                   subtitle,
-                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: AppColors.slate500),
+                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: context.torkk.textSecondary),
                 ),
               ],
             ),
           ),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-            thumbColor: const WidgetStatePropertyAll(Colors.white),
-            trackColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) return accent;
-              return const Color(0xFFE5E7EB);
-            }),
-            trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
-          ),
+          AppSwitch(value: value, onChanged: onChanged),
         ],
       ),
     );

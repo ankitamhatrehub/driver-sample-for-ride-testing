@@ -4,6 +4,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class EarningsScreen extends StatefulWidget {
   const EarningsScreen({super.key});
@@ -27,7 +28,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
           Container(
             padding: EdgeInsets.all(context.w(4)),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(14)),
             ),
             child: Row(
@@ -48,7 +49,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
                           style: AppTypography.regular.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: _range == i ? Colors.white : AppColors.slate500,
+                            color: _range == i ? Theme.of(context).colorScheme.onPrimary : AppColors.slate500,
                           ),
                         ),
                       ),
@@ -76,7 +77,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Row(
               children: [
@@ -84,7 +85,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Today's Earnings", style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                      Text("Today's Earnings", style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                       Text('₹680.00', style: AppTypography.bold.copyWith(fontSize: 22, height: 1.2, letterSpacing: -0.4)),
                     ],
                   ),
@@ -114,12 +115,12 @@ class _EarningsScreenState extends State<EarningsScreen> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         children: [
           for (var i = 0; i < rows.length; i++) ...[
-            if (i > 0) const Divider(height: 1, color: Color(0xFFF1F5F9)),
+            if (i > 0) Divider(height: 1, color: context.torkk.border),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
               child: Row(
@@ -137,7 +138,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
                       children: [
                         Text(rows[i].title, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
                         if (rows[i].subtitle.isNotEmpty)
-                          Text(rows[i].subtitle, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                          Text(rows[i].subtitle, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                       ],
                     ),
                   ),
@@ -214,17 +215,17 @@ class TransactionHistoryScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+        Text(title, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
         SizedBox(height: context.h(8)),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(context.r(16)),
-            border: Border.all(color: const Color(0xFFE8EDF5)),
+            border: Border.all(color: context.torkk.border),
           ),
           child: Column(
             children: [
               for (var i = 0; i < items.length; i++) ...[
-                if (i > 0) const Divider(height: 1, color: Color(0xFFF1F5F9)),
+                if (i > 0) Divider(height: 1, color: context.torkk.border),
                 InkWell(
                   onTap: () {
                     Navigator.of(context).push(
@@ -237,7 +238,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: context.w(16),
-                          backgroundColor: const Color(0xFFF1F5F9),
+                          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
                           child: Icon(Icons.person, color: AppColors.slate400, size: context.w(16)),
                         ),
                         SizedBox(width: context.w(10)),
@@ -246,7 +247,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('User', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
-                              Text('${items[i].kind}  ·  ${items[i].time}', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                              Text('${items[i].kind}  ·  ${items[i].time}', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                             ],
                           ),
                         ),
@@ -282,7 +283,7 @@ class _EmptyTransactions extends StatelessWidget {
               backgroundColor: profileAccent(context),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
             ),
-            child: Text('Back to Home', style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: Colors.white)),
+            child: Text('Back to Home', style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: Theme.of(context).colorScheme.onPrimary)),
           ),
         ),
       ),
@@ -325,7 +326,7 @@ class _EmptyTransactions extends StatelessWidget {
             child: Text(
               'Your transaction will appear here after you complete rides , parcels  or make any wallet activity.',
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.slate500),
+              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary),
             ),
           ),
           const Spacer(),
@@ -351,7 +352,7 @@ class TransactionDetailsScreen extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: context.w(18),
-                backgroundColor: const Color(0xFFF1F5F9),
+                backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
                 child: Icon(Icons.person, color: AppColors.slate400, size: context.w(18)),
               ),
               SizedBox(width: context.w(10)),
@@ -362,7 +363,7 @@ class TransactionDetailsScreen extends StatelessWidget {
           SizedBox(height: context.h(8)),
           Text(
             txn.parcel ? 'Parcel' : 'Ride • 4 Seater',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.textPrimary),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textPrimary),
           ),
           SizedBox(height: context.h(8)),
           Text('Sector 62, Noida  →  DLF Mall of India', style: AppTypography.regular.copyWith(fontSize: 13)),
@@ -371,7 +372,7 @@ class TransactionDetailsScreen extends StatelessWidget {
             children: [
               Icon(Icons.location_on_outlined, size: context.w(14), color: AppColors.slate400),
               SizedBox(width: context.w(4)),
-              Text('4.2 km  •  18 mins', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+              Text('4.2 km  •  18 mins', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
             ],
           ),
           SizedBox(height: context.h(16)),
@@ -381,16 +382,16 @@ class TransactionDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Column(
               children: [
-                _line('Status', 'Completed', valueColor: const Color(0xFF16A34A)),
-                _line('Transaction ID', '47323683678'),
-                _line('Transaction Type', txn.parcel ? 'Parcel Earnings' : 'Ride Earnings'),
-                _line('Amount', '₹120'),
-                _line('Data & Time', '12 jan , 02:34 am'),
-                _line('Job Reference', '#564646'),
+                _line(context, 'Status', 'Completed', valueColor: const Color(0xFF16A34A)),
+                _line(context, 'Transaction ID', '47323683678'),
+                _line(context, 'Transaction Type', txn.parcel ? 'Parcel Earnings' : 'Ride Earnings'),
+                _line(context, 'Amount', '₹120'),
+                _line(context, 'Data & Time', '12 jan , 02:34 am'),
+                _line(context, 'Job Reference', '#564646'),
               ],
             ),
           ),
@@ -400,12 +401,12 @@ class TransactionDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.paymentStatus, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                Text(AppStrings.paymentStatus, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                 SizedBox(height: context.h(2)),
                 Text(AppStrings.paidCash, style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2, letterSpacing: -0.2)),
               ],
@@ -416,13 +417,13 @@ class TransactionDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _line(String label, String value, {Color? valueColor}) {
+  Widget _line(BuildContext context, String label, String value, {Color? valueColor}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500))),
-          Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: valueColor ?? AppColors.textPrimary)),
+          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
+          Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: valueColor ?? context.legible(AppColors.textPrimary))),
         ],
       ),
     );
@@ -439,20 +440,20 @@ class BankAccountScreen extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
-          Text('Primary Bank Account', style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+          Text('Primary Bank Account', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(8)),
           Container(
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Row(
               children: [
                 Container(
                   width: context.w(36),
                   height: context.w(36),
-                  decoration: BoxDecoration(color: const Color(0xFFF3E8FF), borderRadius: BorderRadius.circular(context.r(10))),
+                  decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFF3E8FF)), borderRadius: BorderRadius.circular(context.r(10))),
                   child: Icon(Icons.account_balance_outlined, color: profileAccent(context), size: context.w(18)),
                 ),
               ],
@@ -463,7 +464,7 @@ class BankAccountScreen extends StatelessWidget {
             children: [
               Icon(Icons.lock_outline, size: context.w(14), color: const Color(0xFF16A34A)),
               SizedBox(width: context.w(6)),
-              Text('Your Bank details are safe and secure with us', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+              Text('Your Bank details are safe and secure with us', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
             ],
           ),
         ],

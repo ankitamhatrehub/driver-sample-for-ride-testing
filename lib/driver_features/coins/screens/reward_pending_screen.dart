@@ -26,7 +26,7 @@ class RewardPendingScreen extends StatelessWidget {
             child: Text(
               'Your reward will be credited soon. This may take a few moments',
               textAlign: TextAlign.center,
-              style: coinsMuted(),
+              style: coinsMuted(context),
             ),
           ),
           const Spacer(),

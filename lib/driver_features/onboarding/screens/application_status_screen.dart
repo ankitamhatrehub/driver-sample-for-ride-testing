@@ -6,6 +6,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/status_result.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum ApplicationOutcome { underReview, approved, actionRequired, rejected }
 
@@ -189,7 +190,7 @@ class ApplicationStatusScreen extends StatelessWidget {
                   style: AppTypography.regular.copyWith(
                     fontSize: 10,
                     height: 1.4,
-                    color: AppColors.secondaryTextColor,
+                    color: context.torkk.textSecondary,
                   ),
                 ),
               ],
@@ -250,7 +251,7 @@ class ApplicationStatusScreen extends StatelessWidget {
                     style: AppTypography.regular.copyWith(
                       fontSize: 13,
                       height: 1.4,
-                      color: AppColors.secondaryTextColor,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                 ],
@@ -290,9 +291,9 @@ class ApplicationStatusScreen extends StatelessWidget {
         context.h(8),
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(context.r(12)),
-        border: Border.all(color: AppColors.slate200),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         children: [

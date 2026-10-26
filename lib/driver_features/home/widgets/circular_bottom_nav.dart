@@ -7,6 +7,7 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Floating dashboard bar: Home, Orders, Parcel, Wallet, Profile.
 class CircularBottomNav extends StatelessWidget {
@@ -69,7 +70,7 @@ class CircularBottomNav extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                 child: Container(
-                  color: Colors.white,
+                  color: context.torkk.surface,
                   padding: EdgeInsets.fromLTRB(context.w(8), context.h(6), context.w(8), context.h(6)),
                   child: Row(
                     children: [
@@ -127,11 +128,11 @@ class CircularBottomNav extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(item.icon, color: AppColors.gray500, size: context.w(20)),
+          Icon(item.icon, color: context.torkk.textSecondary, size: context.w(20)),
           Text(
             item.label,
             style: AppTypography.regular.copyWith(
-              color: AppColors.gray500,
+              color: context.torkk.textSecondary,
               fontSize: 10,
               height: 15 / 10,
             ),

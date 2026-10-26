@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Confirmation dialog shown before completing the trip and collecting fare.
 class FinishRideDialog extends StatelessWidget {
@@ -29,7 +30,7 @@ class FinishRideDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+          child: Text('Cancel', style: TextStyle(color: context.themed(light: Colors.grey, dark: context.torkk.textSecondary))),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

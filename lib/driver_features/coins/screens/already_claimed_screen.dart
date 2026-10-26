@@ -28,7 +28,7 @@ class AlreadyClaimedScreen extends StatelessWidget {
             child: Text(
               'You have already claimed a reward for this job. Each eligible job will give you only one scratch card',
               textAlign: TextAlign.center,
-              style: coinsMuted(),
+              style: coinsMuted(context),
             ),
           ),
           const Spacer(),

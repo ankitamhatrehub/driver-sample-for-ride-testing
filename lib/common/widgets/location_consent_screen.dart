@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 
 import '../constants/colors.dart';
 import 'package:rider_app/service/location_consent_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Play Store prominent disclosure for location collection.
 /// Shown before the system location permission prompt.
@@ -49,7 +50,7 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
     const primary = AppColors.primary;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -75,12 +76,12 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       'Allow TORKK Driver to use your location?',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: context.torkk.textPrimary,
                         height: 1.25,
                       ),
                     ),
@@ -91,7 +92,7 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.45,
-                        color: Colors.blueGrey.shade600,
+                        color: context.themed(light: Colors.blueGrey.shade600, dark: context.torkk.textSecondary),
                       ),
                     ),
                     const SizedBox(height: 28),
@@ -132,14 +133,14 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFEF3C7),
+                        color: context.adaptiveTint(const Color(0xFFFEF3C7)),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: const Color(0xFFF59E0B).withValues(alpha: 0.35)),
                       ),
-                      child: const Row(
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(Icons.info_outline, color: Color(0xFFB45309), size: 20),
+                          Icon(Icons.info_outline, color: context.legible(Color(0xFFB45309)), size: 20),
                           SizedBox(width: 10),
                           Expanded(
                             child: Text(
@@ -149,7 +150,7 @@ class _LocationConsentScreenState extends State<LocationConsentScreen> {
                               style: TextStyle(
                                 fontSize: 13,
                                 height: 1.4,
-                                color: Color(0xFF92400E),
+                                color: context.legible(Color(0xFF92400E)),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -223,14 +224,14 @@ class _InfoCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: context.torkk.surfaceMuted,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.black12),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 22),
+          Icon(icon, color: context.legible(AppColors.primary), size: 22),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -238,10 +239,10 @@ class _InfoCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF0F172A),
+                    color: context.torkk.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -250,7 +251,7 @@ class _InfoCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     height: 1.45,
-                    color: Colors.blueGrey.shade700,
+                    color: context.themed(light: Colors.blueGrey.shade700, dark: context.torkk.textSecondary),
                   ),
                 ),
               ],

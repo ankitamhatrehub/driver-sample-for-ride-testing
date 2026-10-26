@@ -26,7 +26,7 @@ class NoScratchCardScreen extends StatelessWidget {
             child: Text(
               "You'll get a scratch card after completing an eligible job. One eligible job gives you one scratch card as per reward rules.",
               textAlign: TextAlign.center,
-              style: coinsMuted(),
+              style: coinsMuted(context),
             ),
           ),
           SizedBox(height: context.h(18)),

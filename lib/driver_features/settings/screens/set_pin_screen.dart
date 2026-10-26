@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/app_snackbar.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 
 import '../../../common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SetPinScreen extends StatefulWidget {
   const SetPinScreen({super.key});
@@ -51,13 +51,24 @@ class _SetPinScreenState extends State<SetPinScreen> {
           Container(
             width: context.w(72),
             height: context.w(72),
-            decoration: BoxDecoration(color: accent.withValues(alpha: 0.12), shape: BoxShape.circle),
-            child: Icon(Icons.lock_outline_rounded, color: accent, size: context.w(32)),
+            decoration: BoxDecoration(
+              color: accent.withValues(alpha: 0.12),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.lock_outline_rounded,
+              color: accent,
+              size: context.w(32),
+            ),
           ),
           SizedBox(height: context.h(16)),
           Text(
             AppStrings.secureYourAccount,
-            style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3),
+            style: AppTypography.bold.copyWith(
+              fontSize: 18,
+              height: 1.2,
+              letterSpacing: -0.3,
+            ),
           ),
           SizedBox(height: context.h(6)),
           Padding(
@@ -65,7 +76,11 @@ class _SetPinScreenState extends State<SetPinScreen> {
             child: Text(
               AppStrings.createPinSubtitle,
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.slate500),
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                height: 1.4,
+                color: context.torkk.textSecondary,
+              ),
             ),
           ),
           SizedBox(height: context.h(28)),
@@ -79,14 +94,24 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   margin: EdgeInsets.symmetric(horizontal: context.w(8)),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: i < _pin.length ? accent : const Color(0xFFE5E7EB),
+                    color: i < _pin.length
+                        ? accent
+                        : context.themed(
+                            light: const Color(0xFFE5E7EB),
+                            dark: context.torkk.border,
+                          ),
                   ),
                 ),
             ],
           ),
           const Spacer(),
           Padding(
-            padding: EdgeInsets.fromLTRB(context.w(36), 0, context.w(36), context.h(24)),
+            padding: EdgeInsets.fromLTRB(
+              context.w(36),
+              0,
+              context.w(36),
+              context.h(24),
+            ),
             child: Column(
               children: [
                 for (final row in const [
@@ -99,7 +124,8 @@ class _SetPinScreenState extends State<SetPinScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        for (final digit in row) _key(context, digit, () => _tap(digit)),
+                        for (final digit in row)
+                          _key(context, digit, () => _tap(digit)),
                       ],
                     ),
                   ),
@@ -108,7 +134,12 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   children: [
                     SizedBox(width: context.w(72)),
                     _key(context, '0', () => _tap('0')),
-                    _key(context, '', _backspace, icon: Icons.backspace_outlined),
+                    _key(
+                      context,
+                      '',
+                      _backspace,
+                      icon: Icons.backspace_outlined,
+                    ),
                   ],
                 ),
               ],
@@ -119,9 +150,14 @@ class _SetPinScreenState extends State<SetPinScreen> {
     );
   }
 
-  Widget _key(BuildContext context, String label, VoidCallback onTap, {IconData? icon}) {
+  Widget _key(
+    BuildContext context,
+    String label,
+    VoidCallback onTap, {
+    IconData? icon,
+  }) {
     return Material(
-      color: const Color(0xFFF3F4F6),
+      color: context.torkk.surfaceMuted,
       shape: const CircleBorder(),
       child: InkWell(
         onTap: onTap,
@@ -131,10 +167,17 @@ class _SetPinScreenState extends State<SetPinScreen> {
           height: context.w(72),
           child: Center(
             child: icon != null
-                ? Icon(icon, color: AppColors.textPrimary, size: context.w(22))
+                ? Icon(
+                    icon,
+                    color: context.torkk.textPrimary,
+                    size: context.w(22),
+                  )
                 : Text(
                     label,
-                    style: AppTypography.regular.copyWith(fontSize: 22, fontWeight: FontWeight.w600),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
           ),
         ),

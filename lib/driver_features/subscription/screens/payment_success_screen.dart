@@ -5,6 +5,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/status_result.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_plan_card.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
   const PaymentSuccessScreen({super.key, required this.methodLabel, required this.onContinue, required this.onBack});
@@ -21,7 +22,7 @@ class PaymentSuccessScreen extends StatelessWidget {
       icon: Container(
         width: context.w(88),
         height: context.w(88),
-        decoration: const BoxDecoration(color: Color(0xFFDCFCE7), shape: BoxShape.circle),
+        decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFDCFCE7)), shape: BoxShape.circle),
         alignment: Alignment.center,
         child: Container(
           width: context.w(64),

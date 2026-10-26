@@ -10,6 +10,7 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Front camera with the face-frame overlay drawn on top.
 /// A face held inside the frame is captured, then [onCaptured] runs.
@@ -195,7 +196,7 @@ class _LiveFaceCameraState extends State<LiveFaceCamera> {
   Widget build(BuildContext context) {
     final statusColor = _detected ? AppColors.green600 : AppColors.error;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -208,7 +209,7 @@ class _LiveFaceCameraState extends State<LiveFaceCamera> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: context.w(16), vertical: context.h(8)),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.torkk.surface,
                       borderRadius: BorderRadius.circular(context.r(24)),
                       border: Border.all(color: const Color(0xFFE9D5FF)),
                     ),
@@ -231,7 +232,7 @@ class _LiveFaceCameraState extends State<LiveFaceCamera> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(8)),
                     decoration: BoxDecoration(
-                      color: _detected ? const Color(0xFFF0FDF4) : Colors.white,
+                      color: _detected ? context.adaptiveTint(Color(0xFFF0FDF4)) : context.torkk.surface,
                       borderRadius: BorderRadius.circular(context.r(20)),
                       border: Border.all(color: _detected ? const Color(0xFFBBF7D0) : const Color(0xFFFECACA)),
                     ),

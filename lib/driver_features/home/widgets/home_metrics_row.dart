@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Reusable row containing Incentives card and Driver Rating card.
 class HomeMetricsRow extends StatelessWidget {
@@ -15,11 +16,10 @@ class HomeMetricsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF111827);
-    final subtextColor = isDark ? Colors.grey.shade400 : const Color(0xFF6B7280);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final borderColor = isDark ? Colors.white12 : const Color(0xFFE5E7EB);
+    final textColor = context.themed(light: const Color(0xFF111827), dark: context.torkk.textPrimary);
+    final subtextColor = context.themed(light: const Color(0xFF6B7280), dark: context.torkk.textSecondary);
+    final cardBg = context.torkk.surface;
+    final borderColor = context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.border);
 
     return Row(
       children: [

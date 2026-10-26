@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 void showRideOtpBottomSheet({
   required BuildContext context,
@@ -24,8 +25,8 @@ void showRideOtpBottomSheet({
               top: 14,
               bottom: MediaQuery.of(context).viewInsets.bottom + 28,
             ),
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: context.torkk.surface,
               borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
             ),
             child: Column(
@@ -43,18 +44,18 @@ void showRideOtpBottomSheet({
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
+                Text(
                   'Enter OTP',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF1E293B),
+                    color: context.torkk.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   subtitle ?? 'Ask the Passenger for OTP',
-                  style: const TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+                  style: TextStyle(fontSize: 14, color: context.torkk.textSecondary),
                 ),
                 if ((rideCode ?? '').isNotEmpty) ...[
                   const SizedBox(height: 12),
@@ -95,22 +96,22 @@ void showRideOtpBottomSheet({
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: isFilled
-                                  ? const Color(0xFFEFF6FF)
-                                  : const Color(0xFFCBD5E1),
+                                  ? context.adaptiveTint(const Color(0xFFEFF6FF))
+                                  : context.torkk.border,
                               borderRadius: BorderRadius.circular(24),
                               border: Border.all(
                                 color: isFilled
-                                    ? const Color(0xFF1142BC)
+                                    ? context.legible(Color(0xFF1142BC))
                                     : const Color(0xFF94A3B8),
                                 width: 1.0,
                               ),
                             ),
                             child: Text(
                               char,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF0F172A),
+                                color: context.torkk.textPrimary,
                               ),
                             ),
                           ),

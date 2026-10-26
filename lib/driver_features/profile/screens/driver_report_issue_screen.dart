@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- REPORT ISSUE SCREEN ---
 class DriverReportIssueScreen extends StatefulWidget {
@@ -104,13 +105,13 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
   Widget build(BuildContext context) {
     const primaryColor = Color(0xFF4F46E5);
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: context.torkk.surfaceMuted,
       appBar: AppBar(
         title: const Text(
           'Report Issue',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         foregroundColor: Colors.black,
         elevation: 0,
       ),
@@ -121,36 +122,36 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'File a Support Ticket',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFF1E293B),
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'Describe any problems you encountered and our team will review and resolve it.',
-                    style: TextStyle(color: Colors.black54, fontSize: 13),
+                    style: TextStyle(color: context.torkk.textSecondary, fontSize: 13),
                   ),
                   const SizedBox(height: 24),
 
-                  const Text(
+                  Text(
                     'Issue Type',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
-                      color: Colors.black87,
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.torkk.surface,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black12),
+                      border: Border.all(color: context.torkk.border),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
@@ -172,12 +173,12 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  const Text(
+                  Text(
                     'Description',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
-                      color: Colors.black87,
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -190,7 +191,7 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: context.torkk.surface,
                     ),
                   ),
                   const SizedBox(height: 32),

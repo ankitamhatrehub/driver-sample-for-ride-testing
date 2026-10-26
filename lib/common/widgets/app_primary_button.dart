@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/app_colors.dart';
+import '../theme/torkk_colors.dart';
 import 'bouncing_widget.dart';
 import '../utils/screen_utils.dart';
 
@@ -23,13 +24,13 @@ class AppPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fill = context.torkk.actionFill(AppColors.zinc800);
+    final labelColor = onColorFor(fill);
     final button = Container(
       width: double.infinity,
       height: context.h(56),
       decoration: BoxDecoration(
-        color: _canTap
-            ? AppColors.zinc800
-            : AppColors.zinc800.withValues(alpha: 0.5),
+        color: _canTap ? fill : fill.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(context.r(28)),
       ),
       alignment: Alignment.center,
@@ -37,15 +38,15 @@ class AppPrimaryButton extends StatelessWidget {
           ? SizedBox(
               width: context.w(22),
               height: context.w(22),
-              child: const CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: Colors.white,
+                color: labelColor,
               ),
             )
           : Text(
               label,
               style: TextStyle(
-                color: Colors.white,
+                color: labelColor,
                 fontSize: context.sp(16),
                 fontWeight: FontWeight.w600,
               ),

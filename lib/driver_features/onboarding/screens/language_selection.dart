@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class LanguageSelectStep extends StatefulWidget {
   final String selectedLanguage;
@@ -58,7 +59,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
               child: Text(
                 AppStrings.chooseLanguageSubtitle,
                 style: AppTypography.regular.copyWith(
-                  color: AppColors.secondaryTextColor,
+                  color: context.torkk.textSecondary,
                   fontSize: 14.5,
                 ),
               ),
@@ -84,7 +85,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
                 children: [
                   Icon(
                     Icons.error,
-                    color: AppColors.error,
+                    color: context.legible(AppColors.error),
                     size: context.w(20),
                   ),
                   SizedBox(width: context.w(8)),
@@ -92,7 +93,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
                     child: Text(
                       AppStrings.selectLanguageError,
                       style: AppTypography.regular.copyWith(
-                        color: AppColors.error,
+                        color: context.legible(AppColors.error),
                         fontSize: 13,
                       ),
                     ),
@@ -110,7 +111,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
               child: Text(
                 AppStrings.languageChangedLater,
                 style: AppTypography.regular.copyWith(
-                  color: AppColors.secondaryTextColor,
+                  color: context.torkk.textSecondary,
                   fontSize: 12,
                 ),
               ),
@@ -136,7 +137,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
           vertical: context.h(14),
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.torkk.surface,
           borderRadius: BorderRadius.circular(context.r(16)),
           border: Border.all(
             color: selected ? AppColors.primary : AppColors.slate200,
@@ -150,7 +151,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
               height: context.w(40),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: AppColors.fieldFill,
+                color: context.torkk.surfaceMuted,
                 borderRadius: BorderRadius.circular(context.r(10)),
               ),
               child: Text(
@@ -174,7 +175,7 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
                     Text(
                       subtitle,
                       style: AppTypography.regular.copyWith(
-                        color: AppColors.textSecondary,
+                        color: context.torkk.textSecondary,
                         fontSize: 13,
                       ),
                     ),

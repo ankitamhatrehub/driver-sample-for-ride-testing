@@ -6,6 +6,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ConnectDigilockerScreen extends StatefulWidget {
   final bool isLoading;
@@ -62,9 +63,9 @@ class _ConnectDigilockerScreenState extends State<ConnectDigilockerScreen> {
                       width: context.w(310),
                       padding: EdgeInsets.all(context.w(14)),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: context.torkk.surface,
                         borderRadius: BorderRadius.circular(context.r(16)),
-                        border: Border.all(color: const Color(0xFFF1F5F9)),
+                        border: Border.all(color: context.torkk.border),
                         boxShadow: const [
                           BoxShadow(
                             color: Color(0x0A000000),
@@ -83,7 +84,7 @@ class _ConnectDigilockerScreenState extends State<ConnectDigilockerScreen> {
                               style: AppTypography.bold.copyWith(
                                 fontSize: 11,
                                 letterSpacing: 0.4,
-                                color: AppColors.secondaryTextColor,
+                                color: context.torkk.textSecondary,
                               ),
                             ),
                           ),
@@ -113,9 +114,9 @@ class _ConnectDigilockerScreenState extends State<ConnectDigilockerScreen> {
                       children: [
                         Checkbox(
                           value: _consent,
-                          checkColor: Colors.white,
-                          side: const BorderSide(
-                            color: AppColors.textPrimary,
+                          checkColor: context.torkk.background,
+                          side: BorderSide(
+                            color: context.torkk.textPrimary,
                             width: 1.4,
                           ),
                           shape: RoundedRectangleBorder(
@@ -123,7 +124,7 @@ class _ConnectDigilockerScreenState extends State<ConnectDigilockerScreen> {
                           ),
                           fillColor: WidgetStateProperty.resolveWith((states) {
                             if (states.contains(WidgetState.selected)) {
-                              return AppColors.textPrimary;
+                              return context.torkk.textPrimary;
                             }
                             return Colors.transparent;
                           }),
@@ -185,7 +186,7 @@ class _DocAccessTile extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(12)),
-        border: Border.all(color: AppColors.fieldBorder),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -212,7 +213,7 @@ class _DocAccessTile extends StatelessWidget {
                 style: AppTypography.bold.copyWith(
                   fontSize: 12,
                   height: 15 / 12,
-                  color: AppColors.textPrimary,
+                  color: context.torkk.textPrimary,
                 ),
                 children: [
                   if (suffix != null)
@@ -222,7 +223,7 @@ class _DocAccessTile extends StatelessWidget {
                         fontSize: 10,
                         height: 15 / 10,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                 ],

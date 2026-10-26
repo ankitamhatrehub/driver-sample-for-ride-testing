@@ -7,6 +7,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/onboarding_info_banner.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ConnectingDigilockerScreen extends StatelessWidget {
   final VoidCallback onBack;
@@ -30,13 +31,13 @@ class ConnectingDigilockerScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       appBar: AppBar(
         leading: IconButton(
           onPressed: onBack,
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
       ),
@@ -54,9 +55,9 @@ class ConnectingDigilockerScreen extends StatelessWidget {
                       SizedBox(
                         width: context.w(56),
                         height: context.w(56),
-                        child: const CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           strokeWidth: 4,
-                          color: AppColors.primary,
+                          color: context.legible(AppColors.primary),
                         ),
                       ),
                       SizedBox(height: context.h(24)),
@@ -64,7 +65,7 @@ class ConnectingDigilockerScreen extends StatelessWidget {
                         AppStrings.connectingDigilockerSubtitle,
                         textAlign: TextAlign.center,
                         style: AppTypography.regular.copyWith(
-                          color: AppColors.secondaryTextColor,
+                          color: context.torkk.textSecondary,
                           fontSize: 14,
                           height: 1.4,
                         ),
@@ -189,7 +190,7 @@ class _ConnectStep extends StatelessWidget {
                       ? AppColors.green600
                       : active
                       ? _active
-                      : Colors.white,
+                      : context.torkk.surface,
                   border: done || active ? null : Border.all(color: AppColors.slate300, width: 1.5),
                 ),
                 child: done
@@ -217,8 +218,8 @@ class _ConnectStep extends StatelessWidget {
           child: Text(
             label,
             style: done || active
-                ? AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: AppColors.textPrimary)
-                : AppTypography.regular.copyWith(fontSize: 14, color: AppColors.secondaryTextColor),
+                ? AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: context.torkk.textPrimary)
+                : AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
           ),
         ),
       ],

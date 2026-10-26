@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../constants/asset_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Full-screen splash. Stays up for [duration], then calls [onFinished].
 class AppSplashScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _AppSplashScreenState extends State<AppSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SizedBox.expand(
         child: Image.asset(
           AppAssets.splashScreen,

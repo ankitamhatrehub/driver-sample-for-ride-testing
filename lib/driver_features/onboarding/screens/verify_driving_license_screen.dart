@@ -15,6 +15,7 @@ import 'package:rider_app/driver_features/onboarding/screens/document_validation
 import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum _DlPage { choose, digilockerVerified, manualForm, unclear, manualVerified, rejected }
 
@@ -62,7 +63,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   Future<void> _pickLicenceSide({required bool front}) async {
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(16)))),
       builder: (context) {
         return SafeArea(
@@ -70,12 +71,12 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.photo_camera_outlined, color: AppColors.primary),
+                leading: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary)),
                 title: Text(AppStrings.camera, style: AppTypography.bold.copyWith(fontSize: 15)),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
-                leading: const Icon(Icons.photo_outlined, color: AppColors.primary),
+                leading: Icon(Icons.photo_outlined, color: context.legible(AppColors.primary)),
                 title: Text(AppStrings.gallery, style: AppTypography.bold.copyWith(fontSize: 15)),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
@@ -208,7 +209,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
             SizedBox(height: context.h(16)),
             Text(
               AppStrings.orWord,
-              style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 12),
+              style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 12),
             ),
             SizedBox(height: context.h(16)),
             Align(
@@ -262,7 +263,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
 
   Widget _digilockerVerified(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(24), context.h(36), context.w(24), context.h(16)),
@@ -287,7 +288,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
               Text(
                 AppStrings.drivingLicenceVerifiedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 14),
+                style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 14),
               ),
               const Spacer(),
               UnifiedButton(label: AppStrings.continueAction, onPressed: widget.onFinished),
@@ -340,7 +341,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
                 AppTextField(controller: _expiryController, hintText: AppStrings.expiryDate),
                 IconButton(
                   onPressed: _pickExpiry,
-                  icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: AppColors.secondaryTextColor),
+                  icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: context.torkk.textSecondary),
                 ),
               ],
             ),
@@ -348,18 +349,18 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
             Container(
               padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(8)),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF7ED),
+                color: context.adaptiveTint(const Color(0xFFFFF7ED)),
                 borderRadius: BorderRadius.circular(context.r(20)),
                 border: Border.all(color: const Color(0xFFFDBA74)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.error_outline, color: AppColors.amber600, size: context.w(16)),
+                  Icon(Icons.error_outline, color: context.legible(AppColors.amber600), size: context.w(16)),
                   SizedBox(width: context.w(6)),
                   Text(
                     AppStrings.verificationPending,
-                    style: AppTypography.regular.copyWith(color: AppColors.amber700, fontSize: 13),
+                    style: AppTypography.regular.copyWith(color: context.legible(AppColors.amber700), fontSize: 13),
                   ),
                 ],
               ),
@@ -396,7 +397,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
             Text(
               AppStrings.drivingLicenseVerifiedManualSubtitle,
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 14, height: 1.4),
+              style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 14, height: 1.4),
             ),
             const Spacer(),
             UnifiedButton(label: AppStrings.continueAction, onPressed: widget.onFinished),
@@ -426,14 +427,14 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
             Text(
               AppStrings.drivingLicenseRejectedSubtitle,
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 14, height: 1.4),
+              style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 14, height: 1.4),
             ),
             SizedBox(height: context.h(20)),
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(context.w(14)),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF5F5),
+                color: context.adaptiveTint(const Color(0xFFFFF5F5)),
                 borderRadius: BorderRadius.circular(context.r(14)),
                 border: Border.all(color: const Color(0xFFFECACA)),
               ),
@@ -442,13 +443,13 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
                 children: [
                   Text(
                     AppStrings.rejectionReason,
-                    style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 12),
+                    style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 12),
                   ),
                   SizedBox(height: context.h(8)),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.info, color: AppColors.error, size: context.w(18)),
+                      Icon(Icons.info, color: context.legible(AppColors.error), size: context.w(18)),
                       SizedBox(width: context.w(8)),
                       Expanded(
                         child: Column(
@@ -456,13 +457,13 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
                           children: [
                             Text(
                               AppStrings.documentImageUnclear,
-                              style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+                              style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2),
                             ),
                             SizedBox(height: context.h(4)),
                             Text(
                               AppStrings.documentImageUnclearHint,
                               style: AppTypography.regular.copyWith(
-                                color: AppColors.secondaryTextColor,
+                                color: context.torkk.textSecondary,
                                 fontSize: 13,
                                 height: 1.35,
                               ),
@@ -498,7 +499,7 @@ class _DigilockerCard extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(context.w(14)),
         decoration: BoxDecoration(
-          color: const Color(0xFFF6F3FB),
+          color: context.adaptiveTint(const Color(0xFFF6F3FB)),
           borderRadius: BorderRadius.circular(context.r(16)),
           border: Border.all(color: selected ? AppColors.primary : AppColors.fieldBorder, width: selected ? 1.6 : 1),
         ),
@@ -518,7 +519,7 @@ class _DigilockerCard extends StatelessWidget {
                 children: [
                   Text(
                     AppStrings.verifyWithDigilocker,
-                    style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+                    style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2),
                   ),
                   SizedBox(height: context.h(4)),
                   Text(
@@ -526,13 +527,13 @@ class _DigilockerCard extends StatelessWidget {
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
                       height: 1.3,
-                      color: AppColors.secondaryTextColor,
+                      color: context.torkk.textSecondary,
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: AppColors.primary, size: context.w(20)),
+            Icon(Icons.chevron_right, color: context.legible(AppColors.primary), size: context.w(20)),
           ],
         ),
       ),
@@ -566,7 +567,7 @@ class _UploadTile extends StatelessWidget {
           height: context.h(148),
           padding: EdgeInsets.symmetric(horizontal: context.w(8), vertical: context.h(16)),
           decoration: BoxDecoration(
-            color: const Color(0xFFFAF5FF),
+            color: context.adaptiveTint(const Color(0xFFFAF5FF)),
             borderRadius: BorderRadius.circular(radius),
           ),
           child: reading
@@ -575,13 +576,13 @@ class _UploadTile extends StatelessWidget {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(icon, color: AppColors.primary, size: context.w(28)),
+                    Icon(icon, color: context.legible(AppColors.primary), size: context.w(28)),
                     SizedBox(height: context.h(10)),
-                    Text(label, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2)),
+                    Text(label, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 13, height: 1.2)),
                     SizedBox(height: context.h(2)),
                     Text(
                       AppStrings.tapToUpload,
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+                      style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                     ),
                   ],
                 )
@@ -638,9 +639,9 @@ class _PreviewTile extends StatelessWidget {
           width: double.infinity,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: AppColors.fieldFill,
+            color: context.torkk.surfaceMuted,
             borderRadius: BorderRadius.circular(context.r(12)),
-            border: Border.all(color: AppColors.fieldBorder),
+            border: Border.all(color: context.torkk.border),
           ),
           child: imagePath == null
               ? Icon(Icons.badge_outlined, color: AppColors.slate300, size: context.w(32))
@@ -648,8 +649,8 @@ class _PreviewTile extends StatelessWidget {
         ),
         TextButton.icon(
           onPressed: onRetake,
-          icon: Icon(Icons.refresh, size: context.w(16), color: AppColors.primary),
-          label: Text(AppStrings.retake, style: AppTypography.regular.copyWith(color: AppColors.primary, fontSize: 13)),
+          icon: Icon(Icons.refresh, size: context.w(16), color: context.legible(AppColors.primary)),
+          label: Text(AppStrings.retake, style: AppTypography.regular.copyWith(color: context.legible(AppColors.primary), fontSize: 13)),
         ),
       ],
     );
@@ -675,7 +676,7 @@ class _LicenceSketch extends StatelessWidget {
             height: context.w(100),
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
-              color: const Color(0xFFF3F0FF),
+              color: context.adaptiveTint(const Color(0xFFF3F0FF)),
               borderRadius: BorderRadius.circular(context.r(16)),
               border: Border.all(color: const Color(0xFFE4DDF3)),
             ),

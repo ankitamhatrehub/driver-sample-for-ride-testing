@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 
 import '../../../common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HowItWorksCard extends StatelessWidget {
   const HowItWorksCard({super.key, this.showTitle = true});
@@ -49,12 +49,12 @@ class HowItWorksCard extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(context.r(16)),
-            border: Border.all(color: const Color(0xFFE8EDF5)),
+            border: Border.all(color: context.torkk.border),
           ),
           child: Column(
             children: [
               for (var i = 0; i < steps.length; i++) ...[
-                if (i > 0) const Divider(height: 1, color: Color(0xFFF1F5F9)),
+                if (i > 0) Divider(height: 1, color: context.torkk.border),
                 Padding(
                   padding: EdgeInsets.all(context.w(14)),
                   child: Row(
@@ -80,7 +80,7 @@ class HowItWorksCard extends StatelessWidget {
                             SizedBox(height: context.h(2)),
                             Text(
                               steps[i].$5,
-                              style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500),
+                              style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
                             ),
                           ],
                         ),

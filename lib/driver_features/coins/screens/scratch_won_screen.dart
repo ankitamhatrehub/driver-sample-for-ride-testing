@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ScratchWonScreen extends StatelessWidget {
   const ScratchWonScreen({super.key, required this.onBack, required this.onClaim});
@@ -15,7 +15,7 @@ class ScratchWonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -25,7 +25,7 @@ class ScratchWonScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   onPressed: onBack,
-                  icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.textPrimary),
+                  icon: Icon(Icons.arrow_back_ios_new, size: 20, color: context.torkk.textPrimary),
                 ),
               ),
             ),
@@ -79,7 +79,7 @@ class ScratchWonScreen extends StatelessWidget {
                       style: AppTypography.regular.copyWith(
                         fontSize: 13,
                         height: 1.4,
-                        color: AppColors.slate500,
+                        color: context.torkk.textSecondary,
                       ),
                     ),
                   ),

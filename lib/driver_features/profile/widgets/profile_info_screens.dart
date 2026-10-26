@@ -6,6 +6,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class PersonalInformationScreen extends StatelessWidget {
   const PersonalInformationScreen({super.key});
@@ -90,7 +91,7 @@ class _VehicleHeader extends StatelessWidget {
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -98,7 +99,7 @@ class _VehicleHeader extends StatelessWidget {
             width: context.w(72),
             height: context.h(48),
             decoration: BoxDecoration(
-              color: const Color(0xFFE2E8F0),
+              color: context.adaptiveTint(const Color(0xFFE2E8F0)),
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
           ),
@@ -108,7 +109,7 @@ class _VehicleHeader extends StatelessWidget {
             children: [
               Text(
                 AppStrings.carModel,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
               ),
               Text(
                 'Cab . 4 Seater',
@@ -171,7 +172,7 @@ class _KycCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -183,7 +184,7 @@ class _KycCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                  style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: context.torkk.textPrimary),
                 ),
                 Text(status, style: AppTypography.regular.copyWith(fontSize: 12, color: statusColor)),
               ],
@@ -215,7 +216,7 @@ class BankInformationScreen extends StatelessWidget {
             padding: EdgeInsets.all(context.w(14)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(16)),
-              border: Border.all(color: const Color(0xFFE8EDF5)),
+              border: Border.all(color: context.torkk.border),
             ),
             child: Row(
               children: [
@@ -234,7 +235,7 @@ class BankInformationScreen extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.bankName,
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                      style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                     ),
                     Text(
                       'HDFC Bank',

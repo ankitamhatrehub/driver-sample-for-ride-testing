@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomeStatsCard extends StatelessWidget {
   const HomeStatsCard({
@@ -49,7 +49,7 @@ class HomeStatsCard extends StatelessWidget {
                     children: [
                       Text(
                         AppStrings.todayEarnings,
-                        style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500),
+                        style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
                       ),
                       SizedBox(height: context.h(4)),
                       Text(
@@ -59,7 +59,7 @@ class HomeStatsCard extends StatelessWidget {
                       SizedBox(height: context.h(4)),
                       Text(
                         completedJobs == 1 ? '1 ride' : '$completedJobs rides',
-                        style: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.slate500),
+                        style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
                       ),
                     ],
                   ),
@@ -68,7 +68,7 @@ class HomeStatsCard extends StatelessWidget {
                   width: context.w(36),
                   height: context.w(36),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.torkk.surface,
                     borderRadius: BorderRadius.circular(context.r(10)),
                   ),
                   child: Icon(Icons.show_chart_rounded, color: accent, size: context.w(18)),
@@ -83,9 +83,9 @@ class HomeStatsCard extends StatelessWidget {
               constraints: BoxConstraints(minHeight: context.h(55)),
               padding: EdgeInsets.symmetric(horizontal: context.w(10), vertical: context.h(6)),
               decoration: BoxDecoration(
-                color: const Color(0xCCFFFFFF),
+                color: context.torkk.surface.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(context.r(12)),
-                border: Border.all(color: const Color(0xFFF1F5F9)),
+                border: Border.all(color: context.torkk.border),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +102,7 @@ class HomeStatsCard extends StatelessWidget {
                           style: AppTypography.regular.copyWith(
                             fontSize: 12,
                             height: 1.1,
-                            color: AppColors.slate500,
+                            color: context.torkk.textSecondary,
                           ),
                         ),
                         Text(

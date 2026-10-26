@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/common/widgets/bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class BiometricSetupStep extends StatelessWidget {
   final Color primaryColor;
@@ -33,12 +34,12 @@ class BiometricSetupStep extends StatelessWidget {
             child: Icon(Icons.security_rounded, size: 84, color: primaryColor),
           ),
           const SizedBox(height: 40),
-          const Text(
+          Text(
             'Enable Biometric Login',
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF1E293B),
+              color: context.torkk.textPrimary,
             ),
           ),
           const SizedBox(height: 12),
@@ -47,7 +48,7 @@ class BiometricSetupStep extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15,
-              color: Colors.blueGrey.shade500,
+              color: context.themed(light: Colors.blueGrey.shade500, dark: context.torkk.textSecondary),
               height: 1.4,
             ),
           ),
@@ -90,7 +91,7 @@ class BiometricSetupStep extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: hasFingerprint ? Colors.white : primaryColor,
+                  color: hasFingerprint ? context.torkk.surface : primaryColor,
                   border: Border.all(color: primaryColor, width: 2),
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -189,12 +190,12 @@ class _BiometricVerifyStepState extends State<BiometricVerifyStep> {
               ),
             ),
             const SizedBox(height: 36),
-            const Text(
+            Text(
               'Verify to Continue',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1E293B),
+                color: context.torkk.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
@@ -203,12 +204,12 @@ class _BiometricVerifyStepState extends State<BiometricVerifyStep> {
               style: TextStyle(color: Colors.blueGrey.shade400, fontSize: 14),
             ),
             const SizedBox(height: 32),
-            const Text(
+            Text(
               'Verifying...',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.blueGrey,
+                color: context.themed(light: Colors.blueGrey, dark: context.torkk.textSecondary),
               ),
             ),
           ],

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rider_app/common/constants/app_urls.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- LIVE CHAT SCREEN USING GEMINI API ---
 class DriverLiveChatScreen extends StatefulWidget {
@@ -135,13 +136,13 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
   Widget build(BuildContext context) {
     final primaryColor = const Color(0xFF4F46E5);
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: context.torkk.surfaceMuted,
       appBar: AppBar(
         title: const Text(
           'Live AI Chat',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         foregroundColor: Colors.black,
         elevation: 1,
       ),
@@ -169,7 +170,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                       maxWidth: MediaQuery.of(context).size.width * 0.75,
                     ),
                     decoration: BoxDecoration(
-                      color: isUser ? primaryColor : Colors.white,
+                      color: isUser ? primaryColor : context.torkk.surface,
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(16),
                         topRight: const Radius.circular(16),
@@ -191,7 +192,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                     child: Text(
                       msg['text'],
                       style: TextStyle(
-                        color: isUser ? Colors.white : Colors.black87,
+                        color: isUser ? Colors.white : context.themed(light: Colors.black87, dark: context.torkk.textPrimary),
                         fontSize: 14,
                       ),
                     ),
@@ -201,14 +202,14 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
             ),
           ),
           if (_typing)
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'AI Assistant is typing...',
                   style: TextStyle(
-                    color: Colors.black45,
+                    color: context.torkk.textSecondary,
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
                   ),
@@ -217,7 +218,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
             ),
           Container(
             padding: const EdgeInsets.all(12),
-            color: Colors.white,
+            color: context.torkk.surface,
             child: SafeArea(
               child: Row(
                 children: [
@@ -232,10 +233,10 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(color: Colors.black12),
+                          borderSide: BorderSide(color: context.torkk.border),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFFF8FAFC),
+                        fillColor: context.torkk.surfaceMuted,
                       ),
                       onSubmitted: (_) => _sendMessage(),
                     ),

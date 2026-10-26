@@ -9,6 +9,7 @@ import 'package:rider_app/driver_features/subscription/screens/subscription_scre
 import 'package:rider_app/driver_features/wallet/wallet_pages.dart';
 
 import '../../common/constants/string_constants.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key, this.onBack});
@@ -52,14 +53,14 @@ class WalletScreen extends StatelessWidget {
       padding: EdgeInsets.all(context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500))),
+              Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary))),
               Icon(icon, size: context.w(16), color: iconColor),
             ],
           ),
@@ -105,7 +106,7 @@ class WalletScreen extends StatelessWidget {
           Text(
             item.label,
             textAlign: TextAlign.center,
-            style: AppTypography.regular.copyWith(fontSize: 11, height: 1.2, color: AppColors.textPrimary),
+            style: AppTypography.regular.copyWith(fontSize: 11, height: 1.2, color: context.torkk.textPrimary),
           ),
         ],
       ),
@@ -119,15 +120,15 @@ class WalletScreen extends StatelessWidget {
         padding: EdgeInsets.all(context.w(12)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(16)),
-          border: Border.all(color: const Color(0xFFE8EDF5)),
+          border: Border.all(color: context.torkk.border),
         ),
         child: Row(
           children: [
             Container(
               width: context.w(36),
               height: context.w(36),
-              decoration: BoxDecoration(color: const Color(0xFFF3E8FF), borderRadius: BorderRadius.circular(context.r(10))),
-              child: Icon(Icons.confirmation_number_outlined, color: const Color(0xFF7C3AED), size: context.w(18)),
+              decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFF3E8FF)), borderRadius: BorderRadius.circular(context.r(10))),
+              child: Icon(Icons.confirmation_number_outlined, color: context.legible(Color(0xFF7C3AED)), size: context.w(18)),
             ),
             SizedBox(width: context.w(10)),
             Expanded(
@@ -136,7 +137,7 @@ class WalletScreen extends StatelessWidget {
                 children: [
                   Text(AppStrings.standardDriverPlan, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
                   Text(AppStrings.perMonth, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3, letterSpacing: -0.2)),
-                  Text(AppStrings.validTill24Aug, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500)),
+                  Text(AppStrings.validTill24Aug, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                 ],
               ),
             ),

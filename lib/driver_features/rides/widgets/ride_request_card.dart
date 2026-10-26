@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'timed_accept_ride_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Individual ride request card displayed in the online search view list.
 /// Features customer info, fare, bonuses, route addresses, passenger badges,
@@ -255,10 +256,10 @@ class RideRequestCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: const Color(0xFFE2E8F0),
+          color: context.torkk.border,
           width: 1.2,
         ),
         boxShadow: [
@@ -283,10 +284,10 @@ class RideRequestCard extends StatelessWidget {
                         displayName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF1E293B),
+                          color: context.torkk.textPrimary,
                         ),
                       ),
                     ),
@@ -297,24 +298,24 @@ class RideRequestCard extends StatelessWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFEF3C7),
+                        color: context.adaptiveTint(const Color(0xFFFEF3C7)),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.star_rounded,
                             size: 14,
-                            color: Color(0xFFD97706),
+                            color: context.legible(Color(0xFFD97706)),
                           ),
                           const SizedBox(width: 2),
                           Text(
                             customerRating,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFFB45309),
+                              color: context.legible(Color(0xFFB45309)),
                             ),
                           ),
                         ],
@@ -337,10 +338,10 @@ class RideRequestCard extends StatelessWidget {
             children: [
               Text(
                 '₹ ${estFare.toStringAsFixed(2)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF111827),
+                  color: context.torkk.textPrimary,
                   letterSpacing: -0.5,
                 ),
               ),
@@ -362,10 +363,10 @@ class RideRequestCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
                 'Category: ${ride['item_category']}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF475569),
+                  color: context.torkk.textBody,
                 ),
               ),
             ),
@@ -409,10 +410,10 @@ class RideRequestCard extends StatelessWidget {
                       pDist.toLowerCase().contains('km')
                           ? pDist
                           : (pDist.isNotEmpty ? '$pDist Km' : ''),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF111827),
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -420,9 +421,9 @@ class RideRequestCard extends StatelessWidget {
                       pAddr,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Color(0xFF6B7280),
+                        color: context.torkk.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -431,10 +432,10 @@ class RideRequestCard extends StatelessWidget {
                       dDist.toLowerCase().contains('km')
                           ? dDist
                           : (dDist.isNotEmpty ? '$dDist Km' : ''),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF111827),
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -442,9 +443,9 @@ class RideRequestCard extends StatelessWidget {
                       dAddr,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Color(0xFF6B7280),
+                        color: context.torkk.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

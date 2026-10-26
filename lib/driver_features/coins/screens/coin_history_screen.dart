@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CoinHistoryScreen extends StatefulWidget {
   const CoinHistoryScreen({super.key, required this.onBack});
@@ -37,7 +38,7 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
           Container(
             padding: EdgeInsets.all(context.w(4)),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(14)),
             ),
             child: Row(
@@ -58,7 +59,7 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
                           style: AppTypography.regular.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: _tab == i ? Colors.white : AppColors.slate500,
+                            color: _tab == i ? Theme.of(context).colorScheme.onPrimary : AppColors.slate500,
                           ),
                         ),
                       ),
@@ -74,7 +75,7 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
               padding: EdgeInsets.all(context.w(12)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(context.r(14)),
-                border: Border.all(color: const Color(0xFFE8EDF5)),
+                border: Border.all(color: context.torkk.border),
               ),
               child: Row(
                 children: [
@@ -98,7 +99,7 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
                         ),
                         Text(
                           row.$5,
-                          style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                          style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                         ),
                       ],
                     ),

@@ -10,6 +10,7 @@ import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_info_banner.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum _PhotoPage { details, camera, preview, wrong, action, verified }
 
@@ -159,7 +160,7 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE2E8F0),
+                          color: context.adaptiveTint(const Color(0xFFE2E8F0)),
                           borderRadius: BorderRadius.circular(context.r(12)),
                           image: const DecorationImage(
                             image: AssetImage(AppAssets.cab),
@@ -249,13 +250,13 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
           children: [
             SizedBox(height: context.h(40)),
             Icon(Icons.crop_original, size: context.w(88), color: AppColors.slate300),
-            Icon(Icons.cancel, color: AppColors.error, size: context.w(28)),
+            Icon(Icons.cancel, color: context.legible(AppColors.error), size: context.w(28)),
             SizedBox(height: context.h(16)),
             Text(AppStrings.wrongImageUploaded, style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2)),
             SizedBox(height: context.h(6)),
             Text(
               AppStrings.wrongImageHint,
-              style: AppTypography.regular.copyWith(color: AppColors.secondaryTextColor, fontSize: 13),
+              style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 13),
             ),
             const Spacer(),
             UnifiedButton(label: AppStrings.retake, onPressed: () => _go(_PhotoPage.camera)),
@@ -304,7 +305,7 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
           children: [
             CircleAvatar(
               radius: context.w(28),
-              backgroundColor: failedBack ? const Color(0xFFFEE2E2) : const Color(0xFFD1FAE5),
+              backgroundColor: failedBack ? context.adaptiveTint(Color(0xFFFEE2E2)) : context.adaptiveTint(Color(0xFFD1FAE5)),
               child: Icon(
                 Icons.directions_car_outlined,
                 color: failedBack ? AppColors.error : AppColors.primary,
@@ -316,7 +317,7 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(16)),
             Row(
@@ -357,7 +358,7 @@ class _TypeChip extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: context.w(18), vertical: context.h(10)),
         decoration: BoxDecoration(
-          color: selected ? AppColors.primary : Colors.white,
+          color: selected ? AppColors.primary : context.torkk.surface,
           borderRadius: BorderRadius.circular(context.r(20)),
           border: Border.all(color: selected ? AppColors.primary : AppColors.fieldBorder),
         ),
@@ -366,7 +367,7 @@ class _TypeChip extends StatelessWidget {
           style: AppTypography.bold.copyWith(
             fontSize: 13,
             height: 1.2,
-            color: selected ? Colors.white : AppColors.textPrimary,
+            color: selected ? Colors.white : context.torkk.textPrimary,
           ),
         ),
       ),
@@ -409,7 +410,7 @@ class _PhotoResultCard extends StatelessWidget {
       padding: EdgeInsets.all(context.w(8)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(12)),
-        border: Border.all(color: AppColors.fieldBorder),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,7 +420,7 @@ class _PhotoResultCard extends StatelessWidget {
               Icon(
                 failed ? Icons.error : Icons.check_circle,
                 size: context.w(14),
-                color: failed ? AppColors.error : AppColors.green600,
+                color: failed ? context.legible(AppColors.error) : AppColors.green600,
               ),
               SizedBox(width: context.w(4)),
               Expanded(
@@ -431,7 +432,7 @@ class _PhotoResultCard extends StatelessWidget {
             failed ? AppStrings.verificationFailedLabel : AppStrings.kycVerified,
             style: AppTypography.regular.copyWith(
               fontSize: 10,
-              color: failed ? AppColors.error : AppColors.green600,
+              color: failed ? context.legible(AppColors.error) : AppColors.green600,
             ),
           ),
           SizedBox(height: context.h(6)),
@@ -446,9 +447,9 @@ class _PhotoResultCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.refresh, size: context.w(14), color: AppColors.primary),
+                  Icon(Icons.refresh, size: context.w(14), color: context.legible(AppColors.primary)),
                   SizedBox(width: context.w(4)),
-                  Text(AppStrings.retake, style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.primary)),
+                  Text(AppStrings.retake, style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.primary))),
                 ],
               ),
             ),

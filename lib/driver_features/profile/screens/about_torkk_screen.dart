@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class AboutTorkkScreen extends StatelessWidget {
   const AboutTorkkScreen({super.key});
@@ -34,7 +34,7 @@ class AboutTorkkScreen extends StatelessWidget {
           Text(
             'Torkk is a modern ride-hailing platform built to make everyday travel simple, safe and reliable. We connect you with trusted drivers, so you can move freely, wherever life takes you.',
             textAlign: TextAlign.center,
-            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.45, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.45, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(22)),
           Text(
@@ -107,7 +107,7 @@ class _InfoCard extends StatelessWidget {
       padding: EdgeInsets.all(context.w(14)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE8EDF5)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +119,7 @@ class _InfoCard extends StatelessWidget {
           SizedBox(height: context.h(4)),
           Text(
             body,
-            style: AppTypography.regular.copyWith(fontSize: 12, height: 1.4, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 12, height: 1.4, color: context.torkk.textSecondary),
           ),
         ],
       ),
@@ -142,16 +142,16 @@ class _FactCard extends StatelessWidget {
           width: context.w(44),
           height: context.w(44),
           decoration: BoxDecoration(
-            color: const Color(0xFFF5F3FF),
+            color: context.adaptiveTint(const Color(0xFFF5F3FF)),
             borderRadius: BorderRadius.circular(context.r(12)),
           ),
-          child: Icon(icon, color: const Color(0xFF7C3AED), size: context.w(20)),
+          child: Icon(icon, color: context.legible(Color(0xFF7C3AED)), size: context.w(20)),
         ),
         SizedBox(height: context.h(8)),
         Text(value, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
         Text(
           label,
-          style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate500),
+          style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
         ),
       ],
     );

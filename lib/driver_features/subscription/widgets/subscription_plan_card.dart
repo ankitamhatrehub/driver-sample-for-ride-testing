@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/subscription/widgets/subscription_text.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SubscriptionPlanCard extends StatelessWidget {
   const SubscriptionPlanCard({
@@ -28,7 +29,7 @@ class SubscriptionPlanCard extends StatelessWidget {
       padding: EdgeInsets.all(context.w(14)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         children: [
@@ -57,7 +58,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                       subtitle,
                       style: AppTypography.regular.copyWith(
                         fontSize: 11,
-                        color: subtitleColor ?? AppColors.slate500,
+                        color: subtitleColor ?? context.legible(AppColors.slate500),
                       ),
                     ),
                   ],
@@ -69,7 +70,7 @@ class SubscriptionPlanCard extends StatelessWidget {
           if (footer != null) ...[
             Padding(
               padding: EdgeInsets.symmetric(vertical: context.h(10)),
-              child: const Divider(height: 1, color: Color(0xFFF1F5F9)),
+              child: Divider(height: 1, color: context.torkk.border),
             ),
             footer!,
           ],
@@ -90,7 +91,7 @@ class SubscriptionAmountBlock extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(child: Text('Plan Amount', style: subscriptionMuted())),
+            Expanded(child: Text('Plan Amount', style: subscriptionMuted(context))),
           ],
         ),
         Align(
@@ -127,7 +128,7 @@ class SubscriptionDateColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: subscriptionMuted()),
+        Text(label, style: subscriptionMuted(context)),
         Text(
           value,
           style: AppTypography.regular.copyWith(
@@ -152,7 +153,7 @@ class SubscriptionInfoRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         children: [
-          Text(label, style: subscriptionMuted()),
+          Text(label, style: subscriptionMuted(context)),
           Text(
             value,
             style: AppTypography.regular.copyWith(

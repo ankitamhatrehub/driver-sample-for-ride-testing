@@ -10,6 +10,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/onboarding/widgets/kyc_form_widgets.dart';
 import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Profile details after KYC. Male uses blue, Female switches the accent to pink.
 class DriverDetailsScreen extends StatefulWidget {
@@ -90,15 +91,15 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.background,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+            icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
             onPressed: widget.onBack,
           ),
           titleSpacing: 0,
           centerTitle: false,
-          backgroundColor: Colors.white,
+          backgroundColor: context.torkk.background,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           title: Text(
@@ -117,7 +118,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
                   Center(
                     child: Text(
                       AppStrings.uploadClearPhoto,
-                      style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.secondaryTextColor),
+                      style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
                     ),
                   ),
                   SizedBox(height: context.h(22)),
@@ -159,7 +160,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
                     SizedBox(height: context.h(12)),
                     Text(
                       AppStrings.driverDetailsRequired,
-                      style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.error),
+                      style: AppTypography.regular.copyWith(fontSize: 13, color: context.legible(AppColors.error)),
                     ),
                   ],
                 ],
@@ -232,7 +233,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
           height: context.h(44),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: selected ? _accent : Colors.white,
+            color: selected ? _accent : context.torkk.surface,
             borderRadius: BorderRadius.circular(context.r(12)),
             border: Border.all(color: selected ? _accent : AppColors.fieldBorder),
           ),
@@ -240,7 +241,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
             label,
             style: AppTypography.bold.copyWith(
               fontSize: 14,
-              color: selected ? Colors.white : AppColors.textPrimary,
+              color: selected ? Colors.white : context.torkk.textPrimary,
             ),
           ),
         ),
@@ -255,9 +256,9 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
         height: context.h(48),
         padding: EdgeInsets.symmetric(horizontal: context.w(16)),
         decoration: BoxDecoration(
-          color: AppColors.fieldFill,
+          color: context.torkk.surfaceMuted,
           borderRadius: BorderRadius.circular(context.r(12)),
-          border: Border.all(color: AppColors.fieldBorder),
+          border: Border.all(color: context.torkk.border),
         ),
         child: Row(
           children: [
@@ -268,7 +269,7 @@ class _DriverDetailsScreenState extends State<DriverDetailsScreen> {
                   fontSize: 14,
                   color: widget.dobController.text.isEmpty
                       ? AppColors.slate400
-                      : AppColors.textPrimary,
+                      : context.torkk.textPrimary,
                 ),
               ),
             ),

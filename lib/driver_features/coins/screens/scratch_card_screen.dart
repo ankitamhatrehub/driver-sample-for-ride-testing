@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ScratchCardScreen extends StatelessWidget {
   const ScratchCardScreen({super.key, required this.onBack, required this.onReveal});
@@ -30,10 +30,10 @@ class ScratchCardScreen extends StatelessWidget {
                   height: context.h(300),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(context.r(24)),
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Color(0xFFF8FAFF), Color(0xFFEDE9FE)],
+                      colors: [context.adaptiveTint(Color(0xFFF8FAFF)), context.adaptiveTint(Color(0xFFEDE9FE))],
                     ),
                   ),
                   alignment: Alignment.center,
@@ -44,7 +44,7 @@ class ScratchCardScreen extends StatelessWidget {
               Text(
                 'Scratch the card to see your reward',
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 15, color: AppColors.slate500),
+                style: AppTypography.regular.copyWith(fontSize: 15, color: context.torkk.textSecondary),
               ),
             ],
           ),

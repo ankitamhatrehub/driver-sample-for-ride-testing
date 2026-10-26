@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class NavigationRideCard extends StatelessWidget {
   final Map<String, dynamic>? ride;
@@ -207,7 +208,7 @@ class NavigationRideCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -226,10 +227,10 @@ class NavigationRideCard extends StatelessWidget {
               children: [
                 Text(
                   '₹ ${estimatedFare > 0 ? estimatedFare.toStringAsFixed(2) : '0.00'}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF0F172A),
+                    color: context.torkk.textPrimary,
                     letterSpacing: -0.5,
                   ),
                 ),
@@ -323,10 +324,10 @@ class NavigationRideCard extends StatelessWidget {
                   children: [
                     Text(
                       displayName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: context.torkk.textPrimary,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -343,10 +344,10 @@ class NavigationRideCard extends StatelessWidget {
                           const SizedBox(width: 3),
                           Text(
                             customerRating,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF64748B),
+                              color: context.torkk.textSecondary,
                             ),
                           ),
                         ],
@@ -356,10 +357,10 @@ class NavigationRideCard extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         'Category: ${ride!['item_category']}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF64748B),
+                          color: context.torkk.textSecondary,
                         ),
                       ),
                     ],
@@ -419,10 +420,10 @@ class NavigationRideCard extends StatelessWidget {
                       if (pickupDistText.isNotEmpty)
                         Text(
                           pickupDistText,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: context.torkk.textPrimary,
                           ),
                         ),
                       const SizedBox(height: 2),
@@ -430,9 +431,9 @@ class NavigationRideCard extends StatelessWidget {
                         pickupAddress.isNotEmpty
                             ? pickupAddress
                             : 'Pickup Location',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: Color(0xFF64748B),
+                          color: context.torkk.textSecondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -506,18 +507,18 @@ class NavigationRideCard extends StatelessWidget {
                       if (dropDistText.isNotEmpty)
                         Text(
                           dropDistText,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: context.torkk.textPrimary,
                           ),
                         ),
                       const SizedBox(height: 2),
                       Text(
                         dropAddress.isNotEmpty ? dropAddress : 'Drop Location',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: Color(0xFF64748B),
+                          color: context.torkk.textSecondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/service/driver_api_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER PERFORMANCE SCREEN ---
 class DriverPerformanceScreen extends StatefulWidget {
@@ -85,12 +86,12 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
           margin: const EdgeInsets.only(bottom: 16),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.torkk.surface,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.black12),
-            boxShadow: const [
+            border: Border.all(color: context.torkk.border),
+            boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: context.themed(light: Colors.black12, dark: context.torkk.textSecondary),
                 blurRadius: 6,
                 offset: Offset(0, 2),
               ),
@@ -105,10 +106,10 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
                   const SizedBox(width: 10),
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: Color(0xFF1E293B),
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                   const Spacer(),
@@ -143,14 +144,14 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
   Widget build(BuildContext context) {
     final primaryColor = const Color(0xFF4F46E5);
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: context.torkk.surfaceMuted,
       appBar: AppBar(
         title: const Text(
           'Performance Metrics',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        backgroundColor: context.torkk.background,
+        foregroundColor: context.themed(light: Colors.black, dark: context.torkk.textSecondary),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -166,12 +167,12 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 32),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.torkk.surface,
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.black12),
-                    boxShadow: const [
+                    border: Border.all(color: context.torkk.border),
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black12,
+                        color: context.themed(light: Colors.black12, dark: context.torkk.textSecondary),
                         blurRadius: 10,
                         offset: Offset(0, 4),
                       ),
@@ -207,11 +208,11 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
                                       color: primaryColor,
                                     ),
                                   ),
-                                  const Text(
+                                  Text(
                                     'Overall Score',
                                     style: TextStyle(
                                       fontSize: 10,
-                                      color: Colors.black54,
+                                      color: context.torkk.textSecondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -222,19 +223,19 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const Text(
+                      Text(
                         'Excellent Standing',
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 18,
-                          color: Color(0xFF1E293B),
+                          color: context.torkk.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
+                      Text(
                         'Keep up the high service standards to earn extra bonuses!',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black54, fontSize: 12),
+                        style: TextStyle(color: context.torkk.textSecondary, fontSize: 12),
                       ),
                     ],
                   ),

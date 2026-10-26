@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 const _kycAnswer =
     'KYC helps verify your identity and required documents before you can start driving with Torkk. It ensures a safe and secure platform for all drivers and users, and is required as per regulatory guidelines.';
@@ -82,7 +83,7 @@ class _FaqScreenState extends State<FaqScreen> {
               padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
               child: Column(
                 children: [
-                  Text(AppStrings.answerHelpful, style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500)),
+                  Text(AppStrings.answerHelpful, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
                   SizedBox(height: context.h(10)),
                   Row(
                     children: [
@@ -99,7 +100,7 @@ class _FaqScreenState extends State<FaqScreen> {
         children: [
           Text(
             AppStrings.faqSubtitle,
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(12)),
           TextField(
@@ -111,15 +112,15 @@ class _FaqScreenState extends State<FaqScreen> {
               hintStyle: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.slate400),
               prefixIcon: const Icon(Icons.search, color: AppColors.slate400),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: context.torkk.surface,
               contentPadding: EdgeInsets.symmetric(vertical: context.h(12)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(context.r(14)),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: BorderSide(color: context.torkk.border),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(context.r(14)),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: BorderSide(color: context.torkk.border),
               ),
             ),
           ),
@@ -172,11 +173,11 @@ class _FaqScreenState extends State<FaqScreen> {
         padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(16)),
-          border: Border.all(color: const Color(0xFFE8EDF5)),
+          border: Border.all(color: context.torkk.border),
         ),
         child: Row(
           children: [
-            Icon(icon, size: context.w(18), color: AppColors.textPrimary),
+            Icon(icon, size: context.w(18), color: context.torkk.textPrimary),
             SizedBox(width: context.w(10)),
             Expanded(
               child: Text(title, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
@@ -197,7 +198,7 @@ class _FaqScreenState extends State<FaqScreen> {
         padding: EdgeInsets.all(context.w(14)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(16)),
-          border: Border.all(color: const Color(0xFFE8EDF5)),
+          border: Border.all(color: context.torkk.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +213,7 @@ class _FaqScreenState extends State<FaqScreen> {
             ),
             if (open) ...[
               SizedBox(height: context.h(8)),
-              Text(item.answer, style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: AppColors.slate500)),
+              Text(item.answer, style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary)),
             ],
           ],
         ),

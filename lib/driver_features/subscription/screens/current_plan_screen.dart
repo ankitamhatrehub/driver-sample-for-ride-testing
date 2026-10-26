@@ -29,7 +29,7 @@ class CurrentPlanScreen extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
-          Text('Current Plan', style: subscriptionMuted()),
+          Text('Current Plan', style: subscriptionMuted(context)),
           SizedBox(height: context.h(8)),
           SubscriptionPlanCard(
             name: 'CAB EV- Weekly',

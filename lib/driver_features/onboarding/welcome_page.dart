@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 import 'package:rider_app/driver_features/onboarding/screens/welcome_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -14,7 +15,7 @@ class WelcomePage extends StatelessWidget {
     final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       resizeToAvoidBottomInset: true,
       body: ListenableBuilder(
         listenable: session,

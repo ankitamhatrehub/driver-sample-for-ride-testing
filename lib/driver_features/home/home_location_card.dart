@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomeLocationCard extends StatelessWidget {
   const HomeLocationCard({
@@ -23,7 +23,7 @@ class HomeLocationCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(10)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.torkk.surface,
         borderRadius: BorderRadius.circular(context.r(16)),
         boxShadow: const [
           BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4)),
@@ -39,7 +39,7 @@ class HomeLocationCard extends StatelessWidget {
               children: [
                 Text(
                   AppStrings.currentLocation,
-                  style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.gray500),
+                  style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
                 ),
                 if (place.isNotEmpty)
                   Text(

@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/driver_features/profile/screens/driver_profile_screen.dart';
 import 'package:rider_app/service/driver_api_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER EARNINGS SCREEN ---
 class DriverEarningsScreen extends StatefulWidget {
@@ -212,25 +213,25 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Earnings statement CSV has been downloaded to your device storage:',
-                  style: TextStyle(fontSize: 13.5, color: Color(0xFF475569)),
+                  style: TextStyle(fontSize: 13.5, color: context.torkk.textBody),
                 ),
                 const SizedBox(height: 12),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
+                    color: context.torkk.surfaceMuted,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: const Color(0xFFCBD5E1)),
                   ),
                   child: SelectableText(
                     file.path,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF1E293B),
+                      color: context.torkk.textPrimary,
                     ),
                   ),
                 ),
@@ -248,7 +249,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
               ),
               ElevatedButton(
                 onPressed: () => Navigator.pop(ctx),
-                style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFF2563EB)), 
                   backgroundColor: const Color(0xFF2563EB),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -315,7 +316,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
               height: barHeight,
               decoration: BoxDecoration(
                 color: hasAmount
-                    ? Colors.white
+                    ? context.torkk.surface
                     : Colors.white.withValues(alpha: 0.45),
                 borderRadius: BorderRadius.circular(6),
                 boxShadow: hasAmount
@@ -350,7 +351,6 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
     required String subtitle,
     VoidCallback? onTap,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         InkWell(
@@ -371,7 +371,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w900,
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          color: context.torkk.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -379,7 +379,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                         subtitle,
                         style: TextStyle(
                           fontSize: 12.5,
-                          color: isDark ? Colors.grey.shade400 : const Color(0xFF64748B),
+                          color: context.torkk.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -390,10 +390,10 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
             ),
           ),
         ),
-        const Divider(
+        Divider(
           height: 1,
           thickness: 1,
-          color: Color(0xFFE2E8F0),
+          color: context.torkk.border,
           indent: 82,
           endIndent: 20,
         ),
@@ -432,7 +432,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
       context: context,
       builder: (ctx) => Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.surface,
         child: Padding(
           padding: const EdgeInsets.all(22),
           child: Column(
@@ -469,38 +469,38 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8FAFC),
+                  color: context.torkk.surfaceMuted,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  border: Border.all(color: context.torkk.border),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       amount,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF0F172A),
+                        color: context.torkk.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
-                        color: Color(0xFF64748B),
+                        color: context.torkk.textSecondary,
                       ),
                     ),
                     const Divider(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Status',
                           style: TextStyle(
                             fontSize: 13,
-                            color: Color(0xFF64748B),
+                            color: context.torkk.textSecondary,
                           ),
                         ),
                         Container(
@@ -533,7 +533,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(ctx),
-                  style: ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFF4F46E5)), 
                     backgroundColor: const Color(0xFF4F46E5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
@@ -559,9 +559,8 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
   @override
   Widget build(BuildContext context) {
     final photo = widget.profilePhotoUrl ?? _cachedPhotoUrl;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     final days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     double maxEarning = _dailyEarnings.values.fold(
@@ -637,22 +636,22 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                                   ? Image.network(
                                       photo,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => const Icon(
+                                      errorBuilder: (_, error, stackTrace) => Icon(
                                         Icons.person,
-                                        color: Color(0xFF64748B),
+                                        color: context.torkk.textSecondary,
                                       ),
                                     )
                                   : Image.file(
                                       File(photo),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => const Icon(
+                                      errorBuilder: (_, error, stackTrace) => Icon(
                                         Icons.person,
-                                        color: Color(0xFF64748B),
+                                        color: context.torkk.textSecondary,
                                       ),
                                     ))
-                            : const Icon(
+                            : Icon(
                                 Icons.person,
-                                color: Color(0xFF64748B),
+                                color: context.torkk.textSecondary,
                               ),
                       ),
                     ),
@@ -735,7 +734,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                 onRefresh: _loadEarnings,
                 child: _recentTrips.isEmpty
                     ? ListView(
-                        children: const [
+                        children: [
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 60),
                             child: Column(
@@ -752,7 +751,7 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xFF64748B),
+                                    color: context.torkk.textSecondary,
                                   ),
                                 ),
                                 SizedBox(height: 4),

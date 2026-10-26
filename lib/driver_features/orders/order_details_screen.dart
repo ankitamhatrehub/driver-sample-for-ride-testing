@@ -4,6 +4,7 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Ride or parcel details opened from an order card.
 class OrderDetailsScreen extends StatelessWidget {
@@ -18,7 +19,7 @@ class OrderDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +30,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back_ios_new, size: 18, color: AppColors.textPrimary),
+                    icon: Icon(Icons.arrow_back_ios_new, size: 18, color: context.torkk.textPrimary),
                   ),
                   Text(
                     _parcel ? AppStrings.parcelDetails : AppStrings.rideDetails,
@@ -73,9 +74,9 @@ class OrderDetailsScreen extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(context.w(14), context.h(14), context.w(14), context.h(14)),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: context.torkk.surfaceMuted,
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +87,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 width: context.w(36),
                 height: context.w(36),
                 decoration: BoxDecoration(
-                  color: _parcel ? const Color(0xFFFEF3C7) : accent.withValues(alpha: 0.1),
+                  color: _parcel ? context.adaptiveTint(Color(0xFFFEF3C7)) : accent.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(context.r(10)),
                 ),
                 child: Icon(
@@ -109,17 +110,17 @@ class OrderDetailsScreen extends StatelessWidget {
             _parcel
                 ? '${trip['item_category'] ?? 'Documents'} • ${trip['item_weight'] ?? '1 kg (Small)'}'
                 : '${trip['vehicle_type'] ?? AppStrings.ordersRide} • ${trip['passenger_count'] ?? 4} Seater',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.textPrimary),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textPrimary),
           ),
           SizedBox(height: context.h(10)),
           Text(
             _timeLabel(trip),
-            style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(2)),
           Text(
             '${trip['pickup_address'] ?? ''}  →  ${trip['drop_address'] ?? ''}',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.textPrimary),
+            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textPrimary),
           ),
           SizedBox(height: context.h(6)),
           Row(
@@ -128,7 +129,7 @@ class OrderDetailsScreen extends StatelessWidget {
               SizedBox(width: context.w(4)),
               Text(
                 '${trip['distance_km'] ?? 4.2} km  •  ${trip['duration_mins'] ?? 18} mins',
-                style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
               ),
             ],
           ),
@@ -142,7 +143,7 @@ class OrderDetailsScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: context.w(20),
-          backgroundColor: const Color(0xFFF1F5F9),
+          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
           child: Icon(Icons.person, color: AppColors.slate400, size: context.w(22)),
         ),
         SizedBox(width: context.w(10)),
@@ -161,7 +162,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     SizedBox(width: context.w(4)),
                     Text(
                       '${trip['passengers'] ?? trip['passenger_count'] ?? 4} ${AppStrings.passengers}',
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                      style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                     ),
                     SizedBox(width: context.w(8)),
                     _countPill(context, Icons.thumb_up_alt_rounded, '${trip['likes'] ?? 2}', const Color(0xFF16A34A)),
@@ -184,7 +185,7 @@ class OrderDetailsScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -192,10 +193,10 @@ class OrderDetailsScreen extends StatelessWidget {
             width: context.w(36),
             height: context.w(36),
             decoration: BoxDecoration(
-              color: const Color(0xFFFEF3C7),
+              color: context.adaptiveTint(const Color(0xFFFEF3C7)),
               borderRadius: BorderRadius.circular(context.r(10)),
             ),
-            child: Icon(Icons.star_rounded, color: const Color(0xFFF59E0B), size: context.w(20)),
+            child: Icon(Icons.star_rounded, color: context.legible(Color(0xFFF59E0B)), size: context.w(20)),
           ),
           SizedBox(width: context.w(10)),
           Expanded(
@@ -208,7 +209,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 ),
                 Text(
                   AppStrings.rateReceiverHint,
-                  style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+                  style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                 ),
               ],
             ),
@@ -231,7 +232,7 @@ class OrderDetailsScreen extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(context.w(14), context.h(8), context.w(14), context.h(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         children: [
@@ -243,20 +244,20 @@ class OrderDetailsScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       row.$1,
-                      style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.slate500),
+                      style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
                     ),
                   ),
                   Text(
                     row.$2,
                     style: AppTypography.regular.copyWith(
                       fontSize: 13,
-                      color: row.$3 ? const Color(0xFFEF4444) : AppColors.textPrimary,
+                      color: row.$3 ? const Color(0xFFEF4444) : context.legible(AppColors.textPrimary),
                     ),
                   ),
                 ],
               ),
             ),
-          const Divider(height: 1, color: Color(0xFFE2E8F0)),
+          Divider(height: 1, color: context.torkk.border),
           Padding(
             padding: EdgeInsets.only(top: context.h(12)),
             child: Row(
@@ -285,14 +286,14 @@ class OrderDetailsScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(14)),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             AppStrings.paymentStatus,
-            style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate500),
+            style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
           ),
           SizedBox(height: context.h(2)),
           Text(

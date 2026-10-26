@@ -13,6 +13,7 @@ import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_info_banner.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class AadhaarManualScreen extends StatefulWidget {
   const AadhaarManualScreen({
@@ -43,7 +44,7 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
   Future<void> _pick({required bool front}) async {
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(16)))),
       builder: (context) {
         return SafeArea(
@@ -51,12 +52,12 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.photo_camera_outlined, color: AppColors.primary),
+                leading: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary)),
                 title: Text(AppStrings.camera, style: AppTypography.bold.copyWith(fontSize: 15)),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
-                leading: const Icon(Icons.photo_outlined, color: AppColors.primary),
+                leading: Icon(Icons.photo_outlined, color: context.legible(AppColors.primary)),
                 title: Text(AppStrings.gallery, style: AppTypography.bold.copyWith(fontSize: 15)),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
@@ -181,7 +182,7 @@ class _SideTile extends StatelessWidget {
           height: context.h(132),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: const Color(0xFFFAF5FF),
+            color: context.adaptiveTint(const Color(0xFFFAF5FF)),
             borderRadius: BorderRadius.circular(radius),
           ),
           child: reading
@@ -190,12 +191,12 @@ class _SideTile extends StatelessWidget {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(icon, color: AppColors.primary, size: context.w(28)),
+                        Icon(icon, color: context.legible(AppColors.primary), size: context.w(28)),
                         SizedBox(height: context.h(8)),
-                        Text(label, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2)),
+                        Text(label, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 13, height: 1.2)),
                         Text(
                           AppStrings.tapToUpload,
-                          style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+                          style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
                         ),
                       ],
                     )

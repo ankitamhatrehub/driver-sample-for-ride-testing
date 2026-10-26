@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../common/widgets/bouncing_widget.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SubmitDocumentsStep extends StatelessWidget {
   final VoidCallback onBack;
@@ -68,10 +69,10 @@ class SubmitDocumentsStep extends StatelessWidget {
               // Title
               Text(
                 displayTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF111827),
+                  color: context.torkk.textPrimary,
                   height: 1.1,
                   letterSpacing: -0.4,
                 ),
@@ -80,10 +81,10 @@ class SubmitDocumentsStep extends StatelessWidget {
               // Subtitle (Shown only when KYC is pending)
               if (!isAllCompleted) ...[
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'Required for Torkk operations in your city.\nWe\'ll verify most details automatically',
                   style: TextStyle(
-                    color: Color(0xFF6B7280),
+                    color: context.torkk.textSecondary,
                     fontSize: 15,
                     height: 1.4,
                     fontWeight: FontWeight.w400,
@@ -100,9 +101,9 @@ class SubmitDocumentsStep extends StatelessWidget {
                       horizontal: 16,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.torkk.surface,
                       border: Border.all(
-                        color: const Color(0xFF2563EB),
+                        color: context.legible(Color(0xFF2563EB)),
                         width: 1.5,
                       ),
                       borderRadius: BorderRadius.circular(16),
@@ -121,17 +122,17 @@ class SubmitDocumentsStep extends StatelessWidget {
                           height: 44,
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFEFF6FF),
+                            color: context.adaptiveTint(const Color(0xFFEFF6FF)),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.asset(
                             'assets/digilocker.png',
                             fit: BoxFit.contain,
                             errorBuilder: (context, error, stackTrace) =>
-                                const Center(
+                                Center(
                               child: Icon(
                                 Icons.cloud_done_rounded,
-                                color: Color(0xFF2563EB),
+                                color: context.legible(Color(0xFF2563EB)),
                                 size: 26,
                               ),
                             ),
@@ -141,13 +142,13 @@ class SubmitDocumentsStep extends StatelessWidget {
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 'Automatically Fill\nfrom Digilocker',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF111827),
+                                  color: context.torkk.textPrimary,
                                   height: 1.25,
                                 ),
                               ),
@@ -170,22 +171,22 @@ class SubmitDocumentsStep extends StatelessWidget {
               ],
 
               const SizedBox(height: 24),
-              const Divider(color: Color(0xFFE5E7EB), height: 1),
+              Divider(color: context.torkk.border, height: 1),
               const SizedBox(height: 24),
 
               // Section Title (Required Documents vs Submitted Documents)
               Text(
                 displaySectionTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF111827),
+                  color: context.torkk.textPrimary,
                 ),
               ),
               const SizedBox(height: 16),
 
               // Document 1: Aadhar Card
-              _buildDocItem(
+              _buildDocItem(context, 
                 title: 'Aadhar Card',
                 subtitle: 'Submit Aadhar Card Number',
                 isCompleted: isAadharCompleted,
@@ -193,7 +194,7 @@ class SubmitDocumentsStep extends StatelessWidget {
               ),
 
               // Document 2: Driving License
-              _buildDocItem(
+              _buildDocItem(context, 
                 title: 'Driving License',
                 subtitle: 'Submit your DL Number',
                 isCompleted: isDlCompleted,
@@ -201,7 +202,7 @@ class SubmitDocumentsStep extends StatelessWidget {
               ),
 
               // Document 3: RC
-              _buildDocItem(
+              _buildDocItem(context, 
                 title: 'RC',
                 subtitle: 'Submit your Vehicle RC',
                 isCompleted: isRcCompleted,
@@ -243,7 +244,7 @@ class SubmitDocumentsStep extends StatelessWidget {
     );
   }
 
-  Widget _buildDocItem({
+  Widget _buildDocItem(BuildContext context, {
     required String title,
     required String subtitle,
     required bool isCompleted,
@@ -265,18 +266,18 @@ class SubmitDocumentsStep extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF111827),
+                          color: context.torkk.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         subtitle,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Color(0xFF6B7280),
+                          color: context.torkk.textSecondary,
                         ),
                       ),
                     ],
@@ -296,16 +297,16 @@ class SubmitDocumentsStep extends StatelessWidget {
                           size: 15,
                         ),
                       )
-                    : const Icon(
+                    : Icon(
                         Icons.chevron_right_rounded,
-                        color: Color(0xFF6B7280),
+                        color: context.torkk.textSecondary,
                         size: 22,
                       ),
               ],
             ),
           ),
         ),
-        const Divider(color: Color(0xFFE5E7EB), height: 1),
+        Divider(color: context.torkk.border, height: 1),
       ],
     );
   }
@@ -348,7 +349,7 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: context.torkk.surface,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
@@ -363,17 +364,17 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 20,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chat_bubble_outline_rounded,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       size: 22,
                     ),
                     onPressed: () {},
@@ -388,19 +389,19 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
                   vertical: 8,
                 ),
                 children: [
-                  const Text(
+                  Text(
                     'FAQ',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF111827),
+                      color: context.torkk.textPrimary,
                       height: 1.2,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
+                  Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: Color(0xFF6B7280)),
+                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {
@@ -425,10 +426,10 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
                                 Expanded(
                                   child: Text(
                                     item['q']!,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF111827),
+                                      color: context.torkk.textPrimary,
                                       height: 1.3,
                                     ),
                                   ),
@@ -438,7 +439,7 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
                                   isOpen
                                       ? Icons.keyboard_arrow_up_rounded
                                       : Icons.keyboard_arrow_down_rounded,
-                                  color: const Color(0xFF111827),
+                                  color: context.torkk.textPrimary,
                                   size: 24,
                                 ),
                               ],
@@ -448,15 +449,15 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
                         if (isOpen) ...[
                           Text(
                             item['a']!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
-                              color: Color(0xFF4B5563),
+                              color: context.torkk.textBody,
                               height: 1.45,
                             ),
                           ),
                           const SizedBox(height: 14),
                         ],
-                        const Divider(color: Color(0xFFE5E7EB), height: 1),
+                        Divider(color: context.torkk.border, height: 1),
                       ],
                     );
                   }),

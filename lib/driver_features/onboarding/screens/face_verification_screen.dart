@@ -12,6 +12,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/onboarding/widgets/live_face_camera.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 enum _FacePage {
   intro,
@@ -85,7 +86,7 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
             SizedBox(height: context.h(6)),
             Text(
               AppStrings.verifyIdentitySubtitle,
-              style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(40)),
             _InfoRow(icon: AppAssets.personCheckIcon, text: AppStrings.identityRealPerson),
@@ -117,7 +118,7 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
             SizedBox(height: context.h(4)),
             Text(
               AppStrings.beforeYouStartSubtitle,
-              style: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.secondaryTextColor),
+              style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
             ),
             SizedBox(height: context.h(24)),
             _CheckRow(
@@ -165,8 +166,8 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
           children: [
             CircleAvatar(
               radius: context.w(45),
-              backgroundColor: const Color(0xFFEDE7F6),
-              child: Icon(Icons.photo_camera_outlined, color: AppColors.primary, size: context.w(32)),
+              backgroundColor: context.adaptiveTint(const Color(0xFFEDE7F6)),
+              child: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary), size: context.w(32)),
             ),
             SizedBox(height: context.h(20)),
             Text(AppStrings.allowCameraAccess, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
@@ -176,7 +177,7 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
               child: Text(
                 AppStrings.allowCameraSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 12, height: 1.4, color: AppColors.secondaryTextColor),
+                style: AppTypography.regular.copyWith(fontSize: 12, height: 1.4, color: context.torkk.textSecondary),
               ),
             ),
             SizedBox(height: context.h(28)),
@@ -198,7 +199,7 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
 
   Widget _verified(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(28), context.h(48), context.w(28), context.h(16)),
@@ -214,7 +215,7 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
               SizedBox(height: context.h(6)),
               Text(
                 AppStrings.identityVerifiedFaceSubtitle,
-                style: AppTypography.regular.copyWith(fontSize: 13, color: AppColors.secondaryTextColor),
+                style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
               ),
               SizedBox(height: context.h(50)),
                _SuccessLine(AppStrings.identityConfirmed),
@@ -231,7 +232,7 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
 
   Widget _failed(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(24), context.h(48), context.w(24), context.h(16)),
@@ -248,26 +249,26 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
               Text(
                 AppStrings.faceVerificationFailedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 14, height: 1.4, color: AppColors.secondaryTextColor),
+                style: AppTypography.regular.copyWith(fontSize: 14, height: 1.4, color: context.torkk.textSecondary),
               ),
               SizedBox(height: context.h(20)),
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(context.w(14)),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFEF2F2),
+                  color: context.adaptiveTint(const Color(0xFFFEF2F2)),
                   borderRadius: BorderRadius.circular(context.r(12)),
                   border: Border.all(color: const Color(0xFFFECACA)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppStrings.reason, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+                    Text(AppStrings.reason, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2)),
                     SizedBox(height: context.h(8)),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.cancel, color: AppColors.error, size: context.w(16)),
+                        Icon(Icons.cancel, color: context.legible(AppColors.error), size: context.w(16)),
                         SizedBox(width: context.w(8)),
                         Expanded(
                           child: Column(
@@ -275,11 +276,11 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
                             children: [
                               Text(
                                 AppStrings.faceNotDetectedReason,
-                                style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3, color: AppColors.error),
+                                style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3, color: context.legible(AppColors.error)),
                               ),
                               Text(
                                 AppStrings.faceNotDetectedHint,
-                                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.35, color: AppColors.error),
+                                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.35, color: context.legible(AppColors.error)),
                               ),
                             ],
                           ),
@@ -316,7 +317,7 @@ class _InfoRow extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFF3F4F6)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -325,7 +326,7 @@ class _InfoRow extends StatelessWidget {
             height: context.w(32),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: const Color(0xFFFAF5FF),
+              color: context.adaptiveTint(const Color(0xFFFAF5FF)),
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
             child: Image.asset(icon, width: context.w(18), height: context.w(18), fit: BoxFit.contain),
@@ -336,7 +337,7 @@ class _InfoRow extends StatelessWidget {
               text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.2, color: Colors.black),
+              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.2, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary)),
             ),
           ),
         ],
@@ -382,7 +383,7 @@ class _CheckRow extends StatelessWidget {
               style: AppTypography.regular.copyWith(
                 fontSize: 14,
                 height: 1.35,
-                color: AppColors.textPrimary,
+                color: context.torkk.textPrimary,
               ),
             ),
           ),
@@ -406,7 +407,7 @@ class _IconInfoRow extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.w(12)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
-        border: Border.all(color: const Color(0xFFF3F4F6)),
+        border: Border.all(color: context.torkk.border),
       ),
       child: Row(
         children: [
@@ -415,16 +416,16 @@ class _IconInfoRow extends StatelessWidget {
             height: context.w(32),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: const Color(0xFFFAF5FF),
+              color: context.adaptiveTint(const Color(0xFFFAF5FF)),
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
-            child: Icon(icon, color: AppColors.primary, size: context.w(16)),
+            child: Icon(icon, color: context.legible(AppColors.primary), size: context.w(16)),
           ),
           SizedBox(width: context.w(12)),
           Expanded(
             child: Text(
               text,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.2, color: AppColors.textPrimary),
+              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.2, color: context.torkk.textPrimary),
             ),
           ),
         ],
@@ -489,7 +490,7 @@ class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProvide
   Widget build(BuildContext context) {
     final ring = context.w(120);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(context.w(28), context.h(36), context.w(28), context.h(16)),
@@ -510,10 +511,10 @@ class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProvide
                     ),
                     CircleAvatar(
                       radius: context.w(46),
-                      backgroundColor: const Color(0xFFF5F3FF),
+                      backgroundColor: context.adaptiveTint(const Color(0xFFF5F3FF)),
                       backgroundImage: widget.selfiePath == null ? null : FileImage(File(widget.selfiePath!)),
                       child: widget.selfiePath == null
-                          ? Icon(Icons.person, color: AppColors.primary, size: context.w(32))
+                          ? Icon(Icons.person, color: context.legible(AppColors.primary), size: context.w(32))
                           : null,
                     ),
                   ],
@@ -525,7 +526,7 @@ class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProvide
               Text(
                 AppStrings.verifyingFaceSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.secondaryTextColor),
+                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
               ),
               SizedBox(height: context.h(28)),
               Padding(
@@ -598,9 +599,9 @@ class _VerifyStep extends StatelessWidget {
                 width: context.w(18),
                 height: context.w(18),
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFD1FAE5),
+                  color: context.adaptiveTint(Color(0xFFD1FAE5)),
                 ),
                 child: Container(
                   width: context.w(8),
@@ -634,7 +635,7 @@ class _VerifyStep extends StatelessWidget {
               style: AppTypography.regular.copyWith(
                 fontSize: 14,
                 fontWeight: done || active ? FontWeight.w700 : FontWeight.w400,
-                color: done || active ? AppColors.textPrimary : AppColors.secondaryTextColor,
+                color: done || active ? context.legible(AppColors.textPrimary) : context.legible(AppColors.secondaryTextColor),
               ),
             ),
           ),
@@ -658,7 +659,7 @@ class _SuccessLine extends StatelessWidget {
           Icon(Icons.check_circle, color: AppColors.green600, size: context.w(18)),
           SizedBox(width: context.w(10)),
           Expanded(
-            child: Text(text, style: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.textPrimary)),
+            child: Text(text, style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textPrimary)),
           ),
         ],
       ),

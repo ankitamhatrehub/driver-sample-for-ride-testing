@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 TextStyle subscriptionTitle() => AppTypography.bold.copyWith(
   fontSize: 20,
@@ -8,8 +8,8 @@ TextStyle subscriptionTitle() => AppTypography.bold.copyWith(
   letterSpacing: -0.3,
 );
 
-TextStyle subscriptionMuted() => AppTypography.regular.copyWith(
+TextStyle subscriptionMuted(BuildContext context) => AppTypography.regular.copyWith(
   fontSize: 14,
   height: 1.35,
-  color: AppColors.textPrimary,
+  color: context.torkk.textPrimary,
 );

@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/driver_features/documents/screens/driver_documents_screen.dart';
 import 'package:rider_app/driver_features/documents/screens/driver_subscription_pass_screen.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class DriverProfileScreen extends StatefulWidget {
   const DriverProfileScreen({super.key, this.embedded = false});
@@ -119,7 +120,6 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
 
 
   Widget _buildInfoRow(String title, String value) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 14.0),
       child: Row(
@@ -130,14 +130,14 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: context.torkk.textPrimary,
             ),
           ),
           Text(
             value,
             style: TextStyle(
               fontSize: 16,
-              color: isDark ? Colors.grey.shade400 : const Color(0xFF64748B),
+              color: context.torkk.textSecondary,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -151,14 +151,13 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
     required String title,
     required VoidCallback onTap,
   }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+              color: context.torkk.border,
               width: 1,
             ),
           ),
@@ -172,12 +171,12 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                color: context.torkk.textPrimary,
               ),
             ),
             Icon(
               Icons.chevron_right,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: context.torkk.textPrimary,
               size: 24,
             ),
           ],
@@ -187,7 +186,6 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
   }
 
   Widget _buildBottomNav(BuildContext context, {int currentIndex = 3}) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final navItems = [
       {'label': 'HOME', 'icon': Icons.home_outlined, 'route': AppRoutes.home},
       {
@@ -208,7 +206,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
     ];
 
     return Container(
-      color: isDark ? const Color(0xFF0F172A) : Colors.white,
+      color: context.torkk.background,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: SafeArea(
         top: false,
@@ -272,9 +270,8 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -335,16 +332,16 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                         child: _profilePhotoUrl.isNotEmpty
                             ? CircleAvatar(
                                 radius: 56,
-                                backgroundColor: Colors.grey.shade200,
+                                backgroundColor: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
                                 backgroundImage: NetworkImage(_profilePhotoUrl),
                               )
                             : CircleAvatar(
                                 radius: 56,
-                                backgroundColor: Colors.grey.shade200,
-                                child: const Icon(
+                                backgroundColor: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                                child: Icon(
                                   Icons.person,
                                   size: 56,
-                                  color: Colors.grey,
+                                  color: context.themed(light: Colors.grey, dark: context.torkk.textSecondary),
                                 ),
                               ),
                       ),
@@ -367,7 +364,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                     _gender.isNotEmpty ? _gender : 'Not specified',
                   ),
                   Divider(
-                    color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+                    color: context.torkk.border,
                     height: 1,
                   ),
                   _buildInfoRow(
@@ -375,7 +372,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                     _dob.isNotEmpty ? _dob : 'Not specified',
                   ),
                   Divider(
-                    color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+                    color: context.torkk.border,
                     height: 1,
                   ),
                   const SizedBox(height: 24),

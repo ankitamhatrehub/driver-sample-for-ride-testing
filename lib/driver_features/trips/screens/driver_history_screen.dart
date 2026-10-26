@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/service/driver_api_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 bool _photoStartsWithHttp(String path) => path.startsWith('http');
 
@@ -59,9 +60,8 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
   }
 
   Widget _buildTripTile(BuildContext context, Map<String, dynamic> trip) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final subTextColor = isDark ? Colors.grey.shade400 : const Color(0xFF64748B);
+    final textColor = context.torkk.textPrimary;
+    final subTextColor = context.torkk.textSecondary;
 
     String name =
         (trip['customer_name'] ??
@@ -171,7 +171,7 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
         Divider(
           height: 1,
           thickness: 1,
-          color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+          color: context.torkk.border,
           indent: 84,
           endIndent: 20,
         ),
@@ -182,9 +182,8 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final trips = _completedTrips;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final textColor = context.torkk.textPrimary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -243,22 +242,22 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
                                   ? Image.network(
                                       _profilePhotoUrl!,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => const Icon(
+                                      errorBuilder: (_, error, stackTrace) => Icon(
                                         Icons.person,
-                                        color: Color(0xFF64748B),
+                                        color: context.torkk.textSecondary,
                                       ),
                                     )
                                   : Image.file(
                                       File(_profilePhotoUrl!),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => const Icon(
+                                      errorBuilder: (_, error, stackTrace) => Icon(
                                         Icons.person,
-                                        color: Color(0xFF64748B),
+                                        color: context.torkk.textSecondary,
                                       ),
                                     ))
-                            : const Icon(
+                            : Icon(
                                 Icons.person,
-                                color: Color(0xFF64748B),
+                                color: context.torkk.textSecondary,
                               ),
                       ),
                     ),
@@ -301,7 +300,7 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: isDark ? Colors.grey.shade400 : const Color(0xFF64748B),
+                              color: context.torkk.textSecondary,
                             ),
                           ),
                           const SizedBox(height: 4),

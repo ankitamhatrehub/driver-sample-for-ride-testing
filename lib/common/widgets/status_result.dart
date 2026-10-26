@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Shared result layout.
 ///
@@ -35,7 +35,7 @@ class StatusResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -45,7 +45,7 @@ class StatusResult extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 24),
+                    icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 24),
                     onPressed: onBack,
                   ),
                 ),
@@ -69,7 +69,7 @@ class StatusResult extends StatelessWidget {
                       style: AppTypography.regular.copyWith(
                         fontSize: 12,
                         height: 1.45,
-                        color: AppColors.secondaryTextColor,
+                        color: context.torkk.textSecondary,
                       ),
                     ),
                   ),

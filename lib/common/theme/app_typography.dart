@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_colors.dart';
+import 'torkk_colors.dart';
 
 /// Two Inter bases, loaded from the font files in pubspec.
 /// Change size, color, or weight with [TextStyle.copyWith].
@@ -18,7 +18,6 @@ class AppTypography {
     fontSize: 20,
     height: 32 / 20,
     letterSpacing: -0.6,
-    color: AppColors.textPrimary,
   );
 
   /// Inter Regular, 14px, line-height 20, letter-spacing 0.
@@ -28,20 +27,19 @@ class AppTypography {
     fontSize: 14,
     height: 20 / 14,
     letterSpacing: 0,
-    color: AppColors.textPrimary,
   );
 
   static TextStyle caption({Color? color}) {
     return regular.copyWith(color: color);
   }
 
-  static TextTheme textTheme({required Color textColor, required bool isDark}) {
-    final bodyColor = isDark ? Colors.white70 : Colors.black87;
-    final secondaryColor = isDark ? Colors.white60 : Colors.black54;
+  /// Text colors come from the theme, so [bold] and [regular] (which carry no
+  /// color of their own) follow light/dark automatically.
+  static TextTheme textTheme(TorkkColors colors) {
     return TextTheme(
-      titleLarge: bold.copyWith(color: textColor),
-      bodyLarge: regular.copyWith(fontSize: 16, color: bodyColor),
-      bodyMedium: regular.copyWith(color: secondaryColor),
+      titleLarge: bold.copyWith(color: colors.textPrimary),
+      bodyLarge: regular.copyWith(fontSize: 16, color: colors.textPrimary),
+      bodyMedium: regular.copyWith(color: colors.textPrimary),
     );
   }
 }

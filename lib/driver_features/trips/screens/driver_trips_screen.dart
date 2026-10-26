@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/service/driver_api_service.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER TRIP HISTORY SCREEN ---
 class DriverTripsScreen extends StatefulWidget {
@@ -62,7 +63,7 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
       context: context,
       builder: (context) => Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-        backgroundColor: Colors.white,
+        backgroundColor: context.torkk.surface,
         elevation: 16,
         insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Padding(
@@ -89,19 +90,19 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Trip Invoice',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF0F172A),
+                            color: context.torkk.textPrimary,
                           ),
                         ),
                         Text(
                           'Ride #${trip['id'] ?? ''}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF64748B),
+                            color: context.torkk.textSecondary,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -113,14 +114,14 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFF1F5F9),
+                      decoration: BoxDecoration(
+                        color: context.torkk.surfaceMuted,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.close_rounded,
                         size: 18,
-                        color: Color(0xFF64748B),
+                        color: context.torkk.textSecondary,
                       ),
                     ),
                   ),
@@ -136,9 +137,9 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF8FAFC),
+                          color: context.torkk.surfaceMuted,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFFE2E8F0)),
+                          border: Border.all(color: context.torkk.border),
                         ),
                         child: Column(
                           children: [
@@ -163,19 +164,19 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF8FAFC),
+                          color: context.torkk.surfaceMuted,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFFE2E8F0)),
+                          border: Border.all(color: context.torkk.border),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'ROUTE DETAILS',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF6366F1),
+                                color: context.legible(Color(0xFF6366F1)),
                                 letterSpacing: 0.5,
                               ),
                             ),
@@ -192,9 +193,9 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                                 Expanded(
                                   child: Text(
                                     trip['pickup_address'] ?? 'Pickup Address',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFF1E293B),
+                                      color: context.torkk.textPrimary,
                                     ),
                                   ),
                                 ),
@@ -222,9 +223,9 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                                 Expanded(
                                   child: Text(
                                     trip['drop_address'] ?? 'Drop Address',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFF1E293B),
+                                      color: context.torkk.textPrimary,
                                     ),
                                   ),
                                 ),
@@ -237,19 +238,19 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF8FAFC),
+                          color: context.torkk.surfaceMuted,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFFE2E8F0)),
+                          border: Border.all(color: context.torkk.border),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'FARE BREAKDOWN',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF6366F1),
+                                color: context.legible(Color(0xFF6366F1)),
                                 letterSpacing: 0.5,
                               ),
                             ),
@@ -263,7 +264,7 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                               'Total Customer Fare',
                               '₹${(trip['fare'] as num?)?.toStringAsFixed(2) ?? '0.00'}',
                             ),
-                            const Divider(height: 18, color: Color(0xFFE2E8F0)),
+                            Divider(height: 18, color: context.torkk.border),
                             _invoiceRow(
                               'Your Earnings',
                               '₹${(trip['driver_earnings'] as num?)?.toStringAsFixed(2) ?? (trip['fare'] as num?)?.toStringAsFixed(2) ?? '0.00'}',
@@ -320,7 +321,7 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    foregroundColor: const Color(0xFF475569),
+                    foregroundColor: context.legible(Color(0xFF475569)),
                   ),
                   child: const Text(
                     'Close Invoice',
@@ -348,14 +349,14 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 13, color: Colors.black54),
+            style: TextStyle(fontSize: 13, color: context.torkk.textSecondary),
           ),
           Text(
             value,
             style: TextStyle(
               fontSize: 13,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: color ?? Colors.black87,
+              color: color ?? context.themed(light: Colors.black87, dark: context.torkk.textPrimary),
             ),
           ),
         ],
@@ -433,10 +434,10 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
                   ),
                   const SizedBox(width: 4),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.info_outline_rounded,
                       size: 20,
-                      color: Colors.blueGrey,
+                      color: context.themed(light: Colors.blueGrey, dark: context.torkk.textSecondary),
                     ),
                     onPressed: () => _showInvoiceDialog(context, trip),
                   ),
@@ -464,14 +465,14 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8FAFC),
+        backgroundColor: context.torkk.surfaceMuted,
         appBar: AppBar(
           title: Text(
             widget.parcelsOnly ? 'Parcels' : widget.title,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: context.torkk.background,
+          foregroundColor: context.themed(light: Colors.black, dark: context.torkk.textSecondary),
           elevation: 0,
           bottom: const TabBar(
             labelColor: Color(0xFF4F46E5),
