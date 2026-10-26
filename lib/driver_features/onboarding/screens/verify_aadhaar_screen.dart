@@ -5,7 +5,6 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
-import 'package:rider_app/common/widgets/onboarding_result_screen.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
 

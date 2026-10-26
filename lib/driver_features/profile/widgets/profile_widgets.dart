@@ -113,7 +113,6 @@ class ProfileMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = accent ? profileAccent(context) : AppColors.textPrimary;
     return InkWell(
       onTap: onTap,
       child: Padding(

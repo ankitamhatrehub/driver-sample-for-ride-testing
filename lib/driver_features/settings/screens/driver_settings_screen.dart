@@ -21,8 +21,7 @@ class DriverSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = profileAccent(context);
-    return ProfilePage(
+   return ProfilePage(
       title: AppStrings.settings,
       onBack: onClose,
       child: ListView(

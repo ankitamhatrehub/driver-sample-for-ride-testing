@@ -1517,7 +1517,6 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
   }
 
   Widget _deliveredPage(BuildContext context) {
-    final accent = Theme.of(context).colorScheme.primary;
     return _page(
       context,
       title: '',
