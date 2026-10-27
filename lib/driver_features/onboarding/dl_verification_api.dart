@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:rider_app/common/constants/app_urls.dart';
@@ -68,6 +69,7 @@ Future<DrivingLicenceDetails> verifyDrivingLicence({
   required String idNumber,
   required String dob,
 }) async {
+  debugPrint('[DL][api] POST ${AppUrls.verifyDl} (dob=$dob, id length ${idNumber.length})');
   final response = await http
       .post(
         Uri.parse(AppUrls.verifyDl),
@@ -75,8 +77,10 @@ Future<DrivingLicenceDetails> verifyDrivingLicence({
         body: jsonEncode({'id_number': idNumber, 'dob': dob}),
       )
       .timeout(const Duration(seconds: 20));
+  debugPrint('[DL][api] status ${response.statusCode}, ${response.body.length} bytes');
 
   if (response.statusCode < 200 || response.statusCode >= 300) {
+    debugPrint('[DL][api] error body: ${response.body}');
     throw DlVerificationException(_errorMessage(response.body));
   }
   return DrivingLicenceDetails.fromBody(

@@ -149,7 +149,9 @@ class OtpPage extends StatelessWidget {
                 _snack(context, AppTranslations.tr('enter_verification_code'));
                 return;
               }
+              print('Verifying OTP: ${_session.otp.text}');
               final result = await _session.verifyOtp();
+              print('OTP verification result: $result');
               if (!context.mounted) return;
               if (result.message != null) _snack(context, result.message!);
               if (result.openDashboard) {

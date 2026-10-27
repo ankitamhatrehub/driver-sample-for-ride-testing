@@ -47,7 +47,7 @@ class KycVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = _items();
-
+print('KYC Verification Screen: $items');
     return OnboardingStepScaffold(
       title: AppStrings.kycVerification,
       subtitle: AppStrings.kycSubtitle,

@@ -30,7 +30,7 @@ class AppUrls {
   // ---------------------------------------------------------------------------
   // DigiLocker KYC Endpoints
   // ---------------------------------------------------------------------------
-  static const String digilockerStart = '$apiBase/kyc/digilocker/start';
+  static const String digilockerStart = '$apiBase/kyc/driver/digilocker/start';
   static const String digilockerDownload =
       '$apiBase/kyc/driver/digilocker/fetch';
 
@@ -38,8 +38,8 @@ class AppUrls {
   // Driver Registration & Profile Endpoints
   // ---------------------------------------------------------------------------
   static const String driverRegister = '$apiBase/driver/register';
-  static const String updateProfile = '$apiBase/driver/update-profile';
-  static const String updateVehicleType = '$apiBase/driver/update-vehicle-type';
+  static const String updateProfile = '$apiBase/driver/profile';
+  static const String updateVehicleType = '$apiBase/driver/update-vehicle';
   static const String uploadProfilePhoto = '$apiBase/driver/upload-profile-photo';
   static const String updateLocation = '$apiBase/driver/update-location';
   static const String onlineStatus = '$apiBase/driver/online-status';

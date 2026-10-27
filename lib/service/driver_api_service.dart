@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 
 class DriverApiService {
@@ -11,6 +12,32 @@ class DriverApiService {
 
   /// Expose client for testing or custom requests
   static http.Client get client => _client;
+
+  /// The login token saved by OTP verification / registration.
+  ///
+  /// Both flows store it under `auth_token` and `token`; `access_token` is
+  /// kept as a fallback for older saved sessions.
+  static Future<String> savedToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('auth_token') ??
+        prefs.getString('token') ??
+        prefs.getString('access_token') ??
+        '';
+  }
+
+  /// JSON headers plus the saved token, in the same forms the DigiLocker
+  /// calls send it (Bearer header and the `token` / `x-access-token` headers).
+  static Future<Map<String, String>> authHeaders() async {
+    final token = await savedToken();
+    return {
+      'Content-Type': 'application/json',
+      if (token.isNotEmpty) ...{
+        'Authorization': 'Bearer $token',
+        'token': token,
+        'x-access-token': token,
+      },
+    };
+  }
 
   static Future<List<dynamic>> fetchActiveRides({
     required String driverPhone,
@@ -30,11 +57,13 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.acceptRide),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
-    ).timeout(const Duration(seconds: 5));
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.acceptRide),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
+        )
+        .timeout(const Duration(seconds: 5));
     if (response.statusCode != 200) {
       throw Exception('accept_failed_${response.statusCode}');
     }
@@ -44,11 +73,13 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.startRide),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
-    ).timeout(const Duration(seconds: 5));
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.startRide),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
+        )
+        .timeout(const Duration(seconds: 5));
     if (response.statusCode != 200) {
       throw Exception('Failed to start ride');
     }
@@ -59,12 +90,20 @@ class DriverApiService {
     required String driverPhone,
     required String rideCode,
   }) async {
-    debugPrint('[DEBUG PICKUP API] Calling pickup-customer API for ride: $rideId, code: $rideCode');
-    final response = await _client.post(
-      Uri.parse(AppUrls.pickupCustomer),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone, 'ride_code': rideCode}),
-    ).timeout(const Duration(seconds: 5));
+    debugPrint(
+      '[DEBUG PICKUP API] Calling pickup-customer API for ride: $rideId, code: $rideCode',
+    );
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.pickupCustomer),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'ride_id': rideId,
+            'driver_phone': driverPhone,
+            'ride_code': rideCode,
+          }),
+        )
+        .timeout(const Duration(seconds: 5));
     debugPrint('[DEBUG PICKUP API] Response status: ${response.statusCode}');
     if (response.statusCode != 200) {
       String message = 'Failed to update pickup status';
@@ -83,21 +122,27 @@ class DriverApiService {
     required String driverPhone,
     String paymentMethod = 'cash',
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.completeRide),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'ride_id': rideId,
-        'driver_phone': driverPhone,
-        'payment_method': paymentMethod,
-      }),
-    ).timeout(const Duration(seconds: 10));
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.completeRide),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'ride_id': rideId,
+            'driver_phone': driverPhone,
+            'payment_method': paymentMethod,
+          }),
+        )
+        .timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return (data['driver_earnings'] as num?)?.toDouble() ?? 0;
     }
     final body = response.body.trim();
-    throw Exception(body.isNotEmpty ? body : 'Failed to complete ride (${response.statusCode})');
+    throw Exception(
+      body.isNotEmpty
+          ? body
+          : 'Failed to complete ride (${response.statusCode})',
+    );
   }
 
   static Future<void> setPaymentMethod({
@@ -105,15 +150,17 @@ class DriverApiService {
     required String driverPhone,
     required String paymentMethod,
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.setPaymentMethod),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'ride_id': rideId,
-        'driver_phone': driverPhone,
-        'payment_method': paymentMethod,
-      }),
-    ).timeout(const Duration(seconds: 5));
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.setPaymentMethod),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'ride_id': rideId,
+            'driver_phone': driverPhone,
+            'payment_method': paymentMethod,
+          }),
+        )
+        .timeout(const Duration(seconds: 5));
     if (response.statusCode != 200) {
       throw Exception('Failed to set payment method');
     }
@@ -125,17 +172,21 @@ class DriverApiService {
     required double longitude,
   }) async {
     try {
-      final response = await _client.post(
-        Uri.parse(AppUrls.updateLocation),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'phone': driverPhone,
-          'latitude': latitude,
-          'longitude': longitude,
-        }),
-      ).timeout(const Duration(seconds: 5));
+      final response = await _client
+          .post(
+            Uri.parse(AppUrls.updateLocation),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode({
+              'phone': driverPhone,
+              'latitude': latitude,
+              'longitude': longitude,
+            }),
+          )
+          .timeout(const Duration(seconds: 5));
       if (response.statusCode != 200) {
-        debugPrint('Location update failed: ${response.statusCode} ${response.body}');
+        debugPrint(
+          'Location update failed: ${response.statusCode} ${response.body}',
+        );
       }
     } catch (e) {
       debugPrint('Location update failed: $e');
@@ -146,16 +197,16 @@ class DriverApiService {
     debugPrint('[DEBUG FETCH TRIPS] Fetching trips for driver: $driverPhone');
     final uri = Uri.parse(AppUrls.driverTrips(driverPhone));
     debugPrint('[DEBUG FETCH TRIPS] Request URI: $uri');
-    
+
     final response = await _client.get(uri).timeout(const Duration(seconds: 5));
     debugPrint('[DEBUG FETCH TRIPS] Response status: ${response.statusCode}');
     debugPrint('[DEBUG FETCH TRIPS] Response body: ${response.body}');
-    
+
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final trips = data['trips'] ?? [];
       debugPrint('[DEBUG FETCH TRIPS] Parsed ${trips.length} trips');
-      
+
       // Count Davangere trips
       int davanagereCount = 0;
       for (var trip in trips) {
@@ -163,38 +214,48 @@ class DriverApiService {
         final drop = trip['drop_address']?.toString().toLowerCase() ?? '';
         if (pickup.contains('davangere') || drop.contains('davangere')) {
           davanagereCount++;
-          debugPrint('[DEBUG FETCH TRIPS] Davangere trip found - ID: ${trip['id']}, Pickup: ${trip['pickup_address']}, Drop: ${trip['drop_address']}');
+          debugPrint(
+            '[DEBUG FETCH TRIPS] Davangere trip found - ID: ${trip['id']}, Pickup: ${trip['pickup_address']}, Drop: ${trip['drop_address']}',
+          );
         }
       }
       debugPrint('[DEBUG FETCH TRIPS] Total Davangere trips: $davanagereCount');
-      
+
       return trips;
     }
-    debugPrint('[DEBUG FETCH TRIPS] ERROR: Failed with status ${response.statusCode}');
+    debugPrint(
+      '[DEBUG FETCH TRIPS] ERROR: Failed with status ${response.statusCode}',
+    );
     throw Exception('Failed to fetch trips');
   }
 
   static Future<Map<String, dynamic>> fetchEarnings(String driverPhone) async {
-    debugPrint('[DEBUG FETCH EARNINGS] Fetching earnings for driver: $driverPhone');
+    debugPrint(
+      '[DEBUG FETCH EARNINGS] Fetching earnings for driver: $driverPhone',
+    );
     final uri = Uri.parse(AppUrls.driverEarnings(driverPhone));
     debugPrint('[DEBUG FETCH EARNINGS] Request URI: $uri');
-    
+
     final response = await _client.get(uri).timeout(const Duration(seconds: 5));
-    debugPrint('[DEBUG FETCH EARNINGS] Response status: ${response.statusCode}');
+    debugPrint(
+      '[DEBUG FETCH EARNINGS] Response status: ${response.statusCode}',
+    );
     debugPrint('[DEBUG FETCH EARNINGS] Response body: ${response.body}');
-    
+
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      debugPrint('[DEBUG FETCH EARNINGS] Today: ${data['today_earnings']}, Total: ${data['total_earnings']}, Recent trips: ${data['recent_trips']?.length ?? 0}');
+      debugPrint(
+        '[DEBUG FETCH EARNINGS] Today: ${data['today_earnings']}, Total: ${data['total_earnings']}, Recent trips: ${data['recent_trips']?.length ?? 0}',
+      );
       return data;
     }
     throw Exception('Failed to fetch earnings');
   }
 
   static Future<Map<String, dynamic>> fetchWallet(String driverPhone) async {
-    final response = await _client.get(
-      Uri.parse(AppUrls.driverWallet(driverPhone)),
-    ).timeout(const Duration(seconds: 5));
+    final response = await _client
+        .get(Uri.parse(AppUrls.driverWallet(driverPhone)))
+        .timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }
@@ -202,9 +263,9 @@ class DriverApiService {
   }
 
   static Future<Map<String, dynamic>> fetchProfile(String driverPhone) async {
-    final response = await _client.get(
-      Uri.parse(AppUrls.driverProfile(driverPhone)),
-    ).timeout(const Duration(seconds: 5));
+    final response = await _client
+        .get(Uri.parse(AppUrls.driverProfile(driverPhone)))
+        .timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }
@@ -218,9 +279,13 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await _client.get(
-      Uri.parse(AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone)),
-    ).timeout(const Duration(seconds: 5));
+    final response = await _client
+        .get(
+          Uri.parse(
+            AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone),
+          ),
+        )
+        .timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }
@@ -231,14 +296,13 @@ class DriverApiService {
     required String driverPhone,
     required String base64Image,
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.uploadProfilePhoto),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'phone': driverPhone,
-        'image_data': base64Image,
-      }),
-    ).timeout(const Duration(seconds: 15));
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.uploadProfilePhoto),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'phone': driverPhone, 'image_data': base64Image}),
+        )
+        .timeout(const Duration(seconds: 15));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -251,17 +315,29 @@ class DriverApiService {
     required String driverPhone,
     required String vehicleType,
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.updateVehicleType),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'phone': driverPhone,
-        'vehicle_type': vehicleType,
-      }),
-    ).timeout(const Duration(seconds: 10));
-
+    final token = await savedToken();
+    debugPrint(
+      'Updating vehicle type for $driverPhone to $vehicleType '
+      '(token present: ${token.isNotEmpty})',
+    );
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.updateVehicleType),
+          headers: await authHeaders(),
+          body: json.encode({
+            'phone': driverPhone,
+            'vehicle_type': vehicleType,
+            if (token.isNotEmpty) 'token': token,
+          }),
+        )
+        .timeout(const Duration(seconds: 10));
+    debugPrint(
+      'Update vehicle type response: ${response.statusCode} - ${response.body}',
+    );
     if (response.statusCode != 200) {
-      throw Exception('Failed to update vehicle type: ${response.statusCode}');
+      throw Exception(
+        'Failed to update vehicle type: ${response.statusCode} ${response.body}',
+      );
     }
   }
 
@@ -283,28 +359,30 @@ class DriverApiService {
     String? bankAccountHolderName,
     String? upiId,
   }) async {
-    final response = await _client.post(
-      Uri.parse(AppUrls.updateProfile),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'phone': phone,
-        'name': name,
-        'email': email,
-        'vehicle_type': vehicleType,
-        'aadhaar_number': aadhaarNumber,
-        'pan_number': panNumber,
-        'driving_licence_number': drivingLicenceNumber,
-        'rc_number': rcNumber,
-        'puc_number': pucNumber,
-        'puc_total_marks': pucTotalMarks,
-        'insurance_number': insuranceNumber,
-        'bank_name': bankName,
-        'bank_account_number': bankAccountNumber,
-        'bank_ifsc_code': bankIfscCode,
-        'bank_account_holder_name': bankAccountHolderName,
-        'upi_id': upiId,
-      }),
-    ).timeout(const Duration(seconds: 10));
+    final response = await _client
+        .post(
+          Uri.parse(AppUrls.updateProfile),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'phone': phone,
+            'name': name,
+            'email': email,
+            'vehicle_type': vehicleType,
+            'aadhaar_number': aadhaarNumber,
+            'pan_number': panNumber,
+            'driving_licence_number': drivingLicenceNumber,
+            'rc_number': rcNumber,
+            'puc_number': pucNumber,
+            'puc_total_marks': pucTotalMarks,
+            'insurance_number': insuranceNumber,
+            'bank_name': bankName,
+            'bank_account_number': bankAccountNumber,
+            'bank_ifsc_code': bankIfscCode,
+            'bank_account_holder_name': bankAccountHolderName,
+            'upi_id': upiId,
+          }),
+        )
+        .timeout(const Duration(seconds: 10));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update profile: ${response.statusCode}');

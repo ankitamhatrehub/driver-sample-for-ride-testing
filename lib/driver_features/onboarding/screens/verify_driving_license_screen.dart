@@ -58,7 +58,16 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
     super.dispose();
   }
 
-  void _go(_DlPage page) => setState(() => _page = page);
+  /// Debug trace for the DL flow. Numbers are masked so logs carry no full ID.
+  static String _mask(String v) =>
+      v.length <= 4 ? '***' : '${v.substring(0, 2)}***${v.substring(v.length - 2)}';
+
+  void _log(String message) => debugPrint('[DL] $message');
+
+  void _go(_DlPage page) {
+    _log('page: ${_page.name} -> ${page.name}');
+    setState(() => _page = page);
+  }
 
   Future<void> _pickLicenceSide({required bool front}) async {
     final source = await showModalBottomSheet<ImageSource>(
@@ -193,6 +202,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   }
 
   Widget _choose(BuildContext context) {
+    print('Choose page: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded');
     return OnboardingStepScaffold(
       title: AppStrings.verifyDrivingLicence,
       subtitle: AppStrings.verifyDrivingLicenceSubtitle,
@@ -248,9 +258,12 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
               label: AppStrings.continueAction,
               enabled: _useDigilocker || (_frontUploaded && _backUploaded),
               onPressed: () {
+                print('Continue pressed: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded');
                 if (_useDigilocker) {
+                  print('Using Digilocker for verification');
                   _go(_DlPage.digilockerVerified);
                 } else if (_frontUploaded && _backUploaded) {
+                 print('Proceeding to manual form for verification');
                   _go(_DlPage.manualForm);
                 }
               },
@@ -367,7 +380,8 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
             ),
             SizedBox(height: context.h(24)),
             UnifiedButton(
-              label: AppStrings.continueAction,
+              label:
+               AppStrings.continueAction,
               isLoading: _verifying,
               onPressed: _verifyReadLicence,
             ),
@@ -477,7 +491,11 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
               ),
             ),
             const Spacer(),
-            UnifiedButton(label: AppStrings.fixAndResubmit, onPressed: () => _go(_DlPage.choose)),
+            UnifiedButton(label: AppStrings.fixAndResubmit, onPressed: () {
+print('Resubmitting driving license verification');
+              _go(_DlPage.choose);
+              print('Navigated back to choose page for resubmission');
+            } ),
           ],
         ),
       ),
