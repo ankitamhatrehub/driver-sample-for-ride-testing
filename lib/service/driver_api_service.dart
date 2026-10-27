@@ -116,6 +116,15 @@ class DriverApiService {
     );
   }
 
+  /// Tells the backend the drop-off was reached (no timeout, response ignored).
+  static Future<void> markReached({required Object? rideId}) async {
+    await apiClient.post(
+      Uri.parse(AppUrls.reached),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'ride_id': rideId}),
+    );
+  }
+
   static Future<void> setPaymentMethod({
     required int rideId,
     required String driverPhone,
@@ -135,6 +144,23 @@ class DriverApiService {
     if (response.statusCode != 200) {
       throw Exception('Failed to set payment method');
     }
+  }
+
+  /// Saves the driver's UPI id as the payment method. No timeout, and the
+  /// response is not checked (the caller ignores failures).
+  static Future<void> saveUpiPaymentMethod({
+    required String phone,
+    required String upiId,
+  }) async {
+    await apiClient.post(
+      Uri.parse(AppUrls.setPaymentMethod),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'phone': phone,
+        'payment_method': 'upi',
+        'upi_id': upiId,
+      }),
+    );
   }
 
   static Future<void> updateLocation({
@@ -261,6 +287,17 @@ class DriverApiService {
       return json.decode(response.body);
     }
     throw Exception('Failed to fetch ride detail');
+  }
+
+  /// Raw ride-detail response (no timeout, status not checked) for callers
+  /// that handle non-200 replies themselves.
+  static Future<http.Response> fetchRideDetailResponse({
+    required int rideId,
+    required String driverPhone,
+  }) {
+    return apiClient.get(
+      Uri.parse(AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone)),
+    );
   }
 
   static Future<String> uploadProfilePhoto({

@@ -56,6 +56,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/coming_soon/
     - assets/images/app_logo.png
     - assets/welcome_car_city.png
     - assets/car_porsche.png

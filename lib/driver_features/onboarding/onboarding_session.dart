@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/service/api_client.dart';
-import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/driver_features/onboarding/kyc_resume.dart';
+import 'package:rider_app/driver_features/onboarding/onboarding_api.dart';
 import 'package:rider_app/driver_features/onboarding/screens/application_status_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/bank_payout_screen.dart';
 import 'package:rider_app/service/driver_api_service.dart';
@@ -160,13 +159,7 @@ class OnboardingSession extends ChangeNotifier {
         announceOtp = true;
         return null;
       }
-      final response = await apiClient
-          .post(
-            Uri.parse(AppUrls.sendOtp),
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode({'phone': clean}),
-          )
-          .timeout(const Duration(seconds: 15));
+      final response = await OnboardingApi.sendOtp(phone: clean);
       if (response.statusCode == 200 || response.statusCode == 201) {
         try {
           final data = json.decode(response.body);
@@ -207,13 +200,10 @@ class OnboardingSession extends ChangeNotifier {
         return const OtpVerifyResult.dashboard();
       }
 
-      final response = await apiClient
-          .post(
-            Uri.parse(AppUrls.verifyOtp),
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
-          )
-          .timeout(const Duration(seconds: 15));
+      final response = await OnboardingApi.verifyOtp(
+        phone: clean,
+        otp: otp.text,
+      );
 debugPrint('[verifyOtp] Status: ${response.statusCode}');
 
       if (response.statusCode != 200 && response.statusCode != 201) {
@@ -313,17 +303,11 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
         cleanPhone = prefs.getString('user_phone') ?? '';
       }
 
-      final http.Response response = await apiClient
-          .post(
-            Uri.parse(AppUrls.verifyAadhaar),
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode({
-              'aadhaar_number': number,
-              'phone': cleanPhone,
-              'pan_number': panNumber,
-            }),
-          )
-          .timeout(const Duration(seconds: 10));
+      final http.Response response = await OnboardingApi.verifyAadhaar(
+        aadhaarNumber: number,
+        phone: cleanPhone,
+        panNumber: panNumber,
+      );
 
       debugPrint('[verifyAadhaar] Status: ${response.statusCode}, Body: ${response.body}');
 
@@ -428,11 +412,7 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
     notifyListeners();
     try {
       final clean = phone.text.replaceAll(' ', '').replaceAll('-', '');
-      final response = await apiClient
-          .post(
-            Uri.parse(AppUrls.driverRegister),
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode({
+      final response = await OnboardingApi.register({
               'phone': clean,
               'name': name.text,
               'dob': dob.text,
@@ -446,9 +426,7 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
               'bank_ifsc_code': bankIfsc.text,
               'bank_account_holder_name': bankHolder.text,
               'email': email.text,
-            }),
-          )
-          .timeout(const Duration(seconds: 15));
+            });
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_name', name.text);
       await prefs.setString('user_gender', gender);

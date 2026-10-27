@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:rider_app/driver_features/chat/screens/driver_customer_chat_scre
 import '../widgets/trip_summary_slider.dart';
 import '../widgets/report_customer_dialog.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
+part 'driver_trip_summary_screen_sections.dart';
 
 class DriverTripSummaryScreen extends StatefulWidget {
   final int rideId;
@@ -81,13 +81,9 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
   Future<void> _checkPaymentStatus() async {
     setState(() => _loading = true);
     try {
-      final response = await apiClient.get(
-        Uri.parse(
-          AppUrls.rideDetail(
-            rideId: widget.rideId,
-            driverPhone: widget.driverPhone,
-          ),
-        ),
+      final response = await DriverApiService.fetchRideDetailResponse(
+        rideId: widget.rideId,
+        driverPhone: widget.driverPhone,
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -150,8 +146,6 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
       }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -756,24 +750,5 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
     );
   }
 
-  void _finishAndGoHome() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('driver_is_online', true);
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Trip completed and feedback submitted!'),
-        backgroundColor: Color(0xFF10B981),
-      ),
-    );
-    context.go(AppRoutes.home);
-  }
-
-  Widget _buildPaymentSlider() {
-    return TripSummarySlider(
-      completing: _completing,
-      onAction: _completeTrip,
-    );
-  }
 }
 
