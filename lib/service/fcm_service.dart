@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/service/ride_alert_service.dart';
 
@@ -86,7 +86,7 @@ class FCMService {
 
     debugPrint('FCM Token: $token');
     try {
-      final response = await http.post(
+      final response = await apiClient.post(
         Uri.parse(AppUrls.fcmToken),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
@@ -106,7 +106,7 @@ class FCMService {
     final phone = prefs.getString('user_phone');
     if (phone == null || phone.isEmpty) return;
     try {
-      await http.post(
+      await apiClient.post(
         Uri.parse(AppUrls.onlineStatus),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({

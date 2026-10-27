@@ -5,8 +5,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 
 /// Keeps polling for rides while the driver is online, even if the UI is closed.
@@ -164,7 +164,7 @@ Future<void> _onBackgroundStart(ServiceInstance service) async {
       }
 
       final uri = Uri.parse(AppUrls.activeRides(driverPhone: phone));
-      final response = await http.get(uri).timeout(const Duration(seconds: 5));
+      final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
       if (response.statusCode != 200) return;
 
       final data = json.decode(response.body);

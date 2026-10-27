@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 
 /// Vehicle details returned after the registration number is checked.
@@ -54,7 +54,7 @@ class RcVerificationException implements Exception {
 /// The server keeps the Surepass token and calls
 /// `POST /api/v1/rc/rc-full` with that same body.
 Future<VehicleRcDetails> verifyVehicleRc({required String idNumber}) async {
-  final response = await http
+  final response = await apiClient
       .post(
         Uri.parse(AppUrls.verifyRc),
         headers: {'Content-Type': 'application/json'},

@@ -4,7 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rider_app/app/theme/theme_repository.dart';
+import 'package:rider_app/common/routes/app_router.dart';
+import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:rider_app/common/utils/translations.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/service/ride_alert_service.dart';
 import 'package:rider_app/service/fcm_service.dart';
 
@@ -17,6 +20,9 @@ class AppBootstrap {
   const AppBootstrap._();
 
   static Future<ThemeRepository> start() async {
+    AuthClient.onUnauthorized = () async {
+      AppRouter.router.go(AppRoutes.login);
+    };
     await _startFirebase();
     await RideAlertService.initialize();
     await FCMService.setupHandlers();

@@ -143,8 +143,10 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   }
 
   Future<void> _verifyReadLicence() async {
+    print('Verifying read licence: _licenseController=${_licenseController.text}, _dobController=${_dobController.text}');
     final idNumber = _licenseController.text.trim().toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
     final dob = normalizeDob(_dobController.text);
+    print('Normalized values: idNumber=${_mask(idNumber)}, dob=$dob');
     if (!RegExp(r'^[A-Z]{2}\d{13}$').hasMatch(idNumber) || dob == null) {
       _go(_DlPage.rejected);
       return;
@@ -152,6 +154,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
     setState(() => _verifying = true);
     try {
       final details = await verifyDrivingLicence(idNumber: idNumber, dob: dob);
+      print('Verification successful: name=${details.name}, licenseNumber=${_mask(details.licenseNumber)}, dob=${details.dob}, vehicleClass=${details.vehicleClass}, validity=${details.validity}');
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('driving_licence_number', details.licenseNumber);
       if (!mounted) return;
@@ -313,6 +316,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   }
 
   Widget _manualForm(BuildContext context) {
+    print('Manual form page: _licenseController=${_licenseController.text}, _dobController=${_dobController.text}, _expiryController=${_expiryController.text}');
     return OnboardingStepScaffold(
       title: AppStrings.drivingLicenseTitle,
       onBack: () => _go(_DlPage.choose),

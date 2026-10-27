@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 
@@ -15,32 +16,18 @@ Future<String?> launchDigilocker(BuildContext context) async {
   session.touch();
   try {
     final prefs = await SharedPreferences.getInstance();
-    final token =
-        session.token ??
-        prefs.getString('auth_token') ??
-        prefs.getString('token') ??
-        prefs.getString('access_token') ??
-        '';
-
     final cleanPhone =
         session.phone.text.replaceAll(' ', '').replaceAll('-', '').isNotEmpty
         ? session.phone.text.replaceAll(' ', '').replaceAll('-', '')
         : (prefs.getString('user_phone') ?? '');
 
-    debugPrint('DigiLocker token present: ${token.isNotEmpty}');
-
-    final headers = <String, String>{
-      'Content-Type': 'application/json',
-      if (token.isNotEmpty) ...{'token': token, 'x-access-token': token},
-    };
-    if (token.isNotEmpty) headers['Authorization'] = 'Bearer $token';
+    final headers = <String, String>{'Content-Type': 'application/json'};
     final requestBody = <String, dynamic>{
       'signup_flow': true,
-      if (token.isNotEmpty) 'token': token,
       if (cleanPhone.isNotEmpty) 'phone': cleanPhone,
     };
     final startUri = Uri.parse(AppUrls.digilockerStart);
-    final response = await http
+    final response = await apiClient
         .post(startUri, headers: headers, body: json.encode(requestBody))
         .timeout(const Duration(seconds: 10));
     session.loading = false;
@@ -129,23 +116,9 @@ Future<String?> _download() async {
   session.touch();
   try {
     final prefs = await SharedPreferences.getInstance();
-    final token =
-        session.token ??
-        prefs.getString('auth_token') ??
-        prefs.getString('token') ??
-        prefs.getString('access_token') ??
-        '';
-
-    final headers = <String, String>{
-      'Content-Type': 'application/json',
-      if (token.isNotEmpty) ...{'token': token, 'x-access-token': token},
-    };
-
-    if (token.isNotEmpty) headers['Authorization'] = 'Bearer $token';
+    final headers = <String, String>{'Content-Type': 'application/json'};
     final clientId = session.digilockerClientId ?? '';
-    debugPrint('[DigiLocker][_download] token present: ${token.isNotEmpty}');
     debugPrint('[DigiLocker][_download] client_id: "$clientId"');
-    debugPrint('[DigiLocker][_download] token claims: ${_jwtClaims(token)}');
     if (clientId.isEmpty) {
       session.loading = false;
       session.touch();
@@ -165,12 +138,8 @@ Future<String?> _download() async {
 
     final downloadUri = Uri.parse(AppUrls.digilockerDownload);
     debugPrint('[DigiLocker][_download] POST $downloadUri');
-    debugPrint(
-      '[DigiLocker][_download] headers: ${headers.keys.toList()} '
-      '(Authorization: ${headers.containsKey('Authorization')})',
-    );
     debugPrint('[DigiLocker][_download] body: ${json.encode(requestBody)}');
-    final response = await http
+    final response = await apiClient
         .post(downloadUri, headers: headers, body: json.encode(requestBody))
         .timeout(const Duration(seconds: 15));
     debugPrint('[DigiLocker][_download] status: ${response.statusCode}');
@@ -205,21 +174,6 @@ Future<String?> _download() async {
 }
 
 /// Debug helper: decodes the JWT payload (no signature check) to show its role.
-String _jwtClaims(String token) {
-  try {
-    final parts = token.split('.');
-    if (parts.length != 3) return 'not a JWT';
-    final payload = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
-    final map = json.decode(payload) as Map;
-    return map.entries
-        .where((e) => e.key != 'phone' && e.key != 'sub')
-        .map((e) => '${e.key}=${e.value}')
-        .join(', ');
-  } catch (e) {
-    return 'unreadable ($e)';
-  }
-}
-
 bool _isSuccessful(int statusCode) => statusCode >= 200 && statusCode < 300;
 
 String _requestError(String operation, Uri uri, http.Response response) {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -47,7 +47,7 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
     );
 
     try {
-      final response = await http.post(
+      final response = await apiClient.post(
         Uri.parse(urlString),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({

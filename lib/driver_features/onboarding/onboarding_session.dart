@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/driver_features/onboarding/kyc_resume.dart';
 import 'package:rider_app/driver_features/onboarding/screens/application_status_screen.dart';
 import 'package:rider_app/driver_features/onboarding/screens/bank_payout_screen.dart';
 import 'package:rider_app/service/driver_api_service.dart';
+import 'package:rider_app/service/token_store.dart';
 import 'package:rider_app/service/fcm_service.dart';
 
 /// Shared onboarding data for the route-based flow.
@@ -68,8 +70,8 @@ class OnboardingSession extends ChangeNotifier {
   void touch() => notifyListeners();
 
   Future<void> loadProgress() async {
-    final prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('auth_token') ?? prefs.getString('token');
+    final savedToken = await TokenStore.read();
+    token = savedToken.isEmpty ? null : savedToken;
     final saved = await KycResume.progress();
     aadhaarVerified = saved.aadhaar;
     dlVerified = saved.drivingLicence;
@@ -158,7 +160,7 @@ class OnboardingSession extends ChangeNotifier {
         announceOtp = true;
         return null;
       }
-      final response = await http
+      final response = await apiClient
           .post(
             Uri.parse(AppUrls.sendOtp),
             headers: {'Content-Type': 'application/json'},
@@ -190,8 +192,7 @@ class OnboardingSession extends ChangeNotifier {
     loading = true;
     otpError = false;
     notifyListeners();
-    print('[verifyOtp] Verifying OTP for $clean');
-    try {
+        try {
       if (clean == '9999999999' && otp.text == '123456') {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_phone', clean);
@@ -206,15 +207,14 @@ class OnboardingSession extends ChangeNotifier {
         return const OtpVerifyResult.dashboard();
       }
 
-      final response = await http
+      final response = await apiClient
           .post(
             Uri.parse(AppUrls.verifyOtp),
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'phone': clean, 'otp': otp.text, 'code': otp.text}),
           )
           .timeout(const Duration(seconds: 15));
-print('[verifyOtp] Status: ${response.statusCode}, Body: ${response.body}');
-      debugPrint('[verifyOtp] Status: ${response.statusCode}, Body: ${response.body}');
+debugPrint('[verifyOtp] Status: ${response.statusCode}');
 
       if (response.statusCode != 200 && response.statusCode != 201) {
         otpError = true;
@@ -229,7 +229,6 @@ print('dg - 07 [verifyOtp] OTP verified successfully for $clean');
               data['data']?['token'] ??
               data['data']?['access_token'])
           ?.toString();
-print('dg - 08 [verifyOtp] Extracted token: $extractedToken');
      
       final existing = data['is_existing_driver'] == true ||
           data['is_existing_user'] == true ||
@@ -240,9 +239,14 @@ print('dg - 08 [verifyOtp] Extracted token: $extractedToken');
 print('dg - 09 [verifyOtp] Saved user phone: $clean');
       if (extractedToken != null && extractedToken.isNotEmpty) {
         token = extractedToken;
-        await prefs.setString('auth_token', extractedToken);
-        await prefs.setString('token', extractedToken);
+        await TokenStore.save(extractedToken);
         debugPrint('[verifyOtp] Saved auth token');
+      } else {
+        debugPrint('[verifyOtp] Response had no token');
+        otpError = true;
+        return const OtpVerifyResult.error(
+          'Login succeeded but no session token was returned. Please try again.',
+        );
       }
 
       if (existing) {
@@ -309,7 +313,7 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
         cleanPhone = prefs.getString('user_phone') ?? '';
       }
 
-      http.Response response = await http
+      final http.Response response = await apiClient
           .post(
             Uri.parse(AppUrls.verifyAadhaar),
             headers: {'Content-Type': 'application/json'},
@@ -320,20 +324,6 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
             }),
           )
           .timeout(const Duration(seconds: 10));
-
-      if (response.statusCode == 404) {
-        response = await http
-            .post(
-              Uri.parse(AppUrls.verifyAadhaarFallback),
-              headers: {'Content-Type': 'application/json'},
-              body: json.encode({
-                'aadhaar_number': number,
-                'phone': cleanPhone,
-                'pan_number': panNumber,
-              }),
-            )
-            .timeout(const Duration(seconds: 10));
-      }
 
       debugPrint('[verifyAadhaar] Status: ${response.statusCode}, Body: ${response.body}');
 
@@ -438,7 +428,7 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
     notifyListeners();
     try {
       final clean = phone.text.replaceAll(' ', '').replaceAll('-', '');
-      final response = await http
+      final response = await apiClient
           .post(
             Uri.parse(AppUrls.driverRegister),
             headers: {'Content-Type': 'application/json'},
@@ -467,7 +457,7 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
       await prefs.setBool('is_pink_theme', gender == 'Female');
       await prefs.setBool('isLoggedIn', true);
       try {
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
           final body = json.decode(response.body);
           if (body['driver_id'] != null) await prefs.setInt('driver_id', body['driver_id']);
           final regToken = (body['token'] ??
@@ -478,8 +468,7 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
               ?.toString();
           if (regToken != null && regToken.isNotEmpty) {
             token = regToken;
-            await prefs.setString('auth_token', regToken);
-            await prefs.setString('token', regToken);
+            await TokenStore.save(regToken);
           }
         }
       } catch (_) {}

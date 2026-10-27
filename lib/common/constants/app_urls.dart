@@ -23,7 +23,6 @@ class AppUrls {
   static const String verifyOtp = '$apiBase/driver/auth/verify-otp';
 
   static const String verifyAadhaar = '$apiBase/driver/verify-aadhaar';
-  static const String verifyAadhaarFallback = '$apiBase/verify-aadhaar';
   static const String verifyDl = '$apiBase/driver/verify-dl';
   static const String verifyRc = '$apiBase/driver/verify-rc';
 

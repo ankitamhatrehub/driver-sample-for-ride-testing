@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -185,7 +185,7 @@ void showReportCustomerDialog({
                             ),
                           );
                           try {
-                            await http.post(
+                            await apiClient.post(
                               Uri.parse(AppUrls.reportIssue),
                               headers: {'Content-Type': 'application/json'},
                               body: jsonEncode({

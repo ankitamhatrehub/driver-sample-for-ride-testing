@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 
 /// Details returned after the licence number and date of birth are checked.
@@ -62,22 +63,24 @@ class DlVerificationException implements Exception {
   String toString() => message;
 }
 
-/// Posts `{ "id_number", "dob" }` to the Torkk server.
-/// The server keeps the Surepass token and calls
-/// `POST /api/v1/driving-license/driving-license` with that same body.
+/// Posts `{ "phone", "document_no" }` to the Torkk server (Bearer token is
+/// added by [apiClient]). The server keeps the Surepass token and does the
+/// licence lookup itself. [dob] is only used for the on-device fallback.
 Future<DrivingLicenceDetails> verifyDrivingLicence({
   required String idNumber,
   required String dob,
 }) async {
-  debugPrint('[DL][api] POST ${AppUrls.verifyDl} (dob=$dob, id length ${idNumber.length})');
-  final response = await http
+  final prefs = await SharedPreferences.getInstance();
+  final phone = prefs.getString('user_phone') ?? '';
+  debugPrint('[DL][api] POST ${AppUrls.verifyDl} (id length ${idNumber.length})');
+  final response = await apiClient
       .post(
         Uri.parse(AppUrls.verifyDl),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'id_number': idNumber, 'dob': dob}),
+        body: jsonEncode({'phone': phone, 'document_no': idNumber}),
       )
       .timeout(const Duration(seconds: 20));
-  debugPrint('[DL][api] status ${response.statusCode}, ${response.body.length} bytes');
+  debugPrint('[DL][api] status ${response.statusCode}, ${response.body} bytes');
 
   if (response.statusCode < 200 || response.statusCode >= 300) {
     debugPrint('[DL][api] error body: ${response.body}');

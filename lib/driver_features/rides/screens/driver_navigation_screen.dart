@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'dart:io';
 import 'package:rider_app/common/utils/translations.dart';
@@ -1081,7 +1082,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
 
     // Set is_dropped = 1 on the backend so customer receives payment screen
     try {
-      await http.post(
+      await apiClient.post(
         Uri.parse(AppUrls.reached),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'ride_id': _rideId}),

@@ -1,43 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 
 class DriverApiService {
   static const String baseUrl = AppUrls.apiBase;
 
-  /// Reusable persistent HTTP client with connection pooling
-  static final http.Client _client = http.Client();
-
-  /// Expose client for testing or custom requests
-  static http.Client get client => _client;
-
-  /// The login token saved by OTP verification / registration.
-  ///
-  /// Both flows store it under `auth_token` and `token`; `access_token` is
-  /// kept as a fallback for older saved sessions.
-  static Future<String> savedToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('auth_token') ??
-        prefs.getString('token') ??
-        prefs.getString('access_token') ??
-        '';
-  }
-
-  /// JSON headers plus the saved token, in the same forms the DigiLocker
-  /// calls send it (Bearer header and the `token` / `x-access-token` headers).
-  static Future<Map<String, String>> authHeaders() async {
-    final token = await savedToken();
-    return {
-      'Content-Type': 'application/json',
-      if (token.isNotEmpty) ...{
-        'Authorization': 'Bearer $token',
-        'token': token,
-        'x-access-token': token,
-      },
-    };
-  }
+  /// Shared client; adds the Bearer token to every protected request.
+  static http.Client get client => apiClient;
 
   static Future<List<dynamic>> fetchActiveRides({
     required String driverPhone,
@@ -46,7 +17,7 @@ class DriverApiService {
     final uri = Uri.parse(
       AppUrls.activeRides(driverPhone: driverPhone, city: city),
     );
-    final response = await _client.get(uri).timeout(const Duration(seconds: 5));
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return json.decode(response.body) as List<dynamic>;
     }
@@ -57,7 +28,7 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.acceptRide),
           headers: {'Content-Type': 'application/json'},
@@ -73,7 +44,7 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.startRide),
           headers: {'Content-Type': 'application/json'},
@@ -93,7 +64,7 @@ class DriverApiService {
     debugPrint(
       '[DEBUG PICKUP API] Calling pickup-customer API for ride: $rideId, code: $rideCode',
     );
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.pickupCustomer),
           headers: {'Content-Type': 'application/json'},
@@ -122,7 +93,7 @@ class DriverApiService {
     required String driverPhone,
     String paymentMethod = 'cash',
   }) async {
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.completeRide),
           headers: {'Content-Type': 'application/json'},
@@ -150,7 +121,7 @@ class DriverApiService {
     required String driverPhone,
     required String paymentMethod,
   }) async {
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.setPaymentMethod),
           headers: {'Content-Type': 'application/json'},
@@ -172,7 +143,7 @@ class DriverApiService {
     required double longitude,
   }) async {
     try {
-      final response = await _client
+      final response = await apiClient
           .post(
             Uri.parse(AppUrls.updateLocation),
             headers: {'Content-Type': 'application/json'},
@@ -198,7 +169,7 @@ class DriverApiService {
     final uri = Uri.parse(AppUrls.driverTrips(driverPhone));
     debugPrint('[DEBUG FETCH TRIPS] Request URI: $uri');
 
-    final response = await _client.get(uri).timeout(const Duration(seconds: 5));
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
     debugPrint('[DEBUG FETCH TRIPS] Response status: ${response.statusCode}');
     debugPrint('[DEBUG FETCH TRIPS] Response body: ${response.body}');
 
@@ -236,7 +207,7 @@ class DriverApiService {
     final uri = Uri.parse(AppUrls.driverEarnings(driverPhone));
     debugPrint('[DEBUG FETCH EARNINGS] Request URI: $uri');
 
-    final response = await _client.get(uri).timeout(const Duration(seconds: 5));
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
     debugPrint(
       '[DEBUG FETCH EARNINGS] Response status: ${response.statusCode}',
     );
@@ -253,7 +224,7 @@ class DriverApiService {
   }
 
   static Future<Map<String, dynamic>> fetchWallet(String driverPhone) async {
-    final response = await _client
+    final response = await apiClient
         .get(Uri.parse(AppUrls.driverWallet(driverPhone)))
         .timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
@@ -263,7 +234,7 @@ class DriverApiService {
   }
 
   static Future<Map<String, dynamic>> fetchProfile(String driverPhone) async {
-    final response = await _client
+    final response = await apiClient
         .get(Uri.parse(AppUrls.driverProfile(driverPhone)))
         .timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
@@ -279,7 +250,7 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await _client
+    final response = await apiClient
         .get(
           Uri.parse(
             AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone),
@@ -296,7 +267,7 @@ class DriverApiService {
     required String driverPhone,
     required String base64Image,
   }) async {
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.uploadProfilePhoto),
           headers: {'Content-Type': 'application/json'},
@@ -315,19 +286,14 @@ class DriverApiService {
     required String driverPhone,
     required String vehicleType,
   }) async {
-    final token = await savedToken();
-    debugPrint(
-      'Updating vehicle type for $driverPhone to $vehicleType '
-      '(token present: ${token.isNotEmpty})',
-    );
-    final response = await _client
+    debugPrint('Updating vehicle type for $driverPhone to $vehicleType');
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.updateVehicleType),
-          headers: await authHeaders(),
+          headers: {'Content-Type': 'application/json'},
           body: json.encode({
             'phone': driverPhone,
             'vehicle_type': vehicleType,
-            if (token.isNotEmpty) 'token': token,
           }),
         )
         .timeout(const Duration(seconds: 10));
@@ -359,7 +325,7 @@ class DriverApiService {
     String? bankAccountHolderName,
     String? upiId,
   }) async {
-    final response = await _client
+    final response = await apiClient
         .post(
           Uri.parse(AppUrls.updateProfile),
           headers: {'Content-Type': 'application/json'},

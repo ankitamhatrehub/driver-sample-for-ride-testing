@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 import 'package:rider_app/service/driver_api_service.dart';
@@ -81,7 +81,7 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
   Future<void> _checkPaymentStatus() async {
     setState(() => _loading = true);
     try {
-      final response = await http.get(
+      final response = await apiClient.get(
         Uri.parse(
           AppUrls.rideDetail(
             rideId: widget.rideId,
