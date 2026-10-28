@@ -366,6 +366,7 @@ class DriverApiService {
         .post(
           Uri.parse(AppUrls.updateProfile),
           headers: {'Content-Type': 'application/json'},
+          
           body: json.encode({
             'phone': phone,
             'name': name,

@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
+import 'package:rider_app/service/api_client.dart';
 
 /// Details returned after the licence number and date of birth are checked.
 class DrivingLicenceDetails {
@@ -63,24 +62,34 @@ class DlVerificationException implements Exception {
   String toString() => message;
 }
 
-/// Posts `{ "phone", "document_no" }` to the Torkk server (Bearer token is
-/// added by [apiClient]). The server keeps the Surepass token and does the
-/// licence lookup itself. [dob] is only used for the on-device fallback.
+/// Verifies a driving licence through the Torkk server, which keeps the
+/// Surepass token. The login Bearer token is added by [apiClient].
+///
+/// Pass either [idNumber] + [dob] (typed or read from the card), or
+/// [docNumber] + [phone] (DigiLocker flow).
 Future<DrivingLicenceDetails> verifyDrivingLicence({
-  required String idNumber,
-  required String dob,
+  String? idNumber,
+  String? dob,
+  String? docNumber,
+  String? phone,
 }) async {
-  final prefs = await SharedPreferences.getInstance();
-  final phone = prefs.getString('user_phone') ?? '';
-  debugPrint('[DL][api] POST ${AppUrls.verifyDl} (id length ${idNumber.length})');
+  final viaDigilocker = docNumber != null;
+  assert(
+    viaDigilocker ? (phone != null) : (idNumber != null && dob != null),
+    'Pass idNumber + dob, or docNumber + phone',
+  );
+  final body = viaDigilocker
+      ? {'doc_number': docNumber, 'phone': phone}
+      : {'id_number': idNumber, 'dob': dob};
+  debugPrint('[DL][api] POST ${AppUrls.verifyDl} (${viaDigilocker ? 'digilocker' : 'manual'})');
   final response = await apiClient
       .post(
         Uri.parse(AppUrls.verifyDl),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'phone': phone, 'document_no': idNumber}),
+        body: jsonEncode(body),
       )
       .timeout(const Duration(seconds: 20));
-  debugPrint('[DL][api] status ${response.statusCode}, ${response.body} bytes');
+  debugPrint('[DL][api] status ${response.statusCode}, ${response.body.length} bytes');
 
   if (response.statusCode < 200 || response.statusCode >= 300) {
     debugPrint('[DL][api] error body: ${response.body}');
@@ -88,8 +97,8 @@ Future<DrivingLicenceDetails> verifyDrivingLicence({
   }
   return DrivingLicenceDetails.fromBody(
     response.body,
-    fallbackNumber: idNumber,
-    fallbackDob: dob,
+    fallbackNumber: docNumber ?? idNumber ?? '',
+    fallbackDob: dob ?? '',
   );
 }
 

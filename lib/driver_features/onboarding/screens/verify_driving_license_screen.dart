@@ -11,6 +11,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/onboarding/dl_licence_text.dart';
 import 'package:rider_app/driver_features/onboarding/dl_verification_api.dart';
+import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 import 'package:rider_app/driver_features/onboarding/screens/document_validation_screen.dart';
 import 'package:rider_app/common/widgets/app_text_field.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
@@ -153,9 +154,16 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
     print('Verifying read licence: _licenseController=${_licenseController.text}, _dobController=${_dobController.text}');
     final idNumber = _licenseController.text.trim().toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
     final dob = normalizeDob(_dobController.text);
-    print('Normalized values: idNumber=${_mask(idNumber)}, dob=$dob');
-    if (!RegExp(r'^[A-Z]{2}\d{13}$').hasMatch(idNumber) || dob == null) {
-      _go(_DlPage.rejected);
+    // print('Normalized values: idNumber=${_mask(idNumber)}, dob=$dob');
+    // if (!RegExp(r'^[A-Z]{2}\d{13}$').hasMatch(idNumber)) {
+    //   print('Invalid ID number format: $idNumber');
+    //   _go(_DlPage.rejected);
+    //   return;
+    // }
+    if (dob == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppStrings.dobFormatHint)),
+      );
       return;
     }
     setState(() => _verifying = true);
@@ -177,6 +185,58 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
         _page = _DlPage.rejected;
       });
     }
+  }
+
+  /// DigiLocker path: sends the licence number and phone, not ID + DOB.
+  Future<void> _verifyDigilockerLicence() async {
+    if (_verifying) return;
+    final prefs = await SharedPreferences.getInstance();
+    final session = OnboardingSession.instance;
+    final docNumber = (session.dlNumber.text.trim().isNotEmpty
+            ? session.dlNumber.text
+            : (prefs.getString('driving_licence_number') ?? ''))
+        .toUpperCase()
+        .replaceAll(RegExp(r'[^A-Z0-9]'), '');
+    var phone = (session.phone.text.trim().isNotEmpty
+            ? session.phone.text
+            : (prefs.getString('user_phone') ?? ''))
+        .replaceAll(RegExp(r'\D'), '');
+    if (phone.length > 10) phone = phone.substring(phone.length - 10);
+    print('Verifying DigiLocker licence: docNumber=${_mask(docNumber)}, phone=$phone');
+    if (docNumber.isEmpty || phone.isEmpty) {
+      _go(_DlPage.rejected);
+      return;
+    }
+    setState(() => _verifying = true);
+    try {
+      final details = await verifyDrivingLicence(docNumber: docNumber, phone: phone);
+      await prefs.setString('driving_licence_number', details.licenseNumber);
+      if (!mounted) return;
+      setState(() {
+        _verifying = false;
+        _page = _DlPage.digilockerVerified;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _verifying = false;
+        _page = _DlPage.rejected;
+      });
+    }
+  }
+
+  Future<void> _pickDob() async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(now.year - 25, now.month, now.day),
+      firstDate: DateTime(1940),
+      lastDate: DateTime(now.year - 16, now.month, now.day),
+    );
+    if (picked == null) return;
+    final dd = picked.day.toString().padLeft(2, '0');
+    final mm = picked.month.toString().padLeft(2, '0');
+    setState(() => _dobController.text = '$dd-$mm-${picked.year}');
   }
 
   Future<void> _pickExpiry() async {
@@ -270,8 +330,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
               onPressed: () {
                 print('Continue pressed: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded');
                 if (_useDigilocker) {
-                  print('Using Digilocker for verification');
-                  _go(_DlPage.digilockerVerified);
+                  _verifyDigilockerLicence();
                 } else if (_frontUploaded && _backUploaded) {
                  print('Proceeding to manual form for verification');
                   _go(_DlPage.manualForm);
