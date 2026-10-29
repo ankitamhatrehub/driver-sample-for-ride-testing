@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
+import 'package:rider_app/driver_features/settings/legal/privacy_policy_screen.dart';
+import 'package:rider_app/driver_features/settings/legal/terms_conditions_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rider_app/common/widgets/app_confirm_dialog.dart';
@@ -72,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuItem(
                 icon: Icons.verified_outlined,
                 label: AppStrings.subscriptionRecharge,
-                onTap: () => _open(context, const SubscriptionScreen()),
+                onTap: () => _open(context, const ComingSoonScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.toll_outlined,
@@ -97,12 +100,12 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuItem(
                 icon: Icons.shield_outlined,
                 label: AppStrings.privacyPolicy,
-                onTap: () => _open(context, const PrivacyPolicyScreen()),
+                onTap: () => _open(context, const TorkkPrivacyPolicyScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.article_outlined,
                 label: AppStrings.termsConditions,
-                onTap: () => _open(context, const TermsConditionsScreen()),
+                onTap: () => _open(context, const TermsConditionsUsersScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.help_outline_rounded,

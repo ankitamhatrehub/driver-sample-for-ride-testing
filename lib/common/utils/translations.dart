@@ -142,7 +142,7 @@ class AppTranslations {
       'documentKycStatus': 'Document / KYC Status',
       'documentKyc': 'Document/KYC',
       'bankInformation': 'Bank Information',
-      'subscriptionRecharge': 'Subscription/recharge',
+      'subscriptionRecharge': 'Subscription',
       'torkkCoins': 'Torkk Coins',
       'notification': 'Notification',
       'termsConditions': 'Terms & Conditions',
