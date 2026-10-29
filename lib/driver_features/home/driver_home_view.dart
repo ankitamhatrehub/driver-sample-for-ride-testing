@@ -9,6 +9,7 @@ import 'package:rider_app/driver_features/home/home_location_card.dart';
 import 'package:rider_app/driver_features/home/home_plan_card.dart';
 import 'package:rider_app/driver_features/home/home_stats_card.dart';
 import 'package:rider_app/driver_features/home/home_status_card.dart';
+import 'package:rider_app/driver_features/home/screens/plan_driving_hours_screen.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 /// Home map and cards shown when the driver is not in an active ride search.
@@ -153,7 +154,12 @@ class _DriverHomeViewState extends State<DriverHomeView> {
                 SizedBox(height: context.h(18)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: context.w(28)),
-                  child: HomePlanCard(accent: accent, female: female),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (_) => const PlanDrivingHoursScreen()),
+                    ),
+                    child: HomePlanCard(accent: accent, female: female),
+                  ),
                 ),
               ],
             ),
