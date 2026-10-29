@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -7,15 +8,76 @@ import 'package:rider_app/driver_features/coins/screens/coins_screen.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/subscription/screens/subscription_screen.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
+import 'package:rider_app/driver_features/wallet/wallet_format.dart';
 import 'package:rider_app/driver_features/wallet/wallet_pages.dart';
+import 'package:rider_app/service/driver_api_service.dart';
 
 import '../../common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
-class WalletScreen extends StatelessWidget {
+class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key, this.onBack});
 
   final VoidCallback? onBack;
+
+  @override
+  State<WalletScreen> createState() => _WalletScreenState();
+}
+
+class _WalletScreenState extends State<WalletScreen> {
+  VoidCallback? get onBack => widget.onBack;
+
+  bool _loading = true;
+  double _balance = 0;
+  double _todayEarnings = 0;
+  double _weekEarnings = 0;
+  int _todayTrips = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final phone = prefs.getString('user_phone') ?? prefs.getString('phone') ?? '';
+    if (phone.isEmpty) {
+      if (mounted) setState(() => _loading = false);
+      return;
+    }
+
+    // Wallet and earnings are independent, so one failing doesn't block the other.
+    final results = await Future.wait<Map<String, dynamic>?>([
+      DriverApiService.fetchWallet(phone).then<Map<String, dynamic>?>((v) => v).catchError((Object e) {
+        debugPrint('Error fetching wallet: $e');
+        return null;
+      }),
+      DriverApiService.fetchEarnings(phone).then<Map<String, dynamic>?>((v) => v).catchError((Object e) {
+        debugPrint('Error fetching earnings: $e');
+        return null;
+      }),
+    ]);
+    final wallet = results[0] ?? const <String, dynamic>{};
+    final earnings = results[1] ?? const <String, dynamic>{};
+    debugPrint('[WALLET] $wallet');
+
+    if (!mounted) return;
+    setState(() {
+      _balance = pickAmount(wallet, [
+            'balance',
+            'wallet_balance',
+            'available_balance',
+            'available_cash',
+            'cash_balance',
+          ]) ??
+          0;
+      _todayEarnings = pickAmount(earnings, ['today_earnings']) ?? 0;
+      _weekEarnings = pickAmount(earnings, ['week_earnings']) ?? 0;
+      _todayTrips = (pickAmount(earnings, ['today_trips']) ?? 0).round();
+      _loading = false;
+    });
+  }
 
   void _open(BuildContext context, Widget screen) {
     Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
@@ -23,19 +85,28 @@ class WalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return ProfilePage(
+        title: AppStrings.walletEarning,
+        onBack: onBack,
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
     return ProfilePage(
       title: AppStrings.walletEarning,
       onBack: onBack,
-      child: ListView(
+      child: RefreshIndicator(
+        onRefresh: _load,
+        child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
         children: [
-          const _BalanceCard(),
+          _BalanceCard(balance: _balance, trips: _todayTrips),
           SizedBox(height: context.h(12)),
           Row(
             children: [
-              Expanded(child: _statCard(context, "Today's Earnings", '₹680.00', Icons.account_balance_wallet_outlined, const Color(0xFFF59E0B))),
+              Expanded(child: _statCard(context, "Today's Earnings", rupees(_todayEarnings), Icons.account_balance_wallet_outlined, const Color(0xFFF59E0B))),
               SizedBox(width: context.w(10)),
-              Expanded(child: _statCard(context, 'This Week', '₹3,420.00', Icons.calendar_today_outlined, const Color(0xFFF59E0B))),
+              Expanded(child: _statCard(context, 'This Week', rupees(_weekEarnings), Icons.calendar_today_outlined, const Color(0xFFF59E0B))),
             ],
           ),
           SizedBox(height: context.h(18)),
@@ -45,6 +116,7 @@ class WalletScreen extends StatelessWidget {
           SizedBox(height: context.h(8)),
           _activePlan(context),
         ],
+      ),
       ),
     );
   }
@@ -152,7 +224,10 @@ class WalletScreen extends StatelessWidget {
 }
 
 class _BalanceCard extends StatelessWidget {
-  const _BalanceCard();
+  const _BalanceCard({required this.balance, required this.trips});
+
+  final double balance;
+  final int trips;
 
   @override
   Widget build(BuildContext context) {
@@ -180,8 +255,8 @@ class _BalanceCard extends StatelessWidget {
               ),
             ],
           ),
-          Text('₹1,840', style: AppTypography.bold.copyWith(fontSize: 28, height: 1.2, color: Colors.white, letterSpacing: -0.6)),
-          Text('12 rides', style: AppTypography.regular.copyWith(fontSize: 12, color: Colors.white70)),
+          Text(rupees(balance, decimals: 0), style: AppTypography.bold.copyWith(fontSize: 28, height: 1.2, color: Colors.white, letterSpacing: -0.6)),
+          Text(trips == 1 ? '1 ride' : '$trips rides', style: AppTypography.regular.copyWith(fontSize: 12, color: Colors.white70)),
           SizedBox(height: context.h(14)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
@@ -194,7 +269,7 @@ class _BalanceCard extends StatelessWidget {
                 Expanded(
                   child: Text(AppStrings.todaysCompletedJobs, style: AppTypography.regular.copyWith(fontSize: 13, color: Colors.white)),
                 ),
-                Text('12', style: AppTypography.bold.copyWith(fontSize: 16, height: 1, color: Colors.white)),
+                Text('$trips', style: AppTypography.bold.copyWith(fontSize: 16, height: 1, color: Colors.white)),
                 SizedBox(width: context.w(8)),
                 Icon(Icons.directions_car_filled_rounded, color: Colors.white, size: context.w(18)),
               ],

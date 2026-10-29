@@ -11,6 +11,7 @@ import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rider_app/driver_features/profile/screens/profile_screen.dart';
+import 'package:rider_app/driver_features/wallet/screens/driver_wallet_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:rider_app/service/fcm_service.dart';
@@ -838,7 +839,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 //   onLeave: () => setState(() => _currentIndex = 0),
                 // ),
                 const SizedBox.shrink(),
-                WalletScreen(onBack: () => setState(() => _currentIndex = 0)),
+                WalletScreen(),
                 ProfileScreen(onBack: () => setState(() => _currentIndex = 0)),
               ],
             ),
