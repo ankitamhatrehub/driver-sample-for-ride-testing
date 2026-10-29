@@ -20,13 +20,14 @@ import 'package:rider_app/driver_features/dashboard/availability_dialog.dart';
 import 'package:rider_app/driver_features/home/driver_home_view.dart';
 import 'package:rider_app/driver_features/dashboard/ride_details_loading_dialog.dart';
 import 'package:rider_app/driver_features/orders/orders_screen.dart';
-import 'package:rider_app/driver_features/parcels/parcel_tab.dart';
+// import 'package:rider_app/driver_features/parcels/parcel_tab.dart';
 import 'package:rider_app/driver_features/rides/ride_flow_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/rides/screens/online_ride_search_view.dart';
 import 'package:rider_app/driver_features/trips/screens/driver_history_screen.dart';
 import 'package:rider_app/driver_features/wallet/wallet_screen.dart';
 import 'package:rider_app/driver_features/notifications/screens/driver_notifications_screen.dart';
+import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
 import '../widgets/widgets.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -624,6 +625,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             bottomNavigationBar: CircularBottomNav(
               currentIndex: _currentIndex,
               onItemSelected: (idx) {
+                // Parcel tab (index 2): coming soon for now, so don't switch tabs.
+                if (idx == 2) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const ComingSoonScreen(),
+                    ),
+                  );
+                  return;
+                }
                 setState(() => _currentIndex = idx);
               },
             ),
@@ -692,11 +702,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         },
                       ),
                 OrdersScreen(onBack: () => setState(() => _currentIndex = 0)),
-                ParcelTab(
-                  eligible: _driverProfile['eligible_for_parcels'] == true,
-                  vehicleType: _driverVehicleType,
-                  onLeave: () => setState(() => _currentIndex = 0),
-                ),
+                // Parcel tab disabled for now (coming soon screen opens on tap).
+                // ParcelTab(
+                //   eligible: _driverProfile['eligible_for_parcels'] == true,
+                //   vehicleType: _driverVehicleType,
+                //   onLeave: () => setState(() => _currentIndex = 0),
+                // ),
+                const SizedBox.shrink(),
                 WalletScreen(onBack: () => setState(() => _currentIndex = 0)),
                 ProfileScreen(onBack: () => setState(() => _currentIndex = 0)),
               ],

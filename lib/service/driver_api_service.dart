@@ -19,7 +19,18 @@ class DriverApiService {
     );
     final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
-      return json.decode(response.body) as List<dynamic>;
+      final decoded = json.decode(response.body);
+      if (decoded is List) return decoded;
+      if (decoded is Map) {
+        for (final key in const ['rides', 'data', 'results', 'active_rides']) {
+          final value = decoded[key];
+          if (value is List) return value;
+        }
+        // Map without a rides list (e.g. {"message": "..."}): treat as no rides.
+        debugPrint('[ACTIVE RIDES] Unexpected object response: ${response.body}');
+        return [];
+      }
+      throw Exception('Unexpected active rides response: ${response.body}');
     }
     throw Exception('Failed to fetch active rides: ${response.statusCode}');
   }

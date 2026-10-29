@@ -573,7 +573,7 @@ class AppTranslations {
       'transactionHistory': 'Transaction History',
       'payouts': 'Payouts',
       'BankAccount': 'Bank\nAccount',
-      'rechargeSubscription': 'Recharge /\nSubscription',
+      'rechargeSubscription': 'Subscription',
       'earnings': 'Earnings',
       'bankAccount': 'Bank Account',
       'howToEarnCoins': 'How to Earn Coins',
