@@ -74,31 +74,31 @@ extension _VerifyDrivingLicenseScreenStatePages on _VerifyDrivingLicenseScreenSt
             SizedBox(height: context.h(8)),
             AppTextField(controller: _licenseController, hintText: AppStrings.licenseNumber),
             SizedBox(height: context.h(14)),
-            Text('${AppStrings.dateOfBirth} *', style: AppTypography.regular.copyWith(fontSize: 13)),
-            SizedBox(height: context.h(8)),
-            Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                AppTextField(controller: _dobController, hintText: AppStrings.dobFormatHint),
-                IconButton(
-                  onPressed: _pickDob,
-                  icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: context.torkk.textSecondary),
-                ),
-              ],
-            ),
-            SizedBox(height: context.h(14)),
-            Text('${AppStrings.expiryDate} *', style: AppTypography.regular.copyWith(fontSize: 13)),
-            SizedBox(height: context.h(8)),
-            Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                AppTextField(controller: _expiryController, hintText: AppStrings.expiryDate),
-                IconButton(
-                  onPressed: _pickExpiry,
-                  icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: context.torkk.textSecondary),
-                ),
-              ],
-            ),
+            // Text('${AppStrings.dateOfBirth} *', style: AppTypography.regular.copyWith(fontSize: 13)),
+            // SizedBox(height: context.h(8)),
+            // Stack(
+            //   alignment: Alignment.centerRight,
+            //   children: [
+            //     AppTextField(controller: _dobController, hintText: AppStrings.dobFormatHint),
+            //     IconButton(
+            //       onPressed: _pickDob,
+            //       icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: context.torkk.textSecondary),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(height: context.h(14)),
+            // Text('${AppStrings.expiryDate} *', style: AppTypography.regular.copyWith(fontSize: 13)),
+            // SizedBox(height: context.h(8)),
+            // Stack(
+            //   alignment: Alignment.centerRight,
+            //   children: [
+            //     AppTextField(controller: _expiryController, hintText: AppStrings.expiryDate),
+            //     IconButton(
+            //       onPressed: _pickExpiry,
+            //       icon: Icon(Icons.calendar_today_outlined, size: context.w(18), color: context.torkk.textSecondary),
+            //     ),
+            //   ],
+            // ),
             SizedBox(height: context.h(14)),
             Container(
               padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(8)),

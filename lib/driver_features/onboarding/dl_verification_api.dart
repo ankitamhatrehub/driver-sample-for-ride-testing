@@ -62,34 +62,25 @@ class DlVerificationException implements Exception {
   String toString() => message;
 }
 
-/// Verifies a driving licence through the Torkk server, which keeps the
+/// Posts `{ "document_number", "phone" }` to the Torkk server, which keeps the
 /// Surepass token. The login Bearer token is added by [apiClient].
-///
-/// Pass either [idNumber] + [dob] (typed or read from the card), or
-/// [docNumber] + [phone] (DigiLocker flow).
 Future<DrivingLicenceDetails> verifyDrivingLicence({
-  String? idNumber,
-  String? dob,
-  String? docNumber,
-  String? phone,
+  required String idNumber,
+  required String phone,
 }) async {
-  final viaDigilocker = docNumber != null;
-  assert(
-    viaDigilocker ? (phone != null) : (idNumber != null && dob != null),
-    'Pass idNumber + dob, or docNumber + phone',
-  );
-  final body = viaDigilocker
-      ? {'doc_number': docNumber, 'phone': phone}
-      : {'id_number': idNumber, 'dob': dob};
-  debugPrint('[DL][api] POST ${AppUrls.verifyDl} (${viaDigilocker ? 'digilocker' : 'manual'})');
+  var requestBody = <String, dynamic>{
+    'document_number': idNumber,
+    'phone': phone,
+  };
+  debugPrint('[DL][api] POST ${AppUrls.verifyDl} body: ${json.encode(requestBody)}');
   final response = await apiClient
       .post(
         Uri.parse(AppUrls.verifyDl),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(body),
+        body: json.encode(requestBody)
       )
       .timeout(const Duration(seconds: 20));
-  debugPrint('[DL][api] status ${response.statusCode}, ${response.body.length} bytes');
+  debugPrint('[DL][api] status ${response.statusCode}, ${response.body} bytes');
 
   if (response.statusCode < 200 || response.statusCode >= 300) {
     debugPrint('[DL][api] error body: ${response.body}');
@@ -97,8 +88,8 @@ Future<DrivingLicenceDetails> verifyDrivingLicence({
   }
   return DrivingLicenceDetails.fromBody(
     response.body,
-    fallbackNumber: docNumber ?? idNumber ?? '',
-    fallbackDob: dob ?? '',
+    fallbackNumber: idNumber,
+    fallbackDob: '',
   );
 }
 

@@ -8,6 +8,7 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/app_confirm_dialog.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/driver_features/settings/legal/legal_documents_screen.dart';
 import 'package:rider_app/driver_features/settings/screens/driver_appearance_screen.dart';
 import 'package:rider_app/driver_features/settings/screens/privacy_security_screen.dart';
 import 'package:rider_app/driver_features/settings/screens/settings_language_screen.dart';
@@ -50,6 +51,12 @@ class DriverSettingsScreen extends StatelessWidget {
                   icon: Icons.verified_user_outlined,
                   label: AppStrings.privacyPolicy,
                   onTap: () => _open(context, const PrivacySecurityScreen()),
+                ),
+                const _SettingsDivider(),
+                _SettingsRow(
+                  icon: Icons.gavel_rounded,
+                  label: 'Legal & Policies',
+                  onTap: () => _open(context, const LegalDocumentsScreen()),
                 ),
                 const _SettingsDivider(),
                 _SettingsRow(

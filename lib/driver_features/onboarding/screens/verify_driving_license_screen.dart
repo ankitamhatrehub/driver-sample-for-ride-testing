@@ -153,68 +153,26 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   Future<void> _verifyReadLicence() async {
     print('Verifying read licence: _licenseController=${_licenseController.text}, _dobController=${_dobController.text}');
     final idNumber = _licenseController.text.trim().toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
-    final dob = normalizeDob(_dobController.text);
-    // print('Normalized values: idNumber=${_mask(idNumber)}, dob=$dob');
-    // if (!RegExp(r'^[A-Z]{2}\d{13}$').hasMatch(idNumber)) {
-    //   print('Invalid ID number format: $idNumber');
-    //   _go(_DlPage.rejected);
-    //   return;
-    // }
-    if (dob == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppStrings.dobFormatHint)),
-      );
+    final prefs = await SharedPreferences.getInstance();
+    // Same phone the driver logged in with (saved after OTP verify).
+    final savedPhone = prefs.getString('user_phone') ?? '';
+    final phone = (savedPhone.isNotEmpty ? savedPhone : OnboardingSession.instance.phone.text)
+        .replaceAll(' ', '')
+        .replaceAll('-', '');
+    if (idNumber.isEmpty || phone.isEmpty) {
+      _go(_DlPage.rejected);
       return;
     }
     setState(() => _verifying = true);
     try {
-      final details = await verifyDrivingLicence(idNumber: idNumber, dob: dob);
+      final details = await verifyDrivingLicence(idNumber: idNumber, phone: phone);
       print('Verification successful: name=${details.name}, licenseNumber=${_mask(details.licenseNumber)}, dob=${details.dob}, vehicleClass=${details.vehicleClass}, validity=${details.validity}');
-      final prefs = await SharedPreferences.getInstance();
       await prefs.setString('driving_licence_number', details.licenseNumber);
       if (!mounted) return;
       setState(() {
         _verifying = false;
         if (details.validity.isNotEmpty) _expiryController.text = details.validity;
         _page = _DlPage.manualVerified;
-      });
-    } catch (_) {
-      if (!mounted) return;
-      setState(() {
-        _verifying = false;
-        _page = _DlPage.rejected;
-      });
-    }
-  }
-
-  /// DigiLocker path: sends the licence number and phone, not ID + DOB.
-  Future<void> _verifyDigilockerLicence() async {
-    if (_verifying) return;
-    final prefs = await SharedPreferences.getInstance();
-    final session = OnboardingSession.instance;
-    final docNumber = (session.dlNumber.text.trim().isNotEmpty
-            ? session.dlNumber.text
-            : (prefs.getString('driving_licence_number') ?? ''))
-        .toUpperCase()
-        .replaceAll(RegExp(r'[^A-Z0-9]'), '');
-    var phone = (session.phone.text.trim().isNotEmpty
-            ? session.phone.text
-            : (prefs.getString('user_phone') ?? ''))
-        .replaceAll(RegExp(r'\D'), '');
-    if (phone.length > 10) phone = phone.substring(phone.length - 10);
-    print('Verifying DigiLocker licence: docNumber=${_mask(docNumber)}, phone=$phone');
-    if (docNumber.isEmpty || phone.isEmpty) {
-      _go(_DlPage.rejected);
-      return;
-    }
-    setState(() => _verifying = true);
-    try {
-      final details = await verifyDrivingLicence(docNumber: docNumber, phone: phone);
-      await prefs.setString('driving_licence_number', details.licenseNumber);
-      if (!mounted) return;
-      setState(() {
-        _verifying = false;
-        _page = _DlPage.digilockerVerified;
       });
     } catch (_) {
       if (!mounted) return;
@@ -282,15 +240,15 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
         padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
         child: Column(
           children: [
-            _DigilockerCard(
-              selected: _useDigilocker,
-              onTap: () => setState(() => _useDigilocker = true),
-            ),
-            SizedBox(height: context.h(16)),
-            Text(
-              AppStrings.orWord,
-              style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 12),
-            ),
+            // _DigilockerCard(
+            //   selected: _useDigilocker,
+            //   onTap: () => setState(() => _useDigilocker = true),
+            // ),
+            // SizedBox(height: context.h(16)),
+            // Text(
+            //   AppStrings.orWord,
+            //   style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 12),
+            // ),
             SizedBox(height: context.h(16)),
             Align(
               alignment: Alignment.centerLeft,
@@ -330,7 +288,7 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
               onPressed: () {
                 print('Continue pressed: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded');
                 if (_useDigilocker) {
-                  _verifyDigilockerLicence();
+                  _go(_DlPage.digilockerVerified);
                 } else if (_frontUploaded && _backUploaded) {
                  print('Proceeding to manual form for verification');
                   _go(_DlPage.manualForm);
