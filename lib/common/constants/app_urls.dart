@@ -38,6 +38,7 @@ class AppUrls {
   // ---------------------------------------------------------------------------
   static const String driverRegister = '$apiBase/driver/register';
   static const String updateProfile = '$apiBase/driver/profile'; // remaining
+  static const String updateContact = '$apiBase/driver/profile/contact';
   static const String updateVehicleType = '$apiBase/driver/update-vehicle';
   static const String uploadProfilePhoto = '$apiBase/driver/upload-profile-photo';
   static const String updateLocation = '$apiBase/driver/update-location';

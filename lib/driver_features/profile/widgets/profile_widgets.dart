@@ -172,6 +172,8 @@ class ProfileValueRow extends StatelessWidget {
     required this.label,
     this.value = '',
     this.valueColor,
+    this.trailing,
+    this.onTap,
   });
 
   final IconData icon;
@@ -179,9 +181,13 @@ class ProfileValueRow extends StatelessWidget {
   final String value;
   final Color? valueColor;
 
+  /// Replaces the default right arrow when set.
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final row = Padding(
       padding: EdgeInsets.symmetric(
         horizontal: context.w(14),
         vertical: context.h(12),
@@ -215,14 +221,16 @@ class ProfileValueRow extends StatelessWidget {
               ],
             ),
           ),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.slate400,
-            size: context.w(20),
-          ),
+          trailing ??
+              Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.slate400,
+                size: context.w(20),
+              ),
         ],
       ),
     );
+    return onTap == null ? row : InkWell(onTap: onTap, child: row);
   }
 }
 

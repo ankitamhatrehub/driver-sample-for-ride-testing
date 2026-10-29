@@ -221,6 +221,30 @@ class DriverApiService {
     throw Exception('Unexpected transaction history response');
   }
 
+  /// PUT /api/driver/profile/contact  { "email": ... }
+  /// Throws an Exception with the server message on failure.
+  static Future<void> updateEmail(String email) async {
+    print('DriverApiService.updateEmail called with email: $email');
+    final response = await apiClient
+        .put(
+          Uri.parse(AppUrls.updateContact),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'email': email}),
+        )
+        .timeout(const Duration(seconds: 10));
+        print('DriverApiService.updateEmail response: ${response.statusCode} ${response.body}');
+    if (response.statusCode == 200 || response.statusCode == 204) return;
+    var message = 'Failed to update email (${response.statusCode})';
+    try {
+      final body = json.decode(response.body);
+      if (body is Map) {
+        final m = body['message'] ?? body['error'] ?? body['detail'];
+        if (m != null && m.toString().isNotEmpty) message = m.toString();
+      }
+    } catch (_) {}
+    throw Exception(message);
+  }
+
   static Future<List<dynamic>> fetchTrips(String driverPhone) async {
     debugPrint('[DEBUG FETCH TRIPS] Fetching trips for driver: $driverPhone');
     final uri = Uri.parse(AppUrls.driverTrips(driverPhone));
