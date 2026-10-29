@@ -839,7 +839,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 //   onLeave: () => setState(() => _currentIndex = 0),
                 // ),
                 const SizedBox.shrink(),
-                WalletScreen(),
+                WalletScreen(onBack: () => setState(() => _currentIndex = 0)),
                 ProfileScreen(onBack: () => setState(() => _currentIndex = 0)),
               ],
             ),
