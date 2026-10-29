@@ -71,7 +71,7 @@ class _DriverHomeViewState extends State<DriverHomeView> {
     final target = position == null
         ? const LatLng(28.6139, 77.2090)
         : LatLng(position.latitude, position.longitude);
-
+print('DriverHomeView build: isOnline=${widget.isOnline} driverName=${widget.driverName} locationLabel=${widget.locationLabel} todayEarnings=${widget.todayEarnings} completedJobs=${widget.completedJobs} currentPosition=$position');
     return Stack(
       children: [
         Positioned.fill(

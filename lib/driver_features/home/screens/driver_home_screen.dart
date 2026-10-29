@@ -1,5 +1,10 @@
 import 'dart:ui' as ui;
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io' show Platform;
+import 'package:http/http.dart' as http;
+import 'package:rider_app/common/constants/app_urls.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
@@ -69,6 +74,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   String _driverVehicleType = '';
   int _currentIndex = 0;
   Position? _currentPosition;
+  String _currentAddress = '';
+  Position? _addressPosition;
+  bool _updatingLocation = false;
+  Position? _addressAttemptedFor;
   StreamSubscription<Position>? _realtimePositionSubscription;
   BitmapDescriptor? _homeNavPuckIcon;
   GoogleMapController? _homeMapController;
@@ -87,6 +96,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               setState(() {
                 _currentPosition = position;
               });
+              _resolveAddress(position);
               if (_homeMapController != null) {
                 try {
                   _homeMapController!.animateCamera(
@@ -204,11 +214,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           );
           if (mounted) {
             setState(() => _currentPosition = pos);
+            _resolveAddress(pos);
           }
         } catch (_) {
           final pos = await Geolocator.getLastKnownPosition();
           if (mounted && pos != null) {
             setState(() => _currentPosition = pos);
+            _resolveAddress(pos);
           }
         }
       }
@@ -464,18 +476,120 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     }
   }
 
-  Future<void> _refreshLocation() async {
+  void _showLocationMessage(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  /// Turns lat/lng into a readable address for the location card. Skips the
+  /// lookup if the driver has barely moved since the last one.
+  Future<void> _resolveAddress(Position position, {bool force = false}) async {
+    final last = _addressPosition;
+    if (!force &&
+        _currentAddress.isNotEmpty &&
+        last != null &&
+        Geolocator.distanceBetween(
+              last.latitude,
+              last.longitude,
+              position.latitude,
+              position.longitude,
+            ) <
+            100) {
+      return;
+    }
+    var address = await _addressFromDevice(position);
+    if (address.isEmpty) address = await _addressFromGoogle(position);
+    if (address.isEmpty) return;
+    _addressPosition = position;
+    if (mounted) setState(() => _currentAddress = address);
+  }
+
+  /// Native geocoder (can be unavailable on emulators / devices without it).
+  Future<String> _addressFromDevice(Position position) async {
     try {
-      final pos = await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.high,
-          timeLimit: Duration(seconds: 5),
-        ),
+      final placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
       );
+      if (placemarks.isEmpty) return '';
+      final p = placemarks.first;
+      final parts = <String>[];
+      for (final part in [p.street, p.subLocality, p.locality]) {
+        final v = (part ?? '').trim();
+        if (v.isNotEmpty && !parts.contains(v)) parts.add(v);
+      }
+      return parts.join(', ');
+    } catch (e) {
+      return '';
+    }
+  }
+
+  /// Fallback: Google Geocoding API (same Maps key the navigation screen uses).
+  Future<String> _addressFromGoogle(Position position) async {
+    try {
+      final key = Platform.isIOS
+          ? 'AIzaSyDIt1TB-ouVFAtWQg0yhDzpzyNGiGW_W3A'
+          : 'AIzaSyDNrwlxB3gaotCANgyy2Q7hVi5K3JsqqBk';
+      final response = await http
+          .get(Uri.parse(AppUrls.googleReverseGeocode(
+            lat: position.latitude,
+            lng: position.longitude,
+            apiKey: key,
+          )))
+          .timeout(const Duration(seconds: 8));
+      final body = json.decode(response.body) as Map<String, dynamic>;
+      final results = body['results'];
+      if (results is! List || results.isEmpty) return '';
+      return (results.first['formatted_address'] ?? '').toString();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  /// "Update" button: re-read the GPS position, send it to the backend and
+  /// refresh the address shown in the location card.
+  Future<void> _refreshLocation() async {
+    if (_updatingLocation) return;
+    _updatingLocation = true;
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        _showLocationMessage('Please allow location access to update your location.');
+        return;
+      }
+
+      Position? pos;
+      try {
+        pos = await Geolocator.getCurrentPosition(
+          locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.high,
+            timeLimit: Duration(seconds: 8),
+          ),
+        );
+      } catch (_) {
+        pos = await Geolocator.getLastKnownPosition();
+      }
+      if (pos == null) {
+        _showLocationMessage('Unable to get your current location.');
+        return;
+      }
       if (mounted) setState(() => _currentPosition = pos);
-    } catch (_) {
-      final pos = await Geolocator.getLastKnownPosition();
-      if (mounted && pos != null) setState(() => _currentPosition = pos);
+
+      if (_driverPhone.isNotEmpty) {
+        await DriverApiService.updateLocation(
+          driverPhone: _driverPhone,
+          latitude: pos.latitude,
+          longitude: pos.longitude,
+        );
+      }
+      await _resolveAddress(pos, force: true);
+      _showLocationMessage('Location updated');
+    } finally {
+      _updatingLocation = false;
     }
   }
 
@@ -523,6 +637,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           setState(() {
             _currentPosition = pos;
           });
+          _resolveAddress(pos);
           if (_homeMapController != null) {
             try {
               _homeMapController!.animateCamera(
@@ -543,6 +658,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           setState(() {
             _currentPosition = pos;
           });
+          _resolveAddress(pos);
         }
       }
     } else {
@@ -606,6 +722,19 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Position can already be known (e.g. fetched before this screen built), so
+    // make sure the address lookup runs at least once for it.
+    final knownPosition = _currentPosition;
+    if (_isOnline &&
+        knownPosition != null &&
+        _currentAddress.isEmpty &&
+        _addressAttemptedFor != knownPosition) {
+      _addressAttemptedFor = knownPosition;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _resolveAddress(knownPosition);
+      });
+    }
+
     final visibleRides = _rides
         .where(
           (ride) =>
@@ -675,7 +804,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     : DriverHomeView(
                         isOnline: _isOnline,
                         driverName: _driverName,
-                        locationLabel: _driverCity,
+                        locationLabel: _currentAddress.isNotEmpty ? _currentAddress : _driverCity,
                         todayEarnings: _todayEarnings,
                         completedJobs: _completedJobs,
                         currentPosition: _currentPosition,

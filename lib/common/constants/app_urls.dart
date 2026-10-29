@@ -102,6 +102,14 @@ class AppUrls {
   static String geminiGenerateContent(String apiKey) =>
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=$apiKey';
 
+  static String googleReverseGeocode({
+    required double lat,
+    required double lng,
+    required String apiKey,
+  }) =>
+      'https://maps.googleapis.com/maps/api/geocode/json'
+      '?latlng=$lat,$lng&key=$apiKey';
+
   static String googleDirections({
     required double originLat,
     required double originLng,
