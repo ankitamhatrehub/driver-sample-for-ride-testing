@@ -17,7 +17,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     {
       'isUser': false,
       'text':
-          'Hello Partner! I am your AI Support Assistant. How can I help you regarding the application today?',
+          'Hello Partner! I am Lui , your AI Support Assistant. How can I help you regarding the application today?',
     },
   ];
   final TextEditingController _messageController = TextEditingController();
@@ -139,7 +139,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
       backgroundColor: context.torkk.surfaceMuted,
       appBar: AppBar(
         title: const Text(
-          'Live AI Chat',
+          'Lui',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: context.torkk.background,
