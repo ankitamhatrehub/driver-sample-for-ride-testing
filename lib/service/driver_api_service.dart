@@ -201,6 +201,27 @@ class DriverApiService {
     }
   }
 
+  /// GET /api/driver/wallet/transactions/{transaction_id}
+  static Future<Map<String, dynamic>> fetchTransactionDetails(
+    String transactionId,
+  ) async {
+    final uri = Uri.parse(AppUrls.transactionDetails(transactionId));
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    debugPrint('[TXN DETAILS] ${response.statusCode} ${response.body}');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch transaction details: ${response.statusCode}');
+    }
+    final decoded = json.decode(response.body);
+    if (decoded is Map) {
+      for (final key in const ['transaction', 'data', 'details']) {
+        final value = decoded[key];
+        if (value is Map) return Map<String, dynamic>.from(value);
+      }
+      return Map<String, dynamic>.from(decoded);
+    }
+    throw Exception('Unexpected transaction details response');
+  }
+
   /// GET /api/wallet/transaction-history?phone=...
   static Future<List<dynamic>> fetchTransactionHistory(String driverPhone) async {
     final uri = Uri.parse(AppUrls.transactionHistory(driverPhone));

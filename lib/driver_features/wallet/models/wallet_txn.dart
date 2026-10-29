@@ -6,6 +6,7 @@ class WalletTxn {
     required this.parcel,
     this.name = 'User',
     this.date,
+    this.id = '',
   });
 
   final String kind;
@@ -14,6 +15,9 @@ class WalletTxn {
   final bool parcel;
   final String name;
   final DateTime? date;
+
+  /// Transaction id used to load the details screen.
+  final String id;
 
   /// Builds a transaction from a transaction-history API item.
   factory WalletTxn.fromJson(Map<String, dynamic> json) {
@@ -43,6 +47,7 @@ class WalletTxn {
           ? 'User'
           : pick(['customer_name', 'user_name', 'passenger_name', 'name']),
       date: date,
+      id: pick(['transaction_id', 'txn_id', 'id']),
     );
   }
 

@@ -57,6 +57,9 @@ class AppUrls {
   static String driverTrips(String phone) =>
       '$apiBase/driver/trips?phone=${Uri.encodeComponent(phone)}';
 
+  static String transactionDetails(String transactionId) =>
+      '$apiBase/driver/wallet/transactions/${Uri.encodeComponent(transactionId)}';
+
   static String transactionHistory(String phone) =>
       '$apiBase/wallet/transaction-history?phone=${Uri.encodeComponent(phone)}';
 
