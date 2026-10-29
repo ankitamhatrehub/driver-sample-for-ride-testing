@@ -13,7 +13,7 @@ class VehicleInformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: AppStrings.vehicleInformation,
-      bottom: const ProfileEditButton(),
+     
       child: ListView(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(12)),
         children: [

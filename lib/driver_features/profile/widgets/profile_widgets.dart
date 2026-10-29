@@ -221,12 +221,7 @@ class ProfileValueRow extends StatelessWidget {
               ],
             ),
           ),
-          trailing ??
-              Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.slate400,
-                size: context.w(20),
-              ),
+         
         ],
       ),
     );
