@@ -146,7 +146,7 @@ class _DriverHomeViewState extends State<DriverHomeView> {
                     todayEarnings: widget.todayEarnings,
                     completedJobs: widget.completedJobs,
                     onEarnings: widget.onEarnings,
-                    onJobs: widget.onJobs,
+                  
                     accent: accent,
                   ),
                 ),

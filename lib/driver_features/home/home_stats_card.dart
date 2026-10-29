@@ -11,14 +11,14 @@ class HomeStatsCard extends StatelessWidget {
     required this.todayEarnings,
     required this.completedJobs,
     required this.onEarnings,
-    required this.onJobs,
+   
     required this.accent,
   });
 
   final double todayEarnings;
   final int completedJobs;
   final VoidCallback onEarnings;
-  final VoidCallback onJobs;
+
   final Color accent;
 
   @override
@@ -77,44 +77,41 @@ class HomeStatsCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: onJobs,
-            child: Container(
-              constraints: BoxConstraints(minHeight: context.h(55)),
-              padding: EdgeInsets.symmetric(horizontal: context.w(10), vertical: context.h(6)),
-              decoration: BoxDecoration(
-                color: context.torkk.surface.withValues(alpha: 0.8),
-                borderRadius: BorderRadius.circular(context.r(12)),
-                border: Border.all(color: context.torkk.border),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppStrings.todayCompletedJobs,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.regular.copyWith(
-                            fontSize: 12,
-                            height: 1.1,
-                            color: context.torkk.textSecondary,
-                          ),
+          Container(
+            constraints: BoxConstraints(minHeight: context.h(55)),
+            padding: EdgeInsets.symmetric(horizontal: context.w(10), vertical: context.h(6)),
+            decoration: BoxDecoration(
+              color: context.torkk.surface.withValues(alpha: 0.8),
+              borderRadius: BorderRadius.circular(context.r(12)),
+              border: Border.all(color: context.torkk.border),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.todayCompletedJobs,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.regular.copyWith(
+                          fontSize: 12,
+                          height: 1.1,
+                          color: context.torkk.textSecondary,
                         ),
-                        Text(
-                          '$completedJobs',
-                          style: AppTypography.bold.copyWith(fontSize: 16, height: 1.1, letterSpacing: -0.3),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        '$completedJobs',
+                        style: AppTypography.bold.copyWith(fontSize: 16, height: 1.1, letterSpacing: -0.3),
+                      ),
+                    ],
                   ),
-                  Icon(Icons.directions_car_filled_rounded, color: accent, size: context.w(18)),
-                ],
-              ),
+                ),
+                Icon(Icons.directions_car_filled_rounded, color: accent, size: context.w(18)),
+              ],
             ),
           ),
         ],
