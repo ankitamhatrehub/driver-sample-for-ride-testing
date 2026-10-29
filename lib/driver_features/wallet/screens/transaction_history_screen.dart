@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -8,36 +10,116 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/driver_features/wallet/models/wallet_txn.dart';
 import 'package:rider_app/driver_features/wallet/screens/transaction_details_screen.dart';
 
-class TransactionHistoryScreen extends StatelessWidget {
+class TransactionHistoryScreen extends StatefulWidget {
   const TransactionHistoryScreen({super.key, this.showEmpty = false});
 
   final bool showEmpty;
 
-  static const _today = [
-    WalletTxn(kind: 'Ride', time: '10:24 pm', amount: '+₹520.00', parcel: false),
-    WalletTxn(kind: 'Parcel', time: '10:24 pm', amount: '+₹520.00', parcel: true),
-    WalletTxn(kind: 'Parcel', time: '10:24 pm', amount: '+₹520.00', parcel: true),
+  @override
+  State<TransactionHistoryScreen> createState() => _TransactionHistoryScreenState();
+}
+
+class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
+  static const _months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
   ];
 
-  static const _yesterday = [
-    WalletTxn(kind: 'Ride', time: '10:24 pm', amount: '+₹520.00', parcel: false),
-    WalletTxn(kind: 'Parcel', time: '10:24 pm', amount: '+₹520.00', parcel: true),
-    WalletTxn(kind: 'Parcel', time: '10:24 pm', amount: '+₹520.00', parcel: true),
-    WalletTxn(kind: 'Parcel', time: '10:24 pm', amount: '+₹520.00', parcel: true),
-  ];
+  bool _loading = true;
+  String? _error;
+  List<WalletTxn> _txns = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final phone = prefs.getString('user_phone') ?? '';
+      final data = await DriverApiService.fetchTransactionHistory(phone);
+      final txns = data
+          .whereType<Map>()
+          .map((e) => WalletTxn.fromJson(Map<String, dynamic>.from(e)))
+          .toList()
+        ..sort((a, b) => (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)));
+      if (!mounted) return;
+      setState(() {
+        _txns = txns;
+        _loading = false;
+      });
+    } catch (e) {
+      debugPrint('Error fetching transaction history: $e');
+      if (!mounted) return;
+      setState(() {
+        _error = 'Could not load transactions';
+        _loading = false;
+      });
+    }
+  }
+
+  String _sectionTitle(DateTime? d) {
+    if (d == null) return 'Earlier';
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final day = DateTime(d.year, d.month, d.day);
+    final label = '${d.day} ${_months[d.month - 1]}';
+    if (day == today) return 'Today , $label';
+    if (day == today.subtract(const Duration(days: 1))) return 'Yesterday , $label';
+    return label;
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (showEmpty) return const _EmptyTransactions();
+    print('TransactionHistoryScreen build: loading=$_loading error=$_error txns=${_txns.length}');
+    if (widget.showEmpty) return const _EmptyTransactions();
+    if (_loading) {
+      return ProfilePage(
+        title: AppStrings.transactionHistory,
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_error != null) {
+      return ProfilePage(
+        title: AppStrings.transactionHistory,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(_error!, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
+              TextButton(onPressed: _load, child: const Text('Retry')),
+            ],
+          ),
+        ),
+      );
+    }
+    if (_txns.isEmpty) return const _EmptyTransactions();
+
+    // Group by day, keeping newest first.
+    final groups = <String, List<WalletTxn>>{};
+    for (final t in _txns) {
+      groups.putIfAbsent(_sectionTitle(t.date), () => []).add(t);
+    }
+    final children = <Widget>[];
+    groups.forEach((title, items) {
+      if (children.isNotEmpty) children.add(SizedBox(height: context.h(14)));
+      children.add(_section(context, title, items));
+    });
+
     return ProfilePage(
       title: AppStrings.transactionHistory,
-      child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
-        children: [
-          _section(context, 'Today , 12 June', _today),
-          SizedBox(height: context.h(14)),
-          _section(context, 'Yesterday , 12 June', _yesterday),
-        ],
+      child: RefreshIndicator(
+        onRefresh: _load,
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+          children: children,
+        ),
       ),
     );
   }
@@ -77,7 +159,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('User', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+                              Text(items[i].name, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
                               Text('${items[i].kind}  ·  ${items[i].time}', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                             ],
                           ),
