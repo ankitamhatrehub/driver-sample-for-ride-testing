@@ -4,7 +4,10 @@ extension _OrdersScreenStateSections on _OrdersScreenState {
   Widget _coinsBanner(BuildContext context) {
     final coins = _coinsEarned();
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(14),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
         gradient: const LinearGradient(
@@ -20,7 +23,11 @@ extension _OrdersScreenStateSections on _OrdersScreenState {
               color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(context.r(10)),
             ),
-            child: Icon(Icons.card_giftcard_rounded, color: Colors.white, size: context.w(18)),
+            child: Icon(
+              Icons.card_giftcard_rounded,
+              color: Colors.white,
+              size: context.w(18),
+            ),
           ),
           SizedBox(width: context.w(10)),
           Expanded(
@@ -30,16 +37,29 @@ extension _OrdersScreenStateSections on _OrdersScreenState {
                 if (coins > 0)
                   Text(
                     '${AppStrings.ordersYouEarnedCoins} $coins ${AppStrings.ordersCoins}',
-                    style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, color: Colors.white, letterSpacing: -0.2),
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 14,
+                      height: 1.2,
+                      color: Colors.white,
+                      letterSpacing: -0.2,
+                    ),
                   ),
                 Text(
                   AppStrings.ordersCoinsHint,
-                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: Colors.white.withValues(alpha: 0.9)),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    height: 1.3,
+                    color: Colors.white.withValues(alpha: 0.9),
+                  ),
                 ),
               ],
             ),
           ),
-          Icon(Icons.chevron_right_rounded, color: Colors.white, size: context.w(20)),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: Colors.white,
+            size: context.w(20),
+          ),
         ],
       ),
     );

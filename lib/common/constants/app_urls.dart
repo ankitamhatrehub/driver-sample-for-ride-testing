@@ -57,6 +57,14 @@ class AppUrls {
   static String driverTrips(String phone) =>
       '$apiBase/driver/trips?phone=${Uri.encodeComponent(phone)}';
 
+  /// `type`: current | completed | cancelled | scheduled.
+  static String driverOrders({required String type}) =>
+      '$apiBase/driver/orders?type=${Uri.encodeComponent(type)}';
+
+  /// `type`: ride | parcel.
+  static String driverOrderDetail({required Object id, required String type}) =>
+      '$apiBase/driver/orders/${Uri.encodeComponent(id.toString())}?type=${Uri.encodeComponent(type)}';
+
   static String transactionDetails(String transactionId) =>
       '$apiBase/driver/wallet/transactions/${Uri.encodeComponent(transactionId)}';
 

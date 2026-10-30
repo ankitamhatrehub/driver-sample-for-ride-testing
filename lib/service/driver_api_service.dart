@@ -242,6 +242,54 @@ class DriverApiService {
     throw Exception('Unexpected transaction history response');
   }
 
+  /// GET /api/driver/orders?type=current|completed|cancelled|scheduled
+  static Future<List<Map<String, dynamic>>> fetchOrders({required String type}) async {
+    final uri = Uri.parse(AppUrls.driverOrders(type: type));
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    debugPrint('[ORDERS $type] ${response.statusCode} ${response.body}');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch orders: ${response.statusCode}');
+    }
+    final decoded = json.decode(response.body);
+    Object? list = decoded;
+    if (decoded is Map) {
+      list = null;
+      for (final key in const ['orders', 'data', 'results', 'trips']) {
+        if (decoded[key] is List) {
+          list = decoded[key];
+          break;
+        }
+      }
+    }
+    if (list is! List) return [];
+    return [
+      for (final item in list)
+        if (item is Map) Map<String, dynamic>.from(item),
+    ];
+  }
+
+  /// GET /api/driver/orders/{id}?type=ride|parcel
+  static Future<Map<String, dynamic>> fetchOrderDetail({
+    required Object id,
+    required String type,
+  }) async {
+    final uri = Uri.parse(AppUrls.driverOrderDetail(id: id, type: type));
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    debugPrint('[ORDER DETAIL $type/$id] ${response.statusCode} ${response.body}');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch order details: ${response.statusCode}');
+    }
+    final decoded = json.decode(response.body);
+    if (decoded is Map) {
+      for (final key in const ['order', 'data', 'details']) {
+        final value = decoded[key];
+        if (value is Map) return Map<String, dynamic>.from(value);
+      }
+      return Map<String, dynamic>.from(decoded);
+    }
+    throw Exception('Unexpected order details response');
+  }
+
   /// PUT /api/driver/profile/contact  { "email": ... }
   /// Throws an Exception with the server message on failure.
   static Future<void> updateEmail(String email) async {

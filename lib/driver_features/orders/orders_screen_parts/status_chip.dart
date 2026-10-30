@@ -9,14 +9,21 @@ class _StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(8), vertical: context.h(2)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(8),
+        vertical: context.h(2),
+      ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(context.r(20)),
       ),
       child: Text(
         label,
-        style: AppTypography.regular.copyWith(fontSize: 11, fontWeight: FontWeight.w600, color: color),
+        style: AppTypography.regular.copyWith(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+          color: color,
+        ),
       ),
     );
   }
