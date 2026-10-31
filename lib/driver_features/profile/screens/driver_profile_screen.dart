@@ -201,7 +201,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                   const SizedBox(height: 16),
                   // Driver Name (e.g. Piyush Kumar from prefs/API)
                   Text(
-                    _name.isNotEmpty ? _name : 'Driver Partner',
+                    _name.isNotEmpty ? _name : 'Ankita',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w900,

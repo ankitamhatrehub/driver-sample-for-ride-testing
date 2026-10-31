@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/privacy_policy_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/terms_conditions_users_screen.dart';
@@ -115,7 +116,7 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuItem(
                 icon: Icons.support_agent_rounded,
                 label: AppStrings.helpSupport,
-                onTap: () => _open(context, const HelpSupportScreen()),
+                onTap: () => _open(context, const DriverLiveChatScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.info_outline_rounded,

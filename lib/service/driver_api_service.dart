@@ -379,6 +379,61 @@ class DriverApiService {
     throw Exception(message);
   }
 
+  /// GET /api/chat/{conversation_id}/history. Returns the raw message list;
+  /// an unknown conversation (404) is an empty history.
+  static Future<List<dynamic>> fetchChatHistory(String conversationId) async {
+    final uri = Uri.parse(AppUrls.chatHistory(conversationId));
+    debugPrint('AI_CHAT_API_01 | GET $uri');
+    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    debugPrint('AI_CHAT_API_02 | HTTP ${response.statusCode} body=${response.body}');
+    if (response.statusCode == 404) return [];
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load chat history (${response.statusCode})');
+    }
+    final decoded = json.decode(response.body);
+    if (decoded is List) return decoded;
+    if (decoded is Map) {
+      for (final key in const ['messages', 'history', 'data', 'results']) {
+        final value = decoded[key];
+        if (value is List) return value;
+        if (value is Map && value['messages'] is List) return value['messages'] as List;
+      }
+      return [];
+    }
+    throw Exception('Unexpected chat history response');
+  }
+
+  /// POST /api/chat/message { conversation_id, message }.
+  /// Returns the decoded response body (the AI reply lives in it).
+  static Future<dynamic> sendChatMessage({
+    required String conversationId,
+    required String message,
+  }) async {
+    final payload = {'conversation_id': conversationId, 'message': message};
+    debugPrint('AI_CHAT_API_03 | POST ${AppUrls.chatMessage} body=${json.encode(payload)}');
+    final response = await apiClient
+        .post(
+          Uri.parse(AppUrls.chatMessage),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(payload),
+        )
+        .timeout(const Duration(seconds: 30));
+    debugPrint('AI_CHAT_API_04 | HTTP ${response.statusCode} body=${response.body}');
+    dynamic decoded;
+    try {
+      decoded = response.body.isEmpty ? null : json.decode(response.body);
+    } catch (_) {
+      decoded = response.body;
+    }
+    if (response.statusCode >= 200 && response.statusCode < 300) return decoded;
+    var error = 'Failed to send message (${response.statusCode})';
+    if (decoded is Map) {
+      final m = decoded['message'] ?? decoded['error'] ?? decoded['detail'];
+      if (m != null && m.toString().isNotEmpty) error = m.toString();
+    }
+    throw Exception(error);
+  }
+
   /// PUT /api/driver/profile/contact  { "email": ... }
   /// Throws an Exception with the server message on failure.
   static Future<void> updateEmail(String email) async {
