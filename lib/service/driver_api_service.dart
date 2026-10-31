@@ -339,6 +339,46 @@ class DriverApiService {
     throw Exception(message);
   }
 
+  /// POST /api/driver/bank-details. Returns the decoded response body.
+  /// Throws an Exception with the server message on failure.
+  static Future<dynamic> saveBankDetails({
+    required String accountHolderName,
+    required String accountNumber,
+    required String ifscCode,
+    required String bankName,
+    required String branchName,
+  }) async {
+    final payload = {
+      'account_holder_name': accountHolderName,
+      'account_number': accountNumber,
+      'ifsc_code': ifscCode,
+      'bank_name': bankName,
+      'branch_name': branchName,
+    };
+    debugPrint('BANK_API_01 | POST ${AppUrls.bankDetails} body=${json.encode(payload)}');
+    final response = await apiClient
+        .post(
+          Uri.parse(AppUrls.bankDetails),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(payload),
+        )
+        .timeout(const Duration(seconds: 10));
+    debugPrint('BANK_API_02 | HTTP ${response.statusCode} body=${response.body}');
+    dynamic decoded;
+    try {
+      decoded = response.body.isEmpty ? null : json.decode(response.body);
+    } catch (_) {
+      decoded = response.body;
+    }
+    if (response.statusCode >= 200 && response.statusCode < 300) return decoded;
+    var message = 'Failed to save bank details (${response.statusCode})';
+    if (decoded is Map) {
+      final m = decoded['message'] ?? decoded['error'] ?? decoded['detail'];
+      if (m != null && m.toString().isNotEmpty) message = m.toString();
+    }
+    throw Exception(message);
+  }
+
   /// PUT /api/driver/profile/contact  { "email": ... }
   /// Throws an Exception with the server message on failure.
   static Future<void> updateEmail(String email) async {
