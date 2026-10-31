@@ -6,7 +6,10 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class VehicleHeader extends StatelessWidget {
-  const VehicleHeader({super.key});
+  const VehicleHeader({super.key, this.title = ''});
+
+  /// Line under the label, e.g. the vehicle type. Shows a dash when empty.
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class VehicleHeader extends StatelessWidget {
                 style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
               ),
               Text(
-                'Cab . 4 Seater',
+                title.isEmpty ? '-' : title,
                 style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2),
               ),
             ],
