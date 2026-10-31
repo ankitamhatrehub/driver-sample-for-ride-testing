@@ -314,6 +314,7 @@ class DriverApiService {
     required String endTime,
   }) async {
     final payload = {'title': title, 'start_time': startTime, 'end_time': endTime};
+    print("url: ${AppUrls.driverSchedule}");
     debugPrint('SCHEDULE_API_01 | POST ${AppUrls.driverSchedule} body=${json.encode(payload)}');
     final response = await apiClient
         .post(

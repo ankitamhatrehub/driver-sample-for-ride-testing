@@ -42,6 +42,35 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
   int _selected = 0;
   bool _saving = false;
 
+  Future<void> _showSavedDialog(_Slot slot) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          backgroundColor: dialogContext.torkk.surface,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(dialogContext.r(20))),
+          title: Text('Schedule saved', style: AppTypography.bold.copyWith(fontSize: 18)),
+          content: Text(
+            '${slot.title} (${slot.time}) has been saved as your driving hours.',
+            style: AppTypography.regular.copyWith(fontSize: 14, color: dialogContext.torkk.textSecondary),
+          ),
+          actions: [
+            SizedBox(
+              width: double.infinity,
+              child: UnifiedButton(
+                label: 'OK',
+                backgroundColor: const Color(0xFF1E3FBF),
+                onPressed: () => Navigator.of(dialogContext).pop(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _save() async {
     if (_saving) return;
     final slot = _slots[_selected];
@@ -54,7 +83,9 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
       );
       debugPrint('SCHEDULE_SCREEN_01 | saved "${slot.title}" ${slot.start}-${slot.end} response=$response');
       if (!mounted) return;
-      // Navigator.of(context).pop(slot.title);
+      await _showSavedDialog(slot);
+      if (!mounted) return;
+      Navigator.of(context).pop(slot.title);
     } catch (e) {
       debugPrint('SCHEDULE_SCREEN_02 | save failed: $e');
       if (!mounted) return;
