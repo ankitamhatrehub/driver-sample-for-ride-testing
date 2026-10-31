@@ -5,6 +5,7 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+import 'package:rider_app/service/driver_api_service.dart';
 
 /// Lets the driver pick the time slot they prefer to go online in.
 /// Pops with the selected slot title on Save.
@@ -16,9 +17,12 @@ class PlanDrivingHoursScreen extends StatefulWidget {
 }
 
 class _Slot {
-  const _Slot(this.title, this.time, this.icon, this.color, this.background);
+  const _Slot(this.title, this.time, this.start, this.end, this.icon, this.color, this.background);
   final String title;
   final String time;
+  /// 24h `HH:mm:ss`, sent to the schedule API.
+  final String start;
+  final String end;
   final IconData icon;
   final Color color;
   final Color background;
@@ -28,14 +32,38 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
   static const _purple = Color(0xFF5B21B6);
 
   static const _slots = [
-    _Slot('Morning Time', '06:00 AM - 12:00 PM', Icons.wb_twilight_rounded, Color(0xFFF59E0B), Color(0xFFFDEBD0)),
-    _Slot('Day time', '12:00 PM - 04:00 PM', Icons.wb_sunny_outlined, Color(0xFFF97316), Color(0xFFFFF3E6)),
-    _Slot('Evening Time', '04:00 PM - 08:00 PM', Icons.waves_rounded, Color(0xFFB91C1C), Color(0xFFFFF1E6)),
-    _Slot('Night Time', '08:00 PM - 12:00 AM', Icons.nightlight_round, Color(0xFF312E81), Color(0xFFEEF0FF)),
-    _Slot('Flexible', 'Available Anytime', Icons.calendar_month_rounded, Color(0xFF1D4ED8), Color(0xFFEEF0FF)),
+    _Slot('Morning Time', '06:00 AM - 12:00 PM', '06:00:00', '12:00:00', Icons.wb_twilight_rounded, Color(0xFFF59E0B), Color(0xFFFDEBD0)),
+    _Slot('Day time', '12:00 PM - 04:00 PM', '12:00:00', '16:00:00', Icons.wb_sunny_outlined, Color(0xFFF97316), Color(0xFFFFF3E6)),
+    _Slot('Evening Time', '04:00 PM - 08:00 PM', '16:00:00', '20:00:00', Icons.waves_rounded, Color(0xFFB91C1C), Color(0xFFFFF1E6)),
+    _Slot('Night Time', '08:00 PM - 12:00 AM', '20:00:00', '23:59:59', Icons.nightlight_round, Color(0xFF312E81), Color(0xFFEEF0FF)),
+    _Slot('Flexible', 'Available Anytime', '00:00:00', '23:59:59', Icons.calendar_month_rounded, Color(0xFF1D4ED8), Color(0xFFEEF0FF)),
   ];
 
   int _selected = 0;
+  bool _saving = false;
+
+  Future<void> _save() async {
+    if (_saving) return;
+    final slot = _slots[_selected];
+    setState(() => _saving = true);
+    try {
+      final response = await DriverApiService.saveSchedule(
+        title: slot.title,
+        startTime: slot.start,
+        endTime: slot.end,
+      );
+      debugPrint('SCHEDULE_SCREEN_01 | saved "${slot.title}" ${slot.start}-${slot.end} response=$response');
+      if (!mounted) return;
+      // Navigator.of(context).pop(slot.title);
+    } catch (e) {
+      debugPrint('SCHEDULE_SCREEN_02 | save failed: $e');
+      if (!mounted) return;
+      setState(() => _saving = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +73,9 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
       bottom: Padding(
         padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
         child: UnifiedButton(
-          label: 'Save Schedule',
+          label: _saving ? 'Saving...' : 'Save Schedule',
           backgroundColor: const Color(0xFF1E3FBF),
-          onPressed: () => Navigator.of(context).pop(_slots[_selected].title),
+          onPressed: _saving ? null : _save,
         ),
       ),
       child: ListView.separated(

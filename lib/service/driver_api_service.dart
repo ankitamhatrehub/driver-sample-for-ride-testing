@@ -305,6 +305,39 @@ class DriverApiService {
     return DriverOrderModel.fromResponse(Map<String, dynamic>.from(decoded)).toMap();
   }
 
+  /// POST /api/drivers/schedule  { title, start_time, end_time } (HH:mm:ss).
+  /// Returns the decoded response body. Throws an Exception with the server
+  /// message on failure.
+  static Future<dynamic> saveSchedule({
+    required String title,
+    required String startTime,
+    required String endTime,
+  }) async {
+    final payload = {'title': title, 'start_time': startTime, 'end_time': endTime};
+    debugPrint('SCHEDULE_API_01 | POST ${AppUrls.driverSchedule} body=${json.encode(payload)}');
+    final response = await apiClient
+        .post(
+          Uri.parse(AppUrls.driverSchedule),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(payload),
+        )
+        .timeout(const Duration(seconds: 10));
+    debugPrint('SCHEDULE_API_02 | HTTP ${response.statusCode} body=${response.body}');
+    dynamic decoded;
+    try {
+      decoded = response.body.isEmpty ? null : json.decode(response.body);
+    } catch (_) {
+      decoded = response.body;
+    }
+    if (response.statusCode >= 200 && response.statusCode < 300) return decoded;
+    var message = 'Failed to save schedule (${response.statusCode})';
+    if (decoded is Map) {
+      final m = decoded['message'] ?? decoded['error'] ?? decoded['detail'];
+      if (m != null && m.toString().isNotEmpty) message = m.toString();
+    }
+    throw Exception(message);
+  }
+
   /// PUT /api/driver/profile/contact  { "email": ... }
   /// Throws an Exception with the server message on failure.
   static Future<void> updateEmail(String email) async {
