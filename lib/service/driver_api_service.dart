@@ -528,6 +528,7 @@ class DriverApiService {
     required String driverPhone,
     required String base64Image,
   }) async {
+    print("url: ${AppUrls.uploadProfilePhoto}");
     final response = await apiClient
         .post(
           Uri.parse(AppUrls.uploadProfilePhoto),
@@ -535,7 +536,7 @@ class DriverApiService {
           body: json.encode({'phone': driverPhone, 'image_data': base64Image}),
         )
         .timeout(const Duration(seconds: 15));
-
+print('Upload profile photo response: ${response.statusCode} \n${response.body}');
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return data['profile_photo_url'] ?? '';

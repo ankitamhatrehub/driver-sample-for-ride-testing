@@ -71,7 +71,7 @@ class AppUrls {
       '$apiBase/driver/wallet/transactions/${Uri.encodeComponent(transactionId)}';
 
   static String transactionHistory(String phone) =>
-      '$apiBase/wallet/transaction-history?phone=${Uri.encodeComponent(phone)}';
+      '$apiBase/wallet/transactions?phone=${Uri.encodeComponent(phone)}';
 
   // ---------------------------------------------------------------------------
   // Ride Management Endpoints
