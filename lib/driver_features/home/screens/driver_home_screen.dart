@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:rider_app/driver_features/profile/screens/profile_notifications_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/profile_screen.dart';
 import 'package:rider_app/driver_features/wallet/screens/driver_wallet_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,10 +29,10 @@ import 'package:rider_app/driver_features/dashboard/ride_details_loading_dialog.
 import 'package:rider_app/driver_features/orders/orders_screen.dart';
 // import 'package:rider_app/driver_features/parcels/parcel_tab.dart';
 import 'package:rider_app/driver_features/rides/ride_flow_screen.dart';
-import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/rides/screens/online_ride_search_view.dart';
 import 'package:rider_app/driver_features/trips/screens/driver_history_screen.dart';
 import 'package:rider_app/driver_features/wallet/wallet_screen.dart';
+import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
 import 'package:rider_app/driver_features/notifications/screens/driver_notifications_screen.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
 import '../widgets/widgets.dart';
@@ -842,7 +843,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         onHelp: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute<void>(builder: (_) => const SosScreen()),
+                            MaterialPageRoute<void>(builder: (_) => const DriverLiveChatScreen()),
                           );
                         },
                         onEarnings: () => setState(() => _currentIndex = 3),

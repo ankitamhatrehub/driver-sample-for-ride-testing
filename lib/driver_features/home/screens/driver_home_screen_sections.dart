@@ -235,7 +235,7 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            DriverNotificationsScreen(profilePhotoUrl: _profilePhotoUrl),
+            ProfileNotificationsScreen(),
       ),
     );
   }
