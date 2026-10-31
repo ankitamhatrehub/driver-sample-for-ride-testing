@@ -1,5 +1,10 @@
 part of 'package:rider_app/driver_features/home/screens/driver_home_screen.dart';
 
+int? _rideIdOf(Map ride) {
+  final id = ride['id'];
+  return id is int ? id : int.tryParse('$id');
+}
+
 extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
   void _stopRealtimeLocationStream() {
     _realtimePositionSubscription?.cancel();
@@ -136,6 +141,59 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
     if (dated) return today;
     if (completed > 0) return completed;
     return trips.length;
+  }
+
+  /// Keeps the new ride UI on one ride: picks the first open request, then
+  /// follows that ride through every poll. A request that disappears from
+  /// the list was taken or cancelled, so the UI is told it is unavailable.
+  void _syncFlowRide() {
+    final current = _flowRide;
+    debugPrint('RIDE_FLOW_05 | sync start | showRideFlow=$_showRideFlow isOnline=$_isOnline '
+        'rides=${_rides.length} rejected=$_rejectedRideIds current=$current');
+    for (final r in _rides) {
+      if (r is Map) {
+        debugPrint('RIDE_FLOW_06 | ride item id=${r['id']} status="${r['status']}" '
+            'customer=${r['customer_name']} pickup=${r['pickup_address']} keys=${r.keys.toList()}');
+      } else {
+        debugPrint('RIDE_FLOW_06A | non-map item: ${r.runtimeType} $r');
+      }
+    }
+    if (current != null) {
+      final id = _rideIdOf(current);
+      for (final ride in _rides) {
+        if (ride is Map && _rideIdOf(ride) == id) {
+          _flowRide = Map<String, dynamic>.from(ride);
+          debugPrint('RIDE_FLOW_07 | refreshed current ride #$id status=${ride['status']}');
+          return;
+        }
+      }
+      if ((current['status'] ?? '').toString() == 'requested') {
+        _flowRide = {...current, 'status': 'unavailable'};
+        debugPrint('RIDE_FLOW_08 | ride #$id missing from list -> marked unavailable');
+      } else {
+        debugPrint('RIDE_FLOW_09 | ride #$id missing from list, status=${current['status']} kept');
+      }
+      return;
+    }
+    if (!_showRideFlow || !_isOnline) {
+      debugPrint('RIDE_FLOW_10 | NOT picking ride: showRideFlow=$_showRideFlow isOnline=$_isOnline');
+      return;
+    }
+    for (final ride in _rides) {
+      if (ride is! Map || (ride['status'] ?? '').toString() != 'requested') {
+        debugPrint('RIDE_FLOW_11 | skip: not a "requested" ride -> ${ride is Map ? ride['status'] : ride}');
+        continue;
+      }
+      final id = _rideIdOf(ride);
+      if (id == null || _rejectedRideIds.contains(id)) {
+        debugPrint('RIDE_FLOW_12 | skip: id=$id null or rejected');
+        continue;
+      }
+      _flowRide = Map<String, dynamic>.from(ride);
+      debugPrint('RIDE_FLOW_13 | PICKED ride #$id -> $_flowRide');
+      return;
+    }
+    debugPrint('RIDE_FLOW_14 | no requested ride found, _flowRide stays null');
   }
 
   Future<void> _acceptRide(int rideId) async {

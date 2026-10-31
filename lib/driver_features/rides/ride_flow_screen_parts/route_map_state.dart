@@ -4,10 +4,20 @@ class _RouteMapState extends State<_RouteMap> {
   GoogleMapController? _controller;
   Set<Marker> _markers = {};
 
-  static final _bounds = LatLngBounds(
-    southwest: LatLng(28.5652, 77.3194),
-    northeast: LatLng(28.5730, 77.3286),
-  );
+  LatLng get _from => widget.pickup;
+  LatLng get _to => widget.drop;
+  LatLng get _middle => LatLng((_from.latitude + _to.latitude) / 2, (_from.longitude + _to.longitude) / 2);
+
+  LatLngBounds get _bounds => LatLngBounds(
+        southwest: LatLng(
+          _from.latitude < _to.latitude ? _from.latitude : _to.latitude,
+          _from.longitude < _to.longitude ? _from.longitude : _to.longitude,
+        ),
+        northeast: LatLng(
+          _from.latitude > _to.latitude ? _from.latitude : _to.latitude,
+          _from.longitude > _to.longitude ? _from.longitude : _to.longitude,
+        ),
+      );
 
   @override
   void initState() {
@@ -18,7 +28,7 @@ class _RouteMapState extends State<_RouteMap> {
   @override
   void didUpdateWidget(covariant _RouteMap oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.navigating == widget.navigating) return;
+    if (oldWidget.navigating == widget.navigating && oldWidget.pickup == widget.pickup && oldWidget.drop == widget.drop) return;
     _loadMarkers();
     _frame();
   }
@@ -27,15 +37,15 @@ class _RouteMapState extends State<_RouteMap> {
     final pickup = await _blueDot();
     final drop = await _redPin();
     final markers = <Marker>{
-      Marker(markerId: const MarkerId('pickup'), position: _pickup, icon: pickup, anchor: const Offset(0.5, 0.5), zIndexInt: 2),
-      Marker(markerId: const MarkerId('drop'), position: _drop, icon: drop, anchor: const Offset(0.5, 1), zIndexInt: 2),
+      Marker(markerId: const MarkerId('pickup'), position: _from, icon: pickup, anchor: const Offset(0.5, 0.5), zIndexInt: 2),
+      Marker(markerId: const MarkerId('drop'), position: _to, icon: drop, anchor: const Offset(0.5, 1), zIndexInt: 2),
     };
     if (widget.navigating) {
       markers.add(
         Marker(
           markerId: const MarkerId('label'),
-          position: _labelPoint,
-          icon: await _distanceLabel(),
+          position: _middle,
+          icon: await _distanceLabel(widget.distance, widget.duration),
           anchor: const Offset(0.15, 0.85),
           zIndexInt: 3,
         ),
@@ -54,7 +64,7 @@ class _RouteMapState extends State<_RouteMap> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      initialCameraPosition: const CameraPosition(target: LatLng(28.5690, 77.3240), zoom: 14.6),
+      initialCameraPosition: CameraPosition(target: _middle, zoom: 14.6),
       padding: EdgeInsets.only(top: 64, bottom: widget.navigating ? 130 : 240),
       zoomControlsEnabled: false,
       myLocationButtonEnabled: false,
@@ -65,14 +75,14 @@ class _RouteMapState extends State<_RouteMap> {
         WidgetsBinding.instance.addPostFrameCallback((_) => _frame());
       },
       polylines: {
-        const Polyline(
-          polylineId: PolylineId('ride'),
+        Polyline(
+          polylineId: const PolylineId('ride'),
           color: Color(0xFF4285F4),
           width: 6,
           jointType: JointType.round,
           startCap: Cap.roundCap,
           endCap: Cap.roundCap,
-          points: _route,
+          points: [_from, _to],
         ),
       },
       markers: _markers,

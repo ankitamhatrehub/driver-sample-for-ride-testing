@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
+import 'package:rider_app/driver_features/models/driver_order_model.dart';
+import 'package:rider_app/driver_features/models/ride_model.dart';
 
 class DriverApiService {
   static const String baseUrl = AppUrls.apiBase;
@@ -10,29 +12,52 @@ class DriverApiService {
   /// Shared client; adds the Bearer token to every protected request.
   static http.Client get client => apiClient;
 
+  /// GET /api/driver/active-rides -> `{status, count, rides: [ride]}`.
+  /// Each ride is parsed by [RideModel] and returned as a map.
   static Future<List<dynamic>> fetchActiveRides({
+    required String driverPhone,
+    String city = '',
+  }) async {
+    final rides = await fetchActiveRideModels(driverPhone: driverPhone, city: city);
+    return [for (final ride in rides) ride.toMap()];
+  }
+
+  static Future<List<RideModel>> fetchActiveRideModels({
     required String driverPhone,
     String city = '',
   }) async {
     final uri = Uri.parse(
       AppUrls.activeRides(driverPhone: driverPhone, city: city),
     );
+    debugPrint('RIDE_FLOW_02 | API request GET $uri');
     final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
-    if (response.statusCode == 200) {
-      final decoded = json.decode(response.body);
-      if (decoded is List) return decoded;
-      if (decoded is Map) {
-        for (final key in const ['rides', 'data', 'results', 'active_rides']) {
-          final value = decoded[key];
-          if (value is List) return value;
+    debugPrint('RIDE_FLOW_03 | API response HTTP ${response.statusCode} body=${response.body}');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch active rides: ${response.statusCode}');
+    }
+    final decoded = json.decode(response.body);
+    Object? list = decoded;
+    if (decoded is Map) {
+      list = null;
+      for (final key in const ['rides', 'data', 'results', 'active_rides']) {
+        if (decoded[key] is List) {
+          list = decoded[key];
+          break;
         }
-        // Map without a rides list (e.g. {"message": "..."}): treat as no rides.
-        debugPrint('[ACTIVE RIDES] Unexpected object response: ${response.body}');
+      }
+      // `rides` can be null or missing when there are none.
+      if (list == null) {
+        debugPrint('RIDE_FLOW_03A | API response has no rides list: ${response.body}');
         return [];
       }
+    }
+    if (list is! List) {
       throw Exception('Unexpected active rides response: ${response.body}');
     }
-    throw Exception('Failed to fetch active rides: ${response.statusCode}');
+    return [
+      for (final item in list)
+        if (item is Map) RideModel.fromJson(Map<String, dynamic>.from(item)),
+    ];
   }
 
   static Future<void> acceptRide({
@@ -116,8 +141,11 @@ class DriverApiService {
         )
         .timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
+      // Response: {status, fare, payment_method, already}.
       final data = json.decode(response.body);
-      return (data['driver_earnings'] as num?)?.toDouble() ?? 0;
+      if (data is! Map) return 0;
+      final value = data['fare'] ?? data['driver_earnings'];
+      return value is num ? value.toDouble() : double.tryParse('$value') ?? 0;
     }
     final body = response.body.trim();
     throw Exception(
@@ -243,6 +271,7 @@ class DriverApiService {
   }
 
   /// GET /api/driver/orders?type=current|completed|cancelled|scheduled
+  /// -> `{status, type, count, data: [order]}`
   static Future<List<Map<String, dynamic>>> fetchOrders({required String type}) async {
     final uri = Uri.parse(AppUrls.driverOrders(type: type));
     final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
@@ -251,24 +280,16 @@ class DriverApiService {
       throw Exception('Failed to fetch orders: ${response.statusCode}');
     }
     final decoded = json.decode(response.body);
-    Object? list = decoded;
-    if (decoded is Map) {
-      list = null;
-      for (final key in const ['orders', 'data', 'results', 'trips']) {
-        if (decoded[key] is List) {
-          list = decoded[key];
-          break;
-        }
-      }
-    }
+    final list = decoded is Map ? decoded['data'] : decoded;
+    // `data` is null when the driver has no orders.
     if (list is! List) return [];
     return [
       for (final item in list)
-        if (item is Map) Map<String, dynamic>.from(item),
+        if (item is Map) DriverOrderModel.fromJson(Map<String, dynamic>.from(item)).toMap(),
     ];
   }
 
-  /// GET /api/driver/orders/{id}?type=ride|parcel
+  /// GET /api/driver/orders/{id}?type=ride|parcel -> `{status, data: detail}`
   static Future<Map<String, dynamic>> fetchOrderDetail({
     required Object id,
     required String type,
@@ -280,14 +301,8 @@ class DriverApiService {
       throw Exception('Failed to fetch order details: ${response.statusCode}');
     }
     final decoded = json.decode(response.body);
-    if (decoded is Map) {
-      for (final key in const ['order', 'data', 'details']) {
-        final value = decoded[key];
-        if (value is Map) return Map<String, dynamic>.from(value);
-      }
-      return Map<String, dynamic>.from(decoded);
-    }
-    throw Exception('Unexpected order details response');
+    if (decoded is! Map) throw Exception('Unexpected order details response');
+    return DriverOrderModel.fromResponse(Map<String, dynamic>.from(decoded)).toMap();
   }
 
   /// PUT /api/driver/profile/contact  { "email": ... }
@@ -396,7 +411,16 @@ class DriverApiService {
   static Future<Map<String, dynamic>> fetchDriverProfile(String driverPhone) =>
       fetchProfile(driverPhone);
 
+  /// GET /api/driver/ride -> `{status, ride: detail}`. Returns the detail
+  /// (not the wrapper), so `status` is the ride status.
   static Future<Map<String, dynamic>> fetchRideDetail({
+    required int rideId,
+    required String driverPhone,
+  }) async {
+    return (await fetchRideModel(rideId: rideId, driverPhone: driverPhone)).toMap();
+  }
+
+  static Future<RideModel> fetchRideModel({
     required int rideId,
     required String driverPhone,
   }) async {
@@ -407,10 +431,12 @@ class DriverApiService {
           ),
         )
         .timeout(const Duration(seconds: 5));
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch ride detail');
     }
-    throw Exception('Failed to fetch ride detail');
+    final decoded = json.decode(response.body);
+    if (decoded is! Map) throw Exception('Unexpected ride detail response');
+    return RideModel.fromResponse(Map<String, dynamic>.from(decoded));
   }
 
   /// Raw ride-detail response (no timeout, status not checked) for callers

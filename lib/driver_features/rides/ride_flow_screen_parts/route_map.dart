@@ -1,8 +1,18 @@
 part of 'package:rider_app/driver_features/rides/ride_flow_screen.dart';
 
 class _RouteMap extends StatefulWidget {
-  const _RouteMap({this.navigating = false});
+  const _RouteMap({
+    required this.pickup,
+    required this.drop,
+    required this.distance,
+    required this.duration,
+    this.navigating = false,
+  });
 
+  final LatLng pickup;
+  final LatLng drop;
+  final String distance;
+  final String duration;
   final bool navigating;
 
   @override

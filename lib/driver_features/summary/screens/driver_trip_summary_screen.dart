@@ -86,7 +86,9 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
         driverPhone: widget.driverPhone,
       );
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final body = jsonDecode(response.body);
+        // Detail is wrapped as {status, ride: {...}}.
+        final data = body is Map && body['ride'] is Map ? body['ride'] : body;
         final txnId = data['transaction_id'] ?? '';
         final upi = data['upi_id'] ?? '';
         final savedMethod = (data['payment_method'] ?? '')

@@ -59,6 +59,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   bool _fetchingRides = false;
   bool _loadingRideDetails = false;
   bool _showRideFlow = false;
+  Map<String, dynamic>? _flowRide;
   String _driverPhone = '';
   String _driverName = 'Driver Partner';
   String _driverCity = '';
@@ -189,6 +190,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       _driverVehicleType = prefs.getString('vehicle_type') ?? '';
       _driverGender = prefs.getString('user_gender') ?? 'Male';
       _isOnline = shouldBeOnline;
+      // Restored online state must also show the ride flow, otherwise
+      // _syncFlowRide never picks up a requested ride.
+      _showRideFlow = shouldBeOnline;
     });
     _applyGenderTheme(_driverGender);
     if (shouldBeOnline) {
@@ -199,7 +203,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           permission == LocationPermission.always;
       if (!canUseLocation) {
         await prefs.setBool('driver_is_online', false);
-        if (mounted) setState(() => _isOnline = false);
+        if (mounted) {
+          setState(() {
+            _isOnline = false;
+            _showRideFlow = false;
+          });
+        }
       } else {
         _startPolling();
         _startRealtimeLocationStream();
@@ -376,13 +385,16 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   }
 
   Future<void> _fetchRides() async {
-    if (_fetchingRides || !mounted || _driverPhone.isEmpty) return;
+    if (_fetchingRides || !mounted || _driverPhone.isEmpty) {
+      debugPrint('RIDE_FLOW_01 | fetch skipped: fetching=$_fetchingRides mounted=$mounted phone="$_driverPhone"');
+      return;
+    }
     _fetchingRides = true;
     try {
       final data = await DriverApiService.fetchActiveRides(
         driverPhone: _driverPhone,
       );
-      debugPrint('[DEBUG ACTIVE RIDES PAYLOAD] Received ${data.length} rides: $data');
+      debugPrint('RIDE_FLOW_04 | rides after parsing (${data.length}): $data');
 
       final needsDetail = data.any((ride) {
         if (ride is! Map) return false;
@@ -453,6 +465,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       if (mounted) {
         setState(() {
           _rides = data;
+          _syncFlowRide();
         });
       }
     } catch (e) {
@@ -465,15 +478,29 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     }
   }
 
+  void _closeRideFlow() {
+    final id = _flowRide == null ? null : _rideIdOf(_flowRide!);
+    setState(() {
+      if (id != null) _rejectedRideIds.add(id);
+      _flowRide = null;
+    });
+  }
+
   Future<void> _confirmAvailability() async {
     final goingOnline = !_isOnline;
     final confirmed = await showAvailabilityDialog(context, goingOnline: goingOnline);
     if (!confirmed || !mounted) return;
     await _toggleOnline();
     if (goingOnline && _isOnline && mounted) {
+      print('_showRideFlow set to true after going online');
       setState(() => _showRideFlow = true);
+      print('_showRideFlow set to true after going online $_showRideFlow');
     } else if (!goingOnline && mounted) {
-      setState(() => _showRideFlow = false);
+      print('_showRideFlow set to false after going offline');
+      setState(() {
+        _showRideFlow = false;
+        _flowRide = null;
+      });
     }
   }
 
@@ -747,6 +774,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     return ValueListenableBuilder<String>(
       valueListenable: AppTranslations.currentLanguage,
       builder: (context, lang, child) {
+        print('_showRideFlow: $_showRideFlow, _isOnline: $_isOnline, _currentIndex: $_currentIndex, _flowRide: $_flowRide');
         return PopScope(
           canPop: false,
           child: Scaffold(
@@ -850,9 +878,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       child: RideDetailsLoadingOverlay(),
                     ),
                   ),
-                if (_showRideFlow && _currentIndex == 0)
+                if (_showRideFlow && _isOnline && _currentIndex == 0 && _flowRide != null)
                   Positioned.fill(
-                    child: RideFlowScreen(onClose: () => setState(() => _showRideFlow = false)),
+                    child: RideFlowScreen(
+                      key: ValueKey(_flowRide!['id']),
+                      ride: _flowRide!,
+                      driverPhone: _driverPhone,
+                      driverName: _driverName,
+                      onClose: _closeRideFlow,
+                    ),
                   ),
               ],
             ),

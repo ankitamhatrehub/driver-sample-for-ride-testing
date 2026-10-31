@@ -3,6 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
@@ -11,6 +13,8 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/dashboard/ride_details_loading_dialog.dart';
 import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
+import 'package:rider_app/driver_features/rides/widgets/passenger_gender_bubbles.dart';
+import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -20,7 +24,8 @@ part 'ride_flow_screen_parts/route_map.dart';
 part 'ride_flow_screen_parts/route_map_state.dart';
 part 'ride_flow_screen_sections.dart';
 
-/// Sample ride shown after the driver goes online. No backend yet.
+/// New ride UI. Driven by a ride from `active-rides`; calls the ride APIs
+/// (accept, start, pickup with OTP, reached, complete) as the driver moves on.
 enum _Phase {
   loading,
   request,
@@ -40,19 +45,20 @@ enum _Phase {
 
 const _pickup = LatLng(28.5666, 77.3208);
 const _drop = LatLng(28.5716, 77.3272);
-const _labelPoint = LatLng(28.5672, 77.3236);
-const _route = [
-  LatLng(28.5666, 77.3208),
-  LatLng(28.5669, 77.3222),
-  LatLng(28.5674, 77.3248),
-  LatLng(28.5679, 77.3264),
-  LatLng(28.5696, 77.3268),
-  LatLng(28.5716, 77.3272),
-];
 
 class RideFlowScreen extends StatefulWidget {
-  const RideFlowScreen({super.key, required this.onClose});
+  const RideFlowScreen({
+    super.key,
+    required this.ride,
+    required this.driverPhone,
+    required this.driverName,
+    required this.onClose,
+  });
 
+  /// Latest ride payload from the active-rides poll.
+  final Map<String, dynamic> ride;
+  final String driverPhone;
+  final String driverName;
   final VoidCallback onClose;
 
   @override
@@ -60,7 +66,10 @@ class RideFlowScreen extends StatefulWidget {
 }
 
 class _RideFlowScreenState extends State<RideFlowScreen> {
-  _Phase _phase = _Phase.loading;
+  _Phase _phase = _Phase.request;
+  late Map<String, dynamic> _ride = Map<String, dynamic>.from(widget.ride);
+  bool _busy = false;
+  double _earnings = 0;
   int _offer = 28;
   int _wait = 133;
   int _stars = 5;
@@ -77,9 +86,6 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   @override
   void initState() {
     super.initState();
-    Future<void>.delayed(const Duration(milliseconds: 1200), () {
-      if (mounted && _phase == _Phase.loading) setState(() => _phase = _Phase.request);
-    });
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!mounted) return;
       setState(() {
@@ -90,6 +96,20 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         if (_phase == _Phase.waiting) _wait++;
       });
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant RideFlowScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (identical(oldWidget.ride, widget.ride)) return;
+    _ride = {..._ride, ...widget.ride};
+    final status = (_ride['status'] ?? '').toString().toLowerCase();
+    final gone = status == 'cancelled' || status == 'canceled' || status == 'unavailable';
+    final live = _phase != _Phase.completed && _phase != _Phase.rate && _phase != _Phase.reward && _phase != _Phase.unavailable && _phase != _Phase.expired;
+    if (gone && live) {
+      _timer?.cancel();
+      setState(() => _phase = _Phase.unavailable);
+    }
   }
 
   @override
@@ -140,6 +160,150 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   }
 
   void _close() => widget.onClose();
+
+  // ----- ride data -----
+  int? get _rideId {
+    final id = _ride['id'];
+    return id is int ? id : int.tryParse('$id');
+  }
+
+  /// Sample rides (ids 9901/9902) are local only; skip the backend for them.
+  bool get _callsApi => _rideId != null && _rideId != 9901 && _rideId != 9902 && widget.driverPhone.isNotEmpty;
+
+  String _text(List<String> keys, String fallback) {
+    for (final key in keys) {
+      final value = _ride[key]?.toString().trim() ?? '';
+      if (value.isNotEmpty) return value;
+    }
+    return fallback;
+  }
+
+  String get _customerName => _text(['customer_name', 'user_name', 'passenger_name', 'name'], 'Customer');
+  String get _pickupAddress => _text(['pickup_address'], '-');
+  String get _dropAddress => _text(['drop_address'], '-');
+  String get _vehicleLabel => _text(['vehicle_type', 'service_type'], 'CAB').toUpperCase();
+  String get _customerPhone => _text(['customer_phone', 'user_phone', 'phone', 'rider_phone'], '');
+
+  String get _fareLabel {
+    final fare = num.tryParse(_text(['estimated_fare', 'fare', 'total_fare'], ''));
+    return fare == null ? '-' : '₹${fare.round()}';
+  }
+
+  String get _distanceText {
+    final km = num.tryParse(_text(['distance_km'], ''));
+    return km == null ? '-' : '${km % 1 == 0 ? km.toInt() : km.toStringAsFixed(1)} km';
+  }
+
+  String get _durationText {
+    final mins = num.tryParse(_text(['duration_mins', 'duration_minutes', 'eta_mins', 'estimated_duration'], ''));
+    return mins == null ? '-' : '${mins.round()} min';
+  }
+
+  LatLng get _pickupPoint => _point('pickup_lat', 'pickup_lng') ?? _pickup;
+  LatLng get _dropPoint => _point('drop_lat', 'drop_lng') ?? _drop;
+
+  LatLng? _point(String latKey, String lngKey) {
+    final lat = double.tryParse('${_ride[latKey]}');
+    final lng = double.tryParse('${_ride[lngKey]}');
+    if (lat == null || lng == null || (lat == 0 && lng == 0)) return null;
+    return LatLng(lat, lng);
+  }
+
+  void _toast(String message, {bool error = true}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), backgroundColor: error ? Colors.red : Colors.green));
+  }
+
+  String _errorText(Object e) => e.toString().replaceFirst('Exception: ', '');
+
+  // ----- ride APIs -----
+  Future<void> _accept() async {
+    if (_busy || _sheetLocked) return;
+    setState(() => _busy = true);
+    try {
+      if (_callsApi) {
+        await DriverApiService.acceptRide(rideId: _rideId!, driverPhone: widget.driverPhone);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('active_ride_id', _rideId!);
+        await prefs.remove('active_ride_picked_up');
+      }
+      if (!mounted) return;
+      setState(() => _busy = false);
+      _openNextSheet(_Phase.toPickup);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _busy = false);
+      _openNextSheet(_Phase.unavailable);
+    }
+  }
+
+  void _startTrip() {
+    if (_callsApi) {
+      DriverApiService.startRide(rideId: _rideId!, driverPhone: widget.driverPhone).catchError((Object e) {
+        debugPrint('[RIDE FLOW] start-ride failed: $e');
+      });
+    }
+    _startNav(_Phase.arrived);
+  }
+
+  Future<void> _verifyOtp() async {
+    if (_busy || _otp.text.length != 4) return;
+    setState(() => _busy = true);
+    try {
+      if (_callsApi) {
+        await DriverApiService.pickupCustomer(rideId: _rideId!, driverPhone: widget.driverPhone, rideCode: _otp.text);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('active_ride_picked_up', true);
+      }
+      if (!mounted) return;
+      _otp.clear();
+      setState(() => _busy = false);
+      _go(_Phase.active);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _busy = false);
+      _toast(_errorText(e));
+    }
+  }
+
+  Future<void> _endRide() async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    try {
+      if (_callsApi) {
+        try {
+          await DriverApiService.markReached(rideId: _rideId);
+        } catch (e) {
+          debugPrint('[RIDE FLOW] reached failed: $e');
+        }
+        _earnings = await DriverApiService.completeRide(
+          rideId: _rideId!,
+          driverPhone: widget.driverPhone,
+          paymentMethod: _text(['payment_method'], 'cash'),
+        );
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove('active_ride_id');
+        await prefs.remove('active_ride_picked_up');
+      } else {
+        _earnings = double.tryParse(_text(['estimated_fare'], '')) ?? 0;
+      }
+      if (!mounted) return;
+      setState(() => _busy = false);
+      _go(_Phase.completed);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _busy = false);
+      _toast(_errorText(e));
+    }
+  }
+
+  void _callCustomer() {
+    final phone = _customerPhone;
+    if (phone.isEmpty) {
+      _toast('Customer phone number not available');
+      return;
+    }
+    launchUrl(Uri.parse('tel:$phone'));
+  }
 
   bool get _showSos => switch (_phase) {
         _Phase.toPickup || _Phase.arrived || _Phase.waiting || _Phase.active || _Phase.drop => true,
@@ -210,7 +374,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         children: [
           Center(child: CircleAvatar(radius: context.w(28), backgroundColor: context.adaptiveTint(const Color(0xFFF3E8FF)), child: Icon(Icons.person, color: context.legible(Color(0xFFBA2879))))),
           SizedBox(height: context.h(8)),
-          Text('Rahul', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 16)),
+          Text(_customerName, textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 16)),
           SizedBox(height: context.h(10)),
           Text('How was your Ride?', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 18, letterSpacing: -0.3)),
           Row(
@@ -314,13 +478,13 @@ Future<BitmapDescriptor> _redPin() {
 }
 
 /// Map marker bitmap: always drawn on white, so its text colors are fixed.
-Future<BitmapDescriptor> _distanceLabel() {
+Future<BitmapDescriptor> _distanceLabel(String distance, String duration) {
   return _markerImage(120, (canvas) {
     final rect = RRect.fromRectAndRadius(const Rect.fromLTWH(4, 4, 78, 40), const Radius.circular(6));
     canvas.drawRRect(rect.shift(const Offset(0, 1)), Paint()..color = const Color(0x1A000000));
     canvas.drawRRect(rect, Paint()..color = Colors.white);
-    _paintLine(canvas, '4.8 km', const Offset(12, 8), TextStyle(color: Color.fromARGB(255, 30, 41, 59), fontSize: 13, fontWeight: FontWeight.w700, height: 1));
-    _paintLine(canvas, '12 min', const Offset(12, 24), TextStyle(color: Color.fromARGB(255, 100, 116, 139), fontSize: 11, fontWeight: FontWeight.w500, height: 1));
+    _paintLine(canvas, distance, const Offset(12, 8), TextStyle(color: Color.fromARGB(255, 30, 41, 59), fontSize: 13, fontWeight: FontWeight.w700, height: 1));
+    _paintLine(canvas, duration, const Offset(12, 24), TextStyle(color: Color.fromARGB(255, 100, 116, 139), fontSize: 11, fontWeight: FontWeight.w500, height: 1));
   }, logical: 60);
 }
 

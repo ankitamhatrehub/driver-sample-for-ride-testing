@@ -5,7 +5,15 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(child: _RouteMap(navigating: _phase == _Phase.navigating)),
+          Positioned.fill(
+            child: _RouteMap(
+              pickup: _pickupPoint,
+              drop: _dropPoint,
+              distance: _distanceText,
+              duration: _durationText,
+              navigating: _phase == _Phase.navigating,
+            ),
+          ),
           Positioned(
             top: 0,
             left: 0,
@@ -73,10 +81,10 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
                 child: const Icon(Icons.navigation_rounded, color: Colors.white, size: 20),
               ),
               SizedBox(width: context.w(12)),
-              Expanded(child: _metric('4.2 km', 'Distance')),
+              Expanded(child: _metric(_distanceText, 'Distance')),
               Container(width: 1, height: context.h(28), color: context.adaptiveTint(const Color(0xFFE2E8F0))),
               SizedBox(width: context.w(14)),
-              Expanded(child: _metric('18 min', 'Est. duration')),
+              Expanded(child: _metric(_durationText, 'Est. duration')),
               IconButton(onPressed: () => _go(_navNext), icon: const Icon(Icons.close, color: Color(0xFF94A3B8))),
             ],
           ),
@@ -94,11 +102,11 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
         boxShadow: const [BoxShadow(color: Color(0x40000000), offset: Offset(0, -11), blurRadius: 16.8)],
       ),
       child: switch (_phase) {
-        _Phase.toPickup => _stopSheet(context, title: 'Heading to Pickup', chip: '2 mins away', place: 'Sector 62, Noida', action: 'Navigate', onAction: () => _startNav(_Phase.arrived)),
-        _Phase.arrived => _stopSheet(context, title: 'Arrived', chip: '', place: 'Sector 62, Noida', action: '', onAction: () => _go(_Phase.waiting)),
+        _Phase.toPickup => _stopSheet(context, title: 'Heading to Pickup', chip: '', place: _pickupAddress, action: 'Navigate', onAction: _startTrip),
+        _Phase.arrived => _stopSheet(context, title: 'Arrived', chip: '', place: _pickupAddress, action: '', onAction: () => _go(_Phase.waiting)),
         _Phase.waiting => _waitingSheet(context),
         _Phase.active => _activeSheet(context),
-        _Phase.drop => _stopSheet(context, title: 'Drop', chip: '', place: 'Sector 62, Noida', action: 'End Ride', onAction: () => _go(_Phase.completed), drop: true),
+        _Phase.drop => _stopSheet(context, title: 'Drop', chip: '', place: _dropAddress, action: 'End Ride', onAction: _endRide, drop: true),
         _ => const SizedBox.shrink(),
       },
       ),
@@ -114,7 +122,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Good morning,', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
-              Text('Rahul Sharma', style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3)),
+              Text(widget.driverName, style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3)),
             ],
           ),
         ),
@@ -175,9 +183,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             children: [
               Icon(Icons.local_taxi_rounded, color: context.torkk.textPrimary, size: context.w(22)),
               SizedBox(width: context.w(8)),
-              Text('CAB', style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2, letterSpacing: -0.2)),
+              Text(_vehicleLabel, style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2, letterSpacing: -0.2)),
               const Spacer(),
-              Text('₹240', style: AppTypography.bold.copyWith(fontSize: 22, height: 1, color: accent, letterSpacing: -0.4)),
+              Text(_fareLabel, style: AppTypography.bold.copyWith(fontSize: 22, height: 1, color: accent, letterSpacing: -0.4)),
             ],
           ),
           SizedBox(height: context.h(14)),
@@ -196,11 +204,11 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             ),
             child: Row(
               children: [
-                Expanded(child: _requestStat('4.2 km', 'Distance')),
+                Expanded(child: _requestStat(_distanceText, 'Distance')),
                 SizedBox(width: context.w(10)),
                 Container(width: 1, height: context.h(28), color: context.adaptiveTint(const Color(0xFFE2E8F0))),
                 SizedBox(width: context.w(10)),
-                Expanded(child: _requestStat('18 min', 'Est. duration')),
+                Expanded(child: _requestStat(_durationText, 'Est. duration')),
               ],
             ),
           ),
@@ -230,7 +238,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Rahul', style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, letterSpacing: -0.2)),
+              Text(_customerName, style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, letterSpacing: -0.2)),
               SizedBox(height: context.h(4)),
               Row(
                 children: [
@@ -242,14 +250,12 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
                       children: [
                         Icon(Icons.people_alt_outlined, size: context.w(12), color: context.torkk.textSecondary),
                         SizedBox(width: context.w(4)),
-                        Text('3 passengers', style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary)),
+                        Text('${PassengerGenderBubbles.totalPassengers(_ride)} passengers', style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary)),
                       ],
                     ),
                   ),
                   SizedBox(width: context.w(6)),
-                  _countBadge(Icons.thumb_up_alt_rounded, '1', const Color(0xFF2563EB)),
-                  SizedBox(width: context.w(4)),
-                  _countBadge(Icons.thumb_down_alt_rounded, '2', const Color(0xFFEC4899)),
+                  PassengerGenderBubbles.fromRide(_ride, size: context.w(22)),
                 ],
               ),
             ],
@@ -257,23 +263,8 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
         ),
         _outlineAction(accent, Icons.chat_bubble_outline_rounded),
         SizedBox(width: context.w(8)),
-        _outlineAction(accent, Icons.call_outlined),
+        GestureDetector(onTap: _callCustomer, child: _outlineAction(accent, Icons.call_outlined)),
       ],
-    );
-  }
-
-  Widget _countBadge(IconData icon, String count, Color color) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(6), vertical: context.h(3)),
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(context.r(20))),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: context.w(11), color: Colors.white),
-          SizedBox(width: context.w(2)),
-          Text(count, style: AppTypography.bold.copyWith(fontSize: 11, color: Colors.white, height: 1)),
-        ],
-      ),
     );
   }
 
@@ -311,10 +302,10 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Pickup', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate400)),
-                Text('Sector 18, Noida', style: AppTypography.bold.copyWith(fontSize: 15, height: 1.3, letterSpacing: -0.2)),
+                Text(_pickupAddress, style: AppTypography.bold.copyWith(fontSize: 15, height: 1.3, letterSpacing: -0.2)),
                 SizedBox(height: context.h(16)),
                 Text('Drop', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate400)),
-                Text('DLF Mall of India', style: AppTypography.bold.copyWith(fontSize: 15, height: 1.3, letterSpacing: -0.2)),
+                Text(_dropAddress, style: AppTypography.bold.copyWith(fontSize: 15, height: 1.3, letterSpacing: -0.2)),
               ],
             ),
           ),
@@ -338,7 +329,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     return SizedBox(
       height: context.h(52),
       child: OutlinedButton(
-        onPressed: () => _openNextSheet(_Phase.unavailable),
+        onPressed: _close,
         style: OutlinedButton.styleFrom(
           foregroundColor: const Color(0xFFEF4444),
           side: const BorderSide(color: Color(0xFFEF4444), width: 1.4),
@@ -353,7 +344,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     return SizedBox(
       height: context.h(52),
       child: FilledButton(
-        onPressed: () => _openNextSheet(_Phase.toPickup),
+        onPressed: _busy ? null : _accept,
         style: FilledButton.styleFrom(
           backgroundColor: accent,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(16))),
@@ -439,7 +430,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
         ),
         SizedBox(height: context.h(10)),
         _rider(context),
-        _place(context, const Color(0xFF16A34A), 'PICKUP', 'Sector 62, Noida'),
+        _place(context, const Color(0xFF16A34A), 'PICKUP', _pickupAddress),
         SizedBox(height: context.h(8)),
         Container(
           width: double.infinity,
@@ -472,9 +463,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
         SizedBox(height: context.h(18)),
         _rider(context),
         SizedBox(height: context.h(18)),
-        _place(context, const Color(0xFF1A995B), 'Pickup', 'Sector 18, Noida'),
+        _place(context, const Color(0xFF1A995B), 'Pickup', _pickupAddress),
         SizedBox(height: context.h(12)),
-        _place(context, const Color(0xFFEF4444), 'Drop', 'DLF Mall of India'),
+        _place(context, const Color(0xFFEF4444), 'Drop', _dropAddress),
         SizedBox(height: context.h(50)),
         Row(
           children: [
@@ -506,11 +497,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             SizedBox(height: context.h(28)),
             _RideOtpBoxes(controller: _otp, focusNode: _otpFocus, length: 4),
             SizedBox(height: context.h(28)),
-            _fill(context, 'Verify & Start Ride', () {
-              if (_otp.text.length != 4) return;
-              _otp.clear();
-              _go(_Phase.active);
-            }),
+            _fill(context, _busy ? 'Verifying...' : 'Verify & Start Ride', _verifyOtp),
           ],
         ),
       ),
@@ -568,9 +555,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
           Text('Ride Completed !', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 20, letterSpacing: -0.3)),
           Text('Great job', textAlign: TextAlign.center, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
           SizedBox(height: context.h(16)),
-          _money(context, "Driver's Earning", '₹ 85'),
+          _money(context, "Driver's Earning", '₹ ${_earnings.round()}'),
           SizedBox(height: context.h(8)),
-          _money(context, 'Payment', 'Paid Cash'),
+          _money(context, 'Payment', _text(['payment_method'], 'cash').toLowerCase() == 'cash' ? 'Paid Cash' : 'Paid Online'),
           SizedBox(height: context.h(12)),
           Container(
             padding: EdgeInsets.all(context.w(12)),
@@ -730,7 +717,8 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     );
   }
 
-  Widget _rider(BuildContext context, {int passengers = 4}) {
+  Widget _rider(BuildContext context) {
+    final passengers = PassengerGenderBubbles.totalPassengers(_ride);
     final accent = Theme.of(context).colorScheme.primary;
     return Padding(
       padding: EdgeInsets.only(bottom: context.h(8)),
@@ -742,16 +730,14 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Rahul', style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+                Text(_customerName, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
                 Row(
                   children: [
                     Icon(Icons.people_alt_outlined, size: 14, color: AppColors.slate400),
                     const SizedBox(width: 4),
                     Text('$passengers passengers', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
                     const SizedBox(width: 6),
-                    _pill(Icons.thumb_up_alt_rounded, '1', const Color(0xFF16A34A)),
-                    const SizedBox(width: 4),
-                    _pill(Icons.thumb_down_alt_rounded, '2', const Color(0xFFEF4444)),
+                    PassengerGenderBubbles.fromRide(_ride, size: 20),
                   ],
                 ),
               ],
@@ -759,21 +745,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
           ),
           _dot(accent, Icons.chat_bubble_rounded),
           SizedBox(width: context.w(6)),
-          _dot(accent, Icons.call_rounded),
-        ],
-      ),
-    );
-  }
-
-  Widget _pill(IconData icon, String count, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(8)),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: color),
-          Text(count, style: AppTypography.regular.copyWith(fontSize: 11, fontWeight: FontWeight.w600, color: color)),
+          GestureDetector(onTap: _callCustomer, child: _dot(accent, Icons.call_rounded)),
         ],
       ),
     );
