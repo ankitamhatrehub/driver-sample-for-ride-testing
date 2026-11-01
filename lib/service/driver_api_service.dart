@@ -409,6 +409,9 @@ class DriverApiService {
     required String conversationId,
     required String message,
   }) async {
+    print('url: ${AppUrls.chatMessage}');
+    print('conversationId: $conversationId');
+    print('message: $message');
     final payload = {'conversation_id': conversationId, 'message': message};
     debugPrint('AI_CHAT_API_03 | POST ${AppUrls.chatMessage} body=${json.encode(payload)}');
     final response = await apiClient
@@ -418,7 +421,8 @@ class DriverApiService {
           body: json.encode(payload),
         )
         .timeout(const Duration(seconds: 30));
-    debugPrint('AI_CHAT_API_04 | HTTP ${response.statusCode} body=${response.body}');
+    debugPrint('statuscode ${response.statusCode}');
+    print('response: ${response.body}');
     dynamic decoded;
     try {
       decoded = response.body.isEmpty ? null : json.decode(response.body);

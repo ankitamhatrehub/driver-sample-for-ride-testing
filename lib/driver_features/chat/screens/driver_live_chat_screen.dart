@@ -145,6 +145,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     });
     _scrollToBottom();
     try {
+      
       final body = await DriverApiService.sendChatMessage(
         conversationId: _conversationId,
         message: text,
