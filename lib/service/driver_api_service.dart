@@ -535,6 +535,7 @@ class DriverApiService {
     final response = await apiClient
         .get(Uri.parse(AppUrls.driverProfile(driverPhone)))
         .timeout(const Duration(seconds: 5));
+        print('DriverApiService.fetchProfile response: ${response.statusCode} \n${response.body}');
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }

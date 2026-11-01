@@ -41,26 +41,18 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     }
     if (phone.isEmpty) return;
     try {
-      final profile = await DriverApiService.fetchProfile(phone);
-      String pick(List<String> keys) {
-        for (final k in keys) {
-          final v = profile[k];
-          if (v != null && v.toString().trim().isNotEmpty) {
-            return v.toString().trim();
-          }
-        }
-        return '';
-      }
+      final res = await DriverApiService.fetchProfile(phone);
+      final profile = (res['profile'] as Map?) ?? const {};
+      String pick(String key) => (profile[key] ?? '').toString().trim();
 
       if (!mounted) return;
       setState(() {
-        _name = pick(['name']).isNotEmpty ? pick(['name']) : _name;
-        _gender = pick(['gender']).isNotEmpty ? pick(['gender']) : _gender;
-        _driverId = pick(['driver_id', 'id']);
-        _phone = pick(['phone', 'mobile']).isNotEmpty
-            ? pick(['phone', 'mobile'])
-            : _phone;
-        _email = pick(['email']);
+        if (pick('name').isNotEmpty) _name = pick('name');
+        if (pick('gender').isNotEmpty) _gender = pick('gender');
+        if (pick('phone').isNotEmpty) _phone = pick('phone');
+        _driverId = pick('id');
+        _email = pick('email');
+        print('BANK_SCREEN_03 | profile response=$profile');
       });
     } catch (e) {
       debugPrint('Error loading personal information: $e');
