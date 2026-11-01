@@ -24,6 +24,39 @@ class BankDetails {
   final String bankName;
   final String branchName;
 
+  /// Reads bank details from a profile response, wherever the backend nests
+  /// them.
+  factory BankDetails.fromProfile(Map<String, dynamic> profile) {
+    final sources = <Map>[profile];
+    for (final key in const ['driver', 'data', 'profile', 'bank_details']) {
+      final nested = profile[key];
+      if (nested is Map) {
+        sources.add(nested);
+        final inner = nested['bank_details'];
+        if (inner is Map) sources.add(inner);
+      }
+    }
+    String pick(List<String> keys) {
+      for (final source in sources) {
+        for (final key in keys) {
+          final v = source[key];
+          if (v != null && v.toString().trim().isNotEmpty) {
+            return v.toString().trim();
+          }
+        }
+      }
+      return '';
+    }
+
+    return BankDetails(
+      accountHolderName: pick(['account_holder_name', 'bank_account_holder_name']),
+      accountNumber: pick(['account_number', 'bank_account_number']),
+      ifscCode: pick(['ifsc_code', 'bank_ifsc_code']),
+      bankName: pick(['bank_name']),
+      branchName: pick(['branch_name', 'bank_branch_name']),
+    );
+  }
+
   bool get isEmpty =>
       accountNumber.isEmpty && bankName.isEmpty && accountHolderName.isEmpty;
 }

@@ -27,49 +27,15 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
     _load();
   }
 
-  static String _pick(List<Map> sources, List<String> keys) {
-    for (final source in sources) {
-      for (final key in keys) {
-        final v = source[key];
-        if (v != null && v.toString().trim().isNotEmpty)
-          return v.toString().trim();
-      }
-    }
-    return '';
-  }
-
-  /// Reads the saved bank details from the profile response, wherever the
-  /// backend nests them.
   Future<void> _load() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final phone = prefs.getString('user_phone') ?? '';
       final profile = await DriverApiService.fetchProfile(phone);
       debugPrint('BANK_SCREEN_03 | profile response=$profile');
-      final sources = <Map>[profile];
-      for (final key in const ['driver', 'data', 'profile', 'bank_details']) {
-        final nested = profile[key];
-        if (nested is Map) {
-          sources.add(nested);
-          final inner = nested['bank_details'];
-          if (inner is Map) sources.add(inner);
-        }
-      }
       if (!mounted) return;
       setState(() {
-        _details = BankDetails(
-          accountHolderName: _pick(sources, [
-            'account_holder_name',
-            'bank_account_holder_name',
-          ]),
-          accountNumber: _pick(sources, [
-            'account_number',
-            'bank_account_number',
-          ]),
-          ifscCode: _pick(sources, ['ifsc_code', 'bank_ifsc_code']),
-          bankName: _pick(sources, ['bank_name']),
-          branchName: _pick(sources, ['branch_name', 'bank_branch_name']),
-        );
+        _details = BankDetails.fromProfile(profile);
         _loading = false;
       });
     } catch (e) {
