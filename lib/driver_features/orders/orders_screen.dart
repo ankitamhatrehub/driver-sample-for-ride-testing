@@ -207,21 +207,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         ),
                         children: [
                           if (visible.isEmpty)
-                            Padding(
-                              padding: EdgeInsets.only(top: context.h(48)),
-                              child: Center(
-                                child: Text(
-                                  AppStrings.ordersEmpty,
-                                  style: AppTypography.regular.copyWith(
-                                    color: context.torkk.textSecondary,
-                                  ),
-                                ),
-                              ),
-                            )
+                            _emptyState(context, accent)
                           else
                             ..._grouped(context, accent, visible),
                           SizedBox(height: context.h(16)),
-                          _coinsBanner(context),
+                          // _coinsBanner(context),
                         ],
                       ),
                     ),
@@ -250,6 +240,111 @@ class _OrdersScreenState extends State<OrdersScreen> {
           border: Border.all(color: context.torkk.border),
         ),
         child: Icon(Icons.tune_rounded, color: context.torkk.textSecondary),
+      ),
+    );
+  }
+
+  Widget _emptyState(BuildContext context, Color accent) {
+    final icon = switch (_tab) {
+      _OrderTab.current => Icons.local_shipping_outlined,
+      _OrderTab.completed => Icons.task_alt_rounded,
+      _OrderTab.cancelled => Icons.cancel_outlined,
+      _OrderTab.scheduled => Icons.event_note_rounded,
+    };
+    final hint = switch (_tab) {
+      _OrderTab.current => AppStrings.ordersEmptyCurrent,
+      _OrderTab.completed => AppStrings.ordersEmptyCompleted,
+      _OrderTab.cancelled => AppStrings.ordersEmptyCancelled,
+      _OrderTab.scheduled => AppStrings.ordersEmptyScheduled,
+    };
+    return Padding(
+      padding: EdgeInsets.only(
+        top: context.h(56),
+        left: context.w(24),
+        right: context.w(24),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: context.w(150),
+              height: context.w(150),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: accent.withValues(alpha: 0.06),
+                    ),
+                  ),
+                  Container(
+                    width: context.w(112),
+                    height: context.w(112),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: accent.withValues(alpha: 0.12),
+                    ),
+                  ),
+                  Container(
+                    width: context.w(76),
+                    height: context.w(76),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: accent,
+                      boxShadow: [
+                        BoxShadow(
+                          color: accent.withValues(alpha: 0.35),
+                          blurRadius: 16,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Icon(icon, color: Colors.white, size: context.w(38)),
+                  ),
+                  Positioned(
+                    top: context.w(14),
+                    right: context.w(20),
+                    child: Icon(
+                      Icons.star_rounded,
+                      size: context.w(16),
+                      color: accent.withValues(alpha: 0.4),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: context.w(18),
+                    left: context.w(16),
+                    child: Icon(
+                      Icons.circle,
+                      size: context.w(9),
+                      color: accent.withValues(alpha: 0.3),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: context.h(20)),
+            Text(
+              AppStrings.ordersEmpty,
+              textAlign: TextAlign.center,
+              style: AppTypography.bold.copyWith(
+                fontSize: 16,
+                color: context.torkk.textPrimary,
+              ),
+            ),
+            SizedBox(height: context.h(8)),
+            Text(
+              hint,
+              textAlign: TextAlign.center,
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                height: 1.4,
+                color: context.torkk.textSecondary,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

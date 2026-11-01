@@ -42,6 +42,10 @@ class AppStrings {
   static String get ordersOngoing => AppTranslations.tr('ordersOngoing');
   static String get ordersOnline => AppTranslations.tr('ordersOnline');
   static String get ordersEmpty => AppTranslations.tr('ordersEmpty');
+  static String get ordersEmptyCurrent => AppTranslations.tr('ordersEmptyCurrent');
+  static String get ordersEmptyCompleted => AppTranslations.tr('ordersEmptyCompleted');
+  static String get ordersEmptyCancelled => AppTranslations.tr('ordersEmptyCancelled');
+  static String get ordersEmptyScheduled => AppTranslations.tr('ordersEmptyScheduled');
   static String get ordersLoadFailed => AppTranslations.tr('ordersLoadFailed');
   static String get orderDetailsLoadFailed => AppTranslations.tr('orderDetailsLoadFailed');
   static String get ordersRide => AppTranslations.tr('ordersRide');
