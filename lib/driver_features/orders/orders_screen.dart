@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rider_app/app/theme/theme_bloc.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
@@ -244,7 +246,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
     );
   }
 
+  /// Fixed gender brand color (blue / pink), independent of the dark theme's
+  /// cream accent.
+  Color _brand(BuildContext context) => context.watch<ThemeBloc>().state.isPink
+      ? AppColors.femalePink
+      : AppColors.maleBlue;
+
   Widget _emptyState(BuildContext context, Color accent) {
+    accent = _brand(context);
     final icon = switch (_tab) {
       _OrderTab.current => Icons.local_shipping_outlined,
       _OrderTab.completed => Icons.task_alt_rounded,
@@ -276,7 +285,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: accent.withValues(alpha: 0.06),
+                      color: accent.withValues(
+                        alpha: context.isDarkTheme ? 0.12 : 0.06,
+                      ),
                     ),
                   ),
                   Container(
@@ -284,7 +295,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     height: context.w(112),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: accent.withValues(alpha: 0.12),
+                      color: accent.withValues(
+                        alpha: context.isDarkTheme ? 0.22 : 0.12,
+                      ),
                     ),
                   ),
                   Container(
@@ -350,6 +363,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
   Widget _tabs(BuildContext context, Color accent) {
+    accent = _brand(context);
     final tabs = [
       (_OrderTab.current, AppStrings.ordersCurrent),
       (_OrderTab.completed, AppStrings.ordersCompleted),
@@ -380,9 +394,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: _tab == tab.$1
-                          ? Theme.of(context).colorScheme.onPrimary
-                          : AppColors.slate500,
+                      color: _tab == tab.$1 ? Colors.white : AppColors.slate500,
                     ),
                   ),
                 ),
