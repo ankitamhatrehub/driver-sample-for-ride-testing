@@ -133,7 +133,10 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Describe any problems you encountered and our team will review and resolve it.',
-                    style: TextStyle(color: context.torkk.textSecondary, fontSize: 13),
+                    style: TextStyle(
+                      color: context.torkk.textSecondary,
+                      fontSize: 13,
+                    ),
                   ),
                   const SizedBox(height: 24),
 

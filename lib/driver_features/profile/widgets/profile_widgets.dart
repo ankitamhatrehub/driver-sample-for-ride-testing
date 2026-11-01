@@ -123,12 +123,16 @@ class ProfileMenuItem extends StatelessWidget {
     required this.label,
     required this.onTap,
     this.accent = false,
+    this.iconColor,
   });
 
   final IconData icon;
   final String label;
   final VoidCallback onTap;
   final bool accent;
+
+  /// Brand color for the leading icon badge; plain icon when null.
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +145,24 @@ class ProfileMenuItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon, size: context.w(20), color: context.torkk.textPrimary),
+            if (iconColor == null)
+              Icon(icon, size: context.w(20), color: context.torkk.textPrimary)
+            else
+              Container(
+                width: context.w(34),
+                height: context.w(34),
+                decoration: BoxDecoration(
+                  color: iconColor!.withValues(
+                    alpha: context.isDarkTheme ? 0.2 : 0.12,
+                  ),
+                  borderRadius: BorderRadius.circular(context.r(10)),
+                ),
+                child: Icon(
+                  icon,
+                  size: context.w(19),
+                  color: context.legible(iconColor!, minContrast: 3),
+                ),
+              ),
             SizedBox(width: context.w(14)),
             Expanded(
               child: Text(
@@ -221,7 +242,7 @@ class ProfileValueRow extends StatelessWidget {
               ],
             ),
           ),
-         
+          if (trailing != null) ...[SizedBox(width: context.w(8)), trailing!],
         ],
       ),
     );

@@ -16,31 +16,66 @@ class PrivacyPolicyScreen extends StatelessWidget {
     return ProfilePage(
       title: AppStrings.privacyPolicy,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
-          ProfileAccordion(sections: [
-            ProfileSection(AppStrings.overview, AppStrings.privacyOverviewDescription,),
-            ProfileSection(AppStrings.privacyPolicy, _kycAnswer, readMore: true),
-            ProfileSection(AppStrings.userAcceptance, AppStrings.userAcceptanceDescription,),
-            ProfileSection(AppStrings.definitions,
-              AppStrings.definitionsDescription,),
-          ]),
-          ProfileAccordion(sections: [
-            ProfileSection(AppStrings.informationCollectedQuestion,
-              AppStrings.informationCollectedDescription,),
-          ]),
-           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.useOfInformationCollected,
-              AppStrings.useOfInformationCollectedDescription,),
-          ]),
-          ProfileAccordion(sections: [
-            ProfileSection(AppStrings.thirdPartyDisclosure,
-              AppStrings.thirdPartyDisclosureDescription,),
-          ]),
-           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.thirdPartyServices,
-              AppStrings.thirdPartyServicesDescription,),
-          ]),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.overview,
+                AppStrings.privacyOverviewDescription,
+              ),
+              ProfileSection(
+                AppStrings.privacyPolicy,
+                _kycAnswer,
+                readMore: true,
+              ),
+              ProfileSection(
+                AppStrings.userAcceptance,
+                AppStrings.userAcceptanceDescription,
+              ),
+              ProfileSection(
+                AppStrings.definitions,
+                AppStrings.definitionsDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.informationCollectedQuestion,
+                AppStrings.informationCollectedDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.useOfInformationCollected,
+                AppStrings.useOfInformationCollectedDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.thirdPartyDisclosure,
+                AppStrings.thirdPartyDisclosureDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.thirdPartyServices,
+                AppStrings.thirdPartyServicesDescription,
+              ),
+            ],
+          ),
         ],
       ),
     );

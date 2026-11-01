@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -37,21 +36,37 @@ class IssueProblemScreen extends StatelessWidget {
     return ProfilePage(
       title: 'Select Specific Problem',
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(4), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(4),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
-          Text('Choose the issue you are facing', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
+          Text(
+            'Choose the issue you are facing',
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
+          ),
           SizedBox(height: context.h(12)),
           for (final item in _problems)
             ticketChoice(
               context,
               icon: item.$1,
-              color: category == 'Earning & Payments' ? const Color(0xFFF59E0B) : const Color(0xFF7C3AED),
-              background: category == 'Earning & Payments' ? const Color(0xFFFEF3C7) : const Color(0xFFF3E8FF),
+              color: category == 'Earning & Payments'
+                  ? const Color(0xFFF59E0B)
+                  : const Color(0xFF7C3AED),
+              background: category == 'Earning & Payments'
+                  ? const Color(0xFFFEF3C7)
+                  : const Color(0xFFF3E8FF),
               label: item.$2,
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (_) => AddPhotosScreen(category: category, problem: item.$2),
+                    builder: (_) =>
+                        AddPhotosScreen(category: category, problem: item.$2),
                   ),
                 );
               },

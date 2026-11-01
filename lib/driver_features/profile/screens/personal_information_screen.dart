@@ -76,14 +76,39 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return ProfilePage(
       title: AppStrings.personalInformation,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(28), context.h(30), context.w(28), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(28),
+          context.h(30),
+          context.w(28),
+          context.h(20),
+        ),
         children: [
           ProfileMenuCard(
             items: [
-              ProfileValueRow(icon: Icons.person_outline, label: AppStrings.name, value: _name, trailing: lock),
-              ProfileValueRow(icon: Icons.person_outline, label: AppStrings.gender, value: _gender, trailing: lock),
-              ProfileValueRow(icon: Icons.badge_outlined, label: AppStrings.driversId, value: _driverId, trailing: lock),
-              ProfileValueRow(icon: Icons.phone_outlined, label: AppStrings.mobileNumber, value: _phone, trailing: lock),
+              ProfileValueRow(
+                icon: Icons.person_outline,
+                label: AppStrings.name,
+                value: _name,
+                trailing: lock,
+              ),
+              ProfileValueRow(
+                icon: Icons.person_outline,
+                label: AppStrings.gender,
+                value: _gender,
+                trailing: lock,
+              ),
+              ProfileValueRow(
+                icon: Icons.badge_outlined,
+                label: AppStrings.driversId,
+                value: _driverId,
+                trailing: lock,
+              ),
+              ProfileValueRow(
+                icon: Icons.phone_outlined,
+                label: AppStrings.mobileNumber,
+                value: _phone,
+                trailing: lock,
+              ),
               ProfileValueRow(
                 icon: Icons.mail_outline,
                 label: AppStrings.emailAddress,

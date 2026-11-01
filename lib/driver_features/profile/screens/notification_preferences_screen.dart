@@ -11,10 +11,12 @@ class NotificationPreferencesScreen extends StatefulWidget {
   const NotificationPreferencesScreen({super.key});
 
   @override
-  State<NotificationPreferencesScreen> createState() => _NotificationPreferencesScreenState();
+  State<NotificationPreferencesScreen> createState() =>
+      _NotificationPreferencesScreenState();
 }
 
-class _NotificationPreferencesScreenState extends State<NotificationPreferencesScreen> {
+class _NotificationPreferencesScreenState
+    extends State<NotificationPreferencesScreen> {
   bool _rides = false;
   bool _offers = false;
   bool _payments = true;
@@ -24,7 +26,12 @@ class _NotificationPreferencesScreenState extends State<NotificationPreferencesS
     return ProfilePage(
       title: 'Notification Preferences',
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(16), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(16),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           _PreferenceTile(
             icon: Icons.two_wheeler_outlined,
@@ -74,7 +81,10 @@ class _PreferenceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = profileAccent(context);
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(12),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
         border: Border.all(color: context.torkk.border),
@@ -88,7 +98,11 @@ class _PreferenceTile extends StatelessWidget {
               color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(12)),
             ),
-            child: Icon(icon, color: value ? accent : AppColors.slate400, size: context.w(20)),
+            child: Icon(
+              icon,
+              color: value ? accent : AppColors.slate400,
+              size: context.w(20),
+            ),
           ),
           SizedBox(width: context.w(10)),
           Expanded(
@@ -97,11 +111,19 @@ class _PreferenceTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2),
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 14,
+                    height: 1.2,
+                    letterSpacing: -0.2,
+                  ),
                 ),
                 Text(
                   subtitle,
-                  style: AppTypography.regular.copyWith(fontSize: 12, height: 1.3, color: context.torkk.textSecondary),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    height: 1.3,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
               ],
             ),

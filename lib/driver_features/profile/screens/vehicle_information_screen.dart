@@ -11,7 +11,8 @@ class VehicleInformationScreen extends StatefulWidget {
   const VehicleInformationScreen({super.key});
 
   @override
-  State<VehicleInformationScreen> createState() => _VehicleInformationScreenState();
+  State<VehicleInformationScreen> createState() =>
+      _VehicleInformationScreenState();
 }
 
 class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
@@ -34,7 +35,9 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
     for (final source in sources) {
       for (final key in keys) {
         final v = source[key];
-        if (v != null && v.toString().trim().isNotEmpty && v.toString() != 'null') {
+        if (v != null &&
+            v.toString().trim().isNotEmpty &&
+            v.toString() != 'null') {
           return v.toString().trim();
         }
       }
@@ -67,17 +70,47 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
       final profile = await DriverApiService.fetchProfile(phone);
       debugPrint('VEHICLE_SCREEN_01 | profile response=$profile');
       final sources = <Map>[profile];
-      for (final key in const ['driver', 'data', 'profile', 'vehicle', 'vehicle_details']) {
+      for (final key in const [
+        'driver',
+        'data',
+        'profile',
+        'vehicle',
+        'vehicle_details',
+      ]) {
         final nested = profile[key];
         if (nested is Map) sources.add(nested);
       }
       final type = _pick(sources, ['vehicle_type', 'type']);
-      final model = _pick(sources, ['vehicle_model', 'model', 'vehicle_name', 'vehicle_make']);
-      final number = _pick(sources, ['vehicle_number', 'vehicle_no', 'registration_number', 'plate_number']);
-      final license = _pick(sources, ['driving_licence_number', 'driving_license_number', 'license_number', 'dl_number']);
-      final rc = _pick(sources, ['rc_number', 'registration_certificate_number']);
-      final insurance = _pick(sources, ['insurance_expiry_date', 'insurance_expiry', 'insurance_valid_till']);
-      debugPrint('VEHICLE_SCREEN_02 | type=$type model=$model number=$number license=$license rc=$rc insurance=$insurance');
+      final model = _pick(sources, [
+        'vehicle_model',
+        'model',
+        'vehicle_name',
+        'vehicle_make',
+      ]);
+      final number = _pick(sources, [
+        'vehicle_number',
+        'vehicle_no',
+        'registration_number',
+        'plate_number',
+      ]);
+      final license = _pick(sources, [
+        'driving_licence_number',
+        'driving_license_number',
+        'license_number',
+        'dl_number',
+      ]);
+      final rc = _pick(sources, [
+        'rc_number',
+        'registration_certificate_number',
+      ]);
+      final insurance = _pick(sources, [
+        'insurance_expiry_date',
+        'insurance_expiry',
+        'insurance_valid_till',
+      ]);
+      debugPrint(
+        'VEHICLE_SCREEN_02 | type=$type model=$model number=$number license=$license rc=$rc insurance=$insurance',
+      );
       if (!mounted) return;
       setState(() {
         if (type.isNotEmpty) _vehicleType = _titleCase(type);
@@ -99,7 +132,12 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
     return ProfilePage(
       title: AppStrings.vehicleInformation,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           VehicleHeader(title: _vehicleType),
           SizedBox(height: context.h(12)),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,7 +20,9 @@ class IssueSubmittedScreen extends StatelessWidget {
       title: '',
       bottom: ticketFilled(context, 'View Ticket Details', () {
         Navigator.of(context).push(
-          MaterialPageRoute<void>(builder: (_) => TicketDetailsScreen(ticket: ticket)),
+          MaterialPageRoute<void>(
+            builder: (_) => TicketDetailsScreen(ticket: ticket),
+          ),
         );
       }),
       child: ListView(
@@ -32,16 +33,34 @@ class IssueSubmittedScreen extends StatelessWidget {
             child: Container(
               width: context.w(72),
               height: context.w(72),
-              decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFDCFCE7)), shape: BoxShape.circle),
-              child: Icon(Icons.check_rounded, color: context.legible(Color(0xFF16A34A)), size: context.w(36)),
+              decoration: BoxDecoration(
+                color: context.adaptiveTint(Color(0xFFDCFCE7)),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.check_rounded,
+                color: context.legible(Color(0xFF16A34A)),
+                size: context.w(36),
+              ),
             ),
           ),
           SizedBox(height: context.h(16)),
-          Text('Issue Submitted', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2, letterSpacing: -0.3)),
+          Text(
+            'Issue Submitted',
+            textAlign: TextAlign.center,
+            style: AppTypography.bold.copyWith(
+              fontSize: 20,
+              height: 1.2,
+              letterSpacing: -0.3,
+            ),
+          ),
           Text(
             'Your request has been submitted successfully',
             textAlign: TextAlign.center,
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(18)),
           Container(
@@ -54,11 +73,32 @@ class IssueSubmittedScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(child: Text('Ticket ID', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary))),
-                    Text('# tk2345', style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
+                    Expanded(
+                      child: Text(
+                        'Ticket ID',
+                        style: AppTypography.regular.copyWith(
+                          fontSize: 12,
+                          color: context.torkk.textSecondary,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '# tk2345',
+                      style: AppTypography.bold.copyWith(
+                        fontSize: 14,
+                        height: 1.2,
+                        letterSpacing: -0.2,
+                      ),
+                    ),
                     IconButton(
-                      onPressed: () => Clipboard.setData(const ClipboardData(text: 'tk2345')),
-                      icon: Icon(Icons.copy_rounded, size: 16, color: profileAccent(context)),
+                      onPressed: () => Clipboard.setData(
+                        const ClipboardData(text: 'tk2345'),
+                      ),
+                      icon: Icon(
+                        Icons.copy_rounded,
+                        size: 16,
+                        color: profileAccent(context),
+                      ),
                     ),
                   ],
                 ),
@@ -73,7 +113,13 @@ class IssueSubmittedScreen extends StatelessWidget {
             children: [
               Icon(Icons.info, size: 16, color: profileAccent(context)),
               SizedBox(width: context.w(6)),
-              Text("We'll notify you once there is an update.", style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
+              Text(
+                "We'll notify you once there is an update.",
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  color: context.torkk.textSecondary,
+                ),
+              ),
             ],
           ),
         ],
@@ -86,8 +132,22 @@ class IssueSubmittedScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
-          Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600)),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                color: context.torkk.textSecondary,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );

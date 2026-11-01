@@ -12,7 +12,11 @@ import 'package:rider_app/driver_features/profile/screens/tickets/additional_det
 import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets.dart';
 
 class AddPhotosScreen extends StatefulWidget {
-  const AddPhotosScreen({super.key, required this.category, required this.problem});
+  const AddPhotosScreen({
+    super.key,
+    required this.category,
+    required this.problem,
+  });
 
   final String category;
   final String problem;
@@ -25,7 +29,10 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
   final _photos = <String>[];
 
   Future<void> _add() async {
-    final photo = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final photo = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
     if (photo == null) return;
     setState(() => _photos.add(photo.path));
   }
@@ -47,11 +54,19 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
         );
       }),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), 0, context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          0,
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           Text(
             'Add clear photos to help us understand the issue (Optional)',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(14)),
           Wrap(
@@ -64,14 +79,27 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(context.r(12)),
-                      child: Image.file(File(_photos[i]), width: context.w(96), height: context.w(96), fit: BoxFit.cover),
+                      child: Image.file(
+                        File(_photos[i]),
+                        width: context.w(96),
+                        height: context.w(96),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     Positioned(
                       right: 4,
                       top: 4,
                       child: GestureDetector(
                         onTap: () => setState(() => _photos.removeAt(i)),
-                        child: const CircleAvatar(radius: 10, backgroundColor: Colors.black54, child: Icon(Icons.close, size: 12, color: Colors.white)),
+                        child: const CircleAvatar(
+                          radius: 10,
+                          backgroundColor: Colors.black54,
+                          child: Icon(
+                            Icons.close,
+                            size: 12,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -81,15 +109,25 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
           SizedBox(height: context.h(16)),
           Container(
             padding: EdgeInsets.all(context.w(12)),
-            decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFF5F3FF)), borderRadius: BorderRadius.circular(context.r(12))),
+            decoration: BoxDecoration(
+              color: context.adaptiveTint(const Color(0xFFF5F3FF)),
+              borderRadius: BorderRadius.circular(context.r(12)),
+            ),
             child: Row(
               children: [
-                Icon(Icons.photo_camera_outlined, color: profileAccent(context), size: context.w(18)),
+                Icon(
+                  Icons.photo_camera_outlined,
+                  color: profileAccent(context),
+                  size: context.w(18),
+                ),
                 SizedBox(width: context.w(8)),
                 Expanded(
                   child: Text(
                     'Take photos of the location , parcel or any relevant details.',
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 12,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
                 ),
               ],
@@ -115,7 +153,13 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.photo_camera_outlined, color: profileAccent(context)),
-            Text('Add Photo', style: AppTypography.regular.copyWith(fontSize: 11, color: profileAccent(context))),
+            Text(
+              'Add Photo',
+              style: AppTypography.regular.copyWith(
+                fontSize: 11,
+                color: profileAccent(context),
+              ),
+            ),
           ],
         ),
       ),

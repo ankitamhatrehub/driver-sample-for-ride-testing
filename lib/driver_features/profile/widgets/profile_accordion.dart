@@ -46,7 +46,10 @@ class _ProfileAccordionState extends State<ProfileAccordion> {
                 _readMore = false;
               }),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.w(14),
+                  vertical: context.h(14),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -55,11 +58,16 @@ class _ProfileAccordionState extends State<ProfileAccordion> {
                         Expanded(
                           child: Text(
                             widget.sections[i].title,
-                            style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                            style: AppTypography.regular.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                         Icon(
-                          _open == i ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
+                          _open == i
+                              ? Icons.keyboard_arrow_up_rounded
+                              : Icons.keyboard_arrow_down_rounded,
                           color: AppColors.slate400,
                         ),
                       ],
@@ -68,9 +76,17 @@ class _ProfileAccordionState extends State<ProfileAccordion> {
                       SizedBox(height: context.h(8)),
                       Text(
                         widget.sections[i].body,
-                        maxLines: widget.sections[i].readMore && !_readMore ? 4 : null,
-                        overflow: widget.sections[i].readMore && !_readMore ? TextOverflow.ellipsis : null,
-                        style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary),
+                        maxLines: widget.sections[i].readMore && !_readMore
+                            ? 4
+                            : null,
+                        overflow: widget.sections[i].readMore && !_readMore
+                            ? TextOverflow.ellipsis
+                            : null,
+                        style: AppTypography.regular.copyWith(
+                          fontSize: 13,
+                          height: 1.4,
+                          color: context.torkk.textSecondary,
+                        ),
                       ),
                       if (widget.sections[i].readMore && !_readMore)
                         GestureDetector(

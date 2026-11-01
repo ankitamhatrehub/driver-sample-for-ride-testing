@@ -219,7 +219,10 @@ class _DriverSupportScreenState extends State<DriverSupportScreen> {
                             decoration: BoxDecoration(
                               color: isUser
                                   ? const Color(0xFF0F4CBA)
-                                  : (context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.surfaceMuted)),
+                                  : (context.themed(
+                                      light: const Color(0xFFE5E7EB),
+                                      dark: context.torkk.surfaceMuted,
+                                    )),
                               borderRadius: BorderRadius.only(
                                 topLeft: const Radius.circular(18),
                                 topRight: const Radius.circular(18),
@@ -232,7 +235,10 @@ class _DriverSupportScreenState extends State<DriverSupportScreen> {
                               style: TextStyle(
                                 color: isUser
                                     ? Colors.white
-                                    : (context.themed(light: const Color(0xFF1F2937), dark: context.torkk.textPrimary)),
+                                    : (context.themed(
+                                        light: const Color(0xFF1F2937),
+                                        dark: context.torkk.textPrimary,
+                                      )),
                                 fontSize: 14.5,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -256,12 +262,18 @@ class _DriverSupportScreenState extends State<DriverSupportScreen> {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: context.themed(light: const Color(0xFFD9DCE1), dark: context.torkk.surfaceMuted),
+                        color: context.themed(
+                          light: const Color(0xFFD9DCE1),
+                          dark: context.torkk.surfaceMuted,
+                        ),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.add,
-                        color: context.themed(light: const Color(0xFF4B5563), dark: context.torkk.textBody),
+                        color: context.themed(
+                          light: const Color(0xFF4B5563),
+                          dark: context.torkk.textBody,
+                        ),
                         size: 24,
                       ),
                     ),
@@ -273,7 +285,10 @@ class _DriverSupportScreenState extends State<DriverSupportScreen> {
                       height: 46,
                       padding: const EdgeInsets.only(left: 16, right: 5),
                       decoration: BoxDecoration(
-                        color: context.themed(light: const Color(0xFFD9DCE1), dark: context.torkk.surface),
+                        color: context.themed(
+                          light: const Color(0xFFD9DCE1),
+                          dark: context.torkk.surface,
+                        ),
                         borderRadius: BorderRadius.circular(23),
                       ),
                       child: Row(
@@ -284,7 +299,10 @@ class _DriverSupportScreenState extends State<DriverSupportScreen> {
                               onSubmitted: (_) => _sendMessage(),
                               style: TextStyle(
                                 fontSize: 14,
-                                color: context.themed(light: const Color(0xFF1F2937), dark: context.torkk.textPrimary),
+                                color: context.themed(
+                                  light: const Color(0xFF1F2937),
+                                  dark: context.torkk.textPrimary,
+                                ),
                                 fontWeight: FontWeight.w500,
                               ),
                               decoration: InputDecoration(
@@ -292,7 +310,10 @@ class _DriverSupportScreenState extends State<DriverSupportScreen> {
                                 fillColor: Colors.transparent,
                                 hintText: 'Send new message',
                                 hintStyle: TextStyle(
-                                  color: context.themed(light: const Color(0xFF4B5563), dark: context.torkk.textSecondary),
+                                  color: context.themed(
+                                    light: const Color(0xFF4B5563),
+                                    dark: context.torkk.textSecondary,
+                                  ),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -26,7 +25,12 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     return ProfilePage(
       title: 'Ticket Details',
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: SizedBox(
           width: double.infinity,
           height: context.h(48),
@@ -37,23 +41,36 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 return;
               }
               await Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => FollowUpScreen(ticket: ticket)),
+                MaterialPageRoute<void>(
+                  builder: (_) => FollowUpScreen(ticket: ticket),
+                ),
               );
             },
             style: OutlinedButton.styleFrom(
               foregroundColor: profileAccent(context),
               side: BorderSide(color: profileAccent(context)),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(context.r(14)),
+              ),
             ),
             child: Text(
               reopen ? 'Reopen Ticket' : 'Follow up',
-              style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: profileAccent(context)),
+              style: AppTypography.bold.copyWith(
+                fontSize: 15,
+                height: 1,
+                color: profileAccent(context),
+              ),
             ),
           ),
         ),
       ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           ticketCard(context, ticket),
           SizedBox(height: context.h(16)),
@@ -64,16 +81,28 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
           InkWell(
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => TicketFullDetailsScreen(ticket: ticket)),
+                MaterialPageRoute<void>(
+                  builder: (_) => TicketFullDetailsScreen(ticket: ticket),
+                ),
               );
             },
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: context.h(8)),
               child: Row(
                 children: [
-                  Text('View Details', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: profileAccent(context))),
+                  Text(
+                    'View Details',
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: profileAccent(context),
+                    ),
+                  ),
                   const Spacer(),
-                  Icon(Icons.chevron_right_rounded, color: profileAccent(context)),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: profileAccent(context),
+                  ),
                 ],
               ),
             ),

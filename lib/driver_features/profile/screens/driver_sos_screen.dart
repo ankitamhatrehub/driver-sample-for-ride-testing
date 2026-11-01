@@ -203,12 +203,11 @@ class _DriverSosScreenState extends State<DriverSosScreen> {
                                       ? Image.network(
                                           _driverPhotoUrl,
                                           fit: BoxFit.cover,
-                                          errorBuilder: (_, _, _) =>
-                                              Icon(
-                                                Icons.person,
-                                                size: 28,
-                                                color: context.torkk.textBody,
-                                              ),
+                                          errorBuilder: (_, _, _) => Icon(
+                                            Icons.person,
+                                            size: 28,
+                                            color: context.torkk.textBody,
+                                          ),
                                         )
                                       : Icon(
                                           Icons.person,

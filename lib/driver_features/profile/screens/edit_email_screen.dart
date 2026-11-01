@@ -71,14 +71,22 @@ class _EditEmailScreenState extends State<EditEmailScreen> {
     return ProfilePage(
       title: AppStrings.emailAddress,
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'New email',
-              style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 12,
+                color: context.torkk.textSecondary,
+              ),
             ),
             SizedBox(height: context.h(6)),
             TextField(
@@ -111,14 +119,21 @@ class _EditEmailScreenState extends State<EditEmailScreen> {
         ),
       ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(28), context.h(30), context.w(28), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(28),
+          context.h(30),
+          context.w(28),
+          context.h(20),
+        ),
         children: [
           ProfileMenuCard(
             items: [
               ProfileValueRow(
                 icon: Icons.mail_outline,
                 label: 'Current email',
-                value: widget.currentEmail.isEmpty ? 'Not added' : widget.currentEmail,
+                value: widget.currentEmail.isEmpty
+                    ? 'Not added'
+                    : widget.currentEmail,
                 trailing: const SizedBox.shrink(),
               ),
             ],

@@ -20,27 +20,48 @@ class TicketFullDetailsScreen extends StatelessWidget {
     return ProfilePage(
       title: 'Tickets Details',
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: SizedBox(
           width: double.infinity,
           height: context.h(48),
           child: OutlinedButton(
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => FollowUpScreen(ticket: ticket)),
+                MaterialPageRoute<void>(
+                  builder: (_) => FollowUpScreen(ticket: ticket),
+                ),
               );
             },
             style: OutlinedButton.styleFrom(
               foregroundColor: profileAccent(context),
               side: BorderSide(color: profileAccent(context)),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(context.r(14)),
+              ),
             ),
-            child: Text('Follow up', style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: profileAccent(context))),
+            child: Text(
+              'Follow up',
+              style: AppTypography.bold.copyWith(
+                fontSize: 15,
+                height: 1,
+                color: profileAccent(context),
+              ),
+            ),
           ),
         ),
       ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           ticketCard(context, ticket),
           SizedBox(height: context.h(14)),
@@ -49,10 +70,28 @@ class TicketFullDetailsScreen extends StatelessWidget {
           _pair(context, 'Issue', ticket.issue, bold: true),
           _pair(context, 'Category', ticket.category, bold: true),
           SizedBox(height: context.h(8)),
-          Text('Description', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
-          Text(ticket.description, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(
+            'Description',
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
+          ),
+          Text(
+            ticket.description,
+            style: AppTypography.regular.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(12)),
-          Text('Attachments', style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
+          Text(
+            'Attachments',
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           Row(
             children: [
@@ -61,7 +100,12 @@ class TicketFullDetailsScreen extends StatelessWidget {
                   padding: EdgeInsets.only(right: context.w(8)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(context.r(10)),
-                    child: Image.file(File(path), width: context.w(64), height: context.w(64), fit: BoxFit.cover),
+                    child: Image.file(
+                      File(path),
+                      width: context.w(64),
+                      height: context.w(64),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               if (ticket.photos.length > 2)
@@ -73,7 +117,13 @@ class TicketFullDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(context.r(10)),
                     border: Border.all(color: context.torkk.border),
                   ),
-                  child: Text('+${ticket.photos.length - 2}', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+                  child: Text(
+                    '+${ticket.photos.length - 2}',
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -82,13 +132,32 @@ class TicketFullDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _pair(BuildContext context, String label, String value, {bool bold = false}) {
+  Widget _pair(
+    BuildContext context,
+    String label,
+    String value, {
+    bool bold = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
-          Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: bold ? FontWeight.w700 : FontWeight.w500)),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                color: context.torkk.textSecondary,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: bold ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );

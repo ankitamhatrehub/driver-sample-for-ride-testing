@@ -93,7 +93,8 @@ class DriverCallSupportScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(foregroundColor: onColorFor(Colors.green), 
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: onColorFor(Colors.green),
                     backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(

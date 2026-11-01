@@ -54,32 +54,38 @@ class ProfileScreen extends StatelessWidget {
             items: [
               ProfileMenuItem(
                 icon: Icons.person_outline,
+                iconColor: const Color(0xFF6366F1),
                 label: AppStrings.personalInformation,
                 accent: true,
                 onTap: () => _open(context, const PersonalInformationScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.directions_car_outlined,
+                iconColor: const Color(0xFF0EA5E9),
                 label: AppStrings.vehicleInformation,
                 onTap: () => _open(context, const VehicleInformationScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.description_outlined,
+                iconColor: const Color(0xFFF59E0B),
                 label: AppStrings.documentKycStatus,
                 onTap: () => _open(context, const DocumentKycScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.account_balance_outlined,
+                iconColor: const Color(0xFF10B981),
                 label: AppStrings.bankInformation,
                 onTap: () => _open(context, const BankInformationScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.verified_outlined,
+                iconColor: const Color(0xFF8B5CF6),
                 label: AppStrings.subscriptionRecharge,
                 onTap: () => _open(context, const ComingSoonScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.toll_outlined,
+                iconColor: const Color(0xFFEAB308),
                 label: AppStrings.torkkCoins,
                 onTap: () => _open(context, const CoinsScreen()),
               ),
@@ -90,36 +96,43 @@ class ProfileScreen extends StatelessWidget {
             items: [
               ProfileMenuItem(
                 icon: Icons.notifications_none_rounded,
+                iconColor: const Color(0xFFEF4444),
                 label: AppStrings.notifications,
                 onTap: () => _open(context, const ProfileNotificationsScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.settings_outlined,
+                iconColor: const Color(0xFF64748B),
                 label: AppStrings.settings,
                 onTap: () => context.push(AppRoutes.settings),
               ),
               ProfileMenuItem(
                 icon: Icons.shield_outlined,
+                iconColor: const Color(0xFF14B8A6),
                 label: AppStrings.privacyPolicy,
                 onTap: () => _open(context, const TorkkPrivacyPolicyScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.article_outlined,
+                iconColor: const Color(0xFFF97316),
                 label: AppStrings.termsConditions,
                 onTap: () => _open(context, const TermsConditionsUsersScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.help_outline_rounded,
+                iconColor: const Color(0xFF3B82F6),
                 label: AppStrings.faq,
                 onTap: () => _open(context, const FaqScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.support_agent_rounded,
+                iconColor: const Color(0xFFEC4899),
                 label: AppStrings.helpSupport,
                 onTap: () => _open(context, const DriverLiveChatScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.info_outline_rounded,
+                iconColor: const Color(0xFF06B6D4),
                 label: AppStrings.aboutTorkk,
                 onTap: () => _open(context, const AboutTorkkScreen()),
               ),

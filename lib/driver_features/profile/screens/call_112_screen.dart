@@ -99,7 +99,8 @@ class _Call112ScreenState extends State<Call112Screen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFFEF4444)), 
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: onColorFor(const Color(0xFFEF4444)),
                     backgroundColor: const Color(0xFFEF4444),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),

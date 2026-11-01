@@ -77,19 +77,36 @@ class _SosScreenState extends State<SosScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(controller: name, decoration: const InputDecoration(labelText: 'Name')),
-              TextField(controller: phone, keyboardType: TextInputType.phone, decoration: const InputDecoration(labelText: 'Mobile Number')),
+              TextField(
+                controller: name,
+                decoration: const InputDecoration(labelText: 'Name'),
+              ),
+              TextField(
+                controller: phone,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(labelText: 'Mobile Number'),
+              ),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-            TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Save')),
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Save'),
+            ),
           ],
         );
       },
     );
-    if (saved == true && name.text.trim().isNotEmpty && phone.text.trim().isNotEmpty) {
-      setState(() => _contacts.add(_Contact(name.text.trim(), phone.text.trim())));
+    if (saved == true &&
+        name.text.trim().isNotEmpty &&
+        phone.text.trim().isNotEmpty) {
+      setState(
+        () => _contacts.add(_Contact(name.text.trim(), phone.text.trim())),
+      );
     }
     name.dispose();
     phone.dispose();
@@ -124,8 +141,15 @@ class _SosScreenState extends State<SosScreen> {
           Container(
             width: context.w(88),
             height: context.w(88),
-            decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFFEE2E2)), shape: BoxShape.circle),
-            child: Icon(Icons.notifications_active_rounded, color: context.legible(Color(0xFFEF4444)), size: context.w(36)),
+            decoration: BoxDecoration(
+              color: context.adaptiveTint(Color(0xFFFEE2E2)),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.notifications_active_rounded,
+              color: context.legible(Color(0xFFEF4444)),
+              size: context.w(36),
+            ),
           ),
           SizedBox(height: context.h(16)),
           Text('Activate SOS ?', style: _title()),
@@ -138,7 +162,12 @@ class _SosScreenState extends State<SosScreen> {
             ),
           ),
           SizedBox(height: context.h(22)),
-          _redButton(context, 'Confirm SOS', Icons.warning_amber_rounded, _start),
+          _redButton(
+            context,
+            'Confirm SOS',
+            Icons.warning_amber_rounded,
+            _start,
+          ),
           SizedBox(height: context.h(10)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(20)),
@@ -150,9 +179,18 @@ class _SosScreenState extends State<SosScreen> {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: accent,
                   side: BorderSide(color: accent),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(context.r(14)),
+                  ),
                 ),
-                child: Text('Cancel', style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: accent)),
+                child: Text(
+                  'Cancel',
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 15,
+                    height: 1,
+                    color: accent,
+                  ),
+                ),
               ),
             ),
           ),
@@ -162,7 +200,13 @@ class _SosScreenState extends State<SosScreen> {
               Expanded(child: Divider(color: context.torkk.border)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.w(10)),
-                child: Text('OR', style: AppTypography.regular.copyWith(fontSize: 12, color: AppColors.slate400)),
+                child: Text(
+                  'OR',
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    color: AppColors.slate400,
+                  ),
+                ),
               ),
               Expanded(child: Divider(color: context.torkk.border)),
             ],
@@ -171,15 +215,31 @@ class _SosScreenState extends State<SosScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _shortcut(context, Icons.call_rounded, const Color(0xFFFEE2E2), const Color(0xFFEF4444), 'Call Emergency\nContacts', () {
-                setState(() => _page = _SosPage.contacts);
-              }),
+              _shortcut(
+                context,
+                Icons.call_rounded,
+                const Color(0xFFFEE2E2),
+                const Color(0xFFEF4444),
+                'Call Emergency\nContacts',
+                () {
+                  setState(() => _page = _SosPage.contacts);
+                },
+              ),
               SizedBox(width: context.w(28)),
-              _shortcut(context, Icons.warning_amber_rounded, const Color(0xFFFEF3C7), const Color(0xFFF59E0B), 'Report Issue', () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(builder: (_) => const IssueCategoryScreen()),
-                );
-              }),
+              _shortcut(
+                context,
+                Icons.warning_amber_rounded,
+                const Color(0xFFFEF3C7),
+                const Color(0xFFF59E0B),
+                'Report Issue',
+                () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const IssueCategoryScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           const Spacer(),
@@ -188,7 +248,15 @@ class _SosScreenState extends State<SosScreen> {
     );
   }
 
-  TextStyle _title() => AppTypography.bold.copyWith(fontSize: 20, height: 1.2, letterSpacing: -0.3);
+  TextStyle _title() => AppTypography.bold.copyWith(
+    fontSize: 20,
+    height: 1.2,
+    letterSpacing: -0.3,
+  );
 
-  TextStyle _muted() => AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary);
+  TextStyle _muted() => AppTypography.regular.copyWith(
+    fontSize: 13,
+    height: 1.4,
+    color: context.torkk.textSecondary,
+  );
 }

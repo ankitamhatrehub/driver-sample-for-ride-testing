@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -20,8 +19,14 @@ class _TicketsScreenState extends State<TicketsScreen> {
   int _tab = 0;
 
   List<SupportTicket> get _visible {
-    if (_tab == 1) return supportTickets.where((t) => t.status == TicketStatus.underReview).toList();
-    if (_tab == 2) return supportTickets.where((t) => t.status != TicketStatus.underReview).toList();
+    if (_tab == 1)
+      return supportTickets
+          .where((t) => t.status == TicketStatus.underReview)
+          .toList();
+    if (_tab == 2)
+      return supportTickets
+          .where((t) => t.status != TicketStatus.underReview)
+          .toList();
     return supportTickets;
   }
 
@@ -32,7 +37,12 @@ class _TicketsScreenState extends State<TicketsScreen> {
     return ProfilePage(
       title: 'My Tickets',
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           Row(
             children: [
@@ -42,9 +52,14 @@ class _TicketsScreenState extends State<TicketsScreen> {
                   child: GestureDetector(
                     onTap: () => setState(() => _tab = i),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: context.w(18), vertical: context.h(8)),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.w(18),
+                        vertical: context.h(8),
+                      ),
                       decoration: BoxDecoration(
-                        color: _tab == i ? accent : context.adaptiveTint(Color(0xFFF1F5F9)),
+                        color: _tab == i
+                            ? accent
+                            : context.adaptiveTint(Color(0xFFF1F5F9)),
                         borderRadius: BorderRadius.circular(context.r(10)),
                       ),
                       child: Text(
@@ -52,7 +67,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
                         style: AppTypography.regular.copyWith(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: _tab == i ? Theme.of(context).colorScheme.onPrimary : context.torkk.textSecondary,
+                          color: _tab == i
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : context.torkk.textSecondary,
                         ),
                       ),
                     ),
@@ -69,7 +86,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
                 ticket,
                 onTap: () async {
                   await Navigator.of(context).push(
-                    MaterialPageRoute<void>(builder: (_) => TicketDetailsScreen(ticket: ticket)),
+                    MaterialPageRoute<void>(
+                      builder: (_) => TicketDetailsScreen(ticket: ticket),
+                    ),
                   );
                   if (mounted) setState(() {});
                 },

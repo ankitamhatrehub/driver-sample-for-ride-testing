@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -30,18 +29,36 @@ class _FollowUpScreenState extends State<FollowUpScreen> {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: 'Follow up',
-      bottom: ticketFilled(context, 'Submit', () => Navigator.of(context).pop()),
+      bottom: ticketFilled(
+        context,
+        'Submit',
+        () => Navigator.of(context).pop(),
+      ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(4), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(4),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           Text(
             'Add additional information to follow up on this ticket.',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(12)),
           ticketCard(context, widget.ticket),
           SizedBox(height: context.h(16)),
-          Text('Add your message here', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(
+            'Add your message here',
+            style: AppTypography.regular.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           ticketCommentBox(context, _note, () => setState(() {})),
         ],

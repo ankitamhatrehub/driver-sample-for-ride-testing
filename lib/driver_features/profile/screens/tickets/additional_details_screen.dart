@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
@@ -11,14 +10,20 @@ import 'package:rider_app/driver_features/profile/screens/tickets/issue_submitte
 import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets.dart';
 
 class AdditionalDetailsScreen extends StatefulWidget {
-  const AdditionalDetailsScreen({super.key, required this.category, required this.problem, required this.photos});
+  const AdditionalDetailsScreen({
+    super.key,
+    required this.category,
+    required this.problem,
+    required this.photos,
+  });
 
   final String category;
   final String problem;
   final List<String> photos;
 
   @override
-  State<AdditionalDetailsScreen> createState() => _AdditionalDetailsScreenState();
+  State<AdditionalDetailsScreen> createState() =>
+      _AdditionalDetailsScreenState();
 }
 
 class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
@@ -45,12 +50,16 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
       status: TicketStatus.underReview,
       issue: widget.category,
       category: widget.problem,
-      description: _note.text.trim().isEmpty ? _notes[_selected] : _note.text.trim(),
+      description: _note.text.trim().isEmpty
+          ? _notes[_selected]
+          : _note.text.trim(),
       photos: widget.photos,
     );
     supportTickets.insert(0, ticket);
     Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => IssueSubmittedScreen(ticket: ticket)),
+      MaterialPageRoute<void>(
+        builder: (_) => IssueSubmittedScreen(ticket: ticket),
+      ),
     );
   }
 
@@ -60,38 +69,70 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
       title: 'Additional Details',
       bottom: ticketFilled(context, 'Submit Issue', _submit),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), 0, context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          0,
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           Text(
             'Add any additional information to help us resolve the issue.',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(14)),
-          Text('Quick notes (optional)', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(
+            'Quick notes (optional)',
+            style: AppTypography.regular.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           for (var i = 0; i < _notes.length; i++)
             GestureDetector(
               onTap: () => setState(() => _selected = i),
               child: Container(
                 margin: EdgeInsets.only(bottom: context.h(8)),
-                padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.w(14),
+                  vertical: context.h(14),
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(context.r(12)),
                   border: Border.all(color: context.torkk.border),
                 ),
                 child: Row(
                   children: [
-                    Expanded(child: Text(_notes[i], style: AppTypography.regular.copyWith(fontSize: 14))),
+                    Expanded(
+                      child: Text(
+                        _notes[i],
+                        style: AppTypography.regular.copyWith(fontSize: 14),
+                      ),
+                    ),
                     Icon(
-                      _selected == i ? Icons.radio_button_checked : Icons.radio_button_off,
-                      color: _selected == i ? profileAccent(context) : AppColors.slate400,
+                      _selected == i
+                          ? Icons.radio_button_checked
+                          : Icons.radio_button_off,
+                      color: _selected == i
+                          ? profileAccent(context)
+                          : AppColors.slate400,
                     ),
                   ],
                 ),
               ),
             ),
           SizedBox(height: context.h(8)),
-          Text('Add more details (optional)', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(
+            'Add more details (optional)',
+            style: AppTypography.regular.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           ticketCommentBox(context, _note, () => setState(() {})),
         ],

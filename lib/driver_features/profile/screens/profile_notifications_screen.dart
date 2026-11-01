@@ -16,24 +16,61 @@ class ProfileNotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = profileAccent(context);
     final items = [
-      _Notice('New ride request', 'Noida', Icons.directions_car_filled_rounded, accent, accent.withValues(alpha: 0.12), true),
-      const _Notice('Parcel request nearby', 'DLF', Icons.inventory_2_outlined, Color(0xFFF59E0B), Color(0xFFFFF7ED), false),
-      const _Notice('Payment credited', '320 added to my wallet', Icons.account_balance_wallet_outlined, Color(0xFF16A34A), Color(0xFFDCFCE7), true),
-      const _Notice('New Scheduled request', 'Parcel delivery request', Icons.schedule_rounded, Color(0xFFF59E0B), Color(0xFFFFF7ED), false),
-      const _Notice('Torkk pass offer', 'Get 20% off on your next plan', Icons.toll_rounded, Color(0xFFF59E0B), Color(0xFFFFF7ED), false),
+      _Notice(
+        'New ride request',
+        'Noida',
+        Icons.directions_car_filled_rounded,
+        accent,
+        accent.withValues(alpha: 0.12),
+        true,
+      ),
+      const _Notice(
+        'Parcel request nearby',
+        'DLF',
+        Icons.inventory_2_outlined,
+        Color(0xFFF59E0B),
+        Color(0xFFFFF7ED),
+        false,
+      ),
+      const _Notice(
+        'Payment credited',
+        '320 added to my wallet',
+        Icons.account_balance_wallet_outlined,
+        Color(0xFF16A34A),
+        Color(0xFFDCFCE7),
+        true,
+      ),
+      const _Notice(
+        'New Scheduled request',
+        'Parcel delivery request',
+        Icons.schedule_rounded,
+        Color(0xFFF59E0B),
+        Color(0xFFFFF7ED),
+        false,
+      ),
+      const _Notice(
+        'Torkk pass offer',
+        'Get 20% off on your next plan',
+        Icons.toll_rounded,
+        Color(0xFFF59E0B),
+        Color(0xFFFFF7ED),
+        false,
+      ),
     ];
 
     if (items.isEmpty) {
-      return const ProfilePage(
-        title: '',
-        child: _EmptyNotifications(),
-      );
+      return const ProfilePage(title: '', child: _EmptyNotifications());
     }
 
     return ProfilePage(
       title: AppStrings.notification,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           Material(
             color: context.adaptiveTint(const Color(0xFFF5F3FF)),
@@ -41,15 +78,24 @@ class ProfileNotificationsScreen extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute<void>(builder: (_) => const NotificationPreferencesScreen()),
+                  MaterialPageRoute<void>(
+                    builder: (_) => const NotificationPreferencesScreen(),
+                  ),
                 );
               },
               borderRadius: BorderRadius.circular(context.r(16)),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.w(14),
+                  vertical: context.h(14),
+                ),
                 child: Row(
                   children: [
-                    Icon(Icons.settings_outlined, color: accent, size: context.w(22)),
+                    Icon(
+                      Icons.settings_outlined,
+                      color: accent,
+                      size: context.w(22),
+                    ),
                     SizedBox(width: context.w(12)),
                     Expanded(
                       child: Column(
@@ -57,16 +103,28 @@ class ProfileNotificationsScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Notification Preferences',
-                            style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2, letterSpacing: -0.2),
+                            style: AppTypography.bold.copyWith(
+                              color: context.torkk.textPrimary,
+                              fontSize: 14,
+                              height: 1.2,
+                              letterSpacing: -0.2,
+                            ),
                           ),
                           Text(
                             'Choose what you want to be notified about',
-                            style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                            style: AppTypography.regular.copyWith(
+                              fontSize: 12,
+                              color: context.torkk.textSecondary,
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: AppColors.slate400, size: context.w(22)),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.slate400,
+                      size: context.w(22),
+                    ),
                   ],
                 ),
               ),
@@ -75,7 +133,11 @@ class ProfileNotificationsScreen extends StatelessWidget {
           SizedBox(height: context.h(18)),
           Text(
             'Recent Notifications',
-            style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(10)),
           for (var i = 0; i < items.length; i++) ...[
@@ -105,9 +167,16 @@ class _EmptyNotifications extends StatelessWidget {
               Container(
                 width: context.w(120),
                 height: context.w(120),
-                decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFFFF7ED)), shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                  color: context.adaptiveTint(Color(0xFFFFF7ED)),
+                  shape: BoxShape.circle,
+                ),
               ),
-              Image.asset(AppAssets.notification, width: context.w(88), height: context.w(88)),
+              Image.asset(
+                AppAssets.notification,
+                width: context.w(88),
+                height: context.w(88),
+              ),
               Positioned(
                 right: context.w(22),
                 bottom: context.w(28),
@@ -119,7 +188,11 @@ class _EmptyNotifications extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 2),
                   ),
-                  child: Icon(Icons.close, color: Colors.white, size: context.w(12)),
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: context.w(12),
+                  ),
                 ),
               ),
             ],
@@ -128,7 +201,10 @@ class _EmptyNotifications extends StatelessWidget {
         SizedBox(height: context.h(16)),
         Text(
           'You have no new notifications.',
-          style: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.slate400),
+          style: AppTypography.regular.copyWith(
+            fontSize: 14,
+            color: AppColors.slate400,
+          ),
         ),
         const Spacer(),
       ],
@@ -137,7 +213,14 @@ class _EmptyNotifications extends StatelessWidget {
 }
 
 class _Notice {
-  const _Notice(this.title, this.subtitle, this.icon, this.iconColor, this.iconBg, this.unread);
+  const _Notice(
+    this.title,
+    this.subtitle,
+    this.icon,
+    this.iconColor,
+    this.iconBg,
+    this.unread,
+  );
 
   final String title;
   final String subtitle;
@@ -155,7 +238,10 @@ class _NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(12),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
         border: Border.all(color: context.torkk.border),
@@ -165,7 +251,10 @@ class _NoticeCard extends StatelessWidget {
           Container(
             width: context.w(40),
             height: context.w(40),
-            decoration: BoxDecoration(color: item.iconBg, borderRadius: BorderRadius.circular(context.r(12))),
+            decoration: BoxDecoration(
+              color: item.iconBg,
+              borderRadius: BorderRadius.circular(context.r(12)),
+            ),
             child: Icon(item.icon, color: item.iconColor, size: context.w(20)),
           ),
           SizedBox(width: context.w(10)),
@@ -173,18 +262,40 @@ class _NoticeCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.title, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
-                Text(item.subtitle, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
+                Text(
+                  item.title,
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 14,
+                    height: 1.2,
+                    letterSpacing: -0.2,
+                  ),
+                ),
+                Text(
+                  item.subtitle,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    color: context.torkk.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
-          Text('2 hours ago', style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate400)),
+          Text(
+            '2 hours ago',
+            style: AppTypography.regular.copyWith(
+              fontSize: 11,
+              color: AppColors.slate400,
+            ),
+          ),
           if (item.unread) ...[
             SizedBox(width: context.w(6)),
             Container(
               width: context.w(8),
               height: context.w(8),
-              decoration: BoxDecoration(color: profileAccent(context), shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                color: profileAccent(context),
+                shape: BoxShape.circle,
+              ),
             ),
           ],
         ],

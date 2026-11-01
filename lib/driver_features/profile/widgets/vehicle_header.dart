@@ -35,11 +35,18 @@ class VehicleHeader extends StatelessWidget {
             children: [
               Text(
                 AppStrings.carModel,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  color: context.torkk.textSecondary,
+                ),
               ),
               Text(
                 title.isEmpty ? '-' : title,
-                style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2),
+                style: AppTypography.bold.copyWith(
+                  fontSize: 14,
+                  height: 1.3,
+                  letterSpacing: -0.2,
+                ),
               ),
             ],
           ),

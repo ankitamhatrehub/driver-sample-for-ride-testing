@@ -39,10 +39,8 @@ class DocumentKycScreen extends StatelessWidget {
         ),
         itemCount: items.length,
         separatorBuilder: (context, index) => SizedBox(height: context.h(18)),
-        itemBuilder: (context, index) => KycStatusRow(
-          title: items[index].$1,
-          status: items[index].$2,
-        ),
+        itemBuilder: (context, index) =>
+            KycStatusRow(title: items[index].$1, status: items[index].$2),
       ),
     );
   }

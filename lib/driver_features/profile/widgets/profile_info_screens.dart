@@ -17,15 +17,40 @@ class PersonalInformationScreen extends StatelessWidget {
       title: AppStrings.personalInformation,
       bottom: const _ProfileEditButton(),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(28), context.h(30), context.w(28), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(28),
+          context.h(30),
+          context.w(28),
+          context.h(20),
+        ),
         children: [
           ProfileMenuCard(
             items: [
-              ProfileValueRow(icon: Icons.person_outline, label: AppStrings.name, value: 'Rahul'),
-              ProfileValueRow(icon: Icons.person_outline, label: AppStrings.gender, value: 'Male'),
-              ProfileValueRow(icon: Icons.badge_outlined, label: AppStrings.driversId, value: '6767676767'),
-              ProfileValueRow(icon: Icons.phone_outlined, label: AppStrings.mobileNumber, value: '6767676767'),
-              ProfileValueRow(icon: Icons.mail_outline, label: AppStrings.emailAddress, value: 'User@gmail.com'),
+              ProfileValueRow(
+                icon: Icons.person_outline,
+                label: AppStrings.name,
+                value: 'Rahul',
+              ),
+              ProfileValueRow(
+                icon: Icons.person_outline,
+                label: AppStrings.gender,
+                value: 'Male',
+              ),
+              ProfileValueRow(
+                icon: Icons.badge_outlined,
+                label: AppStrings.driversId,
+                value: '6767676767',
+              ),
+              ProfileValueRow(
+                icon: Icons.phone_outlined,
+                label: AppStrings.mobileNumber,
+                value: '6767676767',
+              ),
+              ProfileValueRow(
+                icon: Icons.mail_outline,
+                label: AppStrings.emailAddress,
+                value: 'User@gmail.com',
+              ),
             ],
           ),
         ],
@@ -43,15 +68,32 @@ class VehicleInformationScreen extends StatelessWidget {
       title: AppStrings.vehicleInformation,
       bottom: const _ProfileEditButton(),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           const _VehicleHeader(),
           SizedBox(height: context.h(12)),
           ProfileMenuCard(
             items: [
-              ProfileValueRow(icon: Icons.confirmation_number_outlined, label: AppStrings.registrationNumber, value: 'MH12AB1234'),
-              ProfileValueRow(icon: Icons.two_wheeler_outlined, label: AppStrings.vehicleModel, value: 'Honda Activa'),
-              ProfileValueRow(icon: Icons.directions_car_outlined, label: AppStrings.vehicleType, value: 'Two Wheeler'),
+              ProfileValueRow(
+                icon: Icons.confirmation_number_outlined,
+                label: AppStrings.registrationNumber,
+                value: 'MH12AB1234',
+              ),
+              ProfileValueRow(
+                icon: Icons.two_wheeler_outlined,
+                label: AppStrings.vehicleModel,
+                value: 'Honda Activa',
+              ),
+              ProfileValueRow(
+                icon: Icons.directions_car_outlined,
+                label: AppStrings.vehicleType,
+                value: 'Two Wheeler',
+              ),
             ],
           ),
         ],
@@ -109,11 +151,18 @@ class _VehicleHeader extends StatelessWidget {
             children: [
               Text(
                 AppStrings.carModel,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  color: context.torkk.textSecondary,
+                ),
               ),
               Text(
                 'Cab . 4 Seater',
-                style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2),
+                style: AppTypography.bold.copyWith(
+                  fontSize: 14,
+                  height: 1.3,
+                  letterSpacing: -0.2,
+                ),
               ),
             ],
           ),
@@ -129,20 +178,67 @@ class DocumentKycScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      (Icons.verified_rounded, const Color(0xFF16A34A), 'Aadhaar + PAN', AppStrings.verified, const Color(0xFF16A34A)),
-      (Icons.verified_rounded, const Color(0xFF16A34A), 'Driving License', AppStrings.verified, const Color(0xFF16A34A)),
-      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Vehicle RC', AppStrings.pending, const Color(0xFFEF4444)),
-      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Vehicle Photos', AppStrings.notStarted, AppColors.slate400),
-      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Face Verification', AppStrings.notStarted, AppColors.slate400),
-      (Icons.radio_button_unchecked, const Color(0xFFCBD5E1), 'Profile Review & Submission', AppStrings.notStarted, AppColors.slate400),
+      (
+        Icons.verified_rounded,
+        const Color(0xFF16A34A),
+        'Aadhaar + PAN',
+        AppStrings.verified,
+        const Color(0xFF16A34A),
+      ),
+      (
+        Icons.verified_rounded,
+        const Color(0xFF16A34A),
+        'Driving License',
+        AppStrings.verified,
+        const Color(0xFF16A34A),
+      ),
+      (
+        Icons.radio_button_unchecked,
+        const Color(0xFFCBD5E1),
+        'Vehicle RC',
+        AppStrings.pending,
+        const Color(0xFFEF4444),
+      ),
+      (
+        Icons.radio_button_unchecked,
+        const Color(0xFFCBD5E1),
+        'Vehicle Photos',
+        AppStrings.notStarted,
+        AppColors.slate400,
+      ),
+      (
+        Icons.radio_button_unchecked,
+        const Color(0xFFCBD5E1),
+        'Face Verification',
+        AppStrings.notStarted,
+        AppColors.slate400,
+      ),
+      (
+        Icons.radio_button_unchecked,
+        const Color(0xFFCBD5E1),
+        'Profile Review & Submission',
+        AppStrings.notStarted,
+        AppColors.slate400,
+      ),
     ];
     return ProfilePage(
       title: AppStrings.documentKyc,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           for (final row in rows) ...[
-            _KycCard(icon: row.$1, iconColor: row.$2, title: row.$3, status: row.$4, statusColor: row.$5),
+            _KycCard(
+              icon: row.$1,
+              iconColor: row.$2,
+              title: row.$3,
+              status: row.$4,
+              statusColor: row.$5,
+            ),
             SizedBox(height: context.h(10)),
           ],
         ],
@@ -169,7 +265,10 @@ class _KycCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(14),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
         border: Border.all(color: context.torkk.border),
@@ -184,13 +283,27 @@ class _KycCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: context.torkk.textPrimary),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: context.torkk.textPrimary,
+                  ),
                 ),
-                Text(status, style: AppTypography.regular.copyWith(fontSize: 12, color: statusColor)),
+                Text(
+                  status,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    color: statusColor,
+                  ),
+                ),
               ],
             ),
           ),
-          Icon(Icons.chevron_right_rounded, color: AppColors.slate400, size: context.w(20)),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.slate400,
+            size: context.w(20),
+          ),
         ],
       ),
     );
@@ -210,7 +323,12 @@ class BankInformationScreen extends StatelessWidget {
         onTap: () {},
       ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           Container(
             padding: EdgeInsets.all(context.w(14)),
@@ -227,7 +345,11 @@ class BankInformationScreen extends StatelessWidget {
                     color: profileAccent(context).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(context.r(10)),
                   ),
-                  child: Icon(Icons.account_balance_outlined, color: profileAccent(context), size: context.w(18)),
+                  child: Icon(
+                    Icons.account_balance_outlined,
+                    color: profileAccent(context),
+                    size: context.w(18),
+                  ),
                 ),
                 SizedBox(width: context.w(12)),
                 Column(
@@ -235,11 +357,18 @@ class BankInformationScreen extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.bankName,
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 12,
+                        color: context.torkk.textSecondary,
+                      ),
                     ),
                     Text(
                       'HDFC Bank',
-                      style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2),
+                      style: AppTypography.bold.copyWith(
+                        fontSize: 14,
+                        height: 1.3,
+                        letterSpacing: -0.2,
+                      ),
                     ),
                   ],
                 ),
@@ -249,9 +378,21 @@ class BankInformationScreen extends StatelessWidget {
           SizedBox(height: context.h(12)),
           ProfileMenuCard(
             items: [
-              ProfileValueRow(icon: Icons.person_outline, label: AppStrings.accountHolderName, value: 'Rahul'),
-              ProfileValueRow(icon: Icons.credit_card_outlined, label: AppStrings.accountNumber, value: '123456789012'),
-              ProfileValueRow(icon: Icons.account_balance_outlined, label: AppStrings.ifscCode, value: 'HDFC0001234'),
+              ProfileValueRow(
+                icon: Icons.person_outline,
+                label: AppStrings.accountHolderName,
+                value: 'Rahul',
+              ),
+              ProfileValueRow(
+                icon: Icons.credit_card_outlined,
+                label: AppStrings.accountNumber,
+                value: '123456789012',
+              ),
+              ProfileValueRow(
+                icon: Icons.account_balance_outlined,
+                label: AppStrings.ifscCode,
+                value: 'HDFC0001234',
+              ),
             ],
           ),
         ],

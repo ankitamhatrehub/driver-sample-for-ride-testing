@@ -134,18 +134,22 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
         leading: widget.embedded
             ? const SizedBox.shrink()
             : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () => Navigator.maybePop(context),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF475569),
-                shape: BoxShape.circle,
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: () => Navigator.maybePop(context),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF475569),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
               ),
-              child: const Icon(Icons.close, color: Colors.white, size: 20),
-            ),
-          ),
-        ),
         title: Text(
           'Profile',
           style: TextStyle(
@@ -155,7 +159,9 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: widget.embedded ? null : _buildBottomNav(context, currentIndex: 3),
+      bottomNavigationBar: widget.embedded
+          ? null
+          : _buildBottomNav(context, currentIndex: 3),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -183,16 +189,25 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                         child: _profilePhotoUrl.isNotEmpty
                             ? CircleAvatar(
                                 radius: 56,
-                                backgroundColor: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                                backgroundColor: context.themed(
+                                  light: Colors.grey.shade200,
+                                  dark: context.torkk.surfaceMuted,
+                                ),
                                 backgroundImage: NetworkImage(_profilePhotoUrl),
                               )
                             : CircleAvatar(
                                 radius: 56,
-                                backgroundColor: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                                backgroundColor: context.themed(
+                                  light: Colors.grey.shade200,
+                                  dark: context.torkk.surfaceMuted,
+                                ),
                                 child: Icon(
                                   Icons.person,
                                   size: 56,
-                                  color: context.themed(light: Colors.grey, dark: context.torkk.textSecondary),
+                                  color: context.themed(
+                                    light: Colors.grey,
+                                    dark: context.torkk.textSecondary,
+                                  ),
                                 ),
                               ),
                       ),
@@ -214,18 +229,12 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                     'Gender',
                     _gender.isNotEmpty ? _gender : 'Not specified',
                   ),
-                  Divider(
-                    color: context.torkk.border,
-                    height: 1,
-                  ),
+                  Divider(color: context.torkk.border, height: 1),
                   _buildInfoRow(
                     'DOB',
                     _dob.isNotEmpty ? _dob : 'Not specified',
                   ),
-                  Divider(
-                    color: context.torkk.border,
-                    height: 1,
-                  ),
+                  Divider(color: context.torkk.border, height: 1),
                   const SizedBox(height: 24),
                   // Option Tiles (matching Figma Profile screenshot):
                   _buildOptionTile(

@@ -37,10 +37,7 @@ extension _DriverProfileScreenStateSections on _DriverProfileScreenState {
       child: Container(
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: context.torkk.border,
-              width: 1,
-            ),
+            bottom: BorderSide(color: context.torkk.border, width: 1),
           ),
         ),
         padding: const EdgeInsets.symmetric(vertical: 18.0),

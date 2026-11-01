@@ -13,29 +13,73 @@ class TermsConditionsScreen extends StatelessWidget {
     return ProfilePage(
       title: AppStrings.termsConditions,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
-          ProfileAccordion(sections: [
-            ProfileSection(AppStrings.generalTerms, AppStrings.generalTermsDescription,),
-          ]),
-          ProfileAccordion(sections: [
-            ProfileSection(AppStrings.specialTerms, AppStrings.specialTermsDescription),
-          ]),
-           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.generalTerms, AppStrings.documentsVehicleDetailsDescription,),
-            ProfileSection(AppStrings.platform, AppStrings.platformDescription,),
-            ProfileSection(AppStrings.generalCovenants, AppStrings.generalCovenantsDescription),
-            ProfileSection(AppStrings.registration, AppStrings.registrationDescription,),
-          ]),
-           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.useOfInformationCollected, AppStrings.useOfInformationCollectedDescription,),
-          ]),
-           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.discloseInformationToThirdParties, AppStrings.discloseInformationToThirdPartiesDescription,),
-          ]),
-           ProfileAccordion(sections: [
-            ProfileSection(AppStrings.thirdPartiesProvidingServices, AppStrings.thirdPartiesProvidingServicesDescription,),
-          ]),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.generalTerms,
+                AppStrings.generalTermsDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.specialTerms,
+                AppStrings.specialTermsDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.generalTerms,
+                AppStrings.documentsVehicleDetailsDescription,
+              ),
+              ProfileSection(
+                AppStrings.platform,
+                AppStrings.platformDescription,
+              ),
+              ProfileSection(
+                AppStrings.generalCovenants,
+                AppStrings.generalCovenantsDescription,
+              ),
+              ProfileSection(
+                AppStrings.registration,
+                AppStrings.registrationDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.useOfInformationCollected,
+                AppStrings.useOfInformationCollectedDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.discloseInformationToThirdParties,
+                AppStrings.discloseInformationToThirdPartiesDescription,
+              ),
+            ],
+          ),
+          ProfileAccordion(
+            sections: [
+              ProfileSection(
+                AppStrings.thirdPartiesProvidingServices,
+                AppStrings.thirdPartiesProvidingServicesDescription,
+              ),
+            ],
+          ),
         ],
       ),
     );

@@ -171,4 +171,3 @@ class _FakeIncomingCallOverlayState extends State<FakeIncomingCallOverlay> {
     );
   }
 }
-

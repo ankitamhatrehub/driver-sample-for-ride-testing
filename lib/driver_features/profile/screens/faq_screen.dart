@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
@@ -26,19 +26,34 @@ class _FaqScreenState extends State<FaqScreen> {
   static const _topics = [
     _Topic('KYC & Verification', Icons.description_outlined, [
       _Qa('Why do I need to complete KYC?', _kycAnswer),
-      _Qa('What happens after KYC is complete?', 'Once KYC is approved you can go online and start receiving ride and parcel requests.'),
+      _Qa(
+        'What happens after KYC is complete?',
+        'Once KYC is approved you can go online and start receiving ride and parcel requests.',
+      ),
     ]),
     _Topic('DigiLocker', Icons.lock_outline, [
-      _Qa('Why connect DigiLocker?', 'DigiLocker fetches your Aadhaar and licence so you do not have to upload those documents again.'),
+      _Qa(
+        'Why connect DigiLocker?',
+        'DigiLocker fetches your Aadhaar and licence so you do not have to upload those documents again.',
+      ),
     ]),
     _Topic('Documents', Icons.description_outlined, [
-      _Qa('Which documents are required?', 'Aadhaar, PAN, driving licence, vehicle RC, and a live face check are required before you can drive.'),
+      _Qa(
+        'Which documents are required?',
+        'Aadhaar, PAN, driving licence, vehicle RC, and a live face check are required before you can drive.',
+      ),
     ]),
     _Topic('Bank & Face Verification', Icons.account_balance_outlined, [
-      _Qa('Why verify my bank account?', 'Ride and parcel earnings are sent to the account you verify during onboarding.'),
+      _Qa(
+        'Why verify my bank account?',
+        'Ride and parcel earnings are sent to the account you verify during onboarding.',
+      ),
     ]),
     _Topic('Troubleshooting & Support', Icons.support_agent, [
-      _Qa('I cannot go online. What should I do?', 'Check that location is on, your documents are verified, and you have a stable network connection.'),
+      _Qa(
+        'I cannot go online. What should I do?',
+        'Check that location is on, your documents are verified, and you have a stable network connection.',
+      ),
     ]),
   ];
 
@@ -54,7 +69,9 @@ class _FaqScreenState extends State<FaqScreen> {
     return [
       for (final topic in _topics)
         if (topic.title.toLowerCase().contains(query) ||
-            topic.items.any((item) => item.question.toLowerCase().contains(query)))
+            topic.items.any(
+              (item) => item.question.toLowerCase().contains(query),
+            ))
           topic,
     ];
   }
@@ -80,27 +97,60 @@ class _FaqScreenState extends State<FaqScreen> {
       bottom: _open == null
           ? null
           : Padding(
-              padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+              padding: EdgeInsets.fromLTRB(
+                context.w(20),
+                context.h(8),
+                context.w(20),
+                context.h(16),
+              ),
               child: Column(
                 children: [
-                  Text(AppStrings.answerHelpful, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
+                  Text(
+                    AppStrings.answerHelpful,
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 13,
+                      color: context.torkk.textSecondary,
+                    ),
+                  ),
                   SizedBox(height: context.h(10)),
                   Row(
                     children: [
-                      Expanded(child: _helpButton(context, AppStrings.yes, Icons.thumb_up_alt_outlined, true)),
+                      Expanded(
+                        child: _helpButton(
+                          context,
+                          AppStrings.yes,
+                          Icons.thumb_up_alt_outlined,
+                          true,
+                        ),
+                      ),
                       SizedBox(width: context.w(10)),
-                      Expanded(child: _helpButton(context, AppStrings.no, Icons.thumb_down_alt_outlined, false)),
+                      Expanded(
+                        child: _helpButton(
+                          context,
+                          AppStrings.no,
+                          Icons.thumb_down_alt_outlined,
+                          false,
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(4), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(4),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           Text(
             AppStrings.faqSubtitle,
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(12)),
           TextField(
@@ -109,7 +159,10 @@ class _FaqScreenState extends State<FaqScreen> {
             style: AppTypography.regular.copyWith(fontSize: 14),
             decoration: InputDecoration(
               hintText: AppStrings.searchQuestions,
-              hintStyle: AppTypography.regular.copyWith(fontSize: 14, color: AppColors.slate400),
+              hintStyle: AppTypography.regular.copyWith(
+                fontSize: 14,
+                color: AppColors.slate400,
+              ),
               prefixIcon: const Icon(Icons.search, color: AppColors.slate400),
               filled: true,
               fillColor: context.torkk.surface,
@@ -148,29 +201,53 @@ class _FaqScreenState extends State<FaqScreen> {
     );
   }
 
-  Widget _helpButton(BuildContext context, String label, IconData icon, bool yes) {
+  Widget _helpButton(
+    BuildContext context,
+    String label,
+    IconData icon,
+    bool yes,
+  ) {
     final accent = profileAccent(context);
     final selected = _helpful == yes;
     return OutlinedButton.icon(
       onPressed: () => setState(() => _helpful = yes),
       style: OutlinedButton.styleFrom(
         foregroundColor: accent,
-        backgroundColor: selected ? accent.withValues(alpha: 0.08) : Colors.white,
+        backgroundColor: selected
+            ? accent.withValues(alpha: 0.08)
+            : Colors.white,
         side: BorderSide(color: accent),
         minimumSize: Size.fromHeight(context.h(44)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(12))),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(context.r(12)),
+        ),
       ),
       icon: Icon(icon, size: context.w(16)),
-      label: Text(label, style: AppTypography.bold.copyWith(fontSize: 14, height: 1, color: accent)),
+      label: Text(
+        label,
+        style: AppTypography.bold.copyWith(
+          fontSize: 14,
+          height: 1,
+          color: accent,
+        ),
+      ),
     );
   }
 
-  Widget _outlineRow(BuildContext context, {required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _outlineRow(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(context.r(16)),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(14)),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.w(14),
+          vertical: context.h(14),
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(16)),
           border: Border.all(color: context.torkk.border),
@@ -180,9 +257,19 @@ class _FaqScreenState extends State<FaqScreen> {
             Icon(icon, size: context.w(18), color: context.torkk.textPrimary),
             SizedBox(width: context.w(10)),
             Expanded(
-              child: Text(title, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+              child: Text(
+                title,
+                style: AppTypography.regular.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
-            Icon(Icons.chevron_right_rounded, color: AppColors.slate400, size: context.w(20)),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.slate400,
+              size: context.w(20),
+            ),
           ],
         ),
       ),
@@ -206,14 +293,33 @@ class _FaqScreenState extends State<FaqScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Text(item.question, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2)),
+                  child: Text(
+                    item.question,
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 14,
+                      height: 1.3,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
                 ),
-                Icon(open ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, color: AppColors.slate400),
+                Icon(
+                  open
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.slate400,
+                ),
               ],
             ),
             if (open) ...[
               SizedBox(height: context.h(8)),
-              Text(item.answer, style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary)),
+              Text(
+                item.answer,
+                style: AppTypography.regular.copyWith(
+                  fontSize: 13,
+                  height: 1.4,
+                  color: context.torkk.textSecondary,
+                ),
+              ),
             ],
           ],
         ),

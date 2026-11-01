@@ -31,7 +31,8 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
     for (final source in sources) {
       for (final key in keys) {
         final v = source[key];
-        if (v != null && v.toString().trim().isNotEmpty) return v.toString().trim();
+        if (v != null && v.toString().trim().isNotEmpty)
+          return v.toString().trim();
       }
     }
     return '';
@@ -57,8 +58,14 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
       if (!mounted) return;
       setState(() {
         _details = BankDetails(
-          accountHolderName: _pick(sources, ['account_holder_name', 'bank_account_holder_name']),
-          accountNumber: _pick(sources, ['account_number', 'bank_account_number']),
+          accountHolderName: _pick(sources, [
+            'account_holder_name',
+            'bank_account_holder_name',
+          ]),
+          accountNumber: _pick(sources, [
+            'account_number',
+            'bank_account_number',
+          ]),
           ifscCode: _pick(sources, ['ifsc_code', 'bank_ifsc_code']),
           bankName: _pick(sources, ['bank_name']),
           branchName: _pick(sources, ['branch_name', 'bank_branch_name']),
@@ -73,7 +80,9 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
 
   Future<void> _edit() async {
     final result = await Navigator.of(context).push<BankDetails>(
-      MaterialPageRoute(builder: (_) => EditBankDetailsScreen(initial: _details)),
+      MaterialPageRoute(
+        builder: (_) => EditBankDetailsScreen(initial: _details),
+      ),
     );
     if (result != null && mounted) setState(() => _details = result);
   }
@@ -104,7 +113,12 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
         ),
       ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           Container(
             padding: EdgeInsets.all(context.w(14)),
@@ -121,19 +135,34 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
                     color: accent.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(context.r(12)),
                   ),
-                  child: Icon(Icons.account_balance_outlined, color: accent, size: context.w(20)),
+                  child: Icon(
+                    Icons.account_balance_outlined,
+                    color: accent,
+                    size: context.w(20),
+                  ),
                 ),
                 SizedBox(width: context.w(12)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _details.bankName.isEmpty ? 'Not added' : _details.bankName,
-                      style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2),
+                      _details.bankName.isEmpty
+                          ? 'Not added'
+                          : _details.bankName,
+                      style: AppTypography.bold.copyWith(
+                        fontSize: 14,
+                        height: 1.3,
+                        letterSpacing: -0.2,
+                      ),
                     ),
                     Text(
-                      _details.accountNumber.isEmpty ? '-' : _masked(_details.accountNumber),
-                      style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                      _details.accountNumber.isEmpty
+                          ? '-'
+                          : _masked(_details.accountNumber),
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 12,
+                        color: context.torkk.textSecondary,
+                      ),
                     ),
                   ],
                 ),
@@ -143,10 +172,30 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
           SizedBox(height: context.h(12)),
           ProfileMenuCard(
             items: [
-              ProfileValueRow(icon: Icons.person_outline, label: AppStrings.accountHolderName, value: _details.accountHolderName.isEmpty ? '-' : _details.accountHolderName),
-              ProfileValueRow(icon: Icons.credit_card_outlined, label: AppStrings.accountNumber, value: _details.accountNumber.isEmpty ? '-' : _details.accountNumber),
-              ProfileValueRow(icon: Icons.account_balance_outlined, label: AppStrings.ifscCode, value: _details.ifscCode.isEmpty ? '-' : _details.ifscCode),
-              ProfileValueRow(icon: Icons.location_city_outlined, label: 'Branch name', value: _details.branchName.isEmpty ? '-' : _details.branchName),
+              ProfileValueRow(
+                icon: Icons.person_outline,
+                label: AppStrings.accountHolderName,
+                value: _details.accountHolderName.isEmpty
+                    ? '-'
+                    : _details.accountHolderName,
+              ),
+              ProfileValueRow(
+                icon: Icons.credit_card_outlined,
+                label: AppStrings.accountNumber,
+                value: _details.accountNumber.isEmpty
+                    ? '-'
+                    : _details.accountNumber,
+              ),
+              ProfileValueRow(
+                icon: Icons.account_balance_outlined,
+                label: AppStrings.ifscCode,
+                value: _details.ifscCode.isEmpty ? '-' : _details.ifscCode,
+              ),
+              ProfileValueRow(
+                icon: Icons.location_city_outlined,
+                label: 'Branch name',
+                value: _details.branchName.isEmpty ? '-' : _details.branchName,
+              ),
             ],
           ),
         ],

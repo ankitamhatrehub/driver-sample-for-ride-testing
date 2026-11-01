@@ -24,7 +24,8 @@ class BankDetails {
   final String bankName;
   final String branchName;
 
-  bool get isEmpty => accountNumber.isEmpty && bankName.isEmpty && accountHolderName.isEmpty;
+  bool get isEmpty =>
+      accountNumber.isEmpty && bankName.isEmpty && accountHolderName.isEmpty;
 }
 
 /// Form to add or replace the driver's bank account. Pops with the saved
@@ -42,8 +43,12 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
   static final _ifscPattern = RegExp(r'^[A-Z]{4}0[A-Z0-9]{6}$');
 
   final _formKey = GlobalKey<FormState>();
-  late final _holder = TextEditingController(text: widget.initial.accountHolderName);
-  late final _account = TextEditingController(text: widget.initial.accountNumber);
+  late final _holder = TextEditingController(
+    text: widget.initial.accountHolderName,
+  );
+  late final _account = TextEditingController(
+    text: widget.initial.accountNumber,
+  );
   late final _ifsc = TextEditingController(text: widget.initial.ifscCode);
   late final _bank = TextEditingController(text: widget.initial.bankName);
   late final _branch = TextEditingController(text: widget.initial.branchName);
@@ -96,11 +101,17 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
     }
   }
 
-  InputDecoration _decoration(BuildContext context, String hint, IconData icon) {
+  InputDecoration _decoration(
+    BuildContext context,
+    String hint,
+    IconData icon,
+  ) {
     return InputDecoration(
       hintText: hint,
       prefixIcon: Icon(icon, size: context.w(20)),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(context.r(12))),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(context.r(12)),
+      ),
     );
   }
 
@@ -123,7 +134,10 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
         children: [
           Text(
             label,
-            style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 12,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(6)),
           TextFormField(
@@ -147,9 +161,15 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: 'Edit Bank Details',
-      subtitle: 'Earnings are paid to this account. Please double-check the details.',
+      subtitle:
+          'Earnings are paid to this account. Please double-check the details.',
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: UnifiedButton(
           label: 'Save Bank Details',
           icon: Icons.check_rounded,
@@ -163,7 +183,12 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
         key: _formKey,
         child: ListView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(12)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(20),
+            context.h(12),
+            context.w(20),
+            context.h(12),
+          ),
           children: [
             _field(
               context,
@@ -171,8 +196,11 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
               hint: 'As per bank records',
               icon: Icons.person_outline,
               controller: _holder,
-              validator: (v) => v.length < 3 ? 'Enter the account holder name' : null,
-              formatters: [FilteringTextInputFormatter.allow(RegExp(r"[A-Za-z .'-]"))],
+              validator: (v) =>
+                  v.length < 3 ? 'Enter the account holder name' : null,
+              formatters: [
+                FilteringTextInputFormatter.allow(RegExp(r"[A-Za-z .'-]")),
+              ],
             ),
             _field(
               context,
@@ -182,8 +210,13 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
               controller: _account,
               keyboardType: TextInputType.number,
               capitalization: TextCapitalization.none,
-              validator: (v) => v.length < 9 || v.length > 18 ? 'Account number must be 9 to 18 digits' : null,
-              formatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(18)],
+              validator: (v) => v.length < 9 || v.length > 18
+                  ? 'Account number must be 9 to 18 digits'
+                  : null,
+              formatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(18),
+              ],
             ),
             _field(
               context,
@@ -192,7 +225,9 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
               icon: Icons.pin_outlined,
               controller: _ifsc,
               capitalization: TextCapitalization.characters,
-              validator: (v) => _ifscPattern.hasMatch(v.toUpperCase()) ? null : 'Enter a valid 11 character IFSC code',
+              validator: (v) => _ifscPattern.hasMatch(v.toUpperCase())
+                  ? null
+                  : 'Enter a valid 11 character IFSC code',
               formatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9]')),
                 LengthLimitingTextInputFormatter(11),

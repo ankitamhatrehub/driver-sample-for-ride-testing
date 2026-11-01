@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
-import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 
 class ProfileHeader extends StatefulWidget {
@@ -42,8 +40,9 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     if (_phone.isEmpty) return;
     try {
       final profile = await DriverApiService.fetchProfile(_phone);
-      final name = (profile['name'] ?? '').toString().trim();
-      final photo = (profile['profile_photo_url'] ?? '').toString().trim();
+      final data = (profile['profile'] as Map?) ?? const {};
+      final name = (data['name'] ?? '').toString().trim();
+      final photo = (data['profile_photo_url'] ?? '').toString().trim();
       if (!mounted) return;
       setState(() {
         if (name.isNotEmpty) _name = name;
@@ -81,7 +80,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   void _toast(String message, {bool error = false}) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: error ? Colors.red : null),
+      SnackBar(
+        content: Text(message),
+        backgroundColor: error ? Colors.red : null,
+      ),
     );
   }
 
@@ -91,7 +93,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     final source = await _chooseSource();
     if (source == null || !mounted) return;
     try {
-      final image = await ImagePicker().pickImage(source: source, imageQuality: 70);
+      final image = await ImagePicker().pickImage(
+        source: source,
+        imageQuality: 70,
+      );
       if (image == null) {
         debugPrint('PROFILE_PHOTO_01A | picker closed without a photo');
         return;
@@ -117,7 +122,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       debugPrint('PROFILE_PHOTO_04 | failed: $e');
       if (!mounted) return;
       setState(() => _uploading = false);
-      _toast('Could not update photo: ${e.toString().replaceFirst('Exception: ', '')}', error: true);
+      _toast(
+        'Could not update photo: ${e.toString().replaceFirst('Exception: ', '')}',
+        error: true,
+      );
     }
   }
 
@@ -137,7 +145,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 decoration: BoxDecoration(
                   color: accent.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
-                  border: Border.all(color: accent.withValues(alpha: 0.28), width: 2),
+                  border: Border.all(
+                    color: accent.withValues(alpha: 0.28),
+                    width: 2,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.05),
@@ -153,7 +164,11 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                       Image.network(
                         _photoUrl,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => Icon(Icons.person, color: accent, size: context.w(40)),
+                        errorBuilder: (_, _, _) => Icon(
+                          Icons.person,
+                          color: accent,
+                          size: context.w(40),
+                        ),
                       )
                     else
                       Icon(Icons.person, color: accent, size: context.w(40)),
@@ -164,7 +179,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                           child: SizedBox(
                             width: 24,
                             height: 24,
-                            child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -196,58 +214,13 @@ class _ProfileHeaderState extends State<ProfileHeader> {
           ],
         ),
         SizedBox(height: context.h(8)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              _name.isEmpty ? 'Driver Partner' : _name,
-              style: AppTypography.bold.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color:  Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            SizedBox(width: context.w(10)),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.w(8),
-                vertical: context.h(3),
-              ),
-              decoration: BoxDecoration(
-                color: context.adaptiveTint(const Color(0xFFDCFCE7)),
-                borderRadius: BorderRadius.circular(context.r(20)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: context.w(6),
-                    height: context.w(6),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF16A34A),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  SizedBox(width: context.w(4)),
-                  Text(
-                    AppStrings.ordersOnline,
-                    style: AppTypography.regular.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: context.legible(Color(0xFF16A34A)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: context.h(10)),
         Text(
-          AppStrings.driversId,
-          style: AppTypography.regular.copyWith(
-            fontSize: 12,
-            color: context.torkk.textSecondary,
+          _name.isEmpty ? 'Driver Partner' : _name,
+          textAlign: TextAlign.center,
+          style: AppTypography.bold.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ],
