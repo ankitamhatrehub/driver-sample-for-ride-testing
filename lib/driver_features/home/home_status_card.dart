@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
@@ -12,11 +13,15 @@ class HomeStatusCard extends StatelessWidget {
     required this.isOnline,
     required this.onToggle,
     required this.female,
+    this.locationLabel = '',
+    this.onUpdateLocation,
   });
 
   final bool isOnline;
   final VoidCallback onToggle;
   final bool female;
+  final String locationLabel;
+  final VoidCallback? onUpdateLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +30,7 @@ class HomeStatusCard extends StatelessWidget {
         ? const Color(0xFF22C55E)
         : const Color(0xFFEF4444);
     return Container(
-      height: context.h(148),
-      padding: EdgeInsets.all(context.w(20)),
+      padding: EdgeInsets.all(context.w(14)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(24)),
         gradient: LinearGradient(
@@ -64,6 +68,7 @@ class HomeStatusCard extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -90,7 +95,12 @@ class HomeStatusCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: context.w(8)),
-              Flexible(child: _statusTitle(context)),
+              Expanded(child: _statusTitle(context)),
+              SizedBox(width: context.w(10)),
+              GestureDetector(
+                onTap: onToggle,
+                child: _AvailabilitySwitch(online: isOnline),
+              ),
             ],
           ),
           SizedBox(height: context.h(3.4)),
@@ -105,16 +115,108 @@ class HomeStatusCard extends StatelessWidget {
               ),
             ),
           ),
-          const Spacer(),
-          Align(
-            alignment: Alignment.centerRight,
-            child: GestureDetector(
-              onTap: onToggle,
-              child: _AvailabilitySwitch(online: isOnline),
+          if (isOnline && onUpdateLocation != null) ...[
+            SizedBox(height: context.h(12)),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: context.torkk.textSecondary.withValues(alpha: 0.2),
             ),
-          ),
+            SizedBox(height: context.h(12)),
+            _locationRow(context),
+          ],
         ],
       ),
+    );
+  }
+
+  Widget _locationRow(BuildContext context) {
+    final place = locationLabel.trim();
+    final tint = context.isDarkTheme
+        ? (female ? AppColors.femalePink : AppColors.maleBlue)
+        : Theme.of(context).colorScheme.primary;
+    return Row(
+      children: [
+        Container(
+          width: context.w(34),
+          height: context.w(34),
+          decoration: BoxDecoration(
+            color: tint.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(context.r(12)),
+            border: Border.all(color: tint.withValues(alpha: 0.35)),
+          ),
+          child: Icon(
+            Icons.location_on_rounded,
+            color: tint,
+            size: context.w(20),
+          ),
+        ),
+        SizedBox(width: context.w(10)),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.currentLocation,
+                style: AppTypography.regular.copyWith(
+                  fontSize: 11,
+                  color: context.torkk.textSecondary,
+                ),
+              ),
+              if (place.isNotEmpty)
+                Text(
+                  place,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 14,
+                    height: 1.3,
+                    letterSpacing: -0.2,
+                    color: context.torkk.textPrimary,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: onUpdateLocation,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.w(12),
+              vertical: context.h(7),
+            ),
+            decoration: BoxDecoration(
+              gradient: homeBrandWash(female, 1),
+              borderRadius: BorderRadius.circular(context.r(20)),
+              boxShadow: [
+                BoxShadow(
+                  color: tint.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.my_location_rounded,
+                  size: context.w(14),
+                  color: Colors.white,
+                ),
+                SizedBox(width: context.w(6)),
+                Text(
+                  AppStrings.updateLocation,
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 12,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -160,14 +262,9 @@ class _AvailabilitySwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
-      width: context.w(69.57),
-      height: context.h(30.25),
-      padding: EdgeInsets.fromLTRB(
-        context.w(6.05),
-        context.h(3.02),
-        context.w(6.05),
-        context.h(3.02),
-      ),
+      width: context.w(44),
+      height: context.h(22),
+      padding: EdgeInsets.all(context.h(3)),
       decoration: BoxDecoration(
         color: online ? const Color(0xFF22C55E) : const Color(0xFFEF4444),
         borderRadius: BorderRadius.circular(context.r(9999)),
@@ -182,8 +279,8 @@ class _AvailabilitySwitch extends StatelessWidget {
       child: Align(
         alignment: online ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
-          width: context.h(24),
-          height: context.h(24),
+          width: context.h(16),
+          height: context.h(16),
           decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,

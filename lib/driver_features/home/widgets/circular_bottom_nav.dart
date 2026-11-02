@@ -61,7 +61,7 @@ class CircularBottomNav extends StatelessWidget {
         context.w(18),
         0,
         context.w(18),
-        context.h(28),
+        context.h(8),
       ),
       child: SafeArea(
         top: false,

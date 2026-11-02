@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/home/home_header.dart';
-import 'package:rider_app/driver_features/home/home_location_card.dart';
 import 'package:rider_app/driver_features/home/home_plan_card.dart';
 import 'package:rider_app/driver_features/home/home_stats_card.dart';
 import 'package:rider_app/driver_features/home/home_status_card.dart';
@@ -113,71 +112,68 @@ class _DriverHomeViewState extends State<DriverHomeView> {
           onNotifications: widget.onNotifications,
           onHelp: widget.onHelp,
         ),
-        if (widget.isOnline)
-          Positioned(
-            left: context.w(20),
-            right: context.w(20),
-            top: context.h(168),
-            child: HomeLocationCard(
-              locationLabel: widget.locationLabel,
-              onUpdateLocation: widget.onUpdateLocation,
-              accent: accent,
-            ),
-          ),
         Positioned(
-          top: context.h(254),
+          top: context.h(120),
           left: 0,
           right: 0,
           bottom: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              // Dark: same as the scaffold behind the floating nav bar, so
-              // there is no color strip between the sheet and the nav.
-              color: context.isDarkTheme
-                  ? context.torkk.background
-                  : context.torkk.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(context.r(26)),
-              ),
-            ),
-            child: ListView(
-              padding: EdgeInsets.only(
-                top: context.h(27),
-                bottom: context.h(16),
-              ),
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.w(26)),
-                  child: HomeStatusCard(
-                    isOnline: widget.isOnline,
-                    onToggle: widget.onToggle,
-                    female: female,
-                  ),
+          // Sheet hugs its content and sits at the bottom, so offline (no
+          // location row) there is no empty space above the nav bar.
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              decoration: BoxDecoration(
+                // Dark: same as the scaffold behind the floating nav bar, so
+                // there is no color strip between the sheet and the nav.
+                color: context.isDarkTheme
+                    ? context.torkk.background
+                    : context.torkk.surface,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(context.r(26)),
                 ),
-                SizedBox(height: context.h(18)),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.w(28)),
-                  child: HomeStatsCard(
-                    todayEarnings: widget.todayEarnings,
-                    completedJobs: widget.completedJobs,
-                    onEarnings: widget.onEarnings,
-
-                    accent: accent,
-                  ),
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(
+                  top: context.h(14),
+                  bottom: context.h(10),
                 ),
-                SizedBox(height: context.h(18)),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.w(28)),
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const PlanDrivingHoursScreen(),
-                      ),
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: context.w(16)),
+                    child: HomeStatusCard(
+                      isOnline: widget.isOnline,
+                      onToggle: widget.onToggle,
+                      female: female,
+                      locationLabel: widget.locationLabel,
+                      onUpdateLocation: widget.onUpdateLocation,
                     ),
-                    child: HomePlanCard(accent: accent, female: female),
                   ),
-                ),
-              ],
+                  SizedBox(height: context.h(10)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: context.w(16)),
+                    child: HomeStatsCard(
+                      todayEarnings: widget.todayEarnings,
+                      completedJobs: widget.completedJobs,
+                      onEarnings: widget.onEarnings,
+
+                      accent: accent,
+                    ),
+                  ),
+                  SizedBox(height: context.h(10)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: context.w(16)),
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const PlanDrivingHoursScreen(),
+                        ),
+                      ),
+                      child: HomePlanCard(accent: accent, female: female),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

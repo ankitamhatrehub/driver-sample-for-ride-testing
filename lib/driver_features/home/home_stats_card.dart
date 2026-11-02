@@ -33,8 +33,7 @@ class HomeStatsCard extends StatelessWidget {
         : AppColors.maleBlue;
     final icon = dark ? context.legible(brand, minContrast: 3) : accent;
     return Container(
-      height: context.h(196),
-      padding: EdgeInsets.all(context.w(16)),
+      padding: EdgeInsets.all(context.w(14)),
       decoration: BoxDecoration(
         color: dark ? null : const Color(0x0D57278D),
         gradient: dark
@@ -60,6 +59,7 @@ class HomeStatsCard extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           GestureDetector(
@@ -117,9 +117,9 @@ class HomeStatsCard extends StatelessWidget {
               ],
             ),
           ),
-          const Spacer(),
+          SizedBox(height: context.h(10)),
           Container(
-            constraints: BoxConstraints(minHeight: context.h(55)),
+            constraints: BoxConstraints(minHeight: context.h(48)),
             padding: EdgeInsets.symmetric(
               horizontal: context.w(10),
               vertical: context.h(6),
