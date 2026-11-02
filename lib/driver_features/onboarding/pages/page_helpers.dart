@@ -5,7 +5,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
-import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
+import 'package:rider_app/driver_features/parcels/new_feature_coming_soon_screen.dart';
 
 OnboardingSession get _session => OnboardingSession.instance;
 
@@ -37,5 +37,5 @@ void showOnboardingSnack(BuildContext context, String message) {
 void openAiChat(BuildContext context) {
   Navigator.of(
     context,
-  ).push(MaterialPageRoute<void>(builder: (_) => const ComingSoonScreen()));
+  ).push(MaterialPageRoute<void>(builder: (_) => const NewFeatureComingSoonScreen()));
 }

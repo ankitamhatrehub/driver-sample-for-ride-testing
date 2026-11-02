@@ -7,7 +7,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/coins/screens/coins_screen.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/subscription/screens/subscription_screen.dart';
-import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
+import 'package:rider_app/driver_features/parcels/new_feature_coming_soon_screen.dart';
 import 'package:rider_app/driver_features/wallet/wallet_format.dart';
 import 'package:rider_app/driver_features/wallet/wallet_pages.dart';
 import 'package:rider_app/service/driver_api_service.dart';
@@ -149,7 +149,7 @@ class _WalletScreenState extends State<WalletScreen> {
       _Action(Icons.description_outlined, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), AppStrings.transactionHistory, () => _open(context, const TransactionHistoryScreen())),
       _Action(Icons.account_balance_outlined, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), AppStrings.payouts, () => _open(context, const PayoutsScreen())),
       _Action(Icons.account_balance_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), AppStrings.BankAccount, () => _open(context, const BankAccountScreen())),
-      _Action(Icons.credit_card_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), AppStrings.rechargeSubscription, () => _open(context, const ComingSoonScreen())), // coming soon for now
+      _Action(Icons.credit_card_rounded, const Color(0xFFDB2777), const Color(0xFFFCE7F3), AppStrings.rechargeSubscription, () => _open(context, const NewFeatureComingSoonScreen())), // coming soon for now
       // Previous navigation: () => _open(context, const SubscriptionScreen())
       _Action(Icons.currency_rupee_rounded, const Color(0xFF7C3AED), const Color(0xFFF3E8FF), AppStrings.earnings, () => _open(context, const EarningsScreen())),
       _Action(Icons.toll_rounded, const Color(0xFFF59E0B), const Color(0xFFFEF3C7), AppStrings.torkkCoins, () => _open(context, const CoinsScreen())),

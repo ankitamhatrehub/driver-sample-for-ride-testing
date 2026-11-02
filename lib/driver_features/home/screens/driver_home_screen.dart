@@ -34,7 +34,7 @@ import 'package:rider_app/driver_features/trips/screens/driver_history_screen.da
 import 'package:rider_app/driver_features/wallet/wallet_screen.dart';
 import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
 import 'package:rider_app/driver_features/notifications/screens/driver_notifications_screen.dart';
-import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
+import 'package:rider_app/driver_features/parcels/new_feature_coming_soon_screen.dart';
 import '../widgets/widgets.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -831,7 +831,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 if (idx == 2) {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (_) => const ComingSoonScreen(),
+                      builder: (_) => const NewFeatureComingSoonScreen(),
                     ),
                   );
                   return;

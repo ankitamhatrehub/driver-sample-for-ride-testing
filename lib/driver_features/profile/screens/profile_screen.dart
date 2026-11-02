@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
-import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
+import 'package:rider_app/driver_features/parcels/new_feature_coming_soon_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/privacy_policy_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/terms_conditions_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                 icon: Icons.verified_outlined,
                 iconColor: const Color(0xFF8B5CF6),
                 label: AppStrings.subscriptionRecharge,
-                onTap: () => _open(context, const ComingSoonScreen()),
+                onTap: () => _open(context, const NewFeatureComingSoonScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.toll_outlined,
