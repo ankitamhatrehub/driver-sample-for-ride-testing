@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 
 class _ChatMessage {
@@ -35,7 +37,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
   static const _welcome = _ChatMessage(
     isUser: false,
     text:
-        'Hello Partner! I am Lui, your AI Support Assistant. How can I help you regarding the application today?',
+        'Hello Partner! I am Lui. How can I help you regarding the application today?',
   );
 
   final List<_ChatMessage> _messages = [];
@@ -284,9 +286,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                 _avatar(size: 38),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
                       Text(
                         'Lui',
@@ -297,27 +297,31 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                           height: 1.2,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF16A34A),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            'AI Support Assistant',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: t.textSecondary,
-                            ),
-                          ),
-                        ],
+                      const SizedBox(width: 6),
+                      Container(
+                        width: 7,
+                        height: 7,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF16A34A),
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const TicketsScreen(),
+                    ),
+                  ),
+                  child: Text(
+                    AppStrings.myTickets,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: t.textPrimary,
+                    ),
                   ),
                 ),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
 import 'package:rider_app/driver_features/parcels/new_feature_coming_soon_screen.dart';
+import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/privacy_policy_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/terms_conditions_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -121,8 +122,8 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuItem(
                 icon: Icons.help_outline_rounded,
                 iconColor: const Color(0xFF3B82F6),
-                label: AppStrings.faq,
-                onTap: () => _open(context, const FaqScreen()),
+                label: AppStrings.sosandemergency,
+                onTap: () => _open(context, const SosScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.support_agent_rounded,

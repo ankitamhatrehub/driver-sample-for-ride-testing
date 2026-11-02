@@ -81,7 +81,7 @@ class AppStrings {
   static String get notification => AppTranslations.tr('notification');
   static String get settings => AppTranslations.tr('settings');
   static String get termsConditions => AppTranslations.tr('termsConditions');
-  static String get faq => AppTranslations.tr('faq');
+  static String get sosandemergency => AppTranslations.tr('sosandemergency');
   static String get faqs => AppTranslations.tr('faqs');
   static String get helpSupport => AppTranslations.tr('helpSupport');
   static String get aboutTorkk => AppTranslations.tr('aboutTorkk');

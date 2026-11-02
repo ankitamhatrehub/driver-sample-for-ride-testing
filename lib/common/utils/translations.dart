@@ -152,7 +152,7 @@ class AppTranslations {
       'torkkCoins': 'Torkk Coins',
       'notification': 'Notification',
       'termsConditions': 'Terms & Conditions',
-      'faq': 'FAQ',
+      'sosandemergency': 'Sos & Emergency',
       'faqs': 'FAQs',
       'helpSupport': 'Help & Support',
       'aboutTorkk': 'About Torkk',
