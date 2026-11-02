@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/driver_features/documents/screens/driver_documents_screen.dart';
 import 'package:rider_app/driver_features/documents/screens/driver_subscription_pass_screen.dart';
@@ -91,12 +90,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
 
     setState(() => _loading = true);
     try {
-      final bytes = await image.readAsBytes();
-      final base64Image = base64Encode(bytes);
-      await DriverApiService.uploadProfilePhoto(
-        driverPhone: _phone,
-        base64Image: base64Image,
-      );
+      await DriverApiService.uploadProfilePhoto(filePath: image.path);
       await _loadProfile();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

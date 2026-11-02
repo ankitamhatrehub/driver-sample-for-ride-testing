@@ -21,7 +21,7 @@ class HomeGlassButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = context.w(40);
+    final size = context.w(32);
     final female =
         Theme.of(context).colorScheme.primary == AppColors.femalePink;
 
@@ -40,31 +40,26 @@ class HomeGlassButton extends StatelessWidget {
             ),
           ],
         ),
-        child: ClipOval(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: homeHelpButtonFill(female),
-                border: Border.all(color: homeHelpButtonBorder, width: 1),
-              ),
-              child: asset != null
-                  ? Image.asset(
-                      asset!,
-                      width: context.w(20),
-                      height: context.w(20),
-                      fit: BoxFit.contain,
-                      color: Colors.white,
-                    )
-                  : Icon(
-                      icon,
-                      size: context.w(20),
-                      color: context.torkk.textPrimary,
-                    ),
-            ),
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: homeHelpButtonFill(female),
+            border: Border.all(color: homeHelpButtonBorder, width: 1),
           ),
+          child: asset != null
+              ? Image.asset(
+                  asset!,
+                  width: context.w(17),
+                  height: context.w(17),
+                  fit: BoxFit.contain,
+                  color: Colors.white,
+                )
+              : Icon(
+                  icon,
+                  size: context.w(17),
+                  color: context.torkk.textPrimary,
+                ),
         ),
       ),
     );

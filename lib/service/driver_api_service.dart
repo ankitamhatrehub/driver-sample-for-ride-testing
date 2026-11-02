@@ -601,16 +601,23 @@ class DriverApiService {
   }
 
   static Future<Map<String, dynamic>> fetchProfile(String driverPhone) async {
-    final response = await apiClient
-        .get(Uri.parse(AppUrls.driverProfile(driverPhone)))
-        .timeout(const Duration(seconds: 5));
-    print(
-      'DriverApiService.fetchProfile response: ${response.statusCode} \n${response.body}',
-    );
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
+    final url = AppUrls.driverProfile(driverPhone);
+    debugPrint('[PROFILE API] -> GET $url');
+    try {
+      final response = await apiClient
+          .get(Uri.parse(url))
+          .timeout(const Duration(seconds: 5));
+      debugPrint(
+        '[PROFILE API] <- status=${response.statusCode} body=${response.body}',
+      );
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      }
+      throw Exception('Failed to fetch profile');
+    } catch (e) {
+      debugPrint('[PROFILE API] <- FAILED: $e');
+      rethrow;
     }
-    throw Exception('Failed to fetch profile');
   }
 
   static Future<Map<String, dynamic>> fetchDriverProfile(String driverPhone) =>
@@ -664,26 +671,44 @@ class DriverApiService {
     });
   }
 
-  static Future<String> uploadProfilePhoto({
-    required String driverPhone,
-    required String base64Image,
-  }) async {
-    print("url: ${AppUrls.uploadProfilePhoto}");
-    final response = await apiClient
-        .post(
-          Uri.parse(AppUrls.uploadProfilePhoto),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({'phone': driverPhone, 'image_data': base64Image}),
-        )
-        .timeout(const Duration(seconds: 15));
-    print(
-      'Upload profile photo response: ${response.statusCode} \n${response.body}',
-    );
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data['profile_photo_url'] ?? '';
+  /// POST /api/driver/upload-photo (multipart/form-data, field `photo`).
+  /// The driver is identified by the Bearer token. Returns the photo url.
+  static Future<String> uploadProfilePhoto({required String filePath}) async {
+    final uri = Uri.parse(AppUrls.uploadProfilePhoto);
+    debugPrint('[PROFILE PHOTO API] -> POST $uri photo=$filePath');
+    try {
+      final request = http.MultipartRequest('POST', uri)
+        ..files.add(await http.MultipartFile.fromPath('photo', filePath));
+      final streamed = await apiClient
+          .send(request)
+          .timeout(const Duration(seconds: 30));
+      final response = await http.Response.fromStream(streamed);
+      debugPrint(
+        '[PROFILE PHOTO API] <- status=${response.statusCode} body=${response.body}',
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = json.decode(response.body);
+        if (data is Map) {
+          final nested = data['data'] is Map ? data['data'] as Map : const {};
+          for (final key in const [
+            'profile_photo_url',
+            'photo_url',
+            'url',
+            'image_url',
+          ]) {
+            final value = data[key] ?? nested[key];
+            if (value != null && value.toString().isNotEmpty) {
+              return value.toString();
+            }
+          }
+        }
+        return '';
+      }
+      throw Exception('Failed to upload profile photo: ${response.statusCode}');
+    } catch (e) {
+      debugPrint('[PROFILE PHOTO API] <- FAILED: $e');
+      rethrow;
     }
-    throw Exception('Failed to upload profile photo: ${response.statusCode}');
   }
 
   static Future<void> updateVehicleType({

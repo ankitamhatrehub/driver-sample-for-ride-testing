@@ -45,7 +45,7 @@ class AppUrls {
       '$apiBase/chat/${Uri.encodeComponent(conversationId)}/history';
   static const String updateContact = '$apiBase/driver/profile/contact';
   static const String updateVehicleType = '$apiBase/driver/update-vehicle';
-  static const String uploadProfilePhoto = '$apiBase/driver/upload-profile-photo';
+  static const String uploadProfilePhoto = '$apiBase/driver/upload-photo';
   static const String updateLocation = '$apiBase/driver/update-location';
   static const String onlineStatus = '$apiBase/driver/online-status';
   static const String reportIssue = '$apiBase/driver/report-issue';

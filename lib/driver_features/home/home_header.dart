@@ -46,7 +46,7 @@ class HomeHeader extends StatelessWidget {
                   Text(
                     _greeting,
                     style: AppTypography.regular.copyWith(
-                      fontSize: 12,
+                      fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: context.isDarkTheme
                           ? context.torkk.textBody
@@ -69,11 +69,23 @@ class HomeHeader extends StatelessWidget {
                 ],
               ),
             ),
-            // HomeGlassButton(
-            //   onTap: onNotifications,
-            //   icon: Icons.notifications_none_rounded,
-            // ),
-            // SizedBox(width: context.w(8)),
+            // Plain bell icon (no glass box); tap opens the notifications.
+            GestureDetector(
+              onTap: onNotifications,
+              behavior: HitTestBehavior.opaque,
+              child: SizedBox(
+                width: context.w(36),
+                height: context.w(36),
+                child: Icon(
+                  Icons.notifications_none_rounded,
+                  size: context.w(26),
+                  color: context.isDarkTheme
+                      ? context.torkk.textPrimary
+                      : const Color(0xFF334155),
+                ),
+              ),
+            ),
+            SizedBox(width: context.w(8)),
             HomeGlassButton(onTap: onHelp, asset: AppAssets.questionMark),
           ],
         ),

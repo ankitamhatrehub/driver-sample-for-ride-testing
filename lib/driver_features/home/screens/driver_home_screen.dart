@@ -77,6 +77,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   String _profilePhotoUrl = '';
   String _driverVehicleType = '';
   int _currentIndex = 0;
+  int _profileOpenCount = 0;
   Position? _currentPosition;
   String _currentAddress = '';
   Position? _addressPosition;
@@ -837,7 +838,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   );
                   return;
                 }
-                setState(() => _currentIndex = idx);
+                setState(() {
+                  _currentIndex = idx;
+                  // All tabs are built once at startup, so rebuild the profile
+                  // tab on every open to run its profile API call again.
+                  if (idx == 4) _profileOpenCount++;
+                });
               },
             ),
             body: Stack(
@@ -895,6 +901,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       onBack: () => setState(() => _currentIndex = 0),
                     ),
                     ProfileScreen(
+                      key: ValueKey('profile-$_profileOpenCount'),
                       onBack: () => setState(() => _currentIndex = 0),
                     ),
                   ],

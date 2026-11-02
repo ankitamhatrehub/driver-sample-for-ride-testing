@@ -6,6 +6,7 @@ import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/driver_features/home/home_glass_card.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomeStatsCard extends StatelessWidget {
@@ -32,32 +33,10 @@ class HomeStatsCard extends StatelessWidget {
         ? AppColors.femalePink
         : AppColors.maleBlue;
     final icon = dark ? context.legible(brand, minContrast: 3) : accent;
-    return Container(
+    return HomeGlassCard(
+      tint: brand,
+      radius: 16,
       padding: EdgeInsets.all(context.w(14)),
-      decoration: BoxDecoration(
-        color: dark ? null : const Color(0x0D57278D),
-        gradient: dark
-            ? LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [brand.withValues(alpha: 0.45), context.torkk.surface],
-              )
-            : null,
-        borderRadius: BorderRadius.circular(context.r(dark ? 16 : 12)),
-        border: Border.all(
-          color: dark ? brand.withValues(alpha: 0.7) : const Color(0x3640105F),
-          width: dark ? 1.5 : 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: dark
-                ? brand.withValues(alpha: 0.28)
-                : const Color(0x0A000000),
-            offset: dark ? const Offset(0, 4) : const Offset(0, 1),
-            blurRadius: dark ? 18 : 3.3,
-          ),
-        ],
-      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

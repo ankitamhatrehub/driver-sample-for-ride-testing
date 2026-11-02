@@ -5,6 +5,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/home/home_brand.dart';
+import 'package:rider_app/driver_features/home/home_glass_card.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class HomeStatusCard extends StatelessWidget {
@@ -29,47 +30,10 @@ class HomeStatusCard extends StatelessWidget {
     final statusColor = isOnline
         ? context.torkk.statusOnline
         : context.torkk.statusOffline;
-    // Dark mode: the green / red wash is lightened toward white so it reads
-    // soft instead of heavy.
-    final washColor = Color.lerp(statusColor, Colors.white, 0.35)!;
-    return Container(
+    return HomeGlassCard(
+      tint: statusColor,
+      radius: 24,
       padding: EdgeInsets.all(context.w(14)),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(context.r(24)),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          // Dark mode: status-colored glow fading into the surface.
-          colors: dark
-              ? [washColor.withValues(alpha: 0.32), context.torkk.surface]
-              : isOnline
-              ? [
-                  context.adaptiveTint(Color(0xFFF8F6FE)),
-                  context.adaptiveTint(Color(0x82CEE9DC)),
-                ]
-              : [
-                  context.adaptiveTint(Color(0xFFF8F6FE)),
-                  context.adaptiveTint(Color(0xFFFEF6F7)),
-                ],
-        ),
-        border: Border.all(
-          color: dark
-              ? washColor.withValues(alpha: 0.45)
-              : female
-              ? const Color(0xB2FBCFE8)
-              : const Color(0xB2F3E8FF),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: dark
-                ? Colors.black.withValues(alpha: 0.25)
-                : const Color(0x0D000000),
-            offset: dark ? const Offset(0, 3) : const Offset(0, 1),
-            blurRadius: dark ? 10 : 2,
-          ),
-        ],
-      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

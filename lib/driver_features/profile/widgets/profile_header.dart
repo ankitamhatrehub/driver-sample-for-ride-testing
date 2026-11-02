@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +20,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   String _name = '';
   String _phone = '';
   String _photoUrl = '';
+
+  /// The photo just picked, shown right away (the upload response can come
+  /// back with an empty url).
+  String _localPhotoPath = '';
   bool _uploading = false;
 
   @override
@@ -37,20 +41,35 @@ class _ProfileHeaderState extends State<ProfileHeader> {
         _photoUrl = prefs.getString('profile_photo_url') ?? '';
       });
     }
+    debugPrint('PROFILE_FETCH | profile screen opened, phone="$_phone"');
     if (_phone.isEmpty) return;
     try {
       final profile = await DriverApiService.fetchProfile(_phone);
-      final data = (profile['profile'] as Map?) ?? const {};
-      final name = (data['name'] ?? '').toString().trim();
-      final photo = (data['profile_photo_url'] ?? '').toString().trim();
+      final name = _profileField(profile, 'name');
+      final photo = _profileField(profile, 'profile_photo_url');
+      debugPrint('PROFILE_FETCH | name="$name" photo="$photo"');
       if (!mounted) return;
       setState(() {
         if (name.isNotEmpty) _name = name;
         if (photo.isNotEmpty) _photoUrl = photo;
       });
+      if (name.isNotEmpty) await prefs.setString('user_name', name);
+      if (photo.isNotEmpty) await prefs.setString('profile_photo_url', photo);
     } catch (e) {
       debugPrint('PROFILE_PHOTO_03 | profile load failed: $e');
     }
+  }
+
+  /// Reads [key] from the profile response whether it is at the top level or
+  /// inside a `profile` / `data` wrapper.
+  String _profileField(Map<String, dynamic> response, String key) {
+    for (final source in [response, response['profile'], response['data']]) {
+      if (source is Map) {
+        final value = (source[key] ?? '').toString().trim();
+        if (value.isNotEmpty) return value;
+      }
+    }
+    return '';
   }
 
   Future<ImageSource?> _chooseSource() {
@@ -102,12 +121,18 @@ class _ProfileHeaderState extends State<ProfileHeader> {
         return;
       }
       setState(() => _uploading = true);
-      final base64Image = base64Encode(await image.readAsBytes());
-      final url = await DriverApiService.uploadProfilePhoto(
-        driverPhone: _phone,
-        base64Image: base64Image,
-      );
+      var url = await DriverApiService.uploadProfilePhoto(filePath: image.path);
       debugPrint('PROFILE_PHOTO_02 | uploaded url=$url');
+      if (url.isEmpty && _phone.isNotEmpty) {
+        // The upload response carried no url: read it from the saved profile.
+        try {
+          final profile = await DriverApiService.fetchProfile(_phone);
+          url = _profileField(profile, 'profile_photo_url');
+          debugPrint('PROFILE_PHOTO_02A | url from profile=$url');
+        } catch (e) {
+          debugPrint('PROFILE_PHOTO_02B | profile refetch failed: $e');
+        }
+      }
       if (url.isNotEmpty) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('profile_photo_url', url);
@@ -115,6 +140,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       if (!mounted) return;
       setState(() {
         if (url.isNotEmpty) _photoUrl = url;
+        _localPhotoPath = image.path;
         _uploading = false;
       });
       _toast('Profile photo updated');
@@ -160,7 +186,17 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    if (_photoUrl.isNotEmpty)
+                    if (_localPhotoPath.isNotEmpty)
+                      Image.file(
+                        File(_localPhotoPath),
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) => Icon(
+                          Icons.person,
+                          color: accent,
+                          size: context.w(40),
+                        ),
+                      )
+                    else if (_photoUrl.isNotEmpty)
                       Image.network(
                         _photoUrl,
                         fit: BoxFit.cover,
