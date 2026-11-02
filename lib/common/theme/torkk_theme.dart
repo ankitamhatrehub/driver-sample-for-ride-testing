@@ -13,7 +13,9 @@ ThemeData buildTorkkTheme({
   required TorkkColors colors,
 }) {
   final isDark = scheme.brightness == Brightness.dark;
-  final primary = scheme.primary;
+  // Dark mode keeps the light accent for text, outlines and indicators; solid
+  // buttons use [TorkkColors.buttonFill] instead.
+  final primary = isDark ? colors.accent : scheme.primary;
 
   OutlineInputBorder inputBorder(Color color, [double width = 1]) =>
       OutlineInputBorder(
@@ -90,19 +92,19 @@ ThemeData buildTorkkTheme({
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.disabled)
               ? colors.surfaceMuted
-              : primary,
+              : colors.buttonFill,
         ),
         foregroundColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.disabled)
               ? colors.textDisabled
-              : scheme.onPrimary,
+              : Colors.white,
         ),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: primary,
-        foregroundColor: scheme.onPrimary,
+        backgroundColor: colors.buttonFill,
+        foregroundColor: Colors.white,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -112,7 +114,7 @@ ThemeData buildTorkkTheme({
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: primary),
+      style: TextButton.styleFrom(foregroundColor: colors.accent),
     ),
     dialogTheme: DialogThemeData(
       backgroundColor: colors.surface,

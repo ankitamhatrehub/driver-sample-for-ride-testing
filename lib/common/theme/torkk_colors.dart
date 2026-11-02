@@ -58,10 +58,14 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
   final Color statusOffline;
   final bool isDark;
 
+  /// Solid button fill in dark mode: brand blue, or brand pink when the
+  /// pink (female) theme is active. Labels and icons on it are white.
+  Color get buttonFill =>
+      accent == darkPinkAccent ? AppColors.femalePink : AppColors.maleBlue;
+
   /// Fill for a primary call-to-action. Light mode keeps [lightFill] (the
-  /// button's own brand color); dark mode uses [accent], because dark brand
-  /// colors do not stand out against the dark background.
-  Color actionFill(Color lightFill) => isDark ? accent : lightFill;
+  /// button's own brand color); dark mode uses [buttonFill] (blue / pink).
+  Color actionFill(Color lightFill) => isDark ? buttonFill : lightFill;
 
   /// Matches the colors the app used before dark mode was themed.
   static const light = TorkkColors(
