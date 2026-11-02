@@ -56,10 +56,19 @@ class DriverHomeTab extends StatelessWidget {
     final double displayEarnings = todayEarnings;
     final double displayIncentives = incentives;
 
-    final textColor = context.themed(light: const Color(0xFF111827), dark: context.torkk.textPrimary);
-    final subtextColor = context.themed(light: const Color(0xFF6B7280), dark: context.torkk.textSecondary);
+    final textColor = context.themed(
+      light: const Color(0xFF111827),
+      dark: context.torkk.textPrimary,
+    );
+    final subtextColor = context.themed(
+      light: const Color(0xFF6B7280),
+      dark: context.torkk.textSecondary,
+    );
     final cardBg = context.torkk.surface;
-    final borderColor = context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.border);
+    final borderColor = context.themed(
+      light: const Color(0xFFE5E7EB),
+      dark: context.torkk.border,
+    );
 
     return SafeArea(
       child: ListView(
@@ -75,7 +84,7 @@ class DriverHomeTab extends StatelessWidget {
             driverGender: driverGender,
           ),
           const SizedBox(height: 16),
-          
+
           // Service Preferences (Only shown if offline and eligible for parcels)
           if (!isOnline && eligibleForParcels)
             Container(
@@ -113,7 +122,10 @@ class DriverHomeTab extends StatelessWidget {
                           onChanged: (val) {
                             if (val != null) onWantsRidesChanged(val);
                           },
-                          title: const Text('Rides', style: TextStyle(fontWeight: FontWeight.w600)),
+                          title: const Text(
+                            'Rides',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
                           controlAffinity: ListTileControlAffinity.leading,
                           contentPadding: EdgeInsets.zero,
                           activeColor: const Color(0xFF1D4ED8),
@@ -125,7 +137,10 @@ class DriverHomeTab extends StatelessWidget {
                           onChanged: (val) {
                             if (val != null) onWantsParcelsChanged(val);
                           },
-                          title: const Text('Parcels', style: TextStyle(fontWeight: FontWeight.w600)),
+                          title: const Text(
+                            'Parcels',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
                           controlAffinity: ListTileControlAffinity.leading,
                           contentPadding: EdgeInsets.zero,
                           activeColor: const Color(0xFF1D4ED8),
@@ -136,12 +151,9 @@ class DriverHomeTab extends StatelessWidget {
                 ],
               ),
             ),
-          
+
           // Earnings Hero Card (Purple Gradient)
-          EarningsHeroCard(
-            earnings: displayEarnings,
-            onTap: onEarningsTap,
-          ),
+          EarningsHeroCard(earnings: displayEarnings, onTap: onEarningsTap),
           const SizedBox(height: 16),
 
           // Metrics Row (Incentives & Rating Cards)
@@ -167,11 +179,7 @@ class DriverHomeTab extends StatelessWidget {
                     letterSpacing: -0.3,
                   ),
                 ),
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: textColor,
-                  size: 24,
-                ),
+                Icon(Icons.chevron_right_rounded, color: textColor, size: 24),
               ],
             ),
           ),
@@ -197,12 +205,13 @@ class DriverHomeTab extends StatelessWidget {
               if (trip is! Map) return const SizedBox.shrink();
 
               // Smart name resolution
-              String name = (trip['customer_name'] ??
-                      trip['user_name'] ??
-                      trip['passenger_name'] ??
-                      '')
-                  .toString()
-                  .trim();
+              String name =
+                  (trip['customer_name'] ??
+                          trip['user_name'] ??
+                          trip['passenger_name'] ??
+                          '')
+                      .toString()
+                      .trim();
               if (name.isEmpty) {
                 final rawName = (trip['name'] ?? '').toString().trim();
                 final lower = rawName.toLowerCase();
@@ -220,14 +229,16 @@ class DriverHomeTab extends StatelessWidget {
               }
 
               // Location resolution
-              final location = (trip['drop_address'] ??
-                      trip['pickup_address'] ??
-                      trip['location'] ??
-                      trip['address'] ??
-                      'Location N/A')
-                  .toString();
+              final location =
+                  (trip['drop_address'] ??
+                          trip['pickup_address'] ??
+                          trip['location'] ??
+                          trip['address'] ??
+                          'Location N/A')
+                      .toString();
 
-              final amount = (trip['driver_earnings'] as num?)?.toDouble() ??
+              final amount =
+                  (trip['driver_earnings'] as num?)?.toDouble() ??
                   (trip['fare'] as num?)?.toDouble() ??
                   (trip['amount'] as num?)?.toDouble() ??
                   0.0;
@@ -258,11 +269,21 @@ class DriverHomeTab extends StatelessWidget {
     required double amount,
     required Color color,
   }) {
-    final textColor = context.themed(light: const Color(0xFF111827), dark: context.torkk.textPrimary);
-    final subtextColor = context.themed(light: const Color(0xFF6B7280), dark: context.torkk.textSecondary);
-    final borderColor = context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.border);
-    final initialLetter =
-        name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'C';
+    final textColor = context.themed(
+      light: const Color(0xFF111827),
+      dark: context.torkk.textPrimary,
+    );
+    final subtextColor = context.themed(
+      light: const Color(0xFF6B7280),
+      dark: context.torkk.textSecondary,
+    );
+    final borderColor = context.themed(
+      light: const Color(0xFFE5E7EB),
+      dark: context.torkk.border,
+    );
+    final initialLetter = name.trim().isNotEmpty
+        ? name.trim()[0].toUpperCase()
+        : 'C';
 
     return Column(
       children: [

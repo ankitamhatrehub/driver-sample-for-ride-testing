@@ -16,13 +16,22 @@ class HomePlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: context.h(58),
-      padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(12),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(16)),
         gradient: homeBrandWash(female, 0.11),
-        border: Border.all(color: female ? const Color(0x69BA2879) : const Color(0x697E22CE)),
+        border: Border.all(
+          color: female ? const Color(0x69BA2879) : const Color(0x697E22CE),
+        ),
         boxShadow: const [
-          BoxShadow(color: Color(0x0D000000), offset: Offset(0, 1), blurRadius: 2),
+          BoxShadow(
+            color: Color(0x0D000000),
+            offset: Offset(0, 1),
+            blurRadius: 2,
+          ),
         ],
       ),
       child: Row(
@@ -35,7 +44,11 @@ class HomePlanCard extends StatelessWidget {
               color: context.torkk.surface,
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
-            child: Icon(Icons.calendar_month_rounded, color: accent, size: context.w(16)),
+            child: Icon(
+              Icons.calendar_month_rounded,
+              color: accent,
+              size: context.w(16),
+            ),
           ),
           SizedBox(width: context.w(10)),
           Expanded(
@@ -47,13 +60,21 @@ class HomePlanCard extends StatelessWidget {
                   AppStrings.planYourTime,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2, letterSpacing: -0.2),
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 13,
+                    height: 1.2,
+                    letterSpacing: -0.2,
+                  ),
                 ),
                 Text(
                   AppStrings.planYourTimeSubtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.regular.copyWith(fontSize: 11, height: 1.2, color: context.torkk.textSecondary),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 11,
+                    height: 1.2,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
               ],
             ),

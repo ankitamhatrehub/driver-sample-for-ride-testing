@@ -58,7 +58,9 @@ class _DriverHomeViewState extends State<DriverHomeView> {
     final next = widget.currentPosition;
     final previous = oldWidget.currentPosition;
     if (next == null || _mapController == null) return;
-    if (previous?.latitude == next.latitude && previous?.longitude == next.longitude) return;
+    if (previous?.latitude == next.latitude &&
+        previous?.longitude == next.longitude)
+      return;
     _mapController!.animateCamera(
       CameraUpdate.newLatLng(LatLng(next.latitude, next.longitude)),
     );
@@ -72,7 +74,7 @@ class _DriverHomeViewState extends State<DriverHomeView> {
     final target = position == null
         ? const LatLng(28.6139, 77.2090)
         : LatLng(position.latitude, position.longitude);
-  return Stack(
+    return Stack(
       children: [
         Positioned.fill(
           child: GoogleMap(
@@ -98,7 +100,10 @@ class _DriverHomeViewState extends State<DriverHomeView> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [context.adaptiveTint(Color(0xF2FFFFFF)), context.adaptiveTint(Color(0x00FFFFFF))],
+                // No white fade in dark mode; the map shows through.
+                colors: context.isDarkTheme
+                    ? const [Color(0x00FFFFFF), Color(0x00FFFFFF)]
+                    : [const Color(0xF2FFFFFF), const Color(0x00FFFFFF)],
               ),
             ),
           ),
@@ -126,11 +131,20 @@ class _DriverHomeViewState extends State<DriverHomeView> {
           bottom: 0,
           child: Container(
             decoration: BoxDecoration(
-              color: context.torkk.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(26))),
+              // Dark: same as the scaffold behind the floating nav bar, so
+              // there is no color strip between the sheet and the nav.
+              color: context.isDarkTheme
+                  ? context.torkk.background
+                  : context.torkk.surface,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(context.r(26)),
+              ),
             ),
             child: ListView(
-              padding: EdgeInsets.only(top: context.h(27), bottom: context.h(16)),
+              padding: EdgeInsets.only(
+                top: context.h(27),
+                bottom: context.h(16),
+              ),
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: context.w(26)),
@@ -147,7 +161,7 @@ class _DriverHomeViewState extends State<DriverHomeView> {
                     todayEarnings: widget.todayEarnings,
                     completedJobs: widget.completedJobs,
                     onEarnings: widget.onEarnings,
-                  
+
                     accent: accent,
                   ),
                 ),
@@ -156,7 +170,9 @@ class _DriverHomeViewState extends State<DriverHomeView> {
                   padding: EdgeInsets.symmetric(horizontal: context.w(28)),
                   child: GestureDetector(
                     onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(builder: (_) => const PlanDrivingHoursScreen()),
+                      MaterialPageRoute<void>(
+                        builder: (_) => const PlanDrivingHoursScreen(),
+                      ),
                     ),
                     child: HomePlanCard(accent: accent, female: female),
                   ),

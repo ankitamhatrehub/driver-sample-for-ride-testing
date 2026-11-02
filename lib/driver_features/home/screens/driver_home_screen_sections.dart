@@ -125,16 +125,24 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
     for (final trip in trips) {
       if (trip is! Map) continue;
       final status = (trip['status'] ?? '').toString().toLowerCase();
-      final done = status.isEmpty ||
+      final done =
+          status.isEmpty ||
           status == 'completed' ||
           status == 'complete' ||
           status == 'finished';
       if (done && status.isNotEmpty) completed++;
-      final raw = trip['completed_at'] ?? trip['created_at'] ?? trip['date'] ?? trip['trip_date'];
+      final raw =
+          trip['completed_at'] ??
+          trip['created_at'] ??
+          trip['date'] ??
+          trip['trip_date'];
       final parsed = DateTime.tryParse('${raw ?? ''}');
       if (parsed != null) {
         dated = true;
-        final sameDay = parsed.year == now.year && parsed.month == now.month && parsed.day == now.day;
+        final sameDay =
+            parsed.year == now.year &&
+            parsed.month == now.month &&
+            parsed.day == now.day;
         if (done && sameDay) today++;
       }
     }
@@ -148,12 +156,16 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
   /// the list was taken or cancelled, so the UI is told it is unavailable.
   void _syncFlowRide() {
     final current = _flowRide;
-    debugPrint('RIDE_FLOW_05 | sync start | showRideFlow=$_showRideFlow isOnline=$_isOnline '
-        'rides=${_rides.length} rejected=$_rejectedRideIds current=$current');
+    debugPrint(
+      'RIDE_FLOW_05 | sync start | showRideFlow=$_showRideFlow isOnline=$_isOnline '
+      'rides=${_rides.length} rejected=$_rejectedRideIds current=$current',
+    );
     for (final r in _rides) {
       if (r is Map) {
-        debugPrint('RIDE_FLOW_06 | ride item id=${r['id']} status="${r['status']}" '
-            'customer=${r['customer_name']} pickup=${r['pickup_address']} keys=${r.keys.toList()}');
+        debugPrint(
+          'RIDE_FLOW_06 | ride item id=${r['id']} status="${r['status']}" '
+          'customer=${r['customer_name']} pickup=${r['pickup_address']} keys=${r.keys.toList()}',
+        );
       } else {
         debugPrint('RIDE_FLOW_06A | non-map item: ${r.runtimeType} $r');
       }
@@ -163,25 +175,35 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
       for (final ride in _rides) {
         if (ride is Map && _rideIdOf(ride) == id) {
           _flowRide = Map<String, dynamic>.from(ride);
-          debugPrint('RIDE_FLOW_07 | refreshed current ride #$id status=${ride['status']}');
+          debugPrint(
+            'RIDE_FLOW_07 | refreshed current ride #$id status=${ride['status']}',
+          );
           return;
         }
       }
       if ((current['status'] ?? '').toString() == 'requested') {
         _flowRide = {...current, 'status': 'unavailable'};
-        debugPrint('RIDE_FLOW_08 | ride #$id missing from list -> marked unavailable');
+        debugPrint(
+          'RIDE_FLOW_08 | ride #$id missing from list -> marked unavailable',
+        );
       } else {
-        debugPrint('RIDE_FLOW_09 | ride #$id missing from list, status=${current['status']} kept');
+        debugPrint(
+          'RIDE_FLOW_09 | ride #$id missing from list, status=${current['status']} kept',
+        );
       }
       return;
     }
     if (!_showRideFlow || !_isOnline) {
-      debugPrint('RIDE_FLOW_10 | NOT picking ride: showRideFlow=$_showRideFlow isOnline=$_isOnline');
+      debugPrint(
+        'RIDE_FLOW_10 | NOT picking ride: showRideFlow=$_showRideFlow isOnline=$_isOnline',
+      );
       return;
     }
     for (final ride in _rides) {
       if (ride is! Map || (ride['status'] ?? '').toString() != 'requested') {
-        debugPrint('RIDE_FLOW_11 | skip: not a "requested" ride -> ${ride is Map ? ride['status'] : ride}');
+        debugPrint(
+          'RIDE_FLOW_11 | skip: not a "requested" ride -> ${ride is Map ? ride['status'] : ride}',
+        );
         continue;
       }
       final id = _rideIdOf(ride);
@@ -233,10 +255,7 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
   void _openNotifications() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) =>
-            ProfileNotificationsScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => ProfileNotificationsScreen()),
     );
   }
 }

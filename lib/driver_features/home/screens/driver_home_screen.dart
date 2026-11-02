@@ -387,7 +387,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
   Future<void> _fetchRides() async {
     if (_fetchingRides || !mounted || _driverPhone.isEmpty) {
-      debugPrint('RIDE_FLOW_01 | fetch skipped: fetching=$_fetchingRides mounted=$mounted phone="$_driverPhone"');
+      debugPrint(
+        'RIDE_FLOW_01 | fetch skipped: fetching=$_fetchingRides mounted=$mounted phone="$_driverPhone"',
+      );
       return;
     }
     _fetchingRides = true;
@@ -399,9 +401,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
       final needsDetail = data.any((ride) {
         if (ride is! Map) return false;
-        final name = (ride['customer_name'] ?? ride['user_name'] ?? ride['passenger_name'] ?? ride['name'] ?? '')
-            .toString()
-            .trim();
+        final name =
+            (ride['customer_name'] ??
+                    ride['user_name'] ??
+                    ride['passenger_name'] ??
+                    ride['name'] ??
+                    '')
+                .toString()
+                .trim();
         return name.isEmpty && ride['id'] != null;
       });
       if (needsDetail && mounted) {
@@ -412,7 +419,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       for (int i = 0; i < data.length; i++) {
         if (data[i] is Map<String, dynamic> || data[i] is Map) {
           final rideMap = Map<String, dynamic>.from(data[i] as Map);
-          var existingName = (rideMap['customer_name'] ?? rideMap['user_name'] ?? rideMap['passenger_name'] ?? rideMap['name'] ?? '').toString().trim();
+          var existingName =
+              (rideMap['customer_name'] ??
+                      rideMap['user_name'] ??
+                      rideMap['passenger_name'] ??
+                      rideMap['name'] ??
+                      '')
+                  .toString()
+                  .trim();
           final idVal = rideMap['id'];
           final rideId = idVal is int ? idVal : int.tryParse('$idVal');
           if (existingName.isEmpty && rideId != null) {
@@ -422,14 +436,30 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 driverPhone: _driverPhone,
               );
               rideMap.addAll(Map<String, dynamic>.from(detail));
-              existingName = (rideMap['customer_name'] ?? rideMap['user_name'] ?? rideMap['passenger_name'] ?? rideMap['name'] ?? '').toString().trim();
-                        } catch (err) {
-              debugPrint('[DEBUG RIDE DETAIL ENRICHMENT] Failed for #$rideId: $err');
+              existingName =
+                  (rideMap['customer_name'] ??
+                          rideMap['user_name'] ??
+                          rideMap['passenger_name'] ??
+                          rideMap['name'] ??
+                          '')
+                      .toString()
+                      .trim();
+            } catch (err) {
+              debugPrint(
+                '[DEBUG RIDE DETAIL ENRICHMENT] Failed for #$rideId: $err',
+              );
             }
           }
 
           if (existingName.isEmpty) {
-            final rawPhone = (rideMap['customer_phone'] ?? rideMap['user_phone'] ?? rideMap['phone'] ?? rideMap['rider_phone'] ?? '').toString().replaceAll(RegExp(r'\D'), '');
+            final rawPhone =
+                (rideMap['customer_phone'] ??
+                        rideMap['user_phone'] ??
+                        rideMap['phone'] ??
+                        rideMap['rider_phone'] ??
+                        '')
+                    .toString()
+                    .replaceAll(RegExp(r'\D'), '');
             if (rawPhone.contains('9896566810')) {
               rideMap['customer_name'] = 'Nishant Chauhan';
             } else if (rawPhone.contains('9119070717')) {
@@ -489,7 +519,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
   Future<void> _confirmAvailability() async {
     final goingOnline = !_isOnline;
-    final confirmed = await showAvailabilityDialog(context, goingOnline: goingOnline);
+    final confirmed = await showAvailabilityDialog(
+      context,
+      goingOnline: goingOnline,
+    );
     if (!confirmed || !mounted) return;
     await _toggleOnline();
     if (goingOnline && _isOnline && mounted) {
@@ -507,7 +540,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
   void _showLocationMessage(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   /// Turns lat/lng into a readable address for the location card. Skips the
@@ -560,11 +595,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           ? 'AIzaSyDIt1TB-ouVFAtWQg0yhDzpzyNGiGW_W3A'
           : 'AIzaSyDNrwlxB3gaotCANgyy2Q7hVi5K3JsqqBk';
       final response = await http
-          .get(Uri.parse(AppUrls.googleReverseGeocode(
-            lat: position.latitude,
-            lng: position.longitude,
-            apiKey: key,
-          )))
+          .get(
+            Uri.parse(
+              AppUrls.googleReverseGeocode(
+                lat: position.latitude,
+                lng: position.longitude,
+                apiKey: key,
+              ),
+            ),
+          )
           .timeout(const Duration(seconds: 8));
       final body = json.decode(response.body) as Map<String, dynamic>;
       final results = body['results'];
@@ -587,7 +626,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       }
       if (permission == LocationPermission.denied ||
           permission == LocationPermission.deniedForever) {
-        _showLocationMessage('Please allow location access to update your location.');
+        _showLocationMessage(
+          'Please allow location access to update your location.',
+        );
         return;
       }
 
@@ -775,7 +816,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     return ValueListenableBuilder<String>(
       valueListenable: AppTranslations.currentLanguage,
       builder: (context, lang, child) {
-        print('_showRideFlow: $_showRideFlow, _isOnline: $_isOnline, _currentIndex: $_currentIndex, _flowRide: $_flowRide');
+        print(
+          '_showRideFlow: $_showRideFlow, _isOnline: $_isOnline, _currentIndex: $_currentIndex, _flowRide: $_flowRide',
+        );
         return PopScope(
           canPop: false,
           child: Scaffold(
@@ -799,79 +842,91 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             body: Stack(
               children: [
                 IndexedStack(
-              index: _currentIndex,
-              children: [
-                // HOME Tab
-                _isOnline && visibleRides.isNotEmpty
-                    ? OnlineRideSearchView(
-                        visibleRides: visibleRides,
-                        mapPanOffset: _mapPanOffset,
-                        onPanUpdate: (details) {
-                          setState(() {
-                            _mapPanOffset += details.delta;
-                          });
-                        },
-                        onToggleOnline: _confirmAvailability,
-                        onOpenDrawer: () {},
-                        onProfileTap: () => setState(() => _currentIndex = 4),
-                        onAcceptRide: (id) => _acceptRide(id),
-                        onRejectRide: (id) {
-                          if (mounted) {
-                            setState(() {
-                              _rejectedRideIds.add(id);
-                            });
-                          }
-                        },
-                        onSimulateTestRide: _simulateTestRide,
-                        profilePhotoUrl: _profilePhotoUrl,
-                        currentPosition: _currentPosition,
-                        driverGender: _driverGender,
-                        onNotificationsTap: _openNotifications,
-                        onMapCreated: (controller) {
-                          _homeMapController = controller;
-                        },
-                      )
-                    : DriverHomeView(
-                        isOnline: _isOnline,
-                        driverName: _driverName,
-                        locationLabel: _currentAddress.isNotEmpty ? _currentAddress : _driverCity,
-                        todayEarnings: _todayEarnings,
-                        completedJobs: _completedJobs,
-                        currentPosition: _currentPosition,
-                        onToggle: _confirmAvailability,
-                        onNotifications: _openNotifications,
-                        onHelp: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(builder: (_) => const DriverLiveChatScreen()),
-                          );
-                        },
-                        onEarnings: () => setState(() => _currentIndex = 3),
-                        onJobs: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DriverHistoryScreen(),
-                            ),
-                          );
-                        },
-                        onUpdateLocation: _refreshLocation,
-                        onMapCreated: (controller) {
-                          _homeMapController = controller;
-                        },
-                      ),
-                OrdersScreen(onBack: () => setState(() => _currentIndex = 0)),
-                // Parcel tab disabled for now (coming soon screen opens on tap).
-                // ParcelTab(
-                //   eligible: _driverProfile['eligible_for_parcels'] == true,
-                //   vehicleType: _driverVehicleType,
-                //   onLeave: () => setState(() => _currentIndex = 0),
-                // ),
-                const SizedBox.shrink(),
-                WalletScreen(onBack: () => setState(() => _currentIndex = 0)),
-                ProfileScreen(onBack: () => setState(() => _currentIndex = 0)),
-              ],
-            ),
+                  index: _currentIndex,
+                  children: [
+                    // HOME Tab
+                    _isOnline && visibleRides.isNotEmpty
+                        ? OnlineRideSearchView(
+                            visibleRides: visibleRides,
+                            mapPanOffset: _mapPanOffset,
+                            onPanUpdate: (details) {
+                              setState(() {
+                                _mapPanOffset += details.delta;
+                              });
+                            },
+                            onToggleOnline: _confirmAvailability,
+                            onOpenDrawer: () {},
+                            onProfileTap: () =>
+                                setState(() => _currentIndex = 4),
+                            onAcceptRide: (id) => _acceptRide(id),
+                            onRejectRide: (id) {
+                              if (mounted) {
+                                setState(() {
+                                  _rejectedRideIds.add(id);
+                                });
+                              }
+                            },
+                            onSimulateTestRide: _simulateTestRide,
+                            profilePhotoUrl: _profilePhotoUrl,
+                            currentPosition: _currentPosition,
+                            driverGender: _driverGender,
+                            onNotificationsTap: _openNotifications,
+                            onMapCreated: (controller) {
+                              _homeMapController = controller;
+                            },
+                          )
+                        : DriverHomeView(
+                            isOnline: _isOnline,
+                            driverName: _driverName,
+                            locationLabel: _currentAddress.isNotEmpty
+                                ? _currentAddress
+                                : _driverCity,
+                            todayEarnings: _todayEarnings,
+                            completedJobs: _completedJobs,
+                            currentPosition: _currentPosition,
+                            onToggle: _confirmAvailability,
+                            onNotifications: _openNotifications,
+                            onHelp: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const DriverLiveChatScreen(),
+                                ),
+                              );
+                            },
+                            onEarnings: () => setState(() => _currentIndex = 3),
+                            onJobs: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DriverHistoryScreen(),
+                                ),
+                              );
+                            },
+                            onUpdateLocation: _refreshLocation,
+                            onMapCreated: (controller) {
+                              _homeMapController = controller;
+                            },
+                          ),
+                    OrdersScreen(
+                      onBack: () => setState(() => _currentIndex = 0),
+                    ),
+                    // Parcel tab disabled for now (coming soon screen opens on tap).
+                    // ParcelTab(
+                    //   eligible: _driverProfile['eligible_for_parcels'] == true,
+                    //   vehicleType: _driverVehicleType,
+                    //   onLeave: () => setState(() => _currentIndex = 0),
+                    // ),
+                    const SizedBox.shrink(),
+                    WalletScreen(
+                      onBack: () => setState(() => _currentIndex = 0),
+                    ),
+                    ProfileScreen(
+                      onBack: () => setState(() => _currentIndex = 0),
+                    ),
+                  ],
+                ),
                 if (_loadingRideDetails)
                   const Positioned.fill(
                     child: ColoredBox(
@@ -879,7 +934,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       child: RideDetailsLoadingOverlay(),
                     ),
                   ),
-                if (_showRideFlow && _isOnline && _currentIndex == 0 && _flowRide != null)
+                if (_showRideFlow &&
+                    _isOnline &&
+                    _currentIndex == 0 &&
+                    _flowRide != null)
                   Positioned.fill(
                     child: RideFlowScreen(
                       key: ValueKey(_flowRide!['id']),
@@ -897,4 +955,3 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     );
   }
 }
-

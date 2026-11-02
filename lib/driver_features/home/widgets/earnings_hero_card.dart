@@ -5,11 +5,7 @@ class EarningsHeroCard extends StatelessWidget {
   final double earnings;
   final VoidCallback? onTap;
 
-  const EarningsHeroCard({
-    super.key,
-    required this.earnings,
-    this.onTap,
-  });
+  const EarningsHeroCard({super.key, required this.earnings, this.onTap});
 
   @override
   Widget build(BuildContext context) {

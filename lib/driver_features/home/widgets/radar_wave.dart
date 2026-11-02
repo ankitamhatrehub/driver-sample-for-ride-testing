@@ -54,7 +54,10 @@ class _RadarWaveState extends State<RadarWave>
                 color: Color(0xFF10B981),
                 boxShadow: [
                   BoxShadow(
-                    color: context.themed(light: Colors.black12, dark: context.torkk.textSecondary),
+                    color: context.themed(
+                      light: Colors.black12,
+                      dark: context.torkk.textSecondary,
+                    ),
                     blurRadius: 8,
                     offset: Offset(0, 4),
                   ),

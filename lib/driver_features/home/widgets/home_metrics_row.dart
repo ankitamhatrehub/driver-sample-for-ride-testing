@@ -16,10 +16,19 @@ class HomeMetricsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = context.themed(light: const Color(0xFF111827), dark: context.torkk.textPrimary);
-    final subtextColor = context.themed(light: const Color(0xFF6B7280), dark: context.torkk.textSecondary);
+    final textColor = context.themed(
+      light: const Color(0xFF111827),
+      dark: context.torkk.textPrimary,
+    );
+    final subtextColor = context.themed(
+      light: const Color(0xFF6B7280),
+      dark: context.torkk.textSecondary,
+    );
     final cardBg = context.torkk.surface;
-    final borderColor = context.themed(light: const Color(0xFFE5E7EB), dark: context.torkk.border);
+    final borderColor = context.themed(
+      light: const Color(0xFFE5E7EB),
+      dark: context.torkk.border,
+    );
 
     return Row(
       children: [
@@ -35,10 +44,7 @@ class HomeMetricsRow extends StatelessWidget {
               decoration: BoxDecoration(
                 color: cardBg,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: borderColor,
-                  width: 1.5,
-                ),
+                border: Border.all(color: borderColor, width: 1.5),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.04),
@@ -83,10 +89,7 @@ class HomeMetricsRow extends StatelessWidget {
             decoration: BoxDecoration(
               color: cardBg,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: borderColor,
-                width: 1.5,
-              ),
+              border: Border.all(color: borderColor, width: 1.5),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.04),

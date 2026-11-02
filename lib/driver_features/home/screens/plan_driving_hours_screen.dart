@@ -17,9 +17,18 @@ class PlanDrivingHoursScreen extends StatefulWidget {
 }
 
 class _Slot {
-  const _Slot(this.title, this.time, this.start, this.end, this.icon, this.color, this.background);
+  const _Slot(
+    this.title,
+    this.time,
+    this.start,
+    this.end,
+    this.icon,
+    this.color,
+    this.background,
+  );
   final String title;
   final String time;
+
   /// 24h `HH:mm:ss`, sent to the schedule API.
   final String start;
   final String end;
@@ -32,11 +41,51 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
   static const _purple = Color(0xFF5B21B6);
 
   static const _slots = [
-    _Slot('Morning Time', '06:00 AM - 12:00 PM', '06:00:00', '12:00:00', Icons.wb_twilight_rounded, Color(0xFFF59E0B), Color(0xFFFDEBD0)),
-    _Slot('Day time', '12:00 PM - 04:00 PM', '12:00:00', '16:00:00', Icons.wb_sunny_outlined, Color(0xFFF97316), Color(0xFFFFF3E6)),
-    _Slot('Evening Time', '04:00 PM - 08:00 PM', '16:00:00', '20:00:00', Icons.waves_rounded, Color(0xFFB91C1C), Color(0xFFFFF1E6)),
-    _Slot('Night Time', '08:00 PM - 12:00 AM', '20:00:00', '23:59:59', Icons.nightlight_round, Color(0xFF312E81), Color(0xFFEEF0FF)),
-    _Slot('Flexible', 'Available Anytime', '00:00:00', '23:59:59', Icons.calendar_month_rounded, Color(0xFF1D4ED8), Color(0xFFEEF0FF)),
+    _Slot(
+      'Morning Time',
+      '06:00 AM - 12:00 PM',
+      '06:00:00',
+      '12:00:00',
+      Icons.wb_twilight_rounded,
+      Color(0xFFF59E0B),
+      Color(0xFFFDEBD0),
+    ),
+    _Slot(
+      'Day time',
+      '12:00 PM - 04:00 PM',
+      '12:00:00',
+      '16:00:00',
+      Icons.wb_sunny_outlined,
+      Color(0xFFF97316),
+      Color(0xFFFFF3E6),
+    ),
+    _Slot(
+      'Evening Time',
+      '04:00 PM - 08:00 PM',
+      '16:00:00',
+      '20:00:00',
+      Icons.waves_rounded,
+      Color(0xFFB91C1C),
+      Color(0xFFFFF1E6),
+    ),
+    _Slot(
+      'Night Time',
+      '08:00 PM - 12:00 AM',
+      '20:00:00',
+      '23:59:59',
+      Icons.nightlight_round,
+      Color(0xFF312E81),
+      Color(0xFFEEF0FF),
+    ),
+    _Slot(
+      'Flexible',
+      'Available Anytime',
+      '00:00:00',
+      '23:59:59',
+      Icons.calendar_month_rounded,
+      Color(0xFF1D4ED8),
+      Color(0xFFEEF0FF),
+    ),
   ];
 
   int _selected = 0;
@@ -50,11 +99,19 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
         canPop: false,
         child: AlertDialog(
           backgroundColor: dialogContext.torkk.surface,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(dialogContext.r(20))),
-          title: Text('Schedule saved', style: AppTypography.bold.copyWith(fontSize: 18)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(dialogContext.r(20)),
+          ),
+          title: Text(
+            'Schedule saved',
+            style: AppTypography.bold.copyWith(fontSize: 18),
+          ),
           content: Text(
             '${slot.title} (${slot.time}) has been saved as your driving hours.',
-            style: AppTypography.regular.copyWith(fontSize: 14, color: dialogContext.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 14,
+              color: dialogContext.torkk.textSecondary,
+            ),
           ),
           actions: [
             SizedBox(
@@ -81,7 +138,9 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
         startTime: slot.start,
         endTime: slot.end,
       );
-      debugPrint('SCHEDULE_SCREEN_01 | saved "${slot.title}" ${slot.start}-${slot.end} response=$response');
+      debugPrint(
+        'SCHEDULE_SCREEN_01 | saved "${slot.title}" ${slot.start}-${slot.end} response=$response',
+      );
       if (!mounted) return;
       await _showSavedDialog(slot);
       if (!mounted) return;
@@ -100,9 +159,15 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: 'Plan your Driving Hours',
-      subtitle: 'Select your time slots when you prefer to go online and receive more ride requests.',
+      subtitle:
+          'Select your time slots when you prefer to go online and receive more ride requests.',
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: UnifiedButton(
           label: _saving ? 'Saving...' : 'Save Schedule',
           backgroundColor: const Color(0xFF1E3FBF),
@@ -110,7 +175,12 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
         ),
       ),
       child: ListView.separated(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         itemCount: _slots.length,
         separatorBuilder: (_, _) => SizedBox(height: context.h(12)),
         itemBuilder: (_, i) => _slotCard(context, i),
@@ -125,7 +195,10 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
       onTap: () => setState(() => _selected = index),
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: context.w(16), vertical: context.h(16)),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.w(16),
+          vertical: context.h(16),
+        ),
         decoration: BoxDecoration(
           color: context.torkk.surface,
           borderRadius: BorderRadius.circular(context.r(16)),
@@ -134,7 +207,11 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
             width: selected ? 2 : 1,
           ),
           boxShadow: const [
-            BoxShadow(color: Color(0x0F000000), blurRadius: 8, offset: Offset(0, 2)),
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
           ],
         ),
         child: Row(
@@ -146,18 +223,32 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
                 color: context.adaptiveTint(slot.background),
                 borderRadius: BorderRadius.circular(context.r(12)),
               ),
-              child: Icon(slot.icon, color: context.legible(slot.color), size: context.w(24)),
+              child: Icon(
+                slot.icon,
+                color: context.legible(slot.color),
+                size: context.w(24),
+              ),
             ),
             SizedBox(width: context.w(16)),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(slot.title, style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2, letterSpacing: -0.2)),
+                  Text(
+                    slot.title,
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 15,
+                      height: 1.2,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
                   SizedBox(height: context.h(4)),
                   Text(
                     slot.time,
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 12,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -176,14 +267,20 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: selected ? _purple : context.torkk.textSecondary, width: selected ? 2 : 1.4),
+        border: Border.all(
+          color: selected ? _purple : context.torkk.textSecondary,
+          width: selected ? 2 : 1.4,
+        ),
       ),
       alignment: Alignment.center,
       child: selected
           ? Container(
               width: size * 0.5,
               height: size * 0.5,
-              decoration: const BoxDecoration(color: _purple, shape: BoxShape.circle),
+              decoration: const BoxDecoration(
+                color: _purple,
+                shape: BoxShape.circle,
+              ),
             )
           : null,
     );

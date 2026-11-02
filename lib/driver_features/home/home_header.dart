@@ -6,7 +6,6 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/driver_features/home/home_glass_button.dart';
 
-
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,
@@ -31,7 +30,12 @@ class HomeHeader extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(40), context.h(20), context.w(30), 0),
+        padding: EdgeInsets.fromLTRB(
+          context.w(40),
+          context.h(20),
+          context.w(30),
+          0,
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,7 +47,10 @@ class HomeHeader extends StatelessWidget {
                     _greeting,
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
-                      color: context.torkk.textSecondary,
+                      // The map stays light in dark mode, so keep the text dark.
+                      color: context.isDarkTheme
+                          ? const Color(0xFF475569)
+                          : context.torkk.textSecondary,
                     ),
                   ),
                   Text(
@@ -54,6 +61,9 @@ class HomeHeader extends StatelessWidget {
                       fontSize: 16,
                       height: 1.3,
                       letterSpacing: -0.4,
+                      color: context.isDarkTheme
+                          ? const Color(0xFF0F172A)
+                          : null,
                     ),
                   ),
                 ],
@@ -64,10 +74,7 @@ class HomeHeader extends StatelessWidget {
             //   icon: Icons.notifications_none_rounded,
             // ),
             // SizedBox(width: context.w(8)),
-            HomeGlassButton(
-              onTap: onHelp,
-              asset: AppAssets.questionMark,
-            ),
+            HomeGlassButton(onTap: onHelp, asset: AppAssets.questionMark),
           ],
         ),
       ),

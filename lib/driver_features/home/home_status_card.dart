@@ -20,6 +20,10 @@ class HomeStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = context.isDarkTheme;
+    final statusColor = isOnline
+        ? const Color(0xFF22C55E)
+        : const Color(0xFFEF4444);
     return Container(
       height: context.h(148),
       padding: EdgeInsets.all(context.w(20)),
@@ -28,13 +32,35 @@ class HomeStatusCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: isOnline
-              ? [context.adaptiveTint(Color(0xFFF8F6FE)), context.adaptiveTint(Color(0x82CEE9DC))]
-              : [context.adaptiveTint(Color(0xFFF8F6FE)), context.adaptiveTint(Color(0xFFFEF6F7))],
+          // Dark mode: status-colored glow fading into the surface.
+          colors: dark
+              ? [statusColor.withValues(alpha: 0.28), context.torkk.surface]
+              : isOnline
+              ? [
+                  context.adaptiveTint(Color(0xFFF8F6FE)),
+                  context.adaptiveTint(Color(0x82CEE9DC)),
+                ]
+              : [
+                  context.adaptiveTint(Color(0xFFF8F6FE)),
+                  context.adaptiveTint(Color(0xFFFEF6F7)),
+                ],
         ),
-        border: Border.all(color: female ? const Color(0xB2FBCFE8) : const Color(0xB2F3E8FF)),
-        boxShadow: const [
-          BoxShadow(color: Color(0x0D000000), offset: Offset(0, 1), blurRadius: 2),
+        border: Border.all(
+          color: dark
+              ? statusColor.withValues(alpha: 0.6)
+              : female
+              ? const Color(0xB2FBCFE8)
+              : const Color(0xB2F3E8FF),
+          width: dark ? 1.5 : 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: dark
+                ? statusColor.withValues(alpha: 0.22)
+                : const Color(0x0D000000),
+            offset: dark ? const Offset(0, 4) : const Offset(0, 1),
+            blurRadius: dark ? 18 : 2,
+          ),
         ],
       ),
       child: Column(
@@ -47,14 +73,18 @@ class HomeStatusCard extends StatelessWidget {
                 height: context.w(28),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isOnline ? context.adaptiveTint(Color(0xFFDCFCE7)) : context.adaptiveTint(Color(0xFFFEE2E2)),
+                  color: isOnline
+                      ? context.adaptiveTint(Color(0xFFDCFCE7))
+                      : context.adaptiveTint(Color(0xFFFEE2E2)),
                   shape: BoxShape.circle,
                 ),
                 child: Container(
                   width: context.w(12),
                   height: context.w(12),
                   decoration: BoxDecoration(
-                    color: isOnline ? const Color(0xFF22C55E) : const Color(0xFFEF4444),
+                    color: isOnline
+                        ? const Color(0xFF22C55E)
+                        : const Color(0xFFEF4444),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -89,18 +119,29 @@ class HomeStatusCard extends StatelessWidget {
   }
 
   Widget _statusTitle(BuildContext context) {
-    final parts = (isOnline ? AppStrings.youAreOnline : AppStrings.youAreOffline).split(' ');
+    final parts =
+        (isOnline ? AppStrings.youAreOnline : AppStrings.youAreOffline).split(
+          ' ',
+        );
     final lead = parts.first;
     final word = parts.length > 1 ? parts.sublist(1).join(' ') : '';
-    final style = AppTypography.bold.copyWith(fontSize: 20, height: 25 / 20, letterSpacing: -0.5);
+    final style = AppTypography.bold.copyWith(
+      fontSize: 20,
+      height: 25 / 20,
+      letterSpacing: -0.5,
+    );
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(text: '$lead ', style: style.copyWith(color: context.torkk.textPrimary)),
+          TextSpan(
+            text: '$lead ',
+            style: style.copyWith(color: context.torkk.textPrimary),
+          ),
           WidgetSpan(
             alignment: PlaceholderAlignment.middle,
             child: ShaderMask(
-              shaderCallback: (bounds) => homeBrandWash(female, 1).createShader(bounds),
+              shaderCallback: (bounds) =>
+                  homeBrandWash(female, 1).createShader(bounds),
               child: Text(word, style: style.copyWith(color: Colors.white)),
             ),
           ),
@@ -121,12 +162,21 @@ class _AvailabilitySwitch extends StatelessWidget {
       duration: const Duration(milliseconds: 180),
       width: context.w(69.57),
       height: context.h(30.25),
-      padding: EdgeInsets.fromLTRB(context.w(6.05), context.h(3.02), context.w(6.05), context.h(3.02)),
+      padding: EdgeInsets.fromLTRB(
+        context.w(6.05),
+        context.h(3.02),
+        context.w(6.05),
+        context.h(3.02),
+      ),
       decoration: BoxDecoration(
         color: online ? const Color(0xFF22C55E) : const Color(0xFFEF4444),
         borderRadius: BorderRadius.circular(context.r(9999)),
         boxShadow: const [
-          BoxShadow(color: Color(0x0D000000), offset: Offset(0, 1.51), blurRadius: 3.02),
+          BoxShadow(
+            color: Color(0x0D000000),
+            offset: Offset(0, 1.51),
+            blurRadius: 3.02,
+          ),
         ],
       ),
       child: Align(
@@ -134,7 +184,10 @@ class _AvailabilitySwitch extends StatelessWidget {
         child: Container(
           width: context.h(24),
           height: context.h(24),
-          decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+          ),
         ),
       ),
     );

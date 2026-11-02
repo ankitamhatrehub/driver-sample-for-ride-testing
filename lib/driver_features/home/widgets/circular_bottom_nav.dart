@@ -22,9 +22,17 @@ class CircularBottomNav extends StatelessWidget {
 
   static final List<_NavItem> _items = [
     _NavItem(AppStrings.navHome, Icons.home_rounded, Icons.home_outlined),
-    _NavItem(AppStrings.navOrders, Icons.article_rounded, Icons.article_outlined),
-     _NavItem(AppStrings.navParcel, Icons.view_in_ar, Icons.view_in_ar_outlined),
-     _NavItem(AppStrings.navWallet, Icons.account_balance_wallet, Icons.account_balance_wallet_outlined),
+    _NavItem(
+      AppStrings.navOrders,
+      Icons.article_rounded,
+      Icons.article_outlined,
+    ),
+    _NavItem(AppStrings.navParcel, Icons.view_in_ar, Icons.view_in_ar_outlined),
+    _NavItem(
+      AppStrings.navWallet,
+      Icons.account_balance_wallet,
+      Icons.account_balance_wallet_outlined,
+    ),
     _NavItem(AppStrings.profile, Icons.person, Icons.person_outline),
   ];
 
@@ -33,7 +41,8 @@ class CircularBottomNav extends StatelessWidget {
     final radians = degrees * math.pi / 180;
     final dx = math.sin(radians);
     final dy = -math.cos(radians);
-    final female = Theme.of(context).colorScheme.primary == AppColors.femalePink;
+    final female =
+        Theme.of(context).colorScheme.primary == AppColors.femalePink;
     final colors = female
         ? const [Color(0xFFE85AAD), Color(0xFFBA2879), Color(0xFF6B1848)]
         : const [Color(0xFF0F3FBF), Color(0xFF61217E), Color(0xFF40105F)];
@@ -48,14 +57,23 @@ class CircularBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(context.w(18), 0, context.w(18), context.h(28)),
+      padding: EdgeInsets.fromLTRB(
+        context.w(18),
+        0,
+        context.w(18),
+        context.h(28),
+      ),
       child: SafeArea(
         top: false,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(context.r(47)),
             boxShadow: const [
-              BoxShadow(color: Color(0x14000000), offset: Offset(0, 8), blurRadius: 24),
+              BoxShadow(
+                color: Color(0x14000000),
+                offset: Offset(0, 8),
+                blurRadius: 24,
+              ),
             ],
           ),
           child: Container(
@@ -71,13 +89,28 @@ class CircularBottomNav extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                 child: Container(
                   color: context.torkk.surface,
-                  padding: EdgeInsets.fromLTRB(context.w(8), context.h(6), context.w(8), context.h(6)),
+                  padding: EdgeInsets.fromLTRB(
+                    context.w(8),
+                    context.h(6),
+                    context.w(8),
+                    context.h(6),
+                  ),
                   child: Row(
                     children: [
                       for (var i = 0; i < _items.length; i++)
                         i == currentIndex
-                            ? _selected(context, _items[i], () => onItemSelected(i))
-                            : Expanded(child: _plain(context, _items[i], () => onItemSelected(i))),
+                            ? _selected(
+                                context,
+                                _items[i],
+                                () => onItemSelected(i),
+                              )
+                            : Expanded(
+                                child: _plain(
+                                  context,
+                                  _items[i],
+                                  () => onItemSelected(i),
+                                ),
+                              ),
                     ],
                   ),
                 ),
@@ -95,12 +128,21 @@ class CircularBottomNav extends StatelessWidget {
       child: Container(
         width: context.w(76),
         height: context.h(54),
-        padding: EdgeInsets.fromLTRB(context.w(9), context.h(10), context.w(9), context.h(10)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(9),
+          context.h(10),
+          context.w(9),
+          context.h(10),
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(34)),
           gradient: _gradient(context, 0.93),
           boxShadow: const [
-            BoxShadow(color: Color(0x1C000000), offset: Offset(0, 1), blurRadius: 4),
+            BoxShadow(
+              color: Color(0x1C000000),
+              offset: Offset(0, 1),
+              blurRadius: 4,
+            ),
           ],
         ),
         child: Column(
@@ -128,7 +170,11 @@ class CircularBottomNav extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(item.icon, color: context.torkk.textSecondary, size: context.w(20)),
+          Icon(
+            item.icon,
+            color: context.torkk.textSecondary,
+            size: context.w(20),
+          ),
           Text(
             item.label,
             style: AppTypography.regular.copyWith(
