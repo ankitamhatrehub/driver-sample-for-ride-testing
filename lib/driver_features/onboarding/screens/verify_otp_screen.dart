@@ -120,7 +120,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios_new,
-              color: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
+              color: context.themed(
+                light: Colors.black,
+                dark: context.torkk.textPrimary,
+              ),
               size: 20,
             ),
             onPressed: widget.onBack,
@@ -139,163 +142,178 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () => FocusScope.of(context).unfocus(),
-                        behavior: HitTestBehavior.opaque,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            context.w(24),
-                            context.h(10),
-                            context.w(24),
-                            context.h(28),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppStrings.verifyYourNumber,
-                                style: AppTypography.bold.copyWith(fontSize: 24, height: 1.2),
-                              ),
-                              SizedBox(height: context.h(8)),
-                              Text(
-                                '${AppStrings.otpSentPrefix}$_maskedPhone',
-                                style: AppTypography.regular.copyWith(
-                                  color: context.torkk.textSecondary,
-                                  fontSize: 14.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () => FocusScope.of(context).unfocus(),
+                    behavior: HitTestBehavior.opaque,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        context.w(24),
+                        context.h(10),
+                        context.w(24),
+                        context.h(28),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.w(24)),
-                        child: _OtpBoxes(
-                          value: currentText,
-                          length: _otpLength,
-                          hasError: _hasError,
-                          controller: widget.otpController,
-                          focusNode: widget.otpFocusNode,
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => FocusScope.of(context).unfocus(),
-                          behavior: HitTestBehavior.opaque,
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              context.w(24),
-                              0,
-                              context.w(24),
-                              context.h(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppStrings.verifyYourNumber,
+                            style: AppTypography.bold.copyWith(
+                              fontSize: 24,
+                              height: 1.2,
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (_hasError) ...[
-                                  SizedBox(height: context.h(20)),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.info,
-                                        color: context.legible(AppColors.error),
-                                        size: context.w(18),
-                                      ),
-                                      SizedBox(width: context.w(8)),
-                                      Expanded(
-                                        child: Text(
-                                          AppStrings.incorrectOtp,
-                                          style: AppTypography.regular.copyWith(
-                                            color: context.legible(AppColors.error),
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                          ),
+                          SizedBox(height: context.h(8)),
+                          Text(
+                            '${AppStrings.otpSentPrefix}$_maskedPhone',
+                            style: AppTypography.regular.copyWith(
+                              color: context.torkk.textSecondary,
+                              fontSize: 14.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: context.w(24)),
+                    child: _OtpBoxes(
+                      value: currentText,
+                      length: _otpLength,
+                      hasError: _hasError,
+                      controller: widget.otpController,
+                      focusNode: widget.otpFocusNode,
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      behavior: HitTestBehavior.opaque,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          context.w(24),
+                          0,
+                          context.w(24),
+                          context.h(24),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (_hasError) ...[
+                              SizedBox(height: context.h(20)),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.info,
+                                    color: context.legible(AppColors.error),
+                                    size: context.w(18),
                                   ),
-                                ],
-                                if (widget.otpCountdown > 0) ...[
-                                  SizedBox(height: context.h(20)),
-                                  Center(
+                                  SizedBox(width: context.w(8)),
+                                  Expanded(
                                     child: Text(
-                                      '${AppStrings.resendOtpIn}$_countdownLabel',
+                                      AppStrings.incorrectOtp,
                                       style: AppTypography.regular.copyWith(
-                                        color: context.torkk.textSecondary,
+                                        color: context.legible(AppColors.error),
                                         fontSize: 13,
                                       ),
                                     ),
                                   ),
                                 ],
-                                SizedBox(height: context.h(28)),
-                                Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.symmetric(vertical: context.h(16)),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.otpInfoFill.withValues(alpha: 0.05),
-                                    borderRadius: BorderRadius.circular(context.r(12)),
-                                    border: Border.all(
-                                      color: AppColors.otpInfoFill.withValues(alpha: 0.42),
+                              ),
+                            ],
+                            if (widget.otpCountdown > 0) ...[
+                              SizedBox(height: context.h(20)),
+                              Center(
+                                child: Text(
+                                  '${AppStrings.resendOtpIn}$_countdownLabel',
+                                  style: AppTypography.regular.copyWith(
+                                    color: context.torkk.textSecondary,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            SizedBox(height: context.h(28)),
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                vertical: context.h(16),
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.otpInfoFill.withValues(
+                                  alpha: 0.05,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  context.r(12),
+                                ),
+                                border: Border.all(
+                                  color: AppColors.otpInfoFill.withValues(
+                                    alpha: 0.42,
+                                  ),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    AppStrings.didntReceiveCode,
+                                    style: AppTypography.regular.copyWith(
+                                      color: context.torkk.textSecondary,
+                                      fontSize: 12,
                                     ),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        AppStrings.didntReceiveCode,
-                                        style: AppTypography.regular.copyWith(
-                                          color: context.torkk.textSecondary,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      SizedBox(height: context.h(4)),
-                                      GestureDetector(
-                                        onTap: widget.otpCountdown == 0 ? widget.onResendOtp : null,
-                                        child: Text(
-                                          AppStrings.resendOtp,
-                                          style: AppTypography.bold.copyWith(
-                                            color: AppColors.primary,
-                                            fontSize: 12,
-                                            height: 1.2,
-                                            decoration: TextDecoration.underline,
-                                            decorationColor: AppColors.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: context.h(20)),
-                                UnifiedButton(
-                                  label: AppStrings.verifyAndContinue,
-                                  isLoading: widget.isLoading,
-                                  onPressed: _verify,
-                                ),
-                                SizedBox(height: context.h(30)),
-                                Center(
-                                  child: GestureDetector(
-                                    onTap: widget.onChangeNumber,
+                                  SizedBox(height: context.h(4)),
+                                  GestureDetector(
+                                    onTap: widget.otpCountdown == 0
+                                        ? widget.onResendOtp
+                                        : null,
                                     child: Text(
-                                      AppStrings.changeMobileNumber,
-                                      style: AppTypography.regular.copyWith(
-                                        color: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
-                                        fontSize: 14.5,
+                                      AppStrings.resendOtp,
+                                      style: AppTypography.bold.copyWith(
+                                        color: AppColors.primary,
+                                        fontSize: 12,
+                                        height: 1.2,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: AppColors.primary,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                            SizedBox(height: context.h(20)),
+                            UnifiedButton(
+                              label: AppStrings.verifyAndContinue,
+                              isLoading: widget.isLoading,
+                              onPressed: _verify,
+                            ),
+                            SizedBox(height: context.h(30)),
+                            Center(
+                              child: GestureDetector(
+                                onTap: widget.onChangeNumber,
+                                child: Text(
+                                  AppStrings.changeMobileNumber,
+                                  style: AppTypography.regular.copyWith(
+                                    color: context.themed(
+                                      light: Colors.black,
+                                      dark: context.torkk.textPrimary,
+                                    ),
+                                    fontSize: 14.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+          ],
+        ),
       ),
     );
   }
 }
-

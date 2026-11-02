@@ -96,7 +96,9 @@ class DocumentEntryStep extends StatelessWidget {
                               bottom: 12,
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 6),
+                                  horizontal: 10,
+                                  vertical: 6,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.black.withValues(alpha: 0.7),
                                   borderRadius: BorderRadius.circular(20),
@@ -104,15 +106,19 @@ class DocumentEntryStep extends StatelessWidget {
                                 child: const Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.edit,
-                                        color: Colors.white, size: 14),
+                                    Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
                                     SizedBox(width: 4),
                                     Text(
                                       'Change Photo',
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500),
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -186,8 +192,7 @@ class DocumentEntryStep extends StatelessWidget {
                         child: Image.asset(
                           'assets/digilocker.png',
                           fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Center(
+                          errorBuilder: (context, error, stackTrace) => Center(
                             child: Icon(
                               Icons.cloud_done_rounded,
                               color: context.legible(Color(0xFF2563EB)),
@@ -281,7 +286,9 @@ class DocumentEntryStep extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                        color: context.legible(Color(0xFF2563EB)), width: 1.5),
+                      color: context.legible(Color(0xFF2563EB)),
+                      width: 1.5,
+                    ),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -323,7 +330,9 @@ class DocumentEntryStep extends StatelessWidget {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                          color: context.legible(Color(0xFF2563EB)), width: 1.5),
+                        color: context.legible(Color(0xFF2563EB)),
+                        width: 1.5,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -441,8 +450,10 @@ class _AadhaarFaqBottomSheetState extends State<AadhaarFaqBottomSheet> {
             ),
             Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
                 children: [
                   Text(
                     'FAQ',
@@ -593,8 +604,10 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
             ),
             Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
                 children: [
                   Text(
                     'FAQ',
@@ -608,7 +621,10 @@ class _DlFaqBottomSheetState extends State<DlFaqBottomSheet> {
                   const SizedBox(height: 4),
                   Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {
@@ -776,8 +792,10 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
             ),
             Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
                 children: [
                   Text(
                     'FAQ',
@@ -791,7 +809,10 @@ class _RcFaqBottomSheetState extends State<RcFaqBottomSheet> {
                   const SizedBox(height: 4),
                   Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {

@@ -71,7 +71,9 @@ class _OtpBoxesState extends State<_OtpBoxes> {
   Widget build(BuildContext context) {
     final gap = context.w(8);
     final boxSize =
-        (MediaQuery.sizeOf(context).width - context.w(48) - gap * (widget.length - 1)) /
+        (MediaQuery.sizeOf(context).width -
+            context.w(48) -
+            gap * (widget.length - 1)) /
         widget.length;
 
     return SizedBox(
@@ -86,9 +88,12 @@ class _OtpBoxesState extends State<_OtpBoxes> {
                     ? widget.controller.text[index]
                     : '';
                 final isActive = _cursorInBox(index);
-                final showErrorBorder = widget.hasError && index == widget.length - 1;
+                final showErrorBorder =
+                    widget.hasError && index == widget.length - 1;
                 return Padding(
-                  padding: EdgeInsets.only(right: index == widget.length - 1 ? 0 : gap),
+                  padding: EdgeInsets.only(
+                    right: index == widget.length - 1 ? 0 : gap,
+                  ),
                   child: Container(
                     width: boxSize,
                     height: boxSize,
@@ -136,7 +141,11 @@ class _OtpBoxesState extends State<_OtpBoxes> {
                 maxLength: widget.length,
                 enableInteractiveSelection: false,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: const TextStyle(color: Colors.transparent, fontSize: 1, height: 1),
+                style: const TextStyle(
+                  color: Colors.transparent,
+                  fontSize: 1,
+                  height: 1,
+                ),
                 decoration: const InputDecoration(
                   filled: false,
                   fillColor: Colors.transparent,

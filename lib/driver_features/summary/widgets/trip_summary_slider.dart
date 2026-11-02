@@ -36,7 +36,9 @@ class _TripSummarySliderState extends State<TripSummarySlider> {
             children: [
               Center(
                 child: Text(
-                  widget.completing ? 'Processing...' : 'Slide to Finish the Ride',
+                  widget.completing
+                      ? 'Processing...'
+                      : 'Slide to Finish the Ride',
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,

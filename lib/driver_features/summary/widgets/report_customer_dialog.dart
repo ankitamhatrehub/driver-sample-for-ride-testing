@@ -14,15 +14,10 @@ void showReportCustomerDialog({
     context: context,
     builder: (dialogContext) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
         backgroundColor: context.torkk.surface,
         elevation: 16,
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 24,
-        ),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         child: Padding(
           padding: const EdgeInsets.all(22.0),
           child: Column(

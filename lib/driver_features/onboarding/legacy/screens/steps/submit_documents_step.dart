@@ -34,9 +34,10 @@ class SubmitDocumentsStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isAllCompleted =
         isAadharCompleted && isDlCompleted && isRcCompleted;
-    final String displayTitle = title ??
-        (isAllCompleted ? 'All Set to Drive!' : 'KYC Verification');
-    final String displaySectionTitle = sectionTitle ??
+    final String displayTitle =
+        title ?? (isAllCompleted ? 'All Set to Drive!' : 'KYC Verification');
+    final String displaySectionTitle =
+        sectionTitle ??
         (isAllCompleted ? 'Submitted Documents' : 'Required Documents');
 
     return Column(
@@ -109,7 +110,9 @@ class SubmitDocumentsStep extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF2563EB).withValues(alpha: 0.06),
+                          color: const Color(
+                            0xFF2563EB,
+                          ).withValues(alpha: 0.06),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -122,7 +125,9 @@ class SubmitDocumentsStep extends StatelessWidget {
                           height: 44,
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: context.adaptiveTint(const Color(0xFFEFF6FF)),
+                            color: context.adaptiveTint(
+                              const Color(0xFFEFF6FF),
+                            ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.asset(
@@ -130,12 +135,12 @@ class SubmitDocumentsStep extends StatelessWidget {
                             fit: BoxFit.contain,
                             errorBuilder: (context, error, stackTrace) =>
                                 Center(
-                              child: Icon(
-                                Icons.cloud_done_rounded,
-                                color: context.legible(Color(0xFF2563EB)),
-                                size: 26,
-                              ),
-                            ),
+                                  child: Icon(
+                                    Icons.cloud_done_rounded,
+                                    color: context.legible(Color(0xFF2563EB)),
+                                    size: 26,
+                                  ),
+                                ),
                           ),
                         ),
                         const SizedBox(width: 14),
@@ -186,7 +191,8 @@ class SubmitDocumentsStep extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Document 1: Aadhar Card
-              _buildDocItem(context, 
+              _buildDocItem(
+                context,
                 title: 'Aadhar Card',
                 subtitle: 'Submit Aadhar Card Number',
                 isCompleted: isAadharCompleted,
@@ -194,7 +200,8 @@ class SubmitDocumentsStep extends StatelessWidget {
               ),
 
               // Document 2: Driving License
-              _buildDocItem(context, 
+              _buildDocItem(
+                context,
                 title: 'Driving License',
                 subtitle: 'Submit your DL Number',
                 isCompleted: isDlCompleted,
@@ -202,7 +209,8 @@ class SubmitDocumentsStep extends StatelessWidget {
               ),
 
               // Document 3: RC
-              _buildDocItem(context, 
+              _buildDocItem(
+                context,
                 title: 'RC',
                 subtitle: 'Submit your Vehicle RC',
                 isCompleted: isRcCompleted,
@@ -244,7 +252,8 @@ class SubmitDocumentsStep extends StatelessWidget {
     );
   }
 
-  Widget _buildDocItem(BuildContext context, {
+  Widget _buildDocItem(
+    BuildContext context, {
     required String title,
     required String subtitle,
     required bool isCompleted,
@@ -401,7 +410,10 @@ class _KycFaqBottomSheetState extends State<KycFaqBottomSheet> {
                   const SizedBox(height: 4),
                   Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {

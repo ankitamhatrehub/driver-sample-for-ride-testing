@@ -91,7 +91,10 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
             border: Border.all(color: context.torkk.border),
             boxShadow: [
               BoxShadow(
-                color: context.themed(light: Colors.black12, dark: context.torkk.textSecondary),
+                color: context.themed(
+                  light: Colors.black12,
+                  dark: context.torkk.textSecondary,
+                ),
                 blurRadius: 6,
                 offset: Offset(0, 2),
               ),
@@ -151,7 +154,10 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: context.torkk.background,
-        foregroundColor: context.themed(light: Colors.black, dark: context.torkk.textSecondary),
+        foregroundColor: context.themed(
+          light: Colors.black,
+          dark: context.torkk.textSecondary,
+        ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -172,7 +178,10 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
                     border: Border.all(color: context.torkk.border),
                     boxShadow: [
                       BoxShadow(
-                        color: context.themed(light: Colors.black12, dark: context.torkk.textSecondary),
+                        color: context.themed(
+                          light: Colors.black12,
+                          dark: context.torkk.textSecondary,
+                        ),
                         blurRadius: 10,
                         offset: Offset(0, 4),
                       ),
@@ -235,7 +244,10 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
                       Text(
                         'Keep up the high service standards to earn extra bonuses!',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: context.torkk.textSecondary, fontSize: 12),
+                        style: TextStyle(
+                          color: context.torkk.textSecondary,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),

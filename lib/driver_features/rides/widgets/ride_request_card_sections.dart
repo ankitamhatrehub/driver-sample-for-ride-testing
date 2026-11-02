@@ -8,13 +8,14 @@ extension _RideRequestCardSections on RideRequestCard {
         ride['female_passengers'] ?? ride['female_count'] ?? ride['females'];
     final dynamic totalVal =
         ride['passenger_count'] ?? ride['total_passengers'] ?? ride['seats'];
-    final String gender = (ride['gender'] ??
-            ride['customer_gender'] ??
-            ride['passenger_gender'] ??
-            '')
-        .toString()
-        .trim()
-        .toLowerCase();
+    final String gender =
+        (ride['gender'] ??
+                ride['customer_gender'] ??
+                ride['passenger_gender'] ??
+                '')
+            .toString()
+            .trim()
+            .toLowerCase();
 
     int? maleCount = (maleVal is num)
         ? maleVal.toInt()
@@ -33,8 +34,11 @@ extension _RideRequestCardSections on RideRequestCard {
 
     if (maleCount != null && femaleCount != null) {
       badge1Color = const Color(0xFF1D4ED8);
-      badge1Content =
-          const Icon(Icons.male_rounded, size: 18, color: Colors.white);
+      badge1Content = const Icon(
+        Icons.male_rounded,
+        size: 18,
+        color: Colors.white,
+      );
       if (femaleCount > 0) {
         badge2Color = const Color(0xFFEC4899);
         badge2Content = femaleCount > 1
@@ -50,8 +54,11 @@ extension _RideRequestCardSections on RideRequestCard {
       }
     } else if (gender == 'female' || gender == 'f') {
       badge1Color = const Color(0xFFEC4899);
-      badge1Content =
-          const Icon(Icons.female_rounded, size: 18, color: Colors.white);
+      badge1Content = const Icon(
+        Icons.female_rounded,
+        size: 18,
+        color: Colors.white,
+      );
       if (totalCount > 1) {
         badge2Color = const Color(0xFF1D4ED8);
         badge2Content = Text(
@@ -65,8 +72,11 @@ extension _RideRequestCardSections on RideRequestCard {
       }
     } else {
       badge1Color = const Color(0xFF1D4ED8);
-      badge1Content =
-          const Icon(Icons.male_rounded, size: 18, color: Colors.white);
+      badge1Content = const Icon(
+        Icons.male_rounded,
+        size: 18,
+        color: Colors.white,
+      );
       if (totalCount > 1) {
         badge2Color = const Color(0xFFEC4899);
         badge2Content = Text(
@@ -109,10 +119,7 @@ extension _RideRequestCardSections on RideRequestCard {
                 decoration: BoxDecoration(
                   color: badge2Color,
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
+                  border: Border.all(color: Colors.white, width: 2),
                 ),
                 child: Center(child: badge2Content),
               ),

@@ -55,7 +55,8 @@ class AadhaarVerificationFlow extends StatefulWidget {
   static void _noop() {}
 
   @override
-  State<AadhaarVerificationFlow> createState() => AadhaarVerificationFlowState();
+  State<AadhaarVerificationFlow> createState() =>
+      AadhaarVerificationFlowState();
 }
 
 class AadhaarVerificationFlowState extends State<AadhaarVerificationFlow> {
@@ -65,7 +66,9 @@ class AadhaarVerificationFlowState extends State<AadhaarVerificationFlow> {
   @override
   void initState() {
     super.initState();
-    _page = widget.alreadyVerified ? AadhaarFlowPage.verified : AadhaarFlowPage.choose;
+    _page = widget.alreadyVerified
+        ? AadhaarFlowPage.verified
+        : AadhaarFlowPage.choose;
   }
 
   @override
@@ -85,66 +88,68 @@ class AadhaarVerificationFlowState extends State<AadhaarVerificationFlow> {
   Widget build(BuildContext context) {
     return switch (_page) {
       AadhaarFlowPage.choose => VerifyAadhaarScreen(
-          onBack: widget.onBack,
-          onHelp: widget.onHelp,
-          onContinueDigilocker: _openDigilocker,
-          onUploadManually: () => show(AadhaarFlowPage.aadhaarManual),
-        ),
+        onBack: widget.onBack,
+        onHelp: widget.onHelp,
+        onContinueDigilocker: _openDigilocker,
+        onUploadManually: () => show(AadhaarFlowPage.aadhaarManual),
+      ),
       AadhaarFlowPage.digilocker => ConnectDigilockerScreen(
-          isLoading: widget.isLoading,
-          onBack: () => show(AadhaarFlowPage.choose),
-          onHelp: widget.onHelp,
-          onContinue: () {
-            show(AadhaarFlowPage.connecting);
-            widget.onStartDigilocker();
-          },
-        ),
+        isLoading: widget.isLoading,
+        onBack: () => show(AadhaarFlowPage.choose),
+        onHelp: widget.onHelp,
+        onContinue: () {
+          show(AadhaarFlowPage.connecting);
+          widget.onStartDigilocker();
+        },
+      ),
       AadhaarFlowPage.aadhaarManual => AadhaarManualScreen(
-          aadhaarController: widget.aadhaarController,
-          isLoading: widget.isLoading,
-          onBack: () => show(AadhaarFlowPage.choose),
-          onVerify: () => show(AadhaarFlowPage.pan),
-        ),
+        aadhaarController: widget.aadhaarController,
+        isLoading: widget.isLoading,
+        onBack: () => show(AadhaarFlowPage.choose),
+        onVerify: () => show(AadhaarFlowPage.pan),
+      ),
       AadhaarFlowPage.pan => PanVerificationScreen(
-          onBack: () => show(AadhaarFlowPage.aadhaarManual),
-          onVerify: (pan) {
-            OnboardingSession.instance.rememberPan(pan);
-            widget.onSubmitUpload();
-          },
-        ),
+        onBack: () => show(AadhaarFlowPage.aadhaarManual),
+        onVerify: (pan) {
+          OnboardingSession.instance.rememberPan(pan);
+          widget.onSubmitUpload();
+        },
+      ),
       AadhaarFlowPage.connecting => ConnectingDigilockerScreen(
-          onBack: () => show(AadhaarFlowPage.digilocker),
-          ticking: _ticking,
-          onTickingFinished: () {
-            setState(() {
-              _ticking = false;
-              _page = AadhaarFlowPage.verified;
-            });
-            widget.onSuccessPlayed();
-          },
-        ),
-      AadhaarFlowPage.verified => IdentityVerifiedScreen(onContinue: widget.onVerified),
+        onBack: () => show(AadhaarFlowPage.digilocker),
+        ticking: _ticking,
+        onTickingFinished: () {
+          setState(() {
+            _ticking = false;
+            _page = AadhaarFlowPage.verified;
+          });
+          widget.onSuccessPlayed();
+        },
+      ),
+      AadhaarFlowPage.verified => IdentityVerifiedScreen(
+        onContinue: widget.onVerified,
+      ),
       AadhaarFlowPage.verificationFailed => VerificationFailedScreen(
-          onBack: _openDigilocker,
-          onHelp: widget.onHelp,
-          onRetry: _openDigilocker,
-        ),
+        onBack: _openDigilocker,
+        onHelp: widget.onHelp,
+        onRetry: _openDigilocker,
+      ),
       AadhaarFlowPage.documentNotFound => DocumentNotFoundScreen(
-          onBack: _openDigilocker,
-          onHelp: widget.onHelp,
-          onTryAgain: _openDigilocker,
-        ),
+        onBack: _openDigilocker,
+        onHelp: widget.onHelp,
+        onTryAgain: _openDigilocker,
+      ),
       AadhaarFlowPage.permissionDenied => PermissionDeniedScreen(
-          onBack: _openDigilocker,
-          onHelp: widget.onHelp,
-          onTryAgain: _openDigilocker,
-        ),
+        onBack: _openDigilocker,
+        onHelp: widget.onHelp,
+        onTryAgain: _openDigilocker,
+      ),
       AadhaarFlowPage.authFailed => AuthenticationFailedScreen(
-          onBack: _openDigilocker,
-          onHelp: widget.onHelp,
-          onTryAgain: _openDigilocker,
-          onUseAnotherMethod: () => show(AadhaarFlowPage.aadhaarManual),
-        ),
+        onBack: _openDigilocker,
+        onHelp: widget.onHelp,
+        onTryAgain: _openDigilocker,
+        onUseAnotherMethod: () => show(AadhaarFlowPage.aadhaarManual),
+      ),
     };
   }
 }

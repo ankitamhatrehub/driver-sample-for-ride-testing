@@ -47,7 +47,7 @@ class KycVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = _items();
-print('KYC Verification Screen: $items');
+    print('KYC Verification Screen: $items');
     return OnboardingStepScaffold(
       title: AppStrings.kycVerification,
       subtitle: AppStrings.kycSubtitle,
@@ -74,7 +74,11 @@ print('KYC Verification Screen: $items');
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: context.w(28), right: context.w(28), bottom: context.h(50)),
+            padding: EdgeInsets.only(
+              left: context.w(28),
+              right: context.w(28),
+              bottom: context.h(50),
+            ),
             child: OnboardingInfoBanner(message: AppStrings.kycActivateHint),
           ),
         ],
@@ -101,21 +105,40 @@ print('KYC Verification Screen: $items');
     }
 
     return [
-      _KycItem(AppStrings.kycAadhaarPan, statusFor(0), (nextIndex == 0 || aadhaarVerified) ? onAadhaarTap : null,
+      _KycItem(
+        AppStrings.kycAadhaarPan,
+        statusFor(0),
+        (nextIndex == 0 || aadhaarVerified) ? onAadhaarTap : null,
       ),
-      _KycItem(AppStrings.kycDrivingLicense, statusFor(1),       (nextIndex == 1 || dlVerified) ? onDlTap : null,
+      _KycItem(
+        AppStrings.kycDrivingLicense,
+        statusFor(1),
+        (nextIndex == 1 || dlVerified) ? onDlTap : null,
       ),
-      _KycItem(AppStrings.kycVehicleRc, statusFor(2),       (nextIndex == 2 || rcVerified) ? onRcTap : null,
+      _KycItem(
+        AppStrings.kycVehicleRc,
+        statusFor(2),
+        (nextIndex == 2 || rcVerified) ? onRcTap : null,
       ),
-      _KycItem(AppStrings.kycVehiclePhotos, statusFor(3), (nextIndex == 3 || vehiclePhotosVerified)
-          ? onVehiclePhotosTap
-          : null,
+      _KycItem(
+        AppStrings.kycVehiclePhotos,
+        statusFor(3),
+        (nextIndex == 3 || vehiclePhotosVerified) ? onVehiclePhotosTap : null,
       ),
-      _KycItem(AppStrings.kycFaceVerification, statusFor(4),       (nextIndex == 4 || faceVerified) ? onFaceTap : null,
+      _KycItem(
+        AppStrings.kycFaceVerification,
+        statusFor(4),
+        (nextIndex == 4 || faceVerified) ? onFaceTap : null,
       ),
-      _KycItem(AppStrings.kycBankDetails, statusFor(5),       (nextIndex == 5 || bankVerified) ? onBankTap : null,
+      _KycItem(
+        AppStrings.kycBankDetails,
+        statusFor(5),
+        (nextIndex == 5 || bankVerified) ? onBankTap : null,
       ),
-      _KycItem(AppStrings.kycProfileReview, statusFor(6),       (nextIndex == 6 || profileSubmitted) ? onProfileTap : null,
+      _KycItem(
+        AppStrings.kycProfileReview,
+        statusFor(6),
+        (nextIndex == 6 || profileSubmitted) ? onProfileTap : null,
       ),
     ];
   }

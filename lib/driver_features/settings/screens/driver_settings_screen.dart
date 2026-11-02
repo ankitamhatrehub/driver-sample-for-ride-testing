@@ -125,11 +125,7 @@ class _SettingsRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: context.torkk.textPrimary,
-              size: context.w(20),
-            ),
+            Icon(icon, color: context.torkk.textPrimary, size: context.w(20)),
             SizedBox(width: context.w(12)),
             Expanded(
               child: Text(

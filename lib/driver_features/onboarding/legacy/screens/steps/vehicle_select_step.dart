@@ -19,31 +19,11 @@ class VehicleSelectStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> vehicles = [
-      {
-        'name': 'Bike',
-        'subtitle': '2 Wheeler',
-        'image': 'assets/bike.png',
-      },
-      {
-        'name': 'Auto',
-        'subtitle': '3 Wheeler',
-        'image': 'assets/auto.png',
-      },
-      {
-        'name': 'Cab',
-        'subtitle': '4 Wheeler',
-        'image': 'assets/cab.png',
-      },
-      {
-        'name': 'Cab EV',
-        'subtitle': '4 Wheeler',
-        'image': 'assets/ev_cab.png',
-      },
-      {
-        'name': 'Cab XL',
-        'subtitle': '4 Wheeler',
-        'image': 'assets/xl_cab.png',
-      },
+      {'name': 'Bike', 'subtitle': '2 Wheeler', 'image': 'assets/bike.png'},
+      {'name': 'Auto', 'subtitle': '3 Wheeler', 'image': 'assets/auto.png'},
+      {'name': 'Cab', 'subtitle': '4 Wheeler', 'image': 'assets/cab.png'},
+      {'name': 'Cab EV', 'subtitle': '4 Wheeler', 'image': 'assets/ev_cab.png'},
+      {'name': 'Cab XL', 'subtitle': '4 Wheeler', 'image': 'assets/xl_cab.png'},
     ];
 
     return Padding(
@@ -112,11 +92,12 @@ class VehicleSelectStep extends StatelessWidget {
                             child: Image.asset(
                               vehicle['image']!,
                               fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) => Icon(
-                                Icons.directions_car_rounded,
-                                size: 36,
-                                color: context.torkk.textSecondary,
-                              ),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
+                                    Icons.directions_car_rounded,
+                                    size: 36,
+                                    color: context.torkk.textSecondary,
+                                  ),
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -252,8 +233,10 @@ class SelectVehicleFaqBottomSheet extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
                 children: [
                   Text(
                     'FAQ',
@@ -281,9 +264,9 @@ class SelectVehicleFaqBottomSheet extends StatelessWidget {
                     return Column(
                       children: [
                         Theme(
-                          data: Theme.of(context).copyWith(
-                            dividerColor: Colors.transparent,
-                          ),
+                          data: Theme.of(
+                            context,
+                          ).copyWith(dividerColor: Colors.transparent),
                           child: ExpansionTile(
                             tilePadding: EdgeInsets.zero,
                             iconColor: const Color(0xFF111827),

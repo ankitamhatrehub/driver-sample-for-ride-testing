@@ -19,7 +19,12 @@ class HowToEarnScreen extends StatelessWidget {
       title: AppStrings.howToEarnCoins,
       onBack: onBack,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           SizedBox(
             height: context.h(160),
@@ -28,10 +33,26 @@ class HowToEarnScreen extends StatelessWidget {
               children: [
                 ColorFiltered(
                   colorFilter: const ColorFilter.matrix(<double>[
-                    1, 0, 0, 0, 0,
-                    0, 1, 0, 0, 0,
-                    0, 0, 1, 0, 0,
-                    1, 1, 1, 0, 0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
                   ]),
                   child: Image.asset(
                     AppAssets.celebration,
@@ -39,11 +60,19 @@ class HowToEarnScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
-                Image.asset(AppAssets.giftCard, width: context.w(110), height: context.w(110)),
+                Image.asset(
+                  AppAssets.giftCard,
+                  width: context.w(110),
+                  height: context.w(110),
+                ),
               ],
             ),
           ),
-          Text(AppStrings.earnTorkkCoins, textAlign: TextAlign.center, style: coinsTitle()),
+          Text(
+            AppStrings.earnTorkkCoins,
+            textAlign: TextAlign.center,
+            style: coinsTitle(),
+          ),
           SizedBox(height: context.h(6)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(48)),

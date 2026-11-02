@@ -21,7 +21,8 @@ class KycProgress {
   final bool face;
   final bool bank;
 
-  bool get anyDone => aadhaar || drivingLicence || rc || vehiclePhotos || face || bank;
+  bool get anyDone =>
+      aadhaar || drivingLicence || rc || vehiclePhotos || face || bank;
 }
 
 class KycResume {

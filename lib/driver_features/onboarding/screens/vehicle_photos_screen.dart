@@ -85,11 +85,19 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
       onBack: widget.onBack,
       onHelp: widget.onHelp,
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(8),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppStrings.uploadVehiclePhoto, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+            Text(
+              AppStrings.uploadVehiclePhoto,
+              style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+            ),
             SizedBox(height: context.h(10)),
             Row(
               children: [
@@ -184,11 +192,20 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
           ),
           Container(
             color: const Color(0xFF4B5563),
-            padding: EdgeInsets.fromLTRB(context.w(28), context.h(16), context.w(28), context.h(20)),
+            padding: EdgeInsets.fromLTRB(
+              context.w(28),
+              context.h(16),
+              context.w(28),
+              context.h(20),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _CameraAction(icon: Icons.photo_outlined, label: AppStrings.gallery, onTap: _capture),
+                _CameraAction(
+                  icon: Icons.photo_outlined,
+                  label: AppStrings.gallery,
+                  onTap: _capture,
+                ),
                 GestureDetector(
                   onTap: _capture,
                   child: Container(
@@ -202,7 +219,10 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
                     child: Container(
                       width: context.w(48),
                       height: context.w(48),
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -218,6 +238,4 @@ class _VehiclePhotosScreenState extends State<VehiclePhotosScreen> {
       ),
     );
   }
-
 }
-

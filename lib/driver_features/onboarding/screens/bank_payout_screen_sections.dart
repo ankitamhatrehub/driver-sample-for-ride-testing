@@ -7,13 +7,21 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
       onBack: widget.onBack,
       onHelp: widget.onHelp,
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(8),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
+              padding: EdgeInsets.symmetric(
+                horizontal: context.w(12),
+                vertical: context.h(10),
+              ),
               decoration: BoxDecoration(
                 color: context.adaptiveTint(const Color(0xFFF0FDF4)),
                 borderRadius: BorderRadius.circular(context.r(12)),
@@ -21,11 +29,18 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.lock_outline, color: context.legible(AppColors.green600), size: context.w(16)),
+                  Icon(
+                    Icons.lock_outline,
+                    color: context.legible(AppColors.green600),
+                    size: context.w(16),
+                  ),
                   SizedBox(width: context.w(8)),
                   Text(
                     AppStrings.informationSecure,
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.green600)),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 12,
+                      color: context.legible(AppColors.green600),
+                    ),
                   ),
                 ],
               ),
@@ -54,7 +69,13 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
             Row(
               children: [
                 Expanded(child: KycRequiredLabel(AppStrings.ifscCode)),
-                Text(AppStrings.findIfsc, style: AppTypography.bold.copyWith(fontSize: 12, color: AppColors.green600)),
+                Text(
+                  AppStrings.findIfsc,
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 12,
+                    color: AppColors.green600,
+                  ),
+                ),
               ],
             ),
             SizedBox(height: context.h(8)),
@@ -68,7 +89,8 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
             SizedBox(height: context.h(24)),
             UnifiedButton(
               label: AppStrings.saveAndVerify,
-              onPressed: () => _matches ? _startVerifying() : _go(_BankPage.failed),
+              onPressed: () =>
+                  _matches ? _startVerifying() : _go(_BankPage.failed),
             ),
           ],
         ),
@@ -81,7 +103,12 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
       title: AppStrings.bankPayoutDetails,
       onBack: () => _go(_BankPage.form),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(24), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(24),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           children: [
             SizedBox(
@@ -92,8 +119,14 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                 children: [
                   CircleAvatar(
                     radius: context.w(36),
-                    backgroundColor: context.adaptiveTint(const Color(0xFFF5F3FF)),
-                    child: Icon(Icons.account_balance, color: context.legible(AppColors.primary), size: context.w(32)),
+                    backgroundColor: context.adaptiveTint(
+                      const Color(0xFFF5F3FF),
+                    ),
+                    child: Icon(
+                      Icons.account_balance,
+                      color: context.legible(AppColors.primary),
+                      size: context.w(32),
+                    ),
                   ),
                   if (_bankDone < 3)
                     Positioned(
@@ -102,19 +135,28 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                       child: SizedBox(
                         width: context.w(18),
                         height: context.w(18),
-                        child: CircularProgressIndicator(strokeWidth: 2, color: context.legible(AppColors.primary)),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: context.legible(AppColors.primary),
+                        ),
                       ),
                     ),
                 ],
               ),
             ),
             SizedBox(height: context.h(16)),
-            Text(AppStrings.verifyingBank, style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2)),
+            Text(
+              AppStrings.verifyingBank,
+              style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2),
+            ),
             SizedBox(height: context.h(6)),
             Text(
               AppStrings.verifyingBankSubtitle,
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                color: context.torkk.textSecondary,
+              ),
             ),
             SizedBox(height: context.h(24)),
             _BankStep(
@@ -158,7 +200,12 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
       backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(context.w(24), context.h(36), context.w(24), context.h(16)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(24),
+            context.h(36),
+            context.w(24),
+            context.h(16),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -171,16 +218,25 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
               ),
               SizedBox(height: context.h(12)),
               Center(
-                child: Text(AppStrings.bankDetailsVerified, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
+                child: Text(
+                  AppStrings.bankDetailsVerified,
+                  style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
+                ),
               ),
               SizedBox(height: context.h(8)),
               Text(
                 AppStrings.bankDetailsVerifiedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 14,
+                  color: context.torkk.textSecondary,
+                ),
               ),
               SizedBox(height: context.h(20)),
-              Text(AppStrings.bankAccountDetails, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+              Text(
+                AppStrings.bankAccountDetails,
+                style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+              ),
               SizedBox(height: context.h(8)),
               Container(
                 decoration: BoxDecoration(
@@ -189,14 +245,26 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                 ),
                 child: Column(
                   children: [
-                    KycDetailRow(icon: Icons.person_outline, label: AppStrings.accountHolderName, value: _name.text),
+                    KycDetailRow(
+                      icon: Icons.person_outline,
+                      label: AppStrings.accountHolderName,
+                      value: _name.text,
+                    ),
                     KycDetailRow(
                       icon: Icons.credit_card,
                       label: AppStrings.accountNumber,
                       value: '*' * _account.text.length,
                     ),
-                    KycDetailRow(icon: Icons.account_balance_outlined, label: AppStrings.ifscCode, value: _ifsc.text),
-                    KycDetailRow(icon: Icons.account_balance, label: AppStrings.bankName, value: _bank.text),
+                    KycDetailRow(
+                      icon: Icons.account_balance_outlined,
+                      label: AppStrings.ifscCode,
+                      value: _ifsc.text,
+                    ),
+                    KycDetailRow(
+                      icon: Icons.account_balance,
+                      label: AppStrings.bankName,
+                      value: _bank.text,
+                    ),
                   ],
                 ),
               ),
@@ -210,12 +278,19 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.check_circle, color: context.legible(AppColors.green600), size: context.w(16)),
+                    Icon(
+                      Icons.check_circle,
+                      color: context.legible(AppColors.green600),
+                      size: context.w(16),
+                    ),
                     SizedBox(width: context.w(8)),
                     Expanded(
                       child: Text(
                         AppStrings.bankReadyHint,
-                        style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.green600)),
+                        style: AppTypography.regular.copyWith(
+                          fontSize: 12,
+                          color: context.legible(AppColors.green600),
+                        ),
                       ),
                     ),
                   ],
@@ -245,7 +320,12 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
       backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(context.w(24), context.h(48), context.w(24), context.h(16)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(24),
+            context.h(48),
+            context.w(24),
+            context.h(16),
+          ),
           child: Column(
             children: [
               Image.asset(
@@ -254,12 +334,18 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                 height: context.w(96),
               ),
               SizedBox(height: context.h(16)),
-              Text(AppStrings.bankVerificationFailed, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
+              Text(
+                AppStrings.bankVerificationFailed,
+                style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
+              ),
               SizedBox(height: context.h(8)),
               Text(
                 AppStrings.bankVerificationFailedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 14,
+                  color: context.torkk.textSecondary,
+                ),
               ),
               SizedBox(height: context.h(20)),
               Container(
@@ -273,7 +359,14 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppStrings.reason, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 14, height: 1.2)),
+                    Text(
+                      AppStrings.reason,
+                      style: AppTypography.bold.copyWith(
+                        color: context.torkk.textPrimary,
+                        fontSize: 14,
+                        height: 1.2,
+                      ),
+                    ),
                     SizedBox(height: context.h(8)),
                     _Reason(AppStrings.incorrectAccountOrIfsc),
                     SizedBox(height: context.h(6)),
@@ -282,7 +375,10 @@ extension _BankPayoutScreenStateSections on _BankPayoutScreenState {
                 ),
               ),
               const Spacer(),
-              UnifiedButton(label: AppStrings.retryVerification, onPressed: () => _go(_BankPage.form)),
+              UnifiedButton(
+                label: AppStrings.retryVerification,
+                onPressed: () => _go(_BankPage.form),
+              ),
             ],
           ),
         ),

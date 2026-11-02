@@ -55,7 +55,8 @@ class BankDetailsStep extends StatelessWidget {
               const SizedBox(height: 32),
 
               _buildFieldLabel(context, 'Account Number'),
-              _buildTextField(context, 
+              _buildTextField(
+                context,
                 accountController,
                 TextInputType.number,
                 maxLength: 16,
@@ -67,12 +68,11 @@ class BankDetailsStep extends StatelessWidget {
               const SizedBox(height: 20),
 
               _buildFieldLabel(context, 'IFSC Code'),
-              _buildTextField(context, 
+              _buildTextField(
+                context,
                 ifscController,
                 TextInputType.text,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(11),
-                ],
+                inputFormatters: [LengthLimitingTextInputFormatter(11)],
               ),
               const SizedBox(height: 20),
 
@@ -93,7 +93,11 @@ class BankDetailsStep extends StatelessWidget {
               const SizedBox(height: 24),
 
               _buildFieldLabel(context, 'UPI ID'),
-              _buildTextField(context, upiController, TextInputType.emailAddress),
+              _buildTextField(
+                context,
+                upiController,
+                TextInputType.emailAddress,
+              ),
               const SizedBox(height: 32),
             ],
           ),
@@ -161,7 +165,8 @@ class BankDetailsStep extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(BuildContext context, 
+  Widget _buildTextField(
+    BuildContext context,
     TextEditingController controller,
     TextInputType keyboardType, {
     List<TextInputFormatter>? inputFormatters,
@@ -220,7 +225,8 @@ class _PaymentFaqBottomSheetState extends State<PaymentFaqBottomSheet> {
     },
     {
       'q': 'What if my bank details or UPI ID are not accepted?',
-      'a': 'Recheck your details. If the issue continues, contact Torkk Support.',
+      'a':
+          'Recheck your details. If the issue continues, contact Torkk Support.',
     },
   ];
 
@@ -279,7 +285,10 @@ class _PaymentFaqBottomSheetState extends State<PaymentFaqBottomSheet> {
                   const SizedBox(height: 4),
                   Text(
                     'Solution to frequent asked questions',
-                    style: TextStyle(fontSize: 16, color: context.torkk.textSecondary),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   ...List.generate(_faqItems.length, (index) {

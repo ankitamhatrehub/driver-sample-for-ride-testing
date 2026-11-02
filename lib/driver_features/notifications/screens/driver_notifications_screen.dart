@@ -139,7 +139,10 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
         decoration: BoxDecoration(
           color: isSelected
               ? const Color(0xFF1D4ED8)
-              : (context.themed(light: const Color(0xFFCBD5E1), dark: context.torkk.surfaceMuted)),
+              : (context.themed(
+                  light: const Color(0xFFCBD5E1),
+                  dark: context.torkk.surfaceMuted,
+                )),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Text(
@@ -147,7 +150,10 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
           style: TextStyle(
             color: isSelected
                 ? Colors.white
-                : (context.themed(light: const Color(0xFF1E293B), dark: context.torkk.textBody)),
+                : (context.themed(
+                    light: const Color(0xFF1E293B),
+                    dark: context.torkk.textBody,
+                  )),
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
             fontSize: 14,
           ),
@@ -225,18 +231,20 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
                                   ? Image.network(
                                       photo,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => Icon(
-                                        Icons.person,
-                                        color: context.torkk.textSecondary,
-                                      ),
+                                      errorBuilder: (_, error, stackTrace) =>
+                                          Icon(
+                                            Icons.person,
+                                            color: context.torkk.textSecondary,
+                                          ),
                                     )
                                   : Image.file(
                                       File(photo),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => Icon(
-                                        Icons.person,
-                                        color: context.torkk.textSecondary,
-                                      ),
+                                      errorBuilder: (_, error, stackTrace) =>
+                                          Icon(
+                                            Icons.person,
+                                            color: context.torkk.textSecondary,
+                                          ),
                                     ))
                             : Icon(
                                 Icons.person,
@@ -292,14 +300,20 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
                           Icon(
                             Icons.mark_email_read_outlined,
                             size: 56,
-                            color: context.themed(light: Colors.grey.shade400, dark: context.torkk.textSecondary),
+                            color: context.themed(
+                              light: Colors.grey.shade400,
+                              dark: context.torkk.textSecondary,
+                            ),
                           ),
                           const SizedBox(height: 12),
                           Text(
                             'No notifications for "$_selectedFilter"',
                             style: TextStyle(
                               fontSize: 15,
-                              color: context.themed(light: Colors.grey.shade600, dark: context.torkk.textSecondary),
+                              color: context.themed(
+                                light: Colors.grey.shade600,
+                                dark: context.torkk.textSecondary,
+                              ),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -346,7 +360,8 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
                                             item['time'] ?? '',
                                             style: TextStyle(
                                               fontSize: 12,
-                                              color: context.torkk.textSecondary,
+                                              color:
+                                                  context.torkk.textSecondary,
                                             ),
                                           ),
                                         ],

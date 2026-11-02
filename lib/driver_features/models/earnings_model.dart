@@ -50,15 +50,15 @@ class EarningsModel {
 
     for (final trip in trips) {
       if (trip is! Map) continue;
-      final amount = (trip['earnings'] ??
-              trip['driver_earnings'] ??
-              trip['fare'] ??
-              trip['amount'] as num?)
-          ?.toDouble() ??
+      final amount =
+          (trip['earnings'] ??
+                  trip['driver_earnings'] ??
+                  trip['fare'] ??
+                  trip['amount'] as num?)
+              ?.toDouble() ??
           0.0;
-      final dateStr = trip['created_at']?.toString() ??
-          trip['date']?.toString() ??
-          '';
+      final dateStr =
+          trip['created_at']?.toString() ?? trip['date']?.toString() ?? '';
       if (dateStr.isNotEmpty) {
         final dt = DateTime.tryParse(dateStr);
         if (dt != null) {
@@ -79,7 +79,8 @@ class EarningsModel {
       weekEarnings: (json['week_earnings'] as num?)?.toDouble() ?? 0.0,
       monthEarnings: (json['month_earnings'] as num?)?.toDouble() ?? 0.0,
       totalEarnings: (json['total_earnings'] as num?)?.toDouble() ?? 0.0,
-      completedTrips: (json['completed_trips'] as num?)?.toInt() ??
+      completedTrips:
+          (json['completed_trips'] as num?)?.toInt() ??
           (json['trips_count'] as num?)?.toInt() ??
           0,
       onlineHours: (json['online_hours'] as num?)?.toDouble() ?? 0.0,

@@ -1,6 +1,7 @@
 part of 'package:rider_app/driver_features/notifications/screens/driver_notifications_screen.dart';
 
-extension _DriverNotificationsScreenStateSections on _DriverNotificationsScreenState {
+extension _DriverNotificationsScreenStateSections
+    on _DriverNotificationsScreenState {
   void _handleNotificationTap(Map<String, dynamic> item) {
     if (item['action'] == 'upi') {
       _showUpiSetupSheet();
@@ -73,7 +74,8 @@ extension _DriverNotificationsScreenStateSections on _DriverNotificationsScreenS
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(ctx),
-                    style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFF4F46E5)), 
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: onColorFor(const Color(0xFF4F46E5)),
                       backgroundColor: const Color(0xFF4F46E5),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
@@ -159,7 +161,10 @@ extension _DriverNotificationsScreenStateSections on _DriverNotificationsScreenS
                     ),
                     Text(
                       'Receive instant daily ride payouts',
-                      style: TextStyle(fontSize: 12, color: context.torkk.textSecondary),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: context.torkk.textSecondary,
+                      ),
                     ),
                   ],
                 ),
@@ -215,7 +220,8 @@ extension _DriverNotificationsScreenStateSections on _DriverNotificationsScreenS
                     );
                   }
                 },
-                style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFF1E3A8A)), 
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: onColorFor(const Color(0xFF1E3A8A)),
                   backgroundColor: const Color(0xFF1E3A8A),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(

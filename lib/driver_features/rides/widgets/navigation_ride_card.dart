@@ -17,7 +17,8 @@ class NavigationRideCard extends StatelessWidget {
     required Color color,
     double? lat,
     double? lng,
-  }) onLocationTap;
+  })
+  onLocationTap;
   final Widget sliderButton;
 
   const NavigationRideCard({
@@ -71,13 +72,14 @@ class NavigationRideCard extends StatelessWidget {
       }
     }
 
-    final rawPhone = (ride['customer_phone'] ??
-            ride['user_phone'] ??
-            ride['phone'] ??
-            ride['rider_phone'] ??
-            '')
-        .toString()
-        .replaceAll(RegExp(r'\D'), '');
+    final rawPhone =
+        (ride['customer_phone'] ??
+                ride['user_phone'] ??
+                ride['phone'] ??
+                ride['rider_phone'] ??
+                '')
+            .toString()
+            .replaceAll(RegExp(r'\D'), '');
     if (rawPhone.isNotEmpty) {
       final formattedPhone = rawPhone.length == 10
           ? '+91 ${rawPhone.substring(0, 5)} ${rawPhone.substring(5)}'
@@ -90,12 +92,15 @@ class NavigationRideCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isParcel = ride?['is_parcel'] == true || ride?['service_type'] == 'parcel';
+    final bool isParcel =
+        ride?['is_parcel'] == true || ride?['service_type'] == 'parcel';
     final rawCustomerName = _resolveRideCustomerName(ride);
-    final customerName = isParcel 
-        ? (isDrop ? (ride?['receiver_name'] ?? rawCustomerName) : (ride?['sender_name'] ?? rawCustomerName))
+    final customerName = isParcel
+        ? (isDrop
+              ? (ride?['receiver_name'] ?? rawCustomerName)
+              : (ride?['sender_name'] ?? rawCustomerName))
         : rawCustomerName;
-    
+
     final displayName = isParcel
         ? (isDrop ? 'Receiver: $customerName' : 'Sender: $customerName')
         : customerName;
@@ -103,34 +108,34 @@ class NavigationRideCard extends StatelessWidget {
     final customerInitial = customerName.trim().isNotEmpty
         ? customerName.trim()[0].toUpperCase()
         : 'C';
-    final rawRating = (ride?['customer_rating'] ??
-            ride?['user_rating'] ??
-            ride?['rating'])
-        ?.toString();
+    final rawRating =
+        (ride?['customer_rating'] ?? ride?['user_rating'] ?? ride?['rating'])
+            ?.toString();
     final customerRating = (rawRating != null && rawRating.isNotEmpty)
         ? rawRating.replaceAll('+', '').trim()
         : null;
-    final estimatedFare = (ride?['estimated_fare'] ??
-            ride?['fare'] ??
-            ride?['total_fare'] ??
-            ride?['amount'] as num?)
-        ?.toDouble() ??
+    final estimatedFare =
+        (ride?['estimated_fare'] ??
+                ride?['fare'] ??
+                ride?['total_fare'] ??
+                ride?['amount'] as num?)
+            ?.toDouble() ??
         0.0;
     final bonusVal =
-        (ride?['bonus'] ??
-                ride?['incentive'] ??
-                ride?['extra_charge'] as num?)
+        (ride?['bonus'] ?? ride?['incentive'] ?? ride?['extra_charge'] as num?)
             ?.toDouble();
-    final pickupAddress = (ride?['pickup_address'] ??
-            ride?['pickup_location'] ??
-            ride?['pickup_name'] ??
-            '')
-        .toString();
-    final dropAddress = (ride?['drop_address'] ??
-            ride?['drop_location'] ??
-            ride?['drop_name'] ??
-            '')
-        .toString();
+    final pickupAddress =
+        (ride?['pickup_address'] ??
+                ride?['pickup_location'] ??
+                ride?['pickup_name'] ??
+                '')
+            .toString();
+    final dropAddress =
+        (ride?['drop_address'] ??
+                ride?['drop_location'] ??
+                ride?['drop_name'] ??
+                '')
+            .toString();
 
     // Dynamically calculate GPS distance to pickup with sanity check
     double? pickupDistKm;
@@ -201,9 +206,7 @@ class NavigationRideCard extends StatelessWidget {
         ? '${dropDistKm.toStringAsFixed(1)} Km'
         : (ride?['distance_km'] != null
               ? '${ride!['distance_km']} Km'
-              : (ride?['distance'] != null
-                    ? '${ride!['distance']} Km'
-                    : ''));
+              : (ride?['distance'] != null ? '${ride!['distance']} Km' : ''));
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -298,24 +301,32 @@ class NavigationRideCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 24,
-                backgroundColor: isParcel ? const Color(0xFF10B981) : const Color(0xFF1D4ED8),
-                backgroundImage: (!isParcel && ride?['customer_photo'] != null &&
+                backgroundColor: isParcel
+                    ? const Color(0xFF10B981)
+                    : const Color(0xFF1D4ED8),
+                backgroundImage:
+                    (!isParcel &&
+                        ride?['customer_photo'] != null &&
                         ride!['customer_photo'].toString().isNotEmpty)
                     ? NetworkImage(ride!['customer_photo']) as ImageProvider
                     : null,
                 child: isParcel
-                    ? const Icon(Icons.local_shipping_rounded, color: Colors.white, size: 24)
+                    ? const Icon(
+                        Icons.local_shipping_rounded,
+                        color: Colors.white,
+                        size: 24,
+                      )
                     : ((ride?['customer_photo'] == null ||
-                            ride!['customer_photo'].toString().isEmpty)
-                        ? Text(
-                            customerInitial,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          )
-                        : null),
+                              ride!['customer_photo'].toString().isEmpty)
+                          ? Text(
+                              customerInitial,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            )
+                          : null),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -332,7 +343,9 @@ class NavigationRideCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (!isParcel && customerRating != null && customerRating.isNotEmpty) ...[
+                    if (!isParcel &&
+                        customerRating != null &&
+                        customerRating.isNotEmpty) ...[
                       const SizedBox(height: 2),
                       Row(
                         children: [

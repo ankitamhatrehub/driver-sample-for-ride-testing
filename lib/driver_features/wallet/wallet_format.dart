@@ -9,7 +9,9 @@ double? pickAmount(Map<dynamic, dynamic> data, List<String> keys) {
   for (final key in keys) {
     final value = data[key];
     if (value == null) continue;
-    final parsed = value is num ? value.toDouble() : double.tryParse('$value'.replaceAll(',', ''));
+    final parsed = value is num
+        ? value.toDouble()
+        : double.tryParse('$value'.replaceAll(',', ''));
     if (parsed != null) return parsed;
   }
   return null;

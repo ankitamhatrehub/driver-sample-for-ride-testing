@@ -123,9 +123,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 borderRadius: BorderRadius.circular(
                                   context.r(12),
                                 ),
-                                border: Border.all(
-                                  color: context.torkk.border,
-                                ),
+                                border: Border.all(color: context.torkk.border),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withValues(alpha: 0.05),

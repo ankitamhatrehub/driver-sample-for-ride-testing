@@ -36,7 +36,9 @@ class PaymentMethodTile extends StatelessWidget {
         margin: EdgeInsets.only(bottom: context.h(10)),
         padding: EdgeInsets.all(context.w(12)),
         decoration: BoxDecoration(
-          color: selected ? accent.withValues(alpha: 0.06) : context.torkk.surface,
+          color: selected
+              ? accent.withValues(alpha: 0.06)
+              : context.torkk.surface,
           borderRadius: BorderRadius.circular(context.r(14)),
           border: Border.all(
             color: selected ? accent : const Color(0xFFE8EDF5),
@@ -56,7 +58,9 @@ class PaymentMethodTile extends StatelessWidget {
                 width: context.w(36),
                 height: context.w(36),
                 decoration: BoxDecoration(
-                  color: selected ? accent.withValues(alpha: 0.12) : context.adaptiveTint(Color(0xFFFFF7ED)),
+                  color: selected
+                      ? accent.withValues(alpha: 0.12)
+                      : context.adaptiveTint(Color(0xFFFFF7ED)),
                   borderRadius: BorderRadius.circular(context.r(10)),
                 ),
                 child: Icon(

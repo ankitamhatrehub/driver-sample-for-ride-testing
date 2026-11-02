@@ -1,6 +1,7 @@
 part of 'package:rider_app/driver_features/summary/screens/driver_trip_summary_screen.dart';
 
-extension _DriverTripSummaryScreenStateSections on _DriverTripSummaryScreenState {
+extension _DriverTripSummaryScreenStateSections
+    on _DriverTripSummaryScreenState {
   void _finishAndGoHome() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('driver_is_online', true);
@@ -15,9 +16,6 @@ extension _DriverTripSummaryScreenStateSections on _DriverTripSummaryScreenState
   }
 
   Widget _buildPaymentSlider() {
-    return TripSummarySlider(
-      completing: _completing,
-      onAction: _completeTrip,
-    );
+    return TripSummarySlider(completing: _completing, onAction: _completeTrip);
   }
 }

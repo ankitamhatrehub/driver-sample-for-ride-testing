@@ -107,9 +107,9 @@ Future<String?> launchDigilocker(BuildContext context) async {
 
 Future<String?> _download() async {
   // reason of this folder ?
-  //=> ans -> This folder is used to store the code related to the onboarding process of the driver features, 
-  //specifically for launching and handling DigiLocker integration. It contains the necessary logic to initiate the DigiLocker flow, 
-  //handle user authorization, and download the required documents from DigiLocker. The code ensures that the user's session 
+  //=> ans -> This folder is used to store the code related to the onboarding process of the driver features,
+  //specifically for launching and handling DigiLocker integration. It contains the necessary logic to initiate the DigiLocker flow,
+  //handle user authorization, and download the required documents from DigiLocker. The code ensures that the user's session
   //is managed properly and that any errors during the process are handled gracefully.
   final session = OnboardingSession.instance;
   session.loading = true;

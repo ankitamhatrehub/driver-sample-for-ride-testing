@@ -6,7 +6,11 @@ import 'package:rider_app/driver_features/subscription/widgets/subscription_text
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class SubscriptionWarningBox extends StatelessWidget {
-  const SubscriptionWarningBox({super.key, required this.title, required this.body});
+  const SubscriptionWarningBox({
+    super.key,
+    required this.title,
+    required this.body,
+  });
 
   final String title;
   final String body;
@@ -25,7 +29,8 @@ class SubscriptionWarningBox extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, 
+            style: AppTypography.bold.copyWith(
+              color: context.torkk.textPrimary,
               fontSize: 13,
               height: 1.2,
               letterSpacing: -0.2,
@@ -35,9 +40,20 @@ class SubscriptionWarningBox extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.cancel, color: context.legible(Color(0xFFEF4444)), size: 16),
+              Icon(
+                Icons.cancel,
+                color: context.legible(Color(0xFFEF4444)),
+                size: 16,
+              ),
               SizedBox(width: context.w(8)),
-              Expanded(child: Text(body, style: subscriptionMuted(context).copyWith(color: context.torkk.textBody))),
+              Expanded(
+                child: Text(
+                  body,
+                  style: subscriptionMuted(
+                    context,
+                  ).copyWith(color: context.torkk.textBody),
+                ),
+              ),
             ],
           ),
         ],
@@ -47,7 +63,11 @@ class SubscriptionWarningBox extends StatelessWidget {
 }
 
 class SubscriptionAlertBadge extends StatelessWidget {
-  const SubscriptionAlertBadge({super.key, required this.color, required this.halo});
+  const SubscriptionAlertBadge({
+    super.key,
+    required this.color,
+    required this.halo,
+  });
 
   final Color color;
   final Color halo;

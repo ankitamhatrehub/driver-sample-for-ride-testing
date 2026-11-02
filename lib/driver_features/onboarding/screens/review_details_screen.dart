@@ -63,8 +63,9 @@ class ReviewDetailsScreen extends StatelessWidget {
   final bool bankDone;
   final bool isLoading;
 
-  Color get _accent =>
-      gender == AppStrings.genderFemale ? AppColors.femalePink : AppColors.maleBlue;
+  Color get _accent => gender == AppStrings.genderFemale
+      ? AppColors.femalePink
+      : AppColors.maleBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,14 @@ class ReviewDetailsScreen extends StatelessWidget {
         backgroundColor: context.torkk.background,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: context.themed(
+                light: Colors.black,
+                dark: context.torkk.textPrimary,
+              ),
+              size: 20,
+            ),
             onPressed: onBack,
           ),
           titleSpacing: 0,
@@ -90,7 +98,12 @@ class ReviewDetailsScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ListView(
-                padding: EdgeInsets.fromLTRB(context.w(20), context.h(50), context.w(20), context.h(16)),
+                padding: EdgeInsets.fromLTRB(
+                  context.w(20),
+                  context.h(50),
+                  context.w(20),
+                  context.h(16),
+                ),
                 children: [
                   _detailCard(
                     context,
@@ -98,9 +111,24 @@ class ReviewDetailsScreen extends StatelessWidget {
                     done: personalDone,
                     onEdit: onEditPersonal,
                     rows: [
-                      if (name.isNotEmpty) _Detail(Icons.person_outline, AppStrings.fullName, name),
-                      if (gender.isNotEmpty) _Detail(Icons.badge_outlined, AppStrings.gender, gender),
-                      if (email.isNotEmpty) _Detail(Icons.mail_outline, AppStrings.emailAddress, email),
+                      if (name.isNotEmpty)
+                        _Detail(
+                          Icons.person_outline,
+                          AppStrings.fullName,
+                          name,
+                        ),
+                      if (gender.isNotEmpty)
+                        _Detail(
+                          Icons.badge_outlined,
+                          AppStrings.gender,
+                          gender,
+                        ),
+                      if (email.isNotEmpty)
+                        _Detail(
+                          Icons.mail_outline,
+                          AppStrings.emailAddress,
+                          email,
+                        ),
                     ],
                   ),
                   SizedBox(height: context.h(12)),
@@ -111,11 +139,29 @@ class ReviewDetailsScreen extends StatelessWidget {
                     onEdit: onEditKyc,
                     rows: [
                       if (aadhaarNumber.isNotEmpty)
-                        _Detail(Icons.badge_outlined, AppStrings.aadhaarCardNumber, aadhaarNumber),
-                      if (panNumber.isNotEmpty) _Detail(Icons.credit_card, AppStrings.panNumber, panNumber),
+                        _Detail(
+                          Icons.badge_outlined,
+                          AppStrings.aadhaarCardNumber,
+                          aadhaarNumber,
+                        ),
+                      if (panNumber.isNotEmpty)
+                        _Detail(
+                          Icons.credit_card,
+                          AppStrings.panNumber,
+                          panNumber,
+                        ),
                       if (licenceNumber.isNotEmpty)
-                        _Detail(Icons.card_membership_outlined, AppStrings.licenseNumber, licenceNumber),
-                      if (faceVerified) _Detail(Icons.face_outlined, AppStrings.kycFaceVerification, AppStrings.kycVerified),
+                        _Detail(
+                          Icons.card_membership_outlined,
+                          AppStrings.licenseNumber,
+                          licenceNumber,
+                        ),
+                      if (faceVerified)
+                        _Detail(
+                          Icons.face_outlined,
+                          AppStrings.kycFaceVerification,
+                          AppStrings.kycVerified,
+                        ),
                     ],
                   ),
                   SizedBox(height: context.h(12)),
@@ -126,10 +172,23 @@ class ReviewDetailsScreen extends StatelessWidget {
                     onEdit: onEditVehicle,
                     rows: [
                       if (vehicleType.isNotEmpty)
-                        _Detail(Icons.directions_car_outlined, AppStrings.vehicleType, vehicleType),
+                        _Detail(
+                          Icons.directions_car_outlined,
+                          AppStrings.vehicleType,
+                          vehicleType,
+                        ),
                       if (registrationNumber.isNotEmpty)
-                        _Detail(Icons.pin_outlined, AppStrings.registrationNumber, registrationNumber),
-                      if (photosUploaded) _Detail(Icons.photo_camera_outlined, AppStrings.vehiclePhotos, AppStrings.rcUploaded),
+                        _Detail(
+                          Icons.pin_outlined,
+                          AppStrings.registrationNumber,
+                          registrationNumber,
+                        ),
+                      if (photosUploaded)
+                        _Detail(
+                          Icons.photo_camera_outlined,
+                          AppStrings.vehiclePhotos,
+                          AppStrings.rcUploaded,
+                        ),
                     ],
                   ),
                   SizedBox(height: context.h(12)),
@@ -140,18 +199,37 @@ class ReviewDetailsScreen extends StatelessWidget {
                     onEdit: onEditBank,
                     rows: [
                       if (accountHolder.isNotEmpty)
-                        _Detail(Icons.person_outline, AppStrings.accountHolderName, accountHolder),
+                        _Detail(
+                          Icons.person_outline,
+                          AppStrings.accountHolderName,
+                          accountHolder,
+                        ),
                       if (accountNumber.isNotEmpty)
-                        _Detail(Icons.numbers, AppStrings.accountNumber, accountNumber),
-                      if (ifsc.isNotEmpty) _Detail(Icons.tag, AppStrings.ifscCode, ifsc),
-                      if (bankName.isNotEmpty) _Detail(Icons.account_balance, AppStrings.bankName, bankName),
+                        _Detail(
+                          Icons.numbers,
+                          AppStrings.accountNumber,
+                          accountNumber,
+                        ),
+                      if (ifsc.isNotEmpty)
+                        _Detail(Icons.tag, AppStrings.ifscCode, ifsc),
+                      if (bankName.isNotEmpty)
+                        _Detail(
+                          Icons.account_balance,
+                          AppStrings.bankName,
+                          bankName,
+                        ),
                     ],
                   ),
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+              padding: EdgeInsets.fromLTRB(
+                context.w(20),
+                context.h(8),
+                context.w(20),
+                context.h(16),
+              ),
               child: UnifiedButton(
                 label: AppStrings.submit,
                 backgroundColor: _accent,
@@ -178,7 +256,12 @@ class ReviewDetailsScreen extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(context.w(14), context.h(14), context.w(14), context.h(14)),
+            padding: EdgeInsets.fromLTRB(
+              context.w(14),
+              context.h(14),
+              context.w(14),
+              context.h(14),
+            ),
             child: Row(
               children: [
                 _mark(context, done),
@@ -186,14 +269,18 @@ class ReviewDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2),
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 15,
+                      height: 1.2,
+                    ),
                   ),
                 ),
                 _pencil(context, onEdit),
               ],
             ),
           ),
-          for (final row in rows) _infoRow(context, row.icon, row.label, row.value),
+          for (final row in rows)
+            _infoRow(context, row.icon, row.label, row.value),
         ],
       ),
     );
@@ -201,7 +288,11 @@ class ReviewDetailsScreen extends StatelessWidget {
 
   Widget _mark(BuildContext context, bool done) {
     if (done) {
-      return Icon(Icons.check_circle, color: AppColors.green600, size: context.w(22));
+      return Icon(
+        Icons.check_circle,
+        color: AppColors.green600,
+        size: context.w(22),
+      );
     }
     return Container(
       width: context.w(22),
@@ -213,7 +304,12 @@ class ReviewDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(BuildContext context, IconData icon, String label, String value) {
+  Widget _infoRow(
+    BuildContext context,
+    IconData icon,
+    String label,
+    String value,
+  ) {
     return Container(
       width: double.infinity,
       height: context.h(63),
@@ -274,7 +370,11 @@ class ReviewDetailsScreen extends StatelessWidget {
       borderRadius: BorderRadius.circular(context.r(16)),
       border: Border.all(color: context.torkk.border),
       boxShadow: const [
-        BoxShadow(color: Color(0x0A000000), offset: Offset(0, 1), blurRadius: 3),
+        BoxShadow(
+          color: Color(0x0A000000),
+          offset: Offset(0, 1),
+          blurRadius: 3,
+        ),
       ],
     );
   }

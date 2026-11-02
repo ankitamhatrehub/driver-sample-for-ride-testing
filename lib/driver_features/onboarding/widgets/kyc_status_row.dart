@@ -122,7 +122,9 @@ class KycStatusRow extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: verified ? context.adaptiveTint(Color(0xFFE8F8EE)) : context.torkk.surface,
+        color: verified
+            ? context.adaptiveTint(Color(0xFFE8F8EE))
+            : context.torkk.surface,
         border: Border.all(
           color: verified ? AppColors.emerald500 : AppColors.slate300,
         ),

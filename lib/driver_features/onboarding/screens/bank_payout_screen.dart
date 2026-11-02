@@ -63,12 +63,26 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
   void _startVerifying() {
     _bankTimer?.cancel();
     final now = DateTime.now();
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
     final minute = now.minute.toString().padLeft(2, '0');
     final period = now.hour >= 12 ? 'PM' : 'AM';
     setState(() {
-      _submittedAt = '${now.day} ${months[now.month - 1]} ${now.year}, $hour:$minute $period';
+      _submittedAt =
+          '${now.day} ${months[now.month - 1]} ${now.year}, $hour:$minute $period';
       _bankDone = 1;
       _page = _BankPage.verifying;
     });
@@ -84,7 +98,10 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
     });
   }
 
-  bool get _matches => _account.text.isNotEmpty && _account.text == _confirm.text && _ifsc.text.isNotEmpty;
+  bool get _matches =>
+      _account.text.isNotEmpty &&
+      _account.text == _confirm.text &&
+      _ifsc.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +112,6 @@ class _BankPayoutScreenState extends State<BankPayoutScreen> {
       _BankPage.failed => _failed(context),
     };
   }
-
 }
 
 class BankPayoutDetails {
@@ -111,4 +127,3 @@ class BankPayoutDetails {
   final String ifsc;
   final String bankName;
 }
-

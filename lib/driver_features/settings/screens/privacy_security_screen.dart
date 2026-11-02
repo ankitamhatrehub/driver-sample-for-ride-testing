@@ -105,7 +105,8 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
                         children: [
                           Text(
                             AppStrings.setChangePin,
-                            style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, 
+                            style: AppTypography.bold.copyWith(
+                              color: context.torkk.textPrimary,
                               fontSize: 14,
                               height: 1.2,
                             ),

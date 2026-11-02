@@ -88,7 +88,10 @@ class CompleteProfileStep extends StatelessWidget {
                 child: Text(
                   'I agree to Terms & Conditions and Privacy Policy',
                   style: TextStyle(
-                    color: context.themed(light: Colors.blueGrey.shade600, dark: context.torkk.textSecondary),
+                    color: context.themed(
+                      light: Colors.blueGrey.shade600,
+                      dark: context.torkk.textSecondary,
+                    ),
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),

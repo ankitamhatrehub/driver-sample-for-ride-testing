@@ -48,13 +48,14 @@ class RideRequestCard extends StatelessWidget {
       }
     }
 
-    final rawPhone = (ride['customer_phone'] ??
-            ride['user_phone'] ??
-            ride['phone'] ??
-            ride['rider_phone'] ??
-            '')
-        .toString()
-        .replaceAll(RegExp(r'\D'), '');
+    final rawPhone =
+        (ride['customer_phone'] ??
+                ride['user_phone'] ??
+                ride['phone'] ??
+                ride['rider_phone'] ??
+                '')
+            .toString()
+            .replaceAll(RegExp(r'\D'), '');
     if (rawPhone.isNotEmpty) {
       final formattedPhone = rawPhone.length == 10
           ? '+91 ${rawPhone.substring(0, 5)} ${rawPhone.substring(5)}'
@@ -67,44 +68,39 @@ class RideRequestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final estFare = (ride['estimated_fare'] ??
-            ride['fare'] ??
-            ride['amount'] as num?)
-        ?.toDouble() ??
+    final estFare =
+        (ride['estimated_fare'] ?? ride['fare'] ?? ride['amount'] as num?)
+            ?.toDouble() ??
         0.0;
-    final bonusVal = (ride['bonus'] ??
-            ride['incentive'] ??
-            ride['extra_charge'] as num?)
-        ?.toDouble();
+    final bonusVal =
+        (ride['bonus'] ?? ride['incentive'] ?? ride['extra_charge'] as num?)
+            ?.toDouble();
 
-    final pDist = (ride['pickup_distance_km'] ??
-            ride['pickup_distance'] ??
-            '')
+    final pDist = (ride['pickup_distance_km'] ?? ride['pickup_distance'] ?? '')
         .toString();
-    final pAddr = (ride['pickup_address'] ??
-            ride['pickup_location'] ??
-            ride['pickup'] ??
-            '')
-        .toString();
-    final dDist = (ride['distance_km'] ??
-            ride['drop_distance'] ??
-            ride['distance'] ??
-            '')
-        .toString();
-    final dAddr = (ride['drop_address'] ??
-            ride['destination'] ??
-            ride['drop'] ??
-            '')
-        .toString();
+    final pAddr =
+        (ride['pickup_address'] ??
+                ride['pickup_location'] ??
+                ride['pickup'] ??
+                '')
+            .toString();
+    final dDist =
+        (ride['distance_km'] ?? ride['drop_distance'] ?? ride['distance'] ?? '')
+            .toString();
+    final dAddr =
+        (ride['drop_address'] ?? ride['destination'] ?? ride['drop'] ?? '')
+            .toString();
 
     final customerName = resolveCustomerName(ride);
-    final customerRating = (ride['customer_rating'] ??
-            ride['user_rating'] ??
-            ride['rating'] ??
-            '4.9')
-        .toString();
+    final customerRating =
+        (ride['customer_rating'] ??
+                ride['user_rating'] ??
+                ride['rating'] ??
+                '4.9')
+            .toString();
 
-    final bool isParcel = ride['is_parcel'] == true || ride['service_type'] == 'parcel';
+    final bool isParcel =
+        ride['is_parcel'] == true || ride['service_type'] == 'parcel';
     final displayName = isParcel ? 'Parcel: $customerName' : customerName;
 
     return Container(
@@ -113,10 +109,7 @@ class RideRequestCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.torkk.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: context.torkk.border,
-          width: 1.2,
-        ),
+        border: Border.all(color: context.torkk.border, width: 1.2),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withAlpha(15),

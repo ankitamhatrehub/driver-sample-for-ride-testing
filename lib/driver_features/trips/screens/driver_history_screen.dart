@@ -123,18 +123,20 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
                                   ? Image.network(
                                       _profilePhotoUrl!,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => Icon(
-                                        Icons.person,
-                                        color: context.torkk.textSecondary,
-                                      ),
+                                      errorBuilder: (_, error, stackTrace) =>
+                                          Icon(
+                                            Icons.person,
+                                            color: context.torkk.textSecondary,
+                                          ),
                                     )
                                   : Image.file(
                                       File(_profilePhotoUrl!),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => Icon(
-                                        Icons.person,
-                                        color: context.torkk.textSecondary,
-                                      ),
+                                      errorBuilder: (_, error, stackTrace) =>
+                                          Icon(
+                                            Icons.person,
+                                            color: context.torkk.textSecondary,
+                                          ),
                                     ))
                             : Icon(
                                 Icons.person,

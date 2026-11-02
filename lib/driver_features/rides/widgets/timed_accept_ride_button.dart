@@ -32,9 +32,10 @@ class _TimedAcceptRideButtonState extends State<TimedAcceptRideButton>
       vsync: this,
       duration: Duration(seconds: widget.timeoutSeconds),
     );
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.linear),
-    );
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -85,10 +86,7 @@ class _TimedAcceptRideButtonState extends State<TimedAcceptRideButton>
                     child: Container(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [
-                            Color(0xFF2563EB),
-                            Color(0xFF1D4ED8),
-                          ],
+                          colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
                         ),
                       ),
                     ),

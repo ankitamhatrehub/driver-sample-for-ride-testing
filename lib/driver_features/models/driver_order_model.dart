@@ -80,13 +80,17 @@ class DriverOrderModel {
   /// Accepts the item itself or the `{status, data: {...}}` wrapper.
   factory DriverOrderModel.fromResponse(Map<String, dynamic> body) {
     final inner = body['data'];
-    return DriverOrderModel.fromJson(inner is Map ? Map<String, dynamic>.from(inner) : body);
+    return DriverOrderModel.fromJson(
+      inner is Map ? Map<String, dynamic>.from(inner) : body,
+    );
   }
 
   factory DriverOrderModel.fromJson(Map<String, dynamic> json) {
     return DriverOrderModel(
       orderId: _str(json['order_id'] ?? json['id']),
-      orderType: _str(json['order_type']).isEmpty ? 'ride' : _str(json['order_type']),
+      orderType: _str(json['order_type']).isEmpty
+          ? 'ride'
+          : _str(json['order_type']),
       status: _str(json['status']),
       createdAt: DateTime.tryParse(_str(json['created_at']))?.toLocal(),
       pickupAddress: _str(json['pickup_address']),
@@ -117,7 +121,11 @@ class DriverOrderModel {
   /// Keys read by `orders_screen.dart`, its card and `order_details_screen.dart`.
   /// Values the API does not send are left out so the screens' own fallbacks apply.
   Map<String, dynamic> toMap() {
-    final otherCharges = (distanceCharge ?? 0) + (weightCharge ?? 0) + (sizeCharge ?? 0) + (additionalFees ?? 0);
+    final otherCharges =
+        (distanceCharge ?? 0) +
+        (weightCharge ?? 0) +
+        (sizeCharge ?? 0) +
+        (additionalFees ?? 0);
     final fare = amount ?? totalFare ?? estimatedFare;
     return {
       'id': orderId,
@@ -150,7 +158,8 @@ class DriverOrderModel {
     };
   }
 
-  static String _trim(double value) => value % 1 == 0 ? value.toInt().toString() : value.toStringAsFixed(1);
+  static String _trim(double value) =>
+      value % 1 == 0 ? value.toInt().toString() : value.toStringAsFixed(1);
 
   static String _str(Object? value) => value?.toString().trim() ?? '';
 

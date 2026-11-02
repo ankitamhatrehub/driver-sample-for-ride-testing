@@ -22,11 +22,7 @@ class LaunchPage extends StatelessWidget {
         const SizedBox(height: 18),
         const GradientLine('Coming Soon', size: 34),
         const Spacer(),
-        HeroImage(
-          'share_hero',
-          height: 180,
-          fallback: Icons.ios_share_rounded,
-        ),
+        HeroImage('share_hero', height: 180, fallback: Icons.ios_share_rounded),
         const Spacer(),
         NotifyButton(
           label: 'Notify Me',

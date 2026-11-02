@@ -36,7 +36,11 @@ class SubscriptionPaymentScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.lock_outline, size: context.w(14), color: const Color(0xFF16A34A)),
+              Icon(
+                Icons.lock_outline,
+                size: context.w(14),
+                color: const Color(0xFF16A34A),
+              ),
               SizedBox(width: context.w(10)),
               Text(
                 'Your Bank details are safe and secure with us',
@@ -53,20 +57,32 @@ class SubscriptionPaymentScreen extends StatelessWidget {
         ],
       ),
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(12)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(12),
+        ),
         children: [
           SubscriptionPlanCard(
             name: plan.name.replaceAll(' - ', '- '),
             subtitle: plan.validity,
             trailing: Text(
               '₹ ${plan.price}',
-              style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3),
+              style: AppTypography.bold.copyWith(
+                fontSize: 18,
+                height: 1.2,
+                letterSpacing: -0.3,
+              ),
             ),
           ),
           SizedBox(height: context.h(22)),
           Text(
             'Select Payment Method',
-            style: AppTypography.regular.copyWith(fontSize: 12, fontWeight: FontWeight.w600),
+            style: AppTypography.regular.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           SizedBox(height: context.h(6)),
           PaymentMethodTile(

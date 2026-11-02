@@ -54,7 +54,11 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
   @override
   Widget build(BuildContext context) {
     final gap = context.w(8);
-    final boxSize = (MediaQuery.sizeOf(context).width - context.w(48) - gap * (widget.length - 1)) / widget.length;
+    final boxSize =
+        (MediaQuery.sizeOf(context).width -
+            context.w(48) -
+            gap * (widget.length - 1)) /
+        widget.length;
     return SizedBox(
       height: boxSize,
       child: Stack(
@@ -63,10 +67,14 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
           IgnorePointer(
             child: Row(
               children: List.generate(widget.length, (index) {
-                final char = index < widget.controller.text.length ? widget.controller.text[index] : '';
+                final char = index < widget.controller.text.length
+                    ? widget.controller.text[index]
+                    : '';
                 final isActive = _cursorInBox(index);
                 return Padding(
-                  padding: EdgeInsets.only(right: index == widget.length - 1 ? 0 : gap),
+                  padding: EdgeInsets.only(
+                    right: index == widget.length - 1 ? 0 : gap,
+                  ),
                   child: Container(
                     width: boxSize,
                     height: boxSize,
@@ -75,11 +83,19 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
                       color: context.torkk.surface,
                       borderRadius: BorderRadius.circular(context.r(14)),
                       border: Border.all(
-                        color: isActive ? AppColors.primary : AppColors.fieldBorder,
+                        color: isActive
+                            ? AppColors.primary
+                            : AppColors.fieldBorder,
                         width: isActive ? 1.6 : 1,
                       ),
                     ),
-                    child: Text(char, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
+                    child: Text(
+                      char,
+                      style: AppTypography.bold.copyWith(
+                        fontSize: 20,
+                        height: 1.2,
+                      ),
+                    ),
                   ),
                 );
               }),
@@ -89,7 +105,10 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
             child: Listener(
               behavior: HitTestBehavior.translucent,
               onPointerDown: (event) {
-                _tappedIndex = (event.localPosition.dx / (boxSize + gap)).floor().clamp(0, widget.length - 1).toInt();
+                _tappedIndex = (event.localPosition.dx / (boxSize + gap))
+                    .floor()
+                    .clamp(0, widget.length - 1)
+                    .toInt();
                 _selectBox(_tappedIndex);
               },
               child: TextField(
@@ -102,7 +121,11 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
                 maxLength: widget.length,
                 enableInteractiveSelection: false,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: const TextStyle(color: Colors.transparent, fontSize: 1, height: 1),
+                style: const TextStyle(
+                  color: Colors.transparent,
+                  fontSize: 1,
+                  height: 1,
+                ),
                 decoration: const InputDecoration(
                   filled: false,
                   border: InputBorder.none,

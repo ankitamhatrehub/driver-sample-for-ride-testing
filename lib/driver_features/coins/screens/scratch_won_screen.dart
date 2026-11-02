@@ -7,7 +7,11 @@ import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class ScratchWonScreen extends StatelessWidget {
-  const ScratchWonScreen({super.key, required this.onBack, required this.onClaim});
+  const ScratchWonScreen({
+    super.key,
+    required this.onBack,
+    required this.onClaim,
+  });
 
   final VoidCallback onBack;
   final VoidCallback onClaim;
@@ -25,7 +29,11 @@ class ScratchWonScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   onPressed: onBack,
-                  icon: Icon(Icons.arrow_back_ios_new, size: 20, color: context.torkk.textPrimary),
+                  icon: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 20,
+                    color: context.torkk.textPrimary,
+                  ),
                 ),
               ),
             ),
@@ -40,10 +48,26 @@ class ScratchWonScreen extends StatelessWidget {
                       children: [
                         ColorFiltered(
                           colorFilter: const ColorFilter.matrix(<double>[
-                            1, 0, 0, 0, 0,
-                            0, 1, 0, 0, 0,
-                            0, 0, 1, 0, 0,
-                            1, 1, 1, 0, 0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            0,
+                            0,
                           ]),
                           child: Image.asset(
                             AppAssets.celebration,
@@ -62,13 +86,21 @@ class ScratchWonScreen extends StatelessWidget {
                   Text(
                     'You won',
                     textAlign: TextAlign.center,
-                    style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3),
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 18,
+                      height: 1.2,
+                      letterSpacing: -0.3,
+                    ),
                   ),
                   SizedBox(height: context.h(4)),
                   Text(
                     '50 Coins',
                     textAlign: TextAlign.center,
-                    style: AppTypography.bold.copyWith(fontSize: 28, height: 1.15, letterSpacing: -0.4),
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 28,
+                      height: 1.15,
+                      letterSpacing: -0.4,
+                    ),
                   ),
                   SizedBox(height: context.h(8)),
                   Padding(
@@ -88,7 +120,12 @@ class ScratchWonScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+              padding: EdgeInsets.fromLTRB(
+                context.w(20),
+                context.h(8),
+                context.w(20),
+                context.h(16),
+              ),
               child: UnifiedButton(label: 'Claim', onPressed: onClaim),
             ),
           ],

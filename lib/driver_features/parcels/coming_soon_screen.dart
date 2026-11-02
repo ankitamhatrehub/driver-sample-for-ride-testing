@@ -106,7 +106,7 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
                 child: PageView(
                   controller: _pages,
                   children: [
-                   NeighbourhoodPage(
+                    NeighbourhoodPage(
                       notified: _notified,
                       onNotify: _notify,
                       onInstagram: _openInstagram,
@@ -124,8 +124,8 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
                             }
                           },
                     ),
-                   LaunchPage(onNotify: _notify),
-                   FeaturePage(onNotify: _notify),
+                    LaunchPage(onNotify: _notify),
+                    FeaturePage(onNotify: _notify),
                   ],
                 ),
               ),
@@ -136,4 +136,3 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
     );
   }
 }
-

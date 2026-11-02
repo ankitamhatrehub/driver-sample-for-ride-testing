@@ -24,16 +24,41 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
   Widget build(BuildContext context) {
     final accent = profileAccent(context);
     const earned = [
-      (Icons.directions_car_filled_rounded, Color(0xFF7C3AED), Color(0xFFF3E8FF), 'Ride Completed', '2:00 am'),
-      (Icons.inventory_2_rounded, Color(0xFFF59E0B), Color(0xFFFEF3C7), 'Parcel Delivered', '2:00 am'),
-      (Icons.confirmation_number_outlined, Color(0xFFF59E0B), Color(0xFFFEF3C7), 'Scratch Card Reward', '2:00 am'),
+      (
+        Icons.directions_car_filled_rounded,
+        Color(0xFF7C3AED),
+        Color(0xFFF3E8FF),
+        'Ride Completed',
+        '2:00 am',
+      ),
+      (
+        Icons.inventory_2_rounded,
+        Color(0xFFF59E0B),
+        Color(0xFFFEF3C7),
+        'Parcel Delivered',
+        '2:00 am',
+      ),
+      (
+        Icons.confirmation_number_outlined,
+        Color(0xFFF59E0B),
+        Color(0xFFFEF3C7),
+        'Scratch Card Reward',
+        '2:00 am',
+      ),
     ];
-    final rows = _tab == 2 ? const <(IconData, Color, Color, String, String)>[] : earned;
+    final rows = _tab == 2
+        ? const <(IconData, Color, Color, String, String)>[]
+        : earned;
     return ProfilePage(
       title: 'Coin History',
       onBack: widget.onBack,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           Container(
             padding: EdgeInsets.all(context.w(4)),
@@ -59,7 +84,9 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
                           style: AppTypography.regular.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: _tab == i ? Theme.of(context).colorScheme.onPrimary : AppColors.slate500,
+                            color: _tab == i
+                                ? Theme.of(context).colorScheme.onPrimary
+                                : AppColors.slate500,
                           ),
                         ),
                       ),
@@ -95,11 +122,17 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
                       children: [
                         Text(
                           row.$4,
-                          style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                          style: AppTypography.regular.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         Text(
                           row.$5,
-                          style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                          style: AppTypography.regular.copyWith(
+                            fontSize: 12,
+                            color: context.torkk.textSecondary,
+                          ),
                         ),
                       ],
                     ),
@@ -113,7 +146,11 @@ class _CoinHistoryScreenState extends State<CoinHistoryScreen> {
                     ),
                   ),
                   SizedBox(width: context.w(4)),
-                  Image.asset(AppAssets.rewardCoins, width: context.w(16), height: context.w(16)),
+                  Image.asset(
+                    AppAssets.rewardCoins,
+                    width: context.w(16),
+                    height: context.w(16),
+                  ),
                 ],
               ),
             ),

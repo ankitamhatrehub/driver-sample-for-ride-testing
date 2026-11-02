@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:rider_app/driver_features/coins/widgets/coin_result.dart';
 
 class ScratchFailedScreen extends StatelessWidget {
-  const ScratchFailedScreen({super.key, required this.onBack, required this.onTryAgain});
+  const ScratchFailedScreen({
+    super.key,
+    required this.onBack,
+    required this.onTryAgain,
+  });
 
   final VoidCallback onBack;
   final VoidCallback onTryAgain;

@@ -597,7 +597,9 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: context.adaptiveTint(const Color(0xFFF0FDF4)),
+                              color: context.adaptiveTint(
+                                const Color(0xFFF0FDF4),
+                              ),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: const Color(0xFFBBF7D0),
@@ -614,7 +616,9 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: context.legible(Color(0xFF166534)),
+                                        color: context.legible(
+                                          Color(0xFF166534),
+                                        ),
                                       ),
                                     ),
                                     if (_transactionId.isNotEmpty)
@@ -622,7 +626,9 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
                                         'Txn: $_transactionId',
                                         style: TextStyle(
                                           fontSize: 10,
-                                          color: context.legible(Color(0xFF15803D)),
+                                          color: context.legible(
+                                            Color(0xFF15803D),
+                                          ),
                                         ),
                                       ),
                                   ],
@@ -751,6 +757,4 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
       ),
     );
   }
-
 }
-

@@ -7,7 +7,11 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 
 class _ChatMessage {
-  const _ChatMessage({required this.isUser, required this.text, this.isError = false});
+  const _ChatMessage({
+    required this.isUser,
+    required this.text,
+    this.isError = false,
+  });
   final bool isUser;
   final String text;
   final bool isError;
@@ -30,7 +34,8 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
   static const _prefsKey = 'ai_chat_conversation_id';
   static const _welcome = _ChatMessage(
     isUser: false,
-    text: 'Hello Partner! I am Lui, your AI Support Assistant. How can I help you regarding the application today?',
+    text:
+        'Hello Partner! I am Lui, your AI Support Assistant. How can I help you regarding the application today?',
   );
 
   final List<_ChatMessage> _messages = [];
@@ -59,8 +64,10 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     final b = List<int>.generate(16, (_) => rnd.nextInt(256));
     b[6] = (b[6] & 0x0f) | 0x40;
     b[8] = (b[8] & 0x3f) | 0x80;
-    String hex(int from, int to) =>
-        b.sublist(from, to).map((e) => e.toRadixString(16).padLeft(2, '0')).join();
+    String hex(int from, int to) => b
+        .sublist(from, to)
+        .map((e) => e.toRadixString(16).padLeft(2, '0'))
+        .join();
     return '${hex(0, 4)}-${hex(4, 6)}-${hex(6, 8)}-${hex(8, 10)}-${hex(10, 16)}';
   }
 
@@ -75,8 +82,14 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     debugPrint('AI_CHAT_SCREEN_01 | conversation_id=$id');
     try {
       final history = await DriverApiService.fetchChatHistory(id);
-      final parsed = history.whereType<Map>().map(_fromJson).whereType<_ChatMessage>().toList();
-      debugPrint('AI_CHAT_SCREEN_02 | history items=${history.length} parsed=${parsed.length}');
+      final parsed = history
+          .whereType<Map>()
+          .map(_fromJson)
+          .whereType<_ChatMessage>()
+          .toList();
+      debugPrint(
+        'AI_CHAT_SCREEN_02 | history items=${history.length} parsed=${parsed.length}',
+      );
       if (!mounted) return;
       setState(() {
         _messages
@@ -100,10 +113,29 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
   /// One history item. The backend may call the fields role/sender and
   /// message/content/text, so all of them are accepted.
   static _ChatMessage? _fromJson(Map item) {
-    final text = (item['message'] ?? item['content'] ?? item['text'] ?? item['body'] ?? '').toString().trim();
+    final text =
+        (item['message'] ??
+                item['content'] ??
+                item['text'] ??
+                item['body'] ??
+                '')
+            .toString()
+            .trim();
     if (text.isEmpty) return null;
-    final role = (item['role'] ?? item['sender'] ?? item['sender_type'] ?? item['from'] ?? '').toString().toLowerCase();
-    final isUser = role == 'user' || role == 'driver' || role == 'customer' || role == 'human' || item['is_user'] == true;
+    final role =
+        (item['role'] ??
+                item['sender'] ??
+                item['sender_type'] ??
+                item['from'] ??
+                '')
+            .toString()
+            .toLowerCase();
+    final isUser =
+        role == 'user' ||
+        role == 'driver' ||
+        role == 'customer' ||
+        role == 'human' ||
+        item['is_user'] == true;
     return _ChatMessage(isUser: isUser, text: text);
   }
 
@@ -111,7 +143,16 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
   static String? _replyFrom(dynamic body) {
     if (body is String) return body.trim().isEmpty ? null : body.trim();
     if (body is! Map) return null;
-    for (final key in const ['reply', 'response', 'answer', 'ai_message', 'assistant_message', 'message', 'text', 'content']) {
+    for (final key in const [
+      'reply',
+      'response',
+      'answer',
+      'ai_message',
+      'assistant_message',
+      'message',
+      'text',
+      'content',
+    ]) {
       final v = body[key];
       if (v is String && v.trim().isNotEmpty) return v.trim();
       if (v is Map) {
@@ -145,7 +186,6 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     });
     _scrollToBottom();
     try {
-      
       final body = await DriverApiService.sendChatMessage(
         conversationId: _conversationId,
         message: text,
@@ -154,21 +194,27 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
       debugPrint('AI_CHAT_SCREEN_04 | reply=$reply');
       if (!mounted) return;
       setState(() {
-        _messages.add(_ChatMessage(
-          isUser: false,
-          text: reply ?? 'Sorry, I could not understand the reply. Please try again.',
-          isError: reply == null,
-        ));
+        _messages.add(
+          _ChatMessage(
+            isUser: false,
+            text:
+                reply ??
+                'Sorry, I could not understand the reply. Please try again.',
+            isError: reply == null,
+          ),
+        );
       });
     } catch (e) {
       debugPrint('AI_CHAT_SCREEN_05 | send failed: $e');
       if (!mounted) return;
       setState(() {
-        _messages.add(_ChatMessage(
-          isUser: false,
-          text: e.toString().replaceFirst('Exception: ', ''),
-          isError: true,
-        ));
+        _messages.add(
+          _ChatMessage(
+            isUser: false,
+            text: e.toString().replaceFirst('Exception: ', ''),
+            isError: true,
+          ),
+        );
       });
     } finally {
       if (mounted) setState(() => _typing = false);
@@ -190,10 +236,18 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
           colors: [_accentSoft, _accent],
         ),
         boxShadow: [
-          BoxShadow(color: _accent.withValues(alpha: 0.45), blurRadius: size * 0.45, spreadRadius: 0.5),
+          BoxShadow(
+            color: _accent.withValues(alpha: 0.45),
+            blurRadius: size * 0.45,
+            spreadRadius: 0.5,
+          ),
         ],
       ),
-      child: Icon(Icons.auto_awesome_rounded, color: Colors.white, size: size * 0.5),
+      child: Icon(
+        Icons.auto_awesome_rounded,
+        color: Colors.white,
+        size: size * 0.5,
+      ),
     );
   }
 
@@ -205,7 +259,13 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
         decoration: BoxDecoration(
           color: t.surface,
           border: Border(bottom: BorderSide(color: t.border)),
-          boxShadow: const [BoxShadow(color: Color(0x0A000000), blurRadius: 8, offset: Offset(0, 2))],
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0A000000),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         child: SafeArea(
           bottom: false,
@@ -215,7 +275,11 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
               children: [
                 IconButton(
                   onPressed: () => Navigator.of(context).maybePop(),
-                  icon: Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: t.textPrimary),
+                  icon: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    size: 20,
+                    color: t.textPrimary,
+                  ),
                 ),
                 _avatar(size: 38),
                 const SizedBox(width: 12),
@@ -226,17 +290,31 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                     children: [
                       Text(
                         'Lui',
-                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17, color: t.textPrimary, height: 1.2),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 17,
+                          color: t.textPrimary,
+                          height: 1.2,
+                        ),
                       ),
                       Row(
                         children: [
                           Container(
                             width: 7,
                             height: 7,
-                            decoration: const BoxDecoration(color: Color(0xFF16A34A), shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF16A34A),
+                              shape: BoxShape.circle,
+                            ),
                           ),
                           const SizedBox(width: 5),
-                          Text('AI Support Assistant', style: TextStyle(fontSize: 12, color: t.textSecondary)),
+                          Text(
+                            'AI Support Assistant',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: t.textSecondary,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -261,7 +339,9 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     );
     final bubble = Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (isUser ? 0.75 : 0.68)),
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * (isUser ? 0.75 : 0.68),
+      ),
       decoration: BoxDecoration(
         gradient: isUser
             ? const LinearGradient(
@@ -270,12 +350,20 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                 colors: [Color(0xFF6366F1), _accent],
               )
             : null,
-        color: isUser ? null : (msg.isError ? const Color(0x1ADC2626) : t.surface),
+        color: isUser
+            ? null
+            : (msg.isError ? const Color(0x1ADC2626) : t.surface),
         borderRadius: radius,
-        border: isUser ? null : Border.all(color: msg.isError ? const Color(0x55DC2626) : t.border),
+        border: isUser
+            ? null
+            : Border.all(
+                color: msg.isError ? const Color(0x55DC2626) : t.border,
+              ),
         boxShadow: [
           BoxShadow(
-            color: isUser ? _accent.withValues(alpha: 0.25) : const Color(0x0F000000),
+            color: isUser
+                ? _accent.withValues(alpha: 0.25)
+                : const Color(0x0F000000),
             blurRadius: isUser ? 10 : 6,
             offset: const Offset(0, 2),
           ),
@@ -293,7 +381,9 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       child: Row(
-        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isUser) ...[_avatar(), const SizedBox(width: 8)],
@@ -320,7 +410,11 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
             ),
             child: Text(
               'Lui is typing...',
-              style: TextStyle(color: t.textSecondary, fontStyle: FontStyle.italic, fontSize: 12),
+              style: TextStyle(
+                color: t.textSecondary,
+                fontStyle: FontStyle.italic,
+                fontSize: 12,
+              ),
             ),
           ),
         ],
@@ -335,7 +429,13 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
       decoration: BoxDecoration(
         color: t.surface,
         border: Border(top: BorderSide(color: t.border)),
-        boxShadow: const [BoxShadow(color: Color(0x0D000000), blurRadius: 12, offset: Offset(0, -3))],
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0D000000),
+            blurRadius: 12,
+            offset: Offset(0, -3),
+          ),
+        ],
       ),
       child: SafeArea(
         top: false,
@@ -363,7 +463,10 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                       hintText: 'Ask Lui anything...',
                       hintStyle: TextStyle(color: t.textSecondary),
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -384,9 +487,19 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                         end: Alignment.bottomRight,
                         colors: [_accentSoft, _accent],
                       ),
-                      boxShadow: [BoxShadow(color: _accent.withValues(alpha: 0.4), blurRadius: 12, offset: const Offset(0, 3))],
+                      boxShadow: [
+                        BoxShadow(
+                          color: _accent.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                    child: const Icon(
+                      Icons.send_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
@@ -411,7 +524,8 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                     controller: _scrollController,
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 8),
                     itemCount: _messages.length,
-                    itemBuilder: (context, index) => _bubble(context, _messages[index]),
+                    itemBuilder: (context, index) =>
+                        _bubble(context, _messages[index]),
                   ),
           ),
           if (_typing) _typingIndicator(context),

@@ -22,7 +22,10 @@ class KycRequiredLabel extends StatelessWidget {
         children: [
           TextSpan(
             text: ' *',
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.legible(AppColors.error)),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.legible(AppColors.error),
+            ),
           ),
         ],
       ),
@@ -53,7 +56,9 @@ class KycUploadTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: context.adaptiveTint(const Color(0xFFFAF5FF)),
           borderRadius: BorderRadius.circular(context.r(16)),
-          border: Border.all(color: uploaded ? AppColors.primary : const Color(0xFFE9D5FF)),
+          border: Border.all(
+            color: uploaded ? AppColors.primary : const Color(0xFFE9D5FF),
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,10 +69,20 @@ class KycUploadTile extends StatelessWidget {
               size: context.w(26),
             ),
             SizedBox(height: context.h(8)),
-            Text(label, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2, color: context.legible(AppColors.primary))),
+            Text(
+              label,
+              style: AppTypography.bold.copyWith(
+                fontSize: 13,
+                height: 1.2,
+                color: context.legible(AppColors.primary),
+              ),
+            ),
             Text(
               uploaded ? AppStrings.kycVerified : AppStrings.tapToUpload,
-              style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 11,
+                color: context.torkk.textSecondary,
+              ),
             ),
           ],
         ),
@@ -100,10 +115,18 @@ class KycPreviewCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(context.r(10)),
             ),
             child: imagePath == null
-                ? Icon(Icons.badge_outlined, color: AppColors.slate300, size: context.w(32))
+                ? Icon(
+                    Icons.badge_outlined,
+                    color: AppColors.slate300,
+                    size: context.w(32),
+                  )
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(context.r(10)),
-                    child: Image.file(File(imagePath!), fit: BoxFit.cover, width: double.infinity),
+                    child: Image.file(
+                      File(imagePath!),
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   ),
           ),
           SizedBox(height: context.h(8)),
@@ -115,17 +138,28 @@ class KycPreviewCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.refresh, size: context.w(14), color: context.legible(AppColors.primary)),
+                      Icon(
+                        Icons.refresh,
+                        size: context.w(14),
+                        color: context.legible(AppColors.primary),
+                      ),
                       SizedBox(width: context.w(4)),
                       Text(
                         AppStrings.retake,
-                        style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.primary)),
+                        style: AppTypography.regular.copyWith(
+                          fontSize: 12,
+                          color: context.legible(AppColors.primary),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Icon(Icons.more_horiz, size: context.w(16), color: AppColors.slate400),
+              Icon(
+                Icons.more_horiz,
+                size: context.w(16),
+                color: AppColors.slate400,
+              ),
             ],
           ),
         ],
@@ -144,7 +178,10 @@ class KycPendingBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: context.w(14), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(14),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         color: context.adaptiveTint(const Color(0xFFFFF7ED)),
         borderRadius: BorderRadius.circular(context.r(12)),
@@ -152,7 +189,11 @@ class KycPendingBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.schedule, color: context.legible(AppColors.amber600), size: context.w(18)),
+          Icon(
+            Icons.schedule,
+            color: context.legible(AppColors.amber600),
+            size: context.w(18),
+          ),
           SizedBox(width: context.w(10)),
           Expanded(
             child: Column(
@@ -160,13 +201,20 @@ class KycPendingBanner extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2, color: context.legible(AppColors.amber700)),
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 13,
+                    height: 1.2,
+                    color: context.legible(AppColors.amber700),
+                  ),
                 ),
                 if (subtitle != null) ...[
                   SizedBox(height: context.h(2)),
                   Text(
                     subtitle!,
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.amber700)),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 12,
+                      color: context.legible(AppColors.amber700),
+                    ),
                   ),
                 ],
               ],
@@ -193,7 +241,10 @@ class KycDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(12),
+        vertical: context.h(10),
+      ),
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: context.torkk.border)),
       ),
@@ -207,9 +258,15 @@ class KycDetailRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 11,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
-                Text(value, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3)),
+                Text(
+                  value,
+                  style: AppTypography.bold.copyWith(fontSize: 13, height: 1.3),
+                ),
               ],
             ),
           ),

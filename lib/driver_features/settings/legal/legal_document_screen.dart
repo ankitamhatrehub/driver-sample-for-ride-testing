@@ -41,7 +41,10 @@ class LegalDocumentScreen extends StatelessWidget {
           final block = blocks[index];
           if (block.isHeading) {
             return Padding(
-              padding: EdgeInsets.only(top: context.h(18), bottom: context.h(8)),
+              padding: EdgeInsets.only(
+                top: context.h(18),
+                bottom: context.h(8),
+              ),
               child: Text(
                 block.text,
                 style: AppTypography.bold.copyWith(

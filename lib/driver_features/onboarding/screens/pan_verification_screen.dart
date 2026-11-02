@@ -34,7 +34,8 @@ class _PanVerificationScreenState extends State<PanVerificationScreen> {
     super.dispose();
   }
 
-  bool get _validPan => RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$').hasMatch(_panController.text.trim());
+  bool get _validPan =>
+      RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$').hasMatch(_panController.text.trim());
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +43,21 @@ class _PanVerificationScreenState extends State<PanVerificationScreen> {
       title: AppStrings.panVerification,
       onBack: widget.onBack,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(8),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Center(child: _PanCardArt()),
             SizedBox(height: context.h(28)),
-            Text('${AppStrings.panNumber} *', style: AppTypography.regular.copyWith(fontSize: 13)),
+            Text(
+              '${AppStrings.panNumber} *',
+              style: AppTypography.regular.copyWith(fontSize: 13),
+            ),
             SizedBox(height: context.h(8)),
             AppTextField(
               controller: _panController,
@@ -98,8 +107,15 @@ class _PanCardArt extends StatelessWidget {
           Container(
             width: context.w(44),
             height: context.w(44),
-            decoration: BoxDecoration(color: context.adaptiveTint(Color(0xFFE7EEF6)), shape: BoxShape.circle),
-            child: Icon(Icons.person, color: const Color(0xFFC5D0DE), size: context.w(26)),
+            decoration: BoxDecoration(
+              color: context.adaptiveTint(Color(0xFFE7EEF6)),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.person,
+              color: const Color(0xFFC5D0DE),
+              size: context.w(26),
+            ),
           ),
           SizedBox(width: context.w(14)),
           Expanded(
@@ -126,7 +142,10 @@ class _PanCardArt extends StatelessWidget {
         widthFactor: widthFactor,
         child: Container(
           height: context.h(8),
-          decoration: BoxDecoration(color: context.adaptiveTint(const Color(0xFFE3EAF2)), borderRadius: BorderRadius.circular(6)),
+          decoration: BoxDecoration(
+            color: context.adaptiveTint(const Color(0xFFE3EAF2)),
+            borderRadius: BorderRadius.circular(6),
+          ),
         ),
       ),
     );

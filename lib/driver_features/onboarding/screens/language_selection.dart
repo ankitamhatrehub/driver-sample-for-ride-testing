@@ -68,7 +68,9 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
             _buildLanguageOption(
               badge: 'Aa',
               title: AppStrings.english,
-              selected: widget.selectedLanguage == 'en' || widget.selectedLanguage == 'English',
+              selected:
+                  widget.selectedLanguage == 'en' ||
+                  widget.selectedLanguage == 'English',
               onTap: () => _select('en'),
             ),
             SizedBox(height: context.h(14)),
@@ -76,7 +78,10 @@ class _LanguageSelectStepState extends State<LanguageSelectStep> {
               badge: 'अ',
               title: AppStrings.hindi,
               subtitle: 'Hindi',
-              selected: widget.selectedLanguage == 'hi' || widget.selectedLanguage == 'Hindi' || widget.selectedLanguage == 'हिंदी',
+              selected:
+                  widget.selectedLanguage == 'hi' ||
+                  widget.selectedLanguage == 'Hindi' ||
+                  widget.selectedLanguage == 'हिंदी',
               onTap: () => _select('hi'),
             ),
             if (_showError) ...[

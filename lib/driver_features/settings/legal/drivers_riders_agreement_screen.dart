@@ -7,357 +7,918 @@ class DriversRidersAgreementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LegalDocumentScreen(title: 'Drivers and Riders Agreement', blocks: _blocks);
+    return const LegalDocumentScreen(
+      title: 'Drivers and Riders Agreement',
+      blocks: _blocks,
+    );
   }
 }
 
 const List<LegalBlock> _blocks = [
-  LegalBlock.text('THIS DOCUMENT IS AN ELECTRONIC RECORD IN TERMS OF INFORMATION TECHNOLOGY ACT, 2000 AND RULES THEREUNDER AS APPLICABLE AND THE PROVISIONS PERTAINING TO ELECTRONIC RECORDS IN'),
-  LegalBlock.text('VARIOUS STATUTES AS AMENDED BY THE INFORMATION TECHNOLOGY ACT, 2000.'),
-  LegalBlock.text('BLACKORIGINX PRIVATE LIMITED (“Torkk” / “Company” / “us”, “we” or “our”) provides technology-based services and acts as an intermediary for facilitating: (i) on- demand transportation services by means of two-wheelers (“Bikes”) (“Transportation Services”), and (ii) pick up and drop off services of packages from one location to the other through the Captains (defined hereinafter) (“Package Services”); The Package Services shall be further sub-categorised as follows:'),
-  LegalBlock.text('Food Delivery - Pickup and deliver food parcels to customers from restaurants;'),
-  LegalBlock.text('Grocery Delivery - Pickup and deliver groceries to customers from stores; and'),
-  LegalBlock.text('Torkk Parcel - Pick up the items/parcels from customers and deliver to their chosen locations. (Transportation Services and Package Services are collectively referred to as “Services”) and other support services (such as associated payment collection) as offered by Torkk from time to time by means of the Company’s website and the mobile application “Torkk” (collectively, “Platform”).'),
-  LegalBlock.text('The Services are provided / offered by third party vehicle operators, service providers or riders who wish to offer such Services through the Platform (“Captain(s)” / “you”).'),
+  LegalBlock.text(
+    'THIS DOCUMENT IS AN ELECTRONIC RECORD IN TERMS OF INFORMATION TECHNOLOGY ACT, 2000 AND RULES THEREUNDER AS APPLICABLE AND THE PROVISIONS PERTAINING TO ELECTRONIC RECORDS IN',
+  ),
+  LegalBlock.text(
+    'VARIOUS STATUTES AS AMENDED BY THE INFORMATION TECHNOLOGY ACT, 2000.',
+  ),
+  LegalBlock.text(
+    'BLACKORIGINX PRIVATE LIMITED (“Torkk” / “Company” / “us”, “we” or “our”) provides technology-based services and acts as an intermediary for facilitating: (i) on- demand transportation services by means of two-wheelers (“Bikes”) (“Transportation Services”), and (ii) pick up and drop off services of packages from one location to the other through the Captains (defined hereinafter) (“Package Services”); The Package Services shall be further sub-categorised as follows:',
+  ),
+  LegalBlock.text(
+    'Food Delivery - Pickup and deliver food parcels to customers from restaurants;',
+  ),
+  LegalBlock.text(
+    'Grocery Delivery - Pickup and deliver groceries to customers from stores; and',
+  ),
+  LegalBlock.text(
+    'Torkk Parcel - Pick up the items/parcels from customers and deliver to their chosen locations. (Transportation Services and Package Services are collectively referred to as “Services”) and other support services (such as associated payment collection) as offered by Torkk from time to time by means of the Company’s website and the mobile application “Torkk” (collectively, “Platform”).',
+  ),
+  LegalBlock.text(
+    'The Services are provided / offered by third party vehicle operators, service providers or riders who wish to offer such Services through the Platform (“Captain(s)” / “you”).',
+  ),
   LegalBlock.text('It is hereby clarified that:'),
-  LegalBlock.text('in the State of _______, Torkk acts as a demand generation platform for enabling lead generation for Captains, who shall offer ride services directly to the customers;'),
-  LegalBlock.text('Torkk owns a technology-based Software-as-a-Service (“SAAS”) platform (collectively called as “SAAS Platform”), which acts as a discovery platform, enabling lead generation for Captains, who provide or offer to provide Torkk Parcel Services, on their own account, in accordance with terms and conditions as may be agreed between the customers and the Captains. The Torkk Parcel Services are provided to the customers directly by the Captain and Torkk merely acts as a technology platform to facilitate transactions initiated on the Platform and Torkk does not assume any responsibility or liability for any form of deficiency of services on part of the Captain.'),
-  LegalBlock.text('On the basis of the representations and warranties provided by the Captain, the Company has agreed to list the Bikes on the Platform and to enable the Captain to provide the Services through the Platform in accordance with the terms and conditions as hereinafter provided and any other policy or agreement or document made applicable / executed by you for the purpose of the provision of Services (collectively, “T&Cs”). These T&Cs will govern the relationship between you and the Company in the course of provision of the Services. By signing up or registering on the Platform and offering to provide one or more of the Services, you acknowledge that you have read and understood these T&Cs and agree to be bound by these T&Cs, without any limitation or qualification. If you do not agree with these T&Cs, please do not sign -up or register on the Platform or offer any Services.'),
-  LegalBlock.text('Use of and access to the Platform is offered to you upon the unconditional acceptance of all the terms, conditions and notices contained in these T&Cs and Privacy Policy (which is incorporated herein by reference), along with any amendments made by the Company at its sole discretion and posted on the Platform from time to time.'),
-  LegalBlock.text('These T&Cs expressly supersede prior agreements or arrangements with you.'),
+  LegalBlock.text(
+    'in the State of _______, Torkk acts as a demand generation platform for enabling lead generation for Captains, who shall offer ride services directly to the customers;',
+  ),
+  LegalBlock.text(
+    'Torkk owns a technology-based Software-as-a-Service (“SAAS”) platform (collectively called as “SAAS Platform”), which acts as a discovery platform, enabling lead generation for Captains, who provide or offer to provide Torkk Parcel Services, on their own account, in accordance with terms and conditions as may be agreed between the customers and the Captains. The Torkk Parcel Services are provided to the customers directly by the Captain and Torkk merely acts as a technology platform to facilitate transactions initiated on the Platform and Torkk does not assume any responsibility or liability for any form of deficiency of services on part of the Captain.',
+  ),
+  LegalBlock.text(
+    'On the basis of the representations and warranties provided by the Captain, the Company has agreed to list the Bikes on the Platform and to enable the Captain to provide the Services through the Platform in accordance with the terms and conditions as hereinafter provided and any other policy or agreement or document made applicable / executed by you for the purpose of the provision of Services (collectively, “T&Cs”). These T&Cs will govern the relationship between you and the Company in the course of provision of the Services. By signing up or registering on the Platform and offering to provide one or more of the Services, you acknowledge that you have read and understood these T&Cs and agree to be bound by these T&Cs, without any limitation or qualification. If you do not agree with these T&Cs, please do not sign -up or register on the Platform or offer any Services.',
+  ),
+  LegalBlock.text(
+    'Use of and access to the Platform is offered to you upon the unconditional acceptance of all the terms, conditions and notices contained in these T&Cs and Privacy Policy (which is incorporated herein by reference), along with any amendments made by the Company at its sole discretion and posted on the Platform from time to time.',
+  ),
+  LegalBlock.text(
+    'These T&Cs expressly supersede prior agreements or arrangements with you.',
+  ),
   LegalBlock.heading('I. GENERAL COVENANTS'),
-  LegalBlock.text('In relation to your access of the Platform to provide the Services, you covenant and agree to the following: For the purposes of registration/ creation of an account on the Platform and providing the Services, you confirm that you are 18 years of age.'),
-  LegalBlock.text('You are not restricted by any legal, regulatory, judicial, quasi-judicial or other authority, to access the Platform or provide the Services, including to enter into transactions contemplated using the Services. You will provide the Services solely as permitted and in accordance with these T&Cs and in accordance with applicable laws.'),
-  LegalBlock.text('By using the Platform and offering the Services, you authorize Torkk, whether directly or indirectly through third parties, to collect information about you or make any inquiries necessary to validate your identity including conduct police verification and background checks, in accordance with our Privacy Policy. Please read the Privacy Policy to understand how we collect, process, and share your information, including personal information and sensitive personal data or information (collectively, “Information”). When you provide any Information to Torkk, you will provide only true, accurate, current, and complete Information. You understand and acknowledge that the responsibility to provide correct Information, including the contact information, bank account details etc., as required in connection with the Services, lies solely with you. You must take all caution to ensure that there are no mistakes and errors in the Information you provide. We will not be responsible to verify the accuracy of the Information provided by you.'),
-  LegalBlock.text('These T&Cs impose valid and legally binding obligations on you and are enforceable against you.'),
+  LegalBlock.text(
+    'In relation to your access of the Platform to provide the Services, you covenant and agree to the following: For the purposes of registration/ creation of an account on the Platform and providing the Services, you confirm that you are 18 years of age.',
+  ),
+  LegalBlock.text(
+    'You are not restricted by any legal, regulatory, judicial, quasi-judicial or other authority, to access the Platform or provide the Services, including to enter into transactions contemplated using the Services. You will provide the Services solely as permitted and in accordance with these T&Cs and in accordance with applicable laws.',
+  ),
+  LegalBlock.text(
+    'By using the Platform and offering the Services, you authorize Torkk, whether directly or indirectly through third parties, to collect information about you or make any inquiries necessary to validate your identity including conduct police verification and background checks, in accordance with our Privacy Policy. Please read the Privacy Policy to understand how we collect, process, and share your information, including personal information and sensitive personal data or information (collectively, “Information”). When you provide any Information to Torkk, you will provide only true, accurate, current, and complete Information. You understand and acknowledge that the responsibility to provide correct Information, including the contact information, bank account details etc., as required in connection with the Services, lies solely with you. You must take all caution to ensure that there are no mistakes and errors in the Information you provide. We will not be responsible to verify the accuracy of the Information provided by you.',
+  ),
+  LegalBlock.text(
+    'These T&Cs impose valid and legally binding obligations on you and are enforceable against you.',
+  ),
   LegalBlock.heading('II. REGISTRATION ON AND OPERATION OF THE PLATFORM'),
-  LegalBlock.text('To offer the Services on the Platform, you should be eligible as per the onboarding criteria and provide such documents as requested by Torkk as per applicable law and Torkk’s internal policies and ensure continued compliance with the same. Particularly, you represent, warrant and covenant to Torkk that: You have at least 2 years or driving experience;'),
-  LegalBlock.text('No proceeding is pending against you regarding and neither have been convicted of (a) driving under the influence of drugs or alcohol; or (b) any cognizable offence under the Code of Criminal Procedure, 1973, including fraud, sexual offences, use of a motor vehicle to commit cognizable offence, or of any crime involving property damage, theft, acts of violence, or acts of terror, in the past 3 years; and You have cleared and have no pending challans applicable to the Vehicle prior to integration with the Platform.'),
-  LegalBlock.text('You must register on the Platform and create an account on the Platform (“Your Account”) by providing accurate Information as sought during the registration process.'),
-  LegalBlock.text('Further, we may ask you for Information or documents that will allow us, whether directly or indirectly through third parties, to reasonably identify you, requiring you to take steps to confirm your right over your email address or financial instruments, or verifying your information against third party databases or through other sources. We reserve the right to terminate, suspend, or limit access to the Platform in the event we are unable to obtain or verify this Information.'),
-  LegalBlock.text('You are solely responsible for maintaining the confidentiality of your credentials (username, password, etc.) provided upon registration by you, and the Company is not liable for any loss you may incur as a result of someone else using Your Account, either with or without your knowledge.'),
-  LegalBlock.text('You agree to accept responsibility for all activities that occur in or from Your Account and agree to establish reasonable security procedures and controls to limit access to the password or other identifying information of Your Account to unauthorized individuals, which includes choosing passwords and other credentials in a manner that will protect the security of your Information. Your credentials include your username and password to Your Account and to any third-party account you have used to login to Your Account.'),
-  LegalBlock.text('You agree to inform us immediately if you have any reason to believe that your login credentials have become known to anyone else, or if the password is being or is likely to be used in any unauthorized manner.'),
-  LegalBlock.text('Torkk will not be liable for any breach of security or unauthorized use of Your Account. The Company will take the booking request of the customer made on the Platform (“Service Request”) and forward it to you through the Platform, or in such other manner based on Torkk’s sole discretion, and the Captain is prohibited from accepting a ride through street hailing or other means while using the Platform. The Company reserves the right to discontinue or introduce any other modes of Service Requests and/or for providing Services. In case of Package Services, at no time whatsoever will the Captain tamper, damage, open or do anything to the parcels that he/she is not specifically permitted to do during the course of providing the Services.'),
-  LegalBlock.text('The Company may monitor, and record calls made by you to the customers, for the purpose of training and improving customer care services, including complaint handling, and you provide your consent for the same.'),
-  LegalBlock.text('The Company will not be liable if you do not download the correct mobile application including correct and compatible version of the Torkk mobile application.'),
-  LegalBlock.text('You agree that Torkk (either directly or indirectly through its affiliates or third parties) may communicate with you in connection with the Platform or the Services, either electronically (for example, push notifications), or through phone calls, WhatsApp messenger application, email, or in writing through other modes.'),
+  LegalBlock.text(
+    'To offer the Services on the Platform, you should be eligible as per the onboarding criteria and provide such documents as requested by Torkk as per applicable law and Torkk’s internal policies and ensure continued compliance with the same. Particularly, you represent, warrant and covenant to Torkk that: You have at least 2 years or driving experience;',
+  ),
+  LegalBlock.text(
+    'No proceeding is pending against you regarding and neither have been convicted of (a) driving under the influence of drugs or alcohol; or (b) any cognizable offence under the Code of Criminal Procedure, 1973, including fraud, sexual offences, use of a motor vehicle to commit cognizable offence, or of any crime involving property damage, theft, acts of violence, or acts of terror, in the past 3 years; and You have cleared and have no pending challans applicable to the Vehicle prior to integration with the Platform.',
+  ),
+  LegalBlock.text(
+    'You must register on the Platform and create an account on the Platform (“Your Account”) by providing accurate Information as sought during the registration process.',
+  ),
+  LegalBlock.text(
+    'Further, we may ask you for Information or documents that will allow us, whether directly or indirectly through third parties, to reasonably identify you, requiring you to take steps to confirm your right over your email address or financial instruments, or verifying your information against third party databases or through other sources. We reserve the right to terminate, suspend, or limit access to the Platform in the event we are unable to obtain or verify this Information.',
+  ),
+  LegalBlock.text(
+    'You are solely responsible for maintaining the confidentiality of your credentials (username, password, etc.) provided upon registration by you, and the Company is not liable for any loss you may incur as a result of someone else using Your Account, either with or without your knowledge.',
+  ),
+  LegalBlock.text(
+    'You agree to accept responsibility for all activities that occur in or from Your Account and agree to establish reasonable security procedures and controls to limit access to the password or other identifying information of Your Account to unauthorized individuals, which includes choosing passwords and other credentials in a manner that will protect the security of your Information. Your credentials include your username and password to Your Account and to any third-party account you have used to login to Your Account.',
+  ),
+  LegalBlock.text(
+    'You agree to inform us immediately if you have any reason to believe that your login credentials have become known to anyone else, or if the password is being or is likely to be used in any unauthorized manner.',
+  ),
+  LegalBlock.text(
+    'Torkk will not be liable for any breach of security or unauthorized use of Your Account. The Company will take the booking request of the customer made on the Platform (“Service Request”) and forward it to you through the Platform, or in such other manner based on Torkk’s sole discretion, and the Captain is prohibited from accepting a ride through street hailing or other means while using the Platform. The Company reserves the right to discontinue or introduce any other modes of Service Requests and/or for providing Services. In case of Package Services, at no time whatsoever will the Captain tamper, damage, open or do anything to the parcels that he/she is not specifically permitted to do during the course of providing the Services.',
+  ),
+  LegalBlock.text(
+    'The Company may monitor, and record calls made by you to the customers, for the purpose of training and improving customer care services, including complaint handling, and you provide your consent for the same.',
+  ),
+  LegalBlock.text(
+    'The Company will not be liable if you do not download the correct mobile application including correct and compatible version of the Torkk mobile application.',
+  ),
+  LegalBlock.text(
+    'You agree that Torkk (either directly or indirectly through its affiliates or third parties) may communicate with you in connection with the Platform or the Services, either electronically (for example, push notifications), or through phone calls, WhatsApp messenger application, email, or in writing through other modes.',
+  ),
   LegalBlock.heading('III. YOUR CONDUCT'),
-  LegalBlock.text('The Captain will not reject Service Request(s) from a customer, except when deemed absolutely necessary and/or under exceptional circumstances, as deemed acceptable by Torkk at its sole discretion. In case of repeated or consistent denial of Service Requests, Torkk reserves the right to take appropriate action including suspension or permanent deactivation of Your Account and termination of these T&Cs. The Captain will refrain from doing anything which the Company reasonably believes to be disreputable or capable of damaging the Company’s reputation and will comply with all applicable laws of the Republic of India.'),
+  LegalBlock.text(
+    'The Captain will not reject Service Request(s) from a customer, except when deemed absolutely necessary and/or under exceptional circumstances, as deemed acceptable by Torkk at its sole discretion. In case of repeated or consistent denial of Service Requests, Torkk reserves the right to take appropriate action including suspension or permanent deactivation of Your Account and termination of these T&Cs. The Captain will refrain from doing anything which the Company reasonably believes to be disreputable or capable of damaging the Company’s reputation and will comply with all applicable laws of the Republic of India.',
+  ),
   LegalBlock.text('In relation to the Platform, the Captain agrees to:'),
-  LegalBlock.text('Not authorize others to use Your Account on the Platform or your Vehicle;'),
-  LegalBlock.text('Not assign or otherwise transfer Your Account to any other person or legal entity;'),
-  LegalBlock.text('Not use the Platform for unlawful purposes, including but not limited to sending or storing any unlawful material or for fraudulent purposes;'),
-  LegalBlock.text('Not use the Platform to cause nuisance, annoyance, or inconvenience to customer, Torkk or any other person;'),
-  LegalBlock.text('Not consume alcohol or drugs or be under the influence of drugs or other illegal substances, prior to or during the provision of Services. Torkk has a zero-tolerance policy in respect of use of drugs, alcohol, intoxicants, or other illegal substances, by any Captain and the customers can report any such behaviour to Torkk and strict action will be taken by Torkk including but not limited to suspension of your Services / Your Account while under investigation and termination; Not impair the proper operation of the network/ Platform and will not use any device, software, routine, file or other tool or technology, which includes any viruses, trojan horses, worms, time bombs or cancelbots, intended to damage, interfere with or affect functionality or operation of the Platform, to surreptitiously intercept or expropriate any system, data or information in connection with the content hosted/ available on the Platform, or to affect the operation of any other websites or the internet;'),
-  LegalBlock.text('Not take any action that imposes an unreasonable or disproportionately large load on the infrastructure associated with the Platform, including but not limited to denial-of-service attacks, “spam” or any other such unsolicited overload technique;'),
+  LegalBlock.text(
+    'Not authorize others to use Your Account on the Platform or your Vehicle;',
+  ),
+  LegalBlock.text(
+    'Not assign or otherwise transfer Your Account to any other person or legal entity;',
+  ),
+  LegalBlock.text(
+    'Not use the Platform for unlawful purposes, including but not limited to sending or storing any unlawful material or for fraudulent purposes;',
+  ),
+  LegalBlock.text(
+    'Not use the Platform to cause nuisance, annoyance, or inconvenience to customer, Torkk or any other person;',
+  ),
+  LegalBlock.text(
+    'Not consume alcohol or drugs or be under the influence of drugs or other illegal substances, prior to or during the provision of Services. Torkk has a zero-tolerance policy in respect of use of drugs, alcohol, intoxicants, or other illegal substances, by any Captain and the customers can report any such behaviour to Torkk and strict action will be taken by Torkk including but not limited to suspension of your Services / Your Account while under investigation and termination; Not impair the proper operation of the network/ Platform and will not use any device, software, routine, file or other tool or technology, which includes any viruses, trojan horses, worms, time bombs or cancelbots, intended to damage, interfere with or affect functionality or operation of the Platform, to surreptitiously intercept or expropriate any system, data or information in connection with the content hosted/ available on the Platform, or to affect the operation of any other websites or the internet;',
+  ),
+  LegalBlock.text(
+    'Not take any action that imposes an unreasonable or disproportionately large load on the infrastructure associated with the Platform, including but not limited to denial-of-service attacks, “spam” or any other such unsolicited overload technique;',
+  ),
   LegalBlock.text('Not try to harm the Platform in any way whatsoever;'),
-  LegalBlock.text('Not copy, or distribute any content on the Platform without written permission from the Company; and'),
-  LegalBlock.text('Not use the Platform with an incompatible or unauthorized device.'),
-  LegalBlock.text('In addition to the foregoing, you will not upload, display, share, host, publish or transmit any information that:'),
-  LegalBlock.text('Either belongs to another person or to which you do not have any right whatsoever;'),
-  LegalBlock.text('Is harmful, offensive, harassing, obscene, pornographic, invasive of another’s privacy, hateful, racially, or ethnically objectionable, disparaging, relating to or encouraging money laundering or gambling, or an online game that causes user harm, or otherwise unlawful in any manner whatsoever, or promoting enmity between different groups on the grounds of religion or caste with the intent to incite violence; Infringes any patent, trademark, copyright, or any other proprietary rights;'),
+  LegalBlock.text(
+    'Not copy, or distribute any content on the Platform without written permission from the Company; and',
+  ),
+  LegalBlock.text(
+    'Not use the Platform with an incompatible or unauthorized device.',
+  ),
+  LegalBlock.text(
+    'In addition to the foregoing, you will not upload, display, share, host, publish or transmit any information that:',
+  ),
+  LegalBlock.text(
+    'Either belongs to another person or to which you do not have any right whatsoever;',
+  ),
+  LegalBlock.text(
+    'Is harmful, offensive, harassing, obscene, pornographic, invasive of another’s privacy, hateful, racially, or ethnically objectionable, disparaging, relating to or encouraging money laundering or gambling, or an online game that causes user harm, or otherwise unlawful in any manner whatsoever, or promoting enmity between different groups on the grounds of religion or caste with the intent to incite violence; Infringes any patent, trademark, copyright, or any other proprietary rights;',
+  ),
   LegalBlock.text('Harms minors in any way or is harmful to child;'),
-  LegalBlock.text('Includes any commercial material or content (including solicitation of funds, advertising, or marketing of any good or services);'),
-  LegalBlock.text('Deceives or misleads the addressee about the origin of such messages, or communicates any misinformation or information which is patently false and untrue or misleading in nature or in respect of any business of the Central Government, is identified as fake or false or misleading by such fact check unit specified by the Government;'),
+  LegalBlock.text(
+    'Includes any commercial material or content (including solicitation of funds, advertising, or marketing of any good or services);',
+  ),
+  LegalBlock.text(
+    'Deceives or misleads the addressee about the origin of such messages, or communicates any misinformation or information which is patently false and untrue or misleading in nature or in respect of any business of the Central Government, is identified as fake or false or misleading by such fact check unit specified by the Government;',
+  ),
   LegalBlock.text('Impersonates another person;'),
-  LegalBlock.text('contains software viruses or any other computer code, files or programs designed to interrupt, destroy, or limit the functionality of any computer resource;'),
-  LegalBlock.text('Threatens the unity, integrity, defence, security or sovereignty of India, friendly relations with foreign states, or public order or causes incitement to the commission of any cognizable offence or prevents investigation of any offence or is insulting any other nation;'),
-  LegalBlock.text('Is in the nature of an online game that is not verified as a permissible online game;'),
-  LegalBlock.text('Is in the nature of advertisement or surrogate advertisement or promotion of an online game that is not a permissible online game, or of any online gaming intermediary offering such an online game; or Violates any law for the time being in force.'),
-  LegalBlock.text('The Company reserves the right to immediately terminate the use of the Platform by the Captain if he does not comply with any of the above rules in Clauses III.3 and III.4 above.'),
-  LegalBlock.text('The Captain will not be permitted to operate on the Platform for more than 12 hours on a calendar day and should take a mandatory break of 10 hours before subsequent login into the Platform and offering the Services.'),
-  LegalBlock.text('The Captain consents to provide identity documents for police verification and background checks by the Company, directly or indirectly through a third party appointed by the Company.'),
-  LegalBlock.text('The Captain will have to mandatorily undergo an induction training program of 30 hours before onboarding with the Torkk Platform and agrees to undergo any other training programs including refresher training program as required by applicable law or as deemed necessary by Torkk.'),
-  LegalBlock.text('The Captain will not be allowed to operate without undergoing a complete medical examination including eye check-up through a medical institution prescribed by the Company. The cost of such medical check-up will be borne by the Company.'),
-  LegalBlock.text('Torkk / its personnel may undertake spot checks of the Bikes to verify and ensure your compliance with these T&Cs and applicable laws.'),
+  LegalBlock.text(
+    'contains software viruses or any other computer code, files or programs designed to interrupt, destroy, or limit the functionality of any computer resource;',
+  ),
+  LegalBlock.text(
+    'Threatens the unity, integrity, defence, security or sovereignty of India, friendly relations with foreign states, or public order or causes incitement to the commission of any cognizable offence or prevents investigation of any offence or is insulting any other nation;',
+  ),
+  LegalBlock.text(
+    'Is in the nature of an online game that is not verified as a permissible online game;',
+  ),
+  LegalBlock.text(
+    'Is in the nature of advertisement or surrogate advertisement or promotion of an online game that is not a permissible online game, or of any online gaming intermediary offering such an online game; or Violates any law for the time being in force.',
+  ),
+  LegalBlock.text(
+    'The Company reserves the right to immediately terminate the use of the Platform by the Captain if he does not comply with any of the above rules in Clauses III.3 and III.4 above.',
+  ),
+  LegalBlock.text(
+    'The Captain will not be permitted to operate on the Platform for more than 12 hours on a calendar day and should take a mandatory break of 10 hours before subsequent login into the Platform and offering the Services.',
+  ),
+  LegalBlock.text(
+    'The Captain consents to provide identity documents for police verification and background checks by the Company, directly or indirectly through a third party appointed by the Company.',
+  ),
+  LegalBlock.text(
+    'The Captain will have to mandatorily undergo an induction training program of 30 hours before onboarding with the Torkk Platform and agrees to undergo any other training programs including refresher training program as required by applicable law or as deemed necessary by Torkk.',
+  ),
+  LegalBlock.text(
+    'The Captain will not be allowed to operate without undergoing a complete medical examination including eye check-up through a medical institution prescribed by the Company. The cost of such medical check-up will be borne by the Company.',
+  ),
+  LegalBlock.text(
+    'Torkk / its personnel may undertake spot checks of the Bikes to verify and ensure your compliance with these T&Cs and applicable laws.',
+  ),
   LegalBlock.heading('IV. PAYMENT TERMS'),
-  LegalBlock.text('Excluding for the state of _______ for Transportation Services and PAN India for Torkk Parcel Services, the Company has the discretion to charge any such fees from the Captain as updated on the Platform from time to time and will be subject to applicable taxes.'),
-  LegalBlock.text('The Company charges a convenience fee from the customers for facilitating the Services through the Platform.'),
-  LegalBlock.text('For all Indian states, excluding _______________ for Transportation Services and PAN India for Torkk Parcel Services, the Captain authorizes the Company to collect the service/travel fee (“Fare”) from the customers on behalf of the Captains. For the state of _______________ for Transportation Services and PAN India for Torkk Parcel Services, Captain will collect the ride fare directly from the customers. For all Indian states excluding _______________, if the Fare is collected in cash by the Captain from the customer, the convenience fee component of the Fare that is due to Torkk by the customers, for providing the Platform and associated services to the customers, will be adjusted against amounts due to be settled with the Captains by Torkk. It is again clarified that for the state of _______________ for Transportation Services and PAN India for Torkk Parcel Services, Captain will collect the ride fare/ service fees (as applicable) directly from the customer and Torkk charges no commission or service fee to the Captains.'),
+  LegalBlock.text(
+    'Excluding for the state of _______ for Transportation Services and PAN India for Torkk Parcel Services, the Company has the discretion to charge any such fees from the Captain as updated on the Platform from time to time and will be subject to applicable taxes.',
+  ),
+  LegalBlock.text(
+    'The Company charges a convenience fee from the customers for facilitating the Services through the Platform.',
+  ),
+  LegalBlock.text(
+    'For all Indian states, excluding _______________ for Transportation Services and PAN India for Torkk Parcel Services, the Captain authorizes the Company to collect the service/travel fee (“Fare”) from the customers on behalf of the Captains. For the state of _______________ for Transportation Services and PAN India for Torkk Parcel Services, Captain will collect the ride fare directly from the customers. For all Indian states excluding _______________, if the Fare is collected in cash by the Captain from the customer, the convenience fee component of the Fare that is due to Torkk by the customers, for providing the Platform and associated services to the customers, will be adjusted against amounts due to be settled with the Captains by Torkk. It is again clarified that for the state of _______________ for Transportation Services and PAN India for Torkk Parcel Services, Captain will collect the ride fare/ service fees (as applicable) directly from the customer and Torkk charges no commission or service fee to the Captains.',
+  ),
   LegalBlock.heading('V. REPRESENTATIONS, WARRANTIES AND COVENANTS'),
   LegalBlock.text('The Captains and the Company represent the following:'),
-  LegalBlock.text('They have all requisite power and authority to deliver and perform the obligations imposed herein; The execution and performance of the obligations do not and will not violate any provision of any existing agreement, law, rule, regulation, any order, or judicial pronouncement which is applicable to each party; and'),
-  LegalBlock.text('They have not been convicted by any court in India or any other country of any crimes including but not limited to involving moral turpitude.'),
-  LegalBlock.text('The Captains hereby represent, warrant, and covenant the following:'),
-  LegalBlock.text('They have the requisite authority or assignment to drive the Vehicle and there are no restrictions with respect to the use of the Vehicle that will hinder the Captain from the performance of the Services or using the Platform;'),
-  LegalBlock.text('They have all rights, licenses, and permits as may be required under applicable laws to perform the Service in accordance with these T&Cs;'),
-  LegalBlock.text('They are in compliance with the Motor Vehicles Act, 1988 (“MV Act”), Food Safety and Standards Act 2006 and any other applicable laws (including rules, regulations and orders notified thereunder) as required to be complied with by any person driving Bikes and providing the Services;'),
-  LegalBlock.text('At the time of onboarding with the Platform, they have not been convicted within the past 3 years, for the offence of driving under the influence of alcohol or any cognizable offence under the Code of Criminal Procedure, ‘1973 or the Indian Penal Code, 1860 (as may be applicable) including fraud, sexual offences, use of a motor vehicle to commit a cognizable offence, a crime involving property damage or theft, acts of violence, or acts of terror;'),
-  LegalBlock.text('They hold and will maintain updated/renewed licenses, insurance and permits necessary for the use of Vehicle;'),
-  LegalBlock.text('They will not drive rashly, will follow traffic regulations and all applicable laws, not consume liquor/cigarette/bidi, or any other kind of intoxicant and will have and hold a valid driving license and registration/insurance papers for the Vehicle at all times, during the performance of the Services. The Captain will not take any personal calls except in the event of an emergency, without prejudicing the safety of the Vehicle and the customer. The Captain will take all calls from the customer and the Company only after stopping the Vehicle at an appropriate location to take the call, without being a hindrance to the traffic around him or without violating any traffic rules;'),
-  LegalBlock.text('They will provide the Services in a courteous and professional manner as reasonably expected by a service provider providing the Services;'),
-  LegalBlock.text('They will at all times during which he is undertaking the Services, maintain dress, appearance, and hygiene codes reasonably expected from a service provider;'),
-  LegalBlock.text('They will perform its obligations with promptness and use reasonable care and skill and in accordance with standards of diligence, care, skill, quality, and integrity to be reasonably expected of an experienced and reputable provider of Services;'),
-  LegalBlock.text('They will provide Services in accordance with all the specifications that may be prescribed and formulated by the Company from time to time;'),
-  LegalBlock.text('They will follow all the standard operating procedures (SOPs) and policies that may be prescribed and formulated by the Company from time to time;'),
-  LegalBlock.text('They will not carry any weapons, firearms, ammunition, explosive devices, and dangerous substances during performance of the Services;'),
-  LegalBlock.text('They will not seek any extra monetary compensation from the customer for the completion of Services by way of tips or otherwise;'),
-  LegalBlock.text('They will not commit any fraud while providing the Services or otherwise commit any act or omission, to gain any undue advantage which may include, but not be limited to: intentionally falsify information; accept Service Requests without the intention to complete or provide the Services, provoke customers to cancel for fraudulent purposes; claim fraudulent fees or charges; intentionally request, accept, or complete fraudulent or falsified Service Requests; deliberately increase the time or distance of a trip or delivery for fraudulent purposes or otherwise; claim to complete a delivery without ever picking up the delivery item; picking up a delivery item but retaining all or a portion of the item, or not delivering the entire order; actions intended to disrupt or manipulate the normal functioning of the Company’s Platform, including manipulating the settings on a phone to prevent the proper functioning of the Platform and the GPS system; or falsify documents, records, or other data for fraudulent purposes; creating improper duplicate accounts; or falsify documents, records, or other data for fraudulent purposes, or any other fraudulent, negligent or unlawful activity in contravention of the intent of these T&Cs, permitted scope of Services envisaged under these T&Cs, or applicable laws;'),
-  LegalBlock.text('They will not allow more than 1 (one) pillion rider on Bikes;'),
-  LegalBlock.text('They will ensure that the Vehicle has a valid fitness certificate issued, insurance certificate, pollution under control certificate, and other permits / certificates / licenses and will operate under valid and subsisting permit(s) granted under relevant provisions of MV Act or any other applicable law;'),
-  LegalBlock.text('They will adhere to applicable laws including in relation to road safety, abide by traffic signals, speed limits and such other norms or rules applicable for plying the Vehicle on road;'),
-  LegalBlock.text('They will perform each pick-up and delivery in the most efficient manner possible and will make best efforts to adhere to the timelines prescribed;'),
-  LegalBlock.text('They will also ensure that the safety of packages is not compromised at the time of delivery; They will report to Torkk immediately if any illegal or prohibited items are being provided by customer or asked to be delivered by the customer;'),
-  LegalBlock.text('Their total earnings for any given financial year do not exceed INR 20,00,000 (Rupees Twenty Lakhs) and that they are an unregistered GST service provider; and'),
-  LegalBlock.text('They will promptly inform the Company in case their total earnings exceed or is expected to exceed INR 20,00,000 (Rupees Twenty Lakhs) in a financial year .'),
+  LegalBlock.text(
+    'They have all requisite power and authority to deliver and perform the obligations imposed herein; The execution and performance of the obligations do not and will not violate any provision of any existing agreement, law, rule, regulation, any order, or judicial pronouncement which is applicable to each party; and',
+  ),
+  LegalBlock.text(
+    'They have not been convicted by any court in India or any other country of any crimes including but not limited to involving moral turpitude.',
+  ),
+  LegalBlock.text(
+    'The Captains hereby represent, warrant, and covenant the following:',
+  ),
+  LegalBlock.text(
+    'They have the requisite authority or assignment to drive the Vehicle and there are no restrictions with respect to the use of the Vehicle that will hinder the Captain from the performance of the Services or using the Platform;',
+  ),
+  LegalBlock.text(
+    'They have all rights, licenses, and permits as may be required under applicable laws to perform the Service in accordance with these T&Cs;',
+  ),
+  LegalBlock.text(
+    'They are in compliance with the Motor Vehicles Act, 1988 (“MV Act”), Food Safety and Standards Act 2006 and any other applicable laws (including rules, regulations and orders notified thereunder) as required to be complied with by any person driving Bikes and providing the Services;',
+  ),
+  LegalBlock.text(
+    'At the time of onboarding with the Platform, they have not been convicted within the past 3 years, for the offence of driving under the influence of alcohol or any cognizable offence under the Code of Criminal Procedure, ‘1973 or the Indian Penal Code, 1860 (as may be applicable) including fraud, sexual offences, use of a motor vehicle to commit a cognizable offence, a crime involving property damage or theft, acts of violence, or acts of terror;',
+  ),
+  LegalBlock.text(
+    'They hold and will maintain updated/renewed licenses, insurance and permits necessary for the use of Vehicle;',
+  ),
+  LegalBlock.text(
+    'They will not drive rashly, will follow traffic regulations and all applicable laws, not consume liquor/cigarette/bidi, or any other kind of intoxicant and will have and hold a valid driving license and registration/insurance papers for the Vehicle at all times, during the performance of the Services. The Captain will not take any personal calls except in the event of an emergency, without prejudicing the safety of the Vehicle and the customer. The Captain will take all calls from the customer and the Company only after stopping the Vehicle at an appropriate location to take the call, without being a hindrance to the traffic around him or without violating any traffic rules;',
+  ),
+  LegalBlock.text(
+    'They will provide the Services in a courteous and professional manner as reasonably expected by a service provider providing the Services;',
+  ),
+  LegalBlock.text(
+    'They will at all times during which he is undertaking the Services, maintain dress, appearance, and hygiene codes reasonably expected from a service provider;',
+  ),
+  LegalBlock.text(
+    'They will perform its obligations with promptness and use reasonable care and skill and in accordance with standards of diligence, care, skill, quality, and integrity to be reasonably expected of an experienced and reputable provider of Services;',
+  ),
+  LegalBlock.text(
+    'They will provide Services in accordance with all the specifications that may be prescribed and formulated by the Company from time to time;',
+  ),
+  LegalBlock.text(
+    'They will follow all the standard operating procedures (SOPs) and policies that may be prescribed and formulated by the Company from time to time;',
+  ),
+  LegalBlock.text(
+    'They will not carry any weapons, firearms, ammunition, explosive devices, and dangerous substances during performance of the Services;',
+  ),
+  LegalBlock.text(
+    'They will not seek any extra monetary compensation from the customer for the completion of Services by way of tips or otherwise;',
+  ),
+  LegalBlock.text(
+    'They will not commit any fraud while providing the Services or otherwise commit any act or omission, to gain any undue advantage which may include, but not be limited to: intentionally falsify information; accept Service Requests without the intention to complete or provide the Services, provoke customers to cancel for fraudulent purposes; claim fraudulent fees or charges; intentionally request, accept, or complete fraudulent or falsified Service Requests; deliberately increase the time or distance of a trip or delivery for fraudulent purposes or otherwise; claim to complete a delivery without ever picking up the delivery item; picking up a delivery item but retaining all or a portion of the item, or not delivering the entire order; actions intended to disrupt or manipulate the normal functioning of the Company’s Platform, including manipulating the settings on a phone to prevent the proper functioning of the Platform and the GPS system; or falsify documents, records, or other data for fraudulent purposes; creating improper duplicate accounts; or falsify documents, records, or other data for fraudulent purposes, or any other fraudulent, negligent or unlawful activity in contravention of the intent of these T&Cs, permitted scope of Services envisaged under these T&Cs, or applicable laws;',
+  ),
+  LegalBlock.text(
+    'They will not allow more than 1 (one) pillion rider on Bikes;',
+  ),
+  LegalBlock.text(
+    'They will ensure that the Vehicle has a valid fitness certificate issued, insurance certificate, pollution under control certificate, and other permits / certificates / licenses and will operate under valid and subsisting permit(s) granted under relevant provisions of MV Act or any other applicable law;',
+  ),
+  LegalBlock.text(
+    'They will adhere to applicable laws including in relation to road safety, abide by traffic signals, speed limits and such other norms or rules applicable for plying the Vehicle on road;',
+  ),
+  LegalBlock.text(
+    'They will perform each pick-up and delivery in the most efficient manner possible and will make best efforts to adhere to the timelines prescribed;',
+  ),
+  LegalBlock.text(
+    'They will also ensure that the safety of packages is not compromised at the time of delivery; They will report to Torkk immediately if any illegal or prohibited items are being provided by customer or asked to be delivered by the customer;',
+  ),
+  LegalBlock.text(
+    'Their total earnings for any given financial year do not exceed INR 20,00,000 (Rupees Twenty Lakhs) and that they are an unregistered GST service provider; and',
+  ),
+  LegalBlock.text(
+    'They will promptly inform the Company in case their total earnings exceed or is expected to exceed INR 20,00,000 (Rupees Twenty Lakhs) in a financial year .',
+  ),
   LegalBlock.heading('VI. RELATIONSHIP BETWEEN THE PARTIES'),
-  LegalBlock.text('Independent Contractor: The Captain will operate as, and have the status of, an independent contractor . The relationship between the Company and the Captain is on a principal-to- principal basis. The Company and the Captain are independent legal entities, and nothing in these T&Cs will be construed to create a partnership, joint venture, an association of persons, agency (disclosed or undisclosed), franchise, sales representative, or employment relationship between the Company and the Captain. It is clarified that the Captain will not have any right to conclude any contract for and / or on the behalf of the Company or bind the Company in any manner.'),
+  LegalBlock.text(
+    'Independent Contractor: The Captain will operate as, and have the status of, an independent contractor . The relationship between the Company and the Captain is on a principal-to- principal basis. The Company and the Captain are independent legal entities, and nothing in these T&Cs will be construed to create a partnership, joint venture, an association of persons, agency (disclosed or undisclosed), franchise, sales representative, or employment relationship between the Company and the Captain. It is clarified that the Captain will not have any right to conclude any contract for and / or on the behalf of the Company or bind the Company in any manner.',
+  ),
   LegalBlock.heading('VII. CAPTAIN INFORMATION'),
-  LegalBlock.text('Torkk may collect Captain Information at the time of onboarding of the Captains and from time to time, to establish the identity of the Captains. Torkk reserves the right to store, process, access and use the Captain Information for business purposes and needs, background check, verification, marketing, service, development, analytics, research, and any other purpose as Torkk may deem fit and in accordance with Torkk’s Privacy Policy and applicable law. The Captain hereby expressly consents to such collection and use of Captain Information.'),
-  LegalBlock.text('Subject to applicable laws, Torkk may provide to a third party, governmental agency, judicial body, any Captain Information, or information relating to the Captain, if there is a complaint, dispute, or conflict, including any accident involving a Captain on one hand and end-consumer, or a third party on the other hand.'),
-  LegalBlock.text('Please read our Privacy Policy to understand how we deal / handle Information collected from you. “Captain Information” shall mean and include any personal data or Information collected from the Captain including know your customer documents with Captain’s bank, copies of valid government-issued vehicle registration certificate, mobile number, bank account details, vehicle insurance copy, driving license, identity proof, self-clicked images (selfies), residence proof, location data, proof of ownership of Captains’ Vehicle and any other Information that Torkk may deem fit.'),
+  LegalBlock.text(
+    'Torkk may collect Captain Information at the time of onboarding of the Captains and from time to time, to establish the identity of the Captains. Torkk reserves the right to store, process, access and use the Captain Information for business purposes and needs, background check, verification, marketing, service, development, analytics, research, and any other purpose as Torkk may deem fit and in accordance with Torkk’s Privacy Policy and applicable law. The Captain hereby expressly consents to such collection and use of Captain Information.',
+  ),
+  LegalBlock.text(
+    'Subject to applicable laws, Torkk may provide to a third party, governmental agency, judicial body, any Captain Information, or information relating to the Captain, if there is a complaint, dispute, or conflict, including any accident involving a Captain on one hand and end-consumer, or a third party on the other hand.',
+  ),
+  LegalBlock.text(
+    'Please read our Privacy Policy to understand how we deal / handle Information collected from you. “Captain Information” shall mean and include any personal data or Information collected from the Captain including know your customer documents with Captain’s bank, copies of valid government-issued vehicle registration certificate, mobile number, bank account details, vehicle insurance copy, driving license, identity proof, self-clicked images (selfies), residence proof, location data, proof of ownership of Captains’ Vehicle and any other Information that Torkk may deem fit.',
+  ),
   LegalBlock.heading('VIII. CONFIDENTIALITY'),
-  LegalBlock.text('The Captain will keep confidential all data including customer details, market information, all work products and documents related thereto, and the contents of the Platform and will not sell or otherwise make that information available to any third parties. Except as otherwise agreed, the data of customers will be the exclusive property of the Company, and the Captain will not use the same for any purpose or distribute such data in any form or means except for the purpose of providing the Services and other than as permitted by the Company and will keep it confidential at all times.'),
-  LegalBlock.text('All non-public information relating to us or disclosed by us or our affiliates to you that is designated as confidential or that, given the nature of the information or the circumstances surrounding its disclosure, reasonably should be considered as confidential. Confidential information includes but is not limited to: (a) contents / information relating to Services and Platform; (b) information relating to our or our affiliates or business partners’ technology, software, customers, business plans, product plans and designs, promotional and marketing activities, finances and other business affairs; (c) third-party information including that of customers which we are obligated to keep confidential; (d) the nature, content and existence of any discussions or negotiations between you and us or our affiliates; and (e) any other information which should be reasonably kept confidential.'),
+  LegalBlock.text(
+    'The Captain will keep confidential all data including customer details, market information, all work products and documents related thereto, and the contents of the Platform and will not sell or otherwise make that information available to any third parties. Except as otherwise agreed, the data of customers will be the exclusive property of the Company, and the Captain will not use the same for any purpose or distribute such data in any form or means except for the purpose of providing the Services and other than as permitted by the Company and will keep it confidential at all times.',
+  ),
+  LegalBlock.text(
+    'All non-public information relating to us or disclosed by us or our affiliates to you that is designated as confidential or that, given the nature of the information or the circumstances surrounding its disclosure, reasonably should be considered as confidential. Confidential information includes but is not limited to: (a) contents / information relating to Services and Platform; (b) information relating to our or our affiliates or business partners’ technology, software, customers, business plans, product plans and designs, promotional and marketing activities, finances and other business affairs; (c) third-party information including that of customers which we are obligated to keep confidential; (d) the nature, content and existence of any discussions or negotiations between you and us or our affiliates; and (e) any other information which should be reasonably kept confidential.',
+  ),
   LegalBlock.heading('IX. PROPRIETARY RIGHTS'),
-  LegalBlock.text('The Company is the sole owner and lawful licensee of all the rights to Platform or any other digital media and its contents. The content means its design, layout, text, images, graphics, sounds, video, the website/ Platform, etc. or any other digital media content embodying trade secrets and Intellectual Property Rights protected under worldwide copyright and other laws. All titles, ownership and Intellectual Property Rights in the Platform and its content (except third party links) will remain with the Company, its affiliates, agents, authorized representatives, or licensors as the case may be.'),
-  LegalBlock.text('The term “Intellectual Property Rights” means all intellectual property rights or similar proprietary rights, including: (i) patent rights and utility models, (ii) copyrights and database rights including moral rights, (iii) trademarks, trade names, domain names and trade dress and the associated goodwill, (iv) trade secrets, and (v) industrial design rights; and for each of the foregoing includes any registrations of, applications to register, and renewals and extensions of, any of the foregoing in any jurisdiction in the world. All rights not otherwise claimed under this T&Cs or by the Company are hereby reserved. The information contained in this Platform is intended, solely to provide general information for the personal use of the reader, who accepts full responsibility for its use.'),
-  LegalBlock.text('All related icons and logos are registered trademarks or service marks or word marks of the Company in various jurisdictions and are protected under applicable copyrights, trademarks, and other proprietary rights laws. The unauthorized copying, modification, use or publication of these marks is strictly prohibited. Subject to your compliance with these T&Cs, the Company grants you a limited, non- exclusive, non- transferable license to download and install a copy of the Torkk mobile application on a single mobile device that you own or control and to run such copy of the Torkk mobile application solely for your own personal use and for providing the Services.'),
-  LegalBlock.text('Captain data: As between Torkk and Captain, all right, title and interest in: (i) the Information, (ii) other information input into the Platform by Captain or its authorized users (“Other Information”), and (iii) all Intellectual Property Rights in each of the foregoing, belong to and are retained solely by the Captain. Information and Other Information are collectively referred to as “Your Information”. Captain grants to Torkk a unlimited, non-exclusive, royalty-free, worldwide license to use Your Information and perform all acts with respect to the Your Information, as may be necessary for Torkk to operate, maintain and improve the Platform or provide the Services to customers, and a non-exclusive, perpetual, irrevocable, worldwide, royalty-free, fully paid-up license to use, reproduce, modify and distribute the Other Information as a part of the Aggregated Statistics (defined below). Captain is solely responsible for the accuracy, quality, veracity, integrity, legality, reliability, and appropriateness of Your Information. Torkk agrees to access and use Your Information solely for Captain’s / customer’s benefit and as set forth in these T&Cs or the Privacy Policy. Aggregated statistics: Notwithstanding anything else in these T&Cs, Torkk may monitor Captain’s use of the Platform and use data and information related to such use and Your Information in an aggregate and anonymous manner, including to compile statistical and performance information related to the provision and operation of the Platform and the Services (“Aggregated Statistics”). As between Torkk and Captain, all right, title and interest in the Aggregated Statistics and all Intellectual Property Rights therein, belong to and are retained solely by Torkk. Captain acknowledges that Torkk will be compiling Aggregated Statistics based on Your Information and Information input by other customers / other captains into the Platform. Captain agrees that Torkk may: (i) make such Aggregated Statistics publicly available, and (ii) use such information to the extent and in the manner required by applicable law and for purposes of data gathering, analysis, service enhancement and marketing, provided that such data and information does not identify Captain.'),
+  LegalBlock.text(
+    'The Company is the sole owner and lawful licensee of all the rights to Platform or any other digital media and its contents. The content means its design, layout, text, images, graphics, sounds, video, the website/ Platform, etc. or any other digital media content embodying trade secrets and Intellectual Property Rights protected under worldwide copyright and other laws. All titles, ownership and Intellectual Property Rights in the Platform and its content (except third party links) will remain with the Company, its affiliates, agents, authorized representatives, or licensors as the case may be.',
+  ),
+  LegalBlock.text(
+    'The term “Intellectual Property Rights” means all intellectual property rights or similar proprietary rights, including: (i) patent rights and utility models, (ii) copyrights and database rights including moral rights, (iii) trademarks, trade names, domain names and trade dress and the associated goodwill, (iv) trade secrets, and (v) industrial design rights; and for each of the foregoing includes any registrations of, applications to register, and renewals and extensions of, any of the foregoing in any jurisdiction in the world. All rights not otherwise claimed under this T&Cs or by the Company are hereby reserved. The information contained in this Platform is intended, solely to provide general information for the personal use of the reader, who accepts full responsibility for its use.',
+  ),
+  LegalBlock.text(
+    'All related icons and logos are registered trademarks or service marks or word marks of the Company in various jurisdictions and are protected under applicable copyrights, trademarks, and other proprietary rights laws. The unauthorized copying, modification, use or publication of these marks is strictly prohibited. Subject to your compliance with these T&Cs, the Company grants you a limited, non- exclusive, non- transferable license to download and install a copy of the Torkk mobile application on a single mobile device that you own or control and to run such copy of the Torkk mobile application solely for your own personal use and for providing the Services.',
+  ),
+  LegalBlock.text(
+    'Captain data: As between Torkk and Captain, all right, title and interest in: (i) the Information, (ii) other information input into the Platform by Captain or its authorized users (“Other Information”), and (iii) all Intellectual Property Rights in each of the foregoing, belong to and are retained solely by the Captain. Information and Other Information are collectively referred to as “Your Information”. Captain grants to Torkk a unlimited, non-exclusive, royalty-free, worldwide license to use Your Information and perform all acts with respect to the Your Information, as may be necessary for Torkk to operate, maintain and improve the Platform or provide the Services to customers, and a non-exclusive, perpetual, irrevocable, worldwide, royalty-free, fully paid-up license to use, reproduce, modify and distribute the Other Information as a part of the Aggregated Statistics (defined below). Captain is solely responsible for the accuracy, quality, veracity, integrity, legality, reliability, and appropriateness of Your Information. Torkk agrees to access and use Your Information solely for Captain’s / customer’s benefit and as set forth in these T&Cs or the Privacy Policy. Aggregated statistics: Notwithstanding anything else in these T&Cs, Torkk may monitor Captain’s use of the Platform and use data and information related to such use and Your Information in an aggregate and anonymous manner, including to compile statistical and performance information related to the provision and operation of the Platform and the Services (“Aggregated Statistics”). As between Torkk and Captain, all right, title and interest in the Aggregated Statistics and all Intellectual Property Rights therein, belong to and are retained solely by Torkk. Captain acknowledges that Torkk will be compiling Aggregated Statistics based on Your Information and Information input by other customers / other captains into the Platform. Captain agrees that Torkk may: (i) make such Aggregated Statistics publicly available, and (ii) use such information to the extent and in the manner required by applicable law and for purposes of data gathering, analysis, service enhancement and marketing, provided that such data and information does not identify Captain.',
+  ),
   LegalBlock.text('The Captain will not do the following:'),
-  LegalBlock.text('License, sublicense, sell, resell, transfer, assign, distribute or otherwise commercially exploit or make available to any third party the Platform in any way;'),
+  LegalBlock.text(
+    'License, sublicense, sell, resell, transfer, assign, distribute or otherwise commercially exploit or make available to any third party the Platform in any way;',
+  ),
   LegalBlock.text('Modify or make derivative works based upon the Platform;'),
-  LegalBlock.text('Create internet “links” or “frame” or “mirror” any application on any other server or wireless or internet- based device;'),
+  LegalBlock.text(
+    'Create internet “links” or “frame” or “mirror” any application on any other server or wireless or internet- based device;',
+  ),
   LegalBlock.text('Reverse engineer or access the Platform in order to:'),
   LegalBlock.text('Design or build a competitive product or service,'),
-  LegalBlock.text('Design or build a product using similar ideas, features, functions, or graphics of the Platform, or Copy any ideas, features, functions, or graphics of the Platform, or'),
-  LegalBlock.text('Launch an automated program or script, including, but not limited to, web spiders, web crawlers, web robots, web ants, web indexers, bots, viruses or worms, or any program which may make multiple server requests per second, or unduly burdens or hinders the operation and/or performance of the Platform.'),
+  LegalBlock.text(
+    'Design or build a product using similar ideas, features, functions, or graphics of the Platform, or Copy any ideas, features, functions, or graphics of the Platform, or',
+  ),
+  LegalBlock.text(
+    'Launch an automated program or script, including, but not limited to, web spiders, web crawlers, web robots, web ants, web indexers, bots, viruses or worms, or any program which may make multiple server requests per second, or unduly burdens or hinders the operation and/or performance of the Platform.',
+  ),
   LegalBlock.heading('X. INDEMNITY'),
-  LegalBlock.text('The Captain agrees to indemnify, defend and hold harmless, the Company, its affiliates, licensees and its officers, directors, agents and employees, from and against any claim, liability, obligation, loss, damage, deficiency, assessment, judgment, cost or expense (including, without limitation to costs and expenses incurred in preparing and defending against or prosecuting any litigation, claim, action, suit proceeding or demand) of any kind or character, arising out of or in any manner incidental, relating, or attributable to any inaccuracy, breach, or failure by the Captain to perform its obligations under these T&Cs or the applicable laws in relation to performance of the Services.'),
-  LegalBlock.text('Torkk reserves the right, at your expense, to assume the exclusive defence and control of any matter for which you are required to indemnify Torkk, including rights to settle, and you agree to cooperate with Torkk for such defence and settlement. Torkk will use reasonable efforts to notify you of any claim, action, or proceeding brought by a third party that is subject to the foregoing indemnification upon becoming aware of it. Captain may, at its own expense, engage separate counsel to advise Captain regarding a claim and to participate in the defence of the claim, subject to Torkk’s right to control the defence and settlement.'),
+  LegalBlock.text(
+    'The Captain agrees to indemnify, defend and hold harmless, the Company, its affiliates, licensees and its officers, directors, agents and employees, from and against any claim, liability, obligation, loss, damage, deficiency, assessment, judgment, cost or expense (including, without limitation to costs and expenses incurred in preparing and defending against or prosecuting any litigation, claim, action, suit proceeding or demand) of any kind or character, arising out of or in any manner incidental, relating, or attributable to any inaccuracy, breach, or failure by the Captain to perform its obligations under these T&Cs or the applicable laws in relation to performance of the Services.',
+  ),
+  LegalBlock.text(
+    'Torkk reserves the right, at your expense, to assume the exclusive defence and control of any matter for which you are required to indemnify Torkk, including rights to settle, and you agree to cooperate with Torkk for such defence and settlement. Torkk will use reasonable efforts to notify you of any claim, action, or proceeding brought by a third party that is subject to the foregoing indemnification upon becoming aware of it. Captain may, at its own expense, engage separate counsel to advise Captain regarding a claim and to participate in the defence of the claim, subject to Torkk’s right to control the defence and settlement.',
+  ),
   LegalBlock.heading('XI. DISCLAIMERS'),
-  LegalBlock.text('THE COMPANY MAKES NO REPRESENTATION, WARRANTY , OR GUARANTEE AS TO THE RELIABILITY ,'),
-  LegalBlock.text('TIMELINESS, QUALITY, SUITABILITY , AVAILABILITY, ACCURACY OR COMPLETENESS OF THE SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM. THE COMPANY DOES NOT REPRESENT OR WARRANT THAT'),
-  LegalBlock.text('(A) THE USE OF THE SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE SECURE, TIMELY , UNINTERRUPTED OR ERROR-FREE OR OPERATE IN COMBINATION WITH ANY OTHER HARDWARE,'),
-  LegalBlock.text('SOFTWARE, SYSTEM OR DATA, (B) THE PLATFORM / SERVICE WILL MEET YOUR REQUIREMENTS OR'),
-  LegalBlock.text('EXPECTATIONS, (C) ANY STORED DATA WILL BE ACCURATE OR RELIABLE, (D) THE QUALITY OF ANY SERVICES, INFORMATION OBTAINED BY YOU THROUGH THE PLATFORM WILL MEET YOUR REQUIREMENTS OR'),
-  LegalBlock.text('EXPECTATIONS, (E) ERRORS OR DEFECTS IN THE SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE CORRECTED, OR (F) THE PLATFORM OR THE SERVER(S) ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS. THE PLATFORM IS PROVIDED TO YOU STRICTLY ON AN “AS IS” BASIS.'),
-  LegalBlock.text('All conditions, representations, and warranties, whether express, implied, statutory, or otherwise, including, without limitation, any implied warranty of merchantability, fitness for a particular purpose, or non-infringement of third-party rights, are hereby excluded and disclaimed to the highest and maximum extent. The Company makes no representation, warranty, or guarantee as to the reliability, safety, timeliness, quality, suitability, or availability of the Platform. You acknowledge and agree that the entire risk arising out of your use of the Platform remains solely and absolutely with you and you will have no recourse whatsoever to the Company.'),
-  LegalBlock.text('The Platform may be subject to limitations, delays, and other problems inherent in the use of the internet and electronic communications including the device used by you being faulty, not connected, out of range, switched off or not functioning. The Company is not responsible for any delays, service failures or interruptions, errors, damages, or losses resulting from such problems. Access to the Platform or the Services may be unavailable, delayed, limited, or slowed, from time to time, due to the inherent nature of the internet and among other things also due to:'),
-  LegalBlock.text('Servers, networks, hardware failure (including your own computer or mobile), telecommunication lines and connections, and other electronic and mechanical equipment;'),
-  LegalBlock.text('Software failure, including among other things, bugs, errors, viruses, configuration problems, incompatibility of systems, utilities or applications, the operation of firewalls or screening programs, unreadable codes, or irregularities within particular documents or other content;'),
+  LegalBlock.text(
+    'THE COMPANY MAKES NO REPRESENTATION, WARRANTY , OR GUARANTEE AS TO THE RELIABILITY ,',
+  ),
+  LegalBlock.text(
+    'TIMELINESS, QUALITY, SUITABILITY , AVAILABILITY, ACCURACY OR COMPLETENESS OF THE SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM. THE COMPANY DOES NOT REPRESENT OR WARRANT THAT',
+  ),
+  LegalBlock.text(
+    '(A) THE USE OF THE SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE SECURE, TIMELY , UNINTERRUPTED OR ERROR-FREE OR OPERATE IN COMBINATION WITH ANY OTHER HARDWARE,',
+  ),
+  LegalBlock.text(
+    'SOFTWARE, SYSTEM OR DATA, (B) THE PLATFORM / SERVICE WILL MEET YOUR REQUIREMENTS OR',
+  ),
+  LegalBlock.text(
+    'EXPECTATIONS, (C) ANY STORED DATA WILL BE ACCURATE OR RELIABLE, (D) THE QUALITY OF ANY SERVICES, INFORMATION OBTAINED BY YOU THROUGH THE PLATFORM WILL MEET YOUR REQUIREMENTS OR',
+  ),
+  LegalBlock.text(
+    'EXPECTATIONS, (E) ERRORS OR DEFECTS IN THE SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE CORRECTED, OR (F) THE PLATFORM OR THE SERVER(S) ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS. THE PLATFORM IS PROVIDED TO YOU STRICTLY ON AN “AS IS” BASIS.',
+  ),
+  LegalBlock.text(
+    'All conditions, representations, and warranties, whether express, implied, statutory, or otherwise, including, without limitation, any implied warranty of merchantability, fitness for a particular purpose, or non-infringement of third-party rights, are hereby excluded and disclaimed to the highest and maximum extent. The Company makes no representation, warranty, or guarantee as to the reliability, safety, timeliness, quality, suitability, or availability of the Platform. You acknowledge and agree that the entire risk arising out of your use of the Platform remains solely and absolutely with you and you will have no recourse whatsoever to the Company.',
+  ),
+  LegalBlock.text(
+    'The Platform may be subject to limitations, delays, and other problems inherent in the use of the internet and electronic communications including the device used by you being faulty, not connected, out of range, switched off or not functioning. The Company is not responsible for any delays, service failures or interruptions, errors, damages, or losses resulting from such problems. Access to the Platform or the Services may be unavailable, delayed, limited, or slowed, from time to time, due to the inherent nature of the internet and among other things also due to:',
+  ),
+  LegalBlock.text(
+    'Servers, networks, hardware failure (including your own computer or mobile), telecommunication lines and connections, and other electronic and mechanical equipment;',
+  ),
+  LegalBlock.text(
+    'Software failure, including among other things, bugs, errors, viruses, configuration problems, incompatibility of systems, utilities or applications, the operation of firewalls or screening programs, unreadable codes, or irregularities within particular documents or other content;',
+  ),
   LegalBlock.text('Overload of system capacities;'),
-  LegalBlock.text('Damage caused by severe weather, earthquakes, wars, insurrection, riots, civil commotion, act of God, accident, fire, water damage, explosion, mechanical breakdown, or natural disasters;'),
-  LegalBlock.text('Interruption (whether partial or total) of power supplies or other utility service, strike, or other stoppage (whether partial or total) of labour;'),
-  LegalBlock.text('Governmental or regulatory restrictions, exchange rulings, court or tribunal orders or other human intervention; or'),
-  LegalBlock.text('Any other cause (whether similar or dissimilar to the above) beyond the control of Torkk.'),
+  LegalBlock.text(
+    'Damage caused by severe weather, earthquakes, wars, insurrection, riots, civil commotion, act of God, accident, fire, water damage, explosion, mechanical breakdown, or natural disasters;',
+  ),
+  LegalBlock.text(
+    'Interruption (whether partial or total) of power supplies or other utility service, strike, or other stoppage (whether partial or total) of labour;',
+  ),
+  LegalBlock.text(
+    'Governmental or regulatory restrictions, exchange rulings, court or tribunal orders or other human intervention; or',
+  ),
+  LegalBlock.text(
+    'Any other cause (whether similar or dissimilar to the above) beyond the control of Torkk.',
+  ),
   LegalBlock.heading('XII. LIMITATION OF LIABILITY'),
-  LegalBlock.text('The Company is not liable to the Captain, for any condition, suitability, quality, merchantability, and fitness for any purposes in respect of the Platform or the Services provided through the Platform and is not liable for any civil, criminal, tortious, or any other liability, that may accrue as a consequence of the use and access of the Platform.'),
-  LegalBlock.text('To the extent permissible under applicable laws, the Company is not liable for any civil, criminal, tortious, or any other liability, that may accrue as a consequence of the breach by the Captain: (a) of the applicable laws in respect of the use of the Platform or providing the Services; (b) of the terms of the applicable licenses and permits that are issued by the transport authorities; (c) of the terms of these T&Cs; or (d) of the duty of care the Captain owes to the users of the Platform.'),
-  LegalBlock.text('The Company is not responsible for the behaviour, actions, or inactions of the Captain or, quality of the Vehicle. Any contract for the provision of Vehicle is exclusively between the customer and the Captain and the Company is not a party to the same.'),
-  LegalBlock.text('The Company does not represent or endorse the accuracy or reliability of any information or advertisement contained on, distributed through, or linked, downloaded or accessed from any of the services contained on the Platform, or the quality of any products, information or other materials displayed, or obtained by you as a result of any product, information or other materials displayed, or obtained by you as a result of an advertisement or any other information or offer in or in connection with the Services.'),
-  LegalBlock.text('IN NO EVENT WILL TORKK BE LIABLE FOR ANY INDIRECT , PUNITIVE, INCIDENTAL, SPECIAL OR'),
-  LegalBlock.text('CONSEQUENTIAL DAMAGES OR FOR ANY DAMAGES WHATSOEVER, WHETHER BASED ON CONTRACT,'),
-  LegalBlock.text('TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, EVEN IF IT HAS BEEN ADVISED OF THE POSSIBILITY THEREOF.'),
-  LegalBlock.text('IN ADDITION, AND WITHOUT LIMITING THE FOREGOING, TO THE FULLEST EXTENT PERMITTED BY'),
-  LegalBlock.text('APPLICABLE LAW, IN NO EVENT WILL TORKK’s AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THESE T&Cs OR THE SERVICES RENDERED HEREUNDER, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE, PRODUCT LIABILITY , OR OTHER THEORY), WARRANTY , OR OTHERWISE, EXCEED THE AMOUNT OF INR 1000/-.'),
+  LegalBlock.text(
+    'The Company is not liable to the Captain, for any condition, suitability, quality, merchantability, and fitness for any purposes in respect of the Platform or the Services provided through the Platform and is not liable for any civil, criminal, tortious, or any other liability, that may accrue as a consequence of the use and access of the Platform.',
+  ),
+  LegalBlock.text(
+    'To the extent permissible under applicable laws, the Company is not liable for any civil, criminal, tortious, or any other liability, that may accrue as a consequence of the breach by the Captain: (a) of the applicable laws in respect of the use of the Platform or providing the Services; (b) of the terms of the applicable licenses and permits that are issued by the transport authorities; (c) of the terms of these T&Cs; or (d) of the duty of care the Captain owes to the users of the Platform.',
+  ),
+  LegalBlock.text(
+    'The Company is not responsible for the behaviour, actions, or inactions of the Captain or, quality of the Vehicle. Any contract for the provision of Vehicle is exclusively between the customer and the Captain and the Company is not a party to the same.',
+  ),
+  LegalBlock.text(
+    'The Company does not represent or endorse the accuracy or reliability of any information or advertisement contained on, distributed through, or linked, downloaded or accessed from any of the services contained on the Platform, or the quality of any products, information or other materials displayed, or obtained by you as a result of any product, information or other materials displayed, or obtained by you as a result of an advertisement or any other information or offer in or in connection with the Services.',
+  ),
+  LegalBlock.text(
+    'IN NO EVENT WILL TORKK BE LIABLE FOR ANY INDIRECT , PUNITIVE, INCIDENTAL, SPECIAL OR',
+  ),
+  LegalBlock.text(
+    'CONSEQUENTIAL DAMAGES OR FOR ANY DAMAGES WHATSOEVER, WHETHER BASED ON CONTRACT,',
+  ),
+  LegalBlock.text(
+    'TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, EVEN IF IT HAS BEEN ADVISED OF THE POSSIBILITY THEREOF.',
+  ),
+  LegalBlock.text(
+    'IN ADDITION, AND WITHOUT LIMITING THE FOREGOING, TO THE FULLEST EXTENT PERMITTED BY',
+  ),
+  LegalBlock.text(
+    'APPLICABLE LAW, IN NO EVENT WILL TORKK’s AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THESE T&Cs OR THE SERVICES RENDERED HEREUNDER, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE, PRODUCT LIABILITY , OR OTHER THEORY), WARRANTY , OR OTHERWISE, EXCEED THE AMOUNT OF INR 1000/-.',
+  ),
   LegalBlock.heading('XIII. TERMINATION'),
-  LegalBlock.text('Company is entitled to terminate these T&Cs at all times and with immediate effect, at its sole discretion, (by disabling the Captain’s registration on the Platform and use of the Platform) for any one or more of the following reasons:'),
+  LegalBlock.text(
+    'Company is entitled to terminate these T&Cs at all times and with immediate effect, at its sole discretion, (by disabling the Captain’s registration on the Platform and use of the Platform) for any one or more of the following reasons:',
+  ),
   LegalBlock.text('Any violation or breach of any term of these T&Cs;'),
-  LegalBlock.text('If the Captain, in the opinion of the Company, misuses the Platform;'),
-  LegalBlock.text('If the Captain is non-compliant with the requirements under applicable laws;'),
+  LegalBlock.text(
+    'If the Captain, in the opinion of the Company, misuses the Platform;',
+  ),
+  LegalBlock.text(
+    'If the Captain is non-compliant with the requirements under applicable laws;',
+  ),
   LegalBlock.text('Failure to verify or authenticate Captain Information;'),
-  LegalBlock.text('Any action or omission by the Captain which can cause legal or contractual liability for Torkk including but not limited to fraudulent conduct, customer complaints, continuous unsatisfactory reviews by merchants or the users, misconduct, negligence, and all other actions specifically prohibited under applicable laws; or'),
-  LegalBlock.text('Where, in their opinion, continuance of the Services of Captain is detrimental to the business interest of Torkk due to the acts of the Captains, such as the following:'),
-  LegalBlock.text('Misbehaviour, rude behaviour with the staff of Torkk, customers or any other persons associated with the Torkk or any other persons;'),
-  LegalBlock.text('Any acts involving criminal offence punishable under law, including physical assault, threatening any of the staff of Torkk, person associated with Torkk, customers or any other persons;'),
-  LegalBlock.text('Concealment of fact/material information while entering into a contract with Torkk;'),
-  LegalBlock.text('Poor or irregular at work, meetings, and failure to abide by the rules/terms of the T&Cs or other applicable policies / SOPs notified by Torkk;'),
-  LegalBlock.text('Being Drunk / under the influence of drugs or other illegal substances, while providing the Services and unruly/drunken behaviour. Torkk has a zero-tolerance policy in respect of use of drugs or alcohol by any Captain;'),
-  LegalBlock.text('Commission of fraud/ misappropriation/embezzlement for undue monetary gain, or any act which is against the interest of the Torkk;'),
-  LegalBlock.text('Negligence in performing the duty, causing damage of moveable and immoveable assets of Torkk, its employees, customers, or any other persons;'),
-  LegalBlock.text('Indulging in spreading content through digital media, social networking sites, or any other form, which could be detrimental to Torkk’s brand and its image / reputation;'),
-  LegalBlock.text('Indulging in acts such as creating ruckus/ strike/ or any activity against Torkk, which could be detrimental to the Torkk’s brand and its image/ reputation;'),
-  LegalBlock.text('Indulging in unauthorized disclosure of Confidential Information of Torkk to external agency, person, or organization;'),
-  LegalBlock.text('Misuse of assets provided by Torkk and welcome kits, which could be detrimental to the interest of Torkk’s brand and its image / reputation;'),
-  LegalBlock.text('Absconding for more than 4 hours with any asset, delivery item, money or any other valuable item belonging to Torkk, its employees, customers, or other staff member(s);'),
-  LegalBlock.text('Failure to abide by any of the rules and guidelines given by Torkk as part of Service quality standards and principles;'),
+  LegalBlock.text(
+    'Any action or omission by the Captain which can cause legal or contractual liability for Torkk including but not limited to fraudulent conduct, customer complaints, continuous unsatisfactory reviews by merchants or the users, misconduct, negligence, and all other actions specifically prohibited under applicable laws; or',
+  ),
+  LegalBlock.text(
+    'Where, in their opinion, continuance of the Services of Captain is detrimental to the business interest of Torkk due to the acts of the Captains, such as the following:',
+  ),
+  LegalBlock.text(
+    'Misbehaviour, rude behaviour with the staff of Torkk, customers or any other persons associated with the Torkk or any other persons;',
+  ),
+  LegalBlock.text(
+    'Any acts involving criminal offence punishable under law, including physical assault, threatening any of the staff of Torkk, person associated with Torkk, customers or any other persons;',
+  ),
+  LegalBlock.text(
+    'Concealment of fact/material information while entering into a contract with Torkk;',
+  ),
+  LegalBlock.text(
+    'Poor or irregular at work, meetings, and failure to abide by the rules/terms of the T&Cs or other applicable policies / SOPs notified by Torkk;',
+  ),
+  LegalBlock.text(
+    'Being Drunk / under the influence of drugs or other illegal substances, while providing the Services and unruly/drunken behaviour. Torkk has a zero-tolerance policy in respect of use of drugs or alcohol by any Captain;',
+  ),
+  LegalBlock.text(
+    'Commission of fraud/ misappropriation/embezzlement for undue monetary gain, or any act which is against the interest of the Torkk;',
+  ),
+  LegalBlock.text(
+    'Negligence in performing the duty, causing damage of moveable and immoveable assets of Torkk, its employees, customers, or any other persons;',
+  ),
+  LegalBlock.text(
+    'Indulging in spreading content through digital media, social networking sites, or any other form, which could be detrimental to Torkk’s brand and its image / reputation;',
+  ),
+  LegalBlock.text(
+    'Indulging in acts such as creating ruckus/ strike/ or any activity against Torkk, which could be detrimental to the Torkk’s brand and its image/ reputation;',
+  ),
+  LegalBlock.text(
+    'Indulging in unauthorized disclosure of Confidential Information of Torkk to external agency, person, or organization;',
+  ),
+  LegalBlock.text(
+    'Misuse of assets provided by Torkk and welcome kits, which could be detrimental to the interest of Torkk’s brand and its image / reputation;',
+  ),
+  LegalBlock.text(
+    'Absconding for more than 4 hours with any asset, delivery item, money or any other valuable item belonging to Torkk, its employees, customers, or other staff member(s);',
+  ),
+  LegalBlock.text(
+    'Failure to abide by any of the rules and guidelines given by Torkk as part of Service quality standards and principles;',
+  ),
   LegalBlock.text('Doing any act unbecoming of a Captain; or'),
-  LegalBlock.text('In case the background check, whether wholly or partially, is found negative at any point of time during the term of these T&Cs.'),
-  LegalBlock.text('The Company may terminate these T&Cs immediately on the above grounds and is not obliged to give notice of the termination of these T&Cs in advance.'),
-  LegalBlock.text('Torkk or Captain may terminate these T&Cs by providing 7 days’ written notice to the other party. Torkk, in addition to its right to terminate these T&Cs, in its sole discretion reserves the right to legally prosecute the Captain immediately, if there is reason to believe that the Captain has indulged in any fraudulent activity or contravened the T&Cs of the Platform or violated any applicable laws and Torkk will not be responsible for any consequences to the Captain arising from the same.'),
+  LegalBlock.text(
+    'In case the background check, whether wholly or partially, is found negative at any point of time during the term of these T&Cs.',
+  ),
+  LegalBlock.text(
+    'The Company may terminate these T&Cs immediately on the above grounds and is not obliged to give notice of the termination of these T&Cs in advance.',
+  ),
+  LegalBlock.text(
+    'Torkk or Captain may terminate these T&Cs by providing 7 days’ written notice to the other party. Torkk, in addition to its right to terminate these T&Cs, in its sole discretion reserves the right to legally prosecute the Captain immediately, if there is reason to believe that the Captain has indulged in any fraudulent activity or contravened the T&Cs of the Platform or violated any applicable laws and Torkk will not be responsible for any consequences to the Captain arising from the same.',
+  ),
   LegalBlock.text('Upon termination:'),
-  LegalBlock.text('Captain will stop accessing the Platform and offering the Services;'),
-  LegalBlock.text('Torkk will settle all outstanding dues accrued to the Captain subject to deductions / set off of any amount owed by the Captain to Torkk;'),
-  LegalBlock.text('Captain will return all property and materials including confidential information belonging to Torkk; and Captain will cease holding out as a service provider integrated with or connected with Torkk in any manner .'),
+  LegalBlock.text(
+    'Captain will stop accessing the Platform and offering the Services;',
+  ),
+  LegalBlock.text(
+    'Torkk will settle all outstanding dues accrued to the Captain subject to deductions / set off of any amount owed by the Captain to Torkk;',
+  ),
+  LegalBlock.text(
+    'Captain will return all property and materials including confidential information belonging to Torkk; and Captain will cease holding out as a service provider integrated with or connected with Torkk in any manner .',
+  ),
   LegalBlock.heading('XIV. GOVERNING LAW, JURISDICTION AND DISPUTE RESOLUTION'),
-  LegalBlock.text('These T&Cs will be governed by and interpreted in all respects in accordance with the laws of the Republic of India.'),
-  LegalBlock.text('Subject to the provisions made in Clause XIV.3, the parties hereby submit to the exclusive jurisdiction of the courts of Bangalore, India.'),
-  LegalBlock.text('All disputes arising out of or in relation to these T&Cs will be settled amicably by the parties. In the event, no amicable settlement is arrived at within a period of 15 (fifteen) days from the date of first initiation of the dispute by one party to other, the parties will resolve the dispute by means of arbitration pursuant to the Arbitration and Conciliation Act, 1996.'),
-  LegalBlock.text('The arbitration proceedings will be conducted by an arbitral tribunal comprising of 1 arbitrator mutually appointed by you and the Company.'),
-  LegalBlock.text('The arbitration proceedings will be conducted in English language only and the seat for arbitration will be Bangalore, India.'),
-  LegalBlock.text('The award of the arbitral tribunal will be final and binding.'),
+  LegalBlock.text(
+    'These T&Cs will be governed by and interpreted in all respects in accordance with the laws of the Republic of India.',
+  ),
+  LegalBlock.text(
+    'Subject to the provisions made in Clause XIV.3, the parties hereby submit to the exclusive jurisdiction of the courts of Bangalore, India.',
+  ),
+  LegalBlock.text(
+    'All disputes arising out of or in relation to these T&Cs will be settled amicably by the parties. In the event, no amicable settlement is arrived at within a period of 15 (fifteen) days from the date of first initiation of the dispute by one party to other, the parties will resolve the dispute by means of arbitration pursuant to the Arbitration and Conciliation Act, 1996.',
+  ),
+  LegalBlock.text(
+    'The arbitration proceedings will be conducted by an arbitral tribunal comprising of 1 arbitrator mutually appointed by you and the Company.',
+  ),
+  LegalBlock.text(
+    'The arbitration proceedings will be conducted in English language only and the seat for arbitration will be Bangalore, India.',
+  ),
+  LegalBlock.text(
+    'The award of the arbitral tribunal will be final and binding.',
+  ),
   LegalBlock.heading('XV. ASSIGNMENT'),
-  LegalBlock.text('The Captain may not assign its rights or obligations under these T&Cs without prior written approval of the Company. The Company may assign any of its rights and obligations to its affiliates or third parties without prior consent or notice.'),
+  LegalBlock.text(
+    'The Captain may not assign its rights or obligations under these T&Cs without prior written approval of the Company. The Company may assign any of its rights and obligations to its affiliates or third parties without prior consent or notice.',
+  ),
   LegalBlock.heading('XVI. AMENDMENT'),
-  LegalBlock.text('These T&Cs may be amended from time to time and as and when required, at the sole discretion of the Company. If Torkk makes any changes to these T&Cs that it deems to be material, Torkk will make a reasonable effort to inform you of such changes, but it is your responsibility to review the T&Cs posted to the Platform from time to time to see if it has been changed. The updated version of these T&Cs will supersede the current version and such updated version will be immediately effective upon being posted on the Platform. The continued use of the Platform following the notification of modification of the T&Cs or after being updated on the Platform will be construed to mean the acceptance of the said modified T&Cs.'),
+  LegalBlock.text(
+    'These T&Cs may be amended from time to time and as and when required, at the sole discretion of the Company. If Torkk makes any changes to these T&Cs that it deems to be material, Torkk will make a reasonable effort to inform you of such changes, but it is your responsibility to review the T&Cs posted to the Platform from time to time to see if it has been changed. The updated version of these T&Cs will supersede the current version and such updated version will be immediately effective upon being posted on the Platform. The continued use of the Platform following the notification of modification of the T&Cs or after being updated on the Platform will be construed to mean the acceptance of the said modified T&Cs.',
+  ),
   LegalBlock.heading('XVII. SEVERABILITY'),
-  LegalBlock.text('If any provision or any part of a provision of these T&Cs is invalid, unenforceable or prohibited by applicable laws of the Republic of India , such provision or part of provision will be severed from these T&Cs and will be considered divisible as to such provision or part thereof and such provision or part thereof will be inoperative and will not be part of the consideration moving between you and the Company hereto and the remainder of these T&Cs will be valid and binding and of like effect as though such provision was not included herein.'),
+  LegalBlock.text(
+    'If any provision or any part of a provision of these T&Cs is invalid, unenforceable or prohibited by applicable laws of the Republic of India , such provision or part of provision will be severed from these T&Cs and will be considered divisible as to such provision or part thereof and such provision or part thereof will be inoperative and will not be part of the consideration moving between you and the Company hereto and the remainder of these T&Cs will be valid and binding and of like effect as though such provision was not included herein.',
+  ),
   LegalBlock.heading('XVIII. INSURANCE'),
-  LegalBlock.text('The Company at its sole discretion may insure the Captain against any accident suffered by the Captain during provision of Services by the Captain using the Platform. The Company reserves the right to recover any amount paid by the Company in lieu of the insurance from the Captain.'),
+  LegalBlock.text(
+    'The Company at its sole discretion may insure the Captain against any accident suffered by the Captain during provision of Services by the Captain using the Platform. The Company reserves the right to recover any amount paid by the Company in lieu of the insurance from the Captain.',
+  ),
   LegalBlock.heading('XIX. NOTICES'),
-  LegalBlock.text('The Company may give notice by means of a general notice on the Platform, or by electronic mail to your email address on record in the Company’s account information, or by written communication sent by regular mail to the Captain’s address on record in the Company’s account information.'),
-  LegalBlock.text('Captain needs to send any notice at email id: captaincare@Torkk.bike .'),
+  LegalBlock.text(
+    'The Company may give notice by means of a general notice on the Platform, or by electronic mail to your email address on record in the Company’s account information, or by written communication sent by regular mail to the Captain’s address on record in the Company’s account information.',
+  ),
+  LegalBlock.text(
+    'Captain needs to send any notice at email id: captaincare@Torkk.bike .',
+  ),
   LegalBlock.heading('XX. CUSTOMER CARE AND GRIEVANCE REDRESSAL'),
-  LegalBlock.text('Any opinions, issues or suggestion regarding the Platform can be provided / resolved by reaching out to the customer care number or email mentioned below:'),
+  LegalBlock.text(
+    'Any opinions, issues or suggestion regarding the Platform can be provided / resolved by reaching out to the customer care number or email mentioned below:',
+  ),
   LegalBlock.text('Customer Care details: shoutout@Torkk.bike'),
-  LegalBlock.text('Any complaint, dispute, or grievance in relation to the Services or the Platform should be addressed to Torkk as given below. Such complaint, dispute or grievance will be handled as per applicable laws.'),
+  LegalBlock.text(
+    'Any complaint, dispute, or grievance in relation to the Services or the Platform should be addressed to Torkk as given below. Such complaint, dispute or grievance will be handled as per applicable laws.',
+  ),
   LegalBlock.heading('TERMS AND CONDITIONS FOR CAPTAINS'),
   LegalBlock.text('(Auto and Cab)'),
-  LegalBlock.text('THIS DOCUMENT IS AN ELECTRONIC RECORD IN TERMS OF INFORMATION TECHNOLOGY ACT, 2000 AND RULES THEREUNDER AS APPLICABLE AND THE PROVISIONS PERTAINING TO ELECTRONIC RECORDS IN'),
-  LegalBlock.text('VARIOUS STATUTES AS AMENDED BY THE INFORMATION TECHNOLOGY ACT, 2000.'),
-  LegalBlock.text('BLACKORIGINX PRIVATE LIMITED (“Torkk”/ “Company”/ “us”/ “we”/ “our”) provides technology-based platform, as Software-as-a-Service (“SAAS”), and acts as a discovery platform for enabling lead generation for Captains, who shall offer ride services directly to the Captain’s Customers (defined below) through three-wheelers (“Auto”) and four-wheelers (“Cab”) (collectively “Vehicle(s)”), and other platform based support services, as SAAS, as offered by Torkk from time to time by means of the Company’s website and the mobile application “Torkk App” (collectively, “SAAS Platform”).'),
-  LegalBlock.text('The ride services are provided/ offered by third party vehicle operators, service providers or drivers who wish to use the Platform to discover their Customers hereinafter referred to as (“Captain(s)”/ “you”). On the basis of the representations and warranties provided by the Captain, the Company has agreed to onboard Captains on the Platform and to enable the Captains to discover their Customers. The Captain shall act in accordance with the terms and conditions as hereinafter provided and any other policy or agreement or document made applicable / executed by you for the purpose of your usage of the Platform (collectively, “T&Cs”). These T&Cs will govern the relationship between you and the Company in the course of your usage of the Platform. By signing up or registering on the Platform, you acknowledge that you have read and understood these T&Cs and agree to be bound by these T&Cs, without any limitation or qualification. If you do not agree with these T&Cs, please do not sign up or register on the Platform. These T&Cs expressly supersede prior agreements or arrangements with you. Use of, and access to, the Platform, is offered to you upon the unconditional acceptance of all the terms, conditions and notices contained in these T&Cs and Privacy Policy (which is incorporated herein by reference), along with any amendments made by the Company at its sole discretion and posted on the Platform from time to time. These T&Cs expressly supersede prior agreements or arrangements with you.'),
+  LegalBlock.text(
+    'THIS DOCUMENT IS AN ELECTRONIC RECORD IN TERMS OF INFORMATION TECHNOLOGY ACT, 2000 AND RULES THEREUNDER AS APPLICABLE AND THE PROVISIONS PERTAINING TO ELECTRONIC RECORDS IN',
+  ),
+  LegalBlock.text(
+    'VARIOUS STATUTES AS AMENDED BY THE INFORMATION TECHNOLOGY ACT, 2000.',
+  ),
+  LegalBlock.text(
+    'BLACKORIGINX PRIVATE LIMITED (“Torkk”/ “Company”/ “us”/ “we”/ “our”) provides technology-based platform, as Software-as-a-Service (“SAAS”), and acts as a discovery platform for enabling lead generation for Captains, who shall offer ride services directly to the Captain’s Customers (defined below) through three-wheelers (“Auto”) and four-wheelers (“Cab”) (collectively “Vehicle(s)”), and other platform based support services, as SAAS, as offered by Torkk from time to time by means of the Company’s website and the mobile application “Torkk App” (collectively, “SAAS Platform”).',
+  ),
+  LegalBlock.text(
+    'The ride services are provided/ offered by third party vehicle operators, service providers or drivers who wish to use the Platform to discover their Customers hereinafter referred to as (“Captain(s)”/ “you”). On the basis of the representations and warranties provided by the Captain, the Company has agreed to onboard Captains on the Platform and to enable the Captains to discover their Customers. The Captain shall act in accordance with the terms and conditions as hereinafter provided and any other policy or agreement or document made applicable / executed by you for the purpose of your usage of the Platform (collectively, “T&Cs”). These T&Cs will govern the relationship between you and the Company in the course of your usage of the Platform. By signing up or registering on the Platform, you acknowledge that you have read and understood these T&Cs and agree to be bound by these T&Cs, without any limitation or qualification. If you do not agree with these T&Cs, please do not sign up or register on the Platform. These T&Cs expressly supersede prior agreements or arrangements with you. Use of, and access to, the Platform, is offered to you upon the unconditional acceptance of all the terms, conditions and notices contained in these T&Cs and Privacy Policy (which is incorporated herein by reference), along with any amendments made by the Company at its sole discretion and posted on the Platform from time to time. These T&Cs expressly supersede prior agreements or arrangements with you.',
+  ),
   LegalBlock.heading('I. REGISTRATION ON AND USE OF THE PLATFORM'),
-  LegalBlock.text('We provide the SAAS Platform on which you may discover your Customers and may choose to provide ride services on your own by means of Vehicles, in accordance with terms and conditions that you may agree with your Customers who request for and/ or avail such ride services (“Customers”) and the Captain. Torkk may collect Captain Information (defined below) at the time of onboarding of the Captain, to establish the identity of the Captains. Torkk reserves the right to store, process, access and use the Captain Information for business purposes and needs, marketing, service, development, analytics, research, as Torkk may deem fit and in accordance with Torkk’s Privacy Policy and applicable law. The Captain hereby expressly consents to such collection and use of Captain Information.'),
-  LegalBlock.text('Subject to applicable laws, Torkk may provide to a third party, governmental agency, judicial body, any Captain Information or information relating to the Captain, if there is a complaint, dispute or conflict, including any accident involving a Captain on one hand and end-consumer, or a third party on the other hand.'),
-  LegalBlock.text('“Captain Information” shall mean and include any personal data or Information collected from the Captain, including know your customer documents, mobile number, and any other Information that Torkk may deem fit.'),
-  LegalBlock.text('By using the Platform, you authorize Torkk, whether directly or indirectly through third parties, to collect information about you including Captain Information, or make any inquiries necessary to validate your identity including background checks as mandated by law and in accordance with our Privacy Policy. Please read the Privacy Policy to understand how we collect, process and share your information, including Captain Information, personal information and sensitive personal data or information (collectively, “Information”).'),
-  LegalBlock.text('When you provide any Information to Torkk, you will provide only true, accurate, current, and complete Information. You understand and acknowledge that the responsibility to provide correct Information, including your contact information, lies solely with you. We will not be responsible to verify the accuracy of the Information provided by you.'),
-  LegalBlock.text('To use the Platform, you should be eligible as per the onboarding criteria and provide such documents as requested by Torkk (from time to time) as per applicable law and Torkk’s internal policies, and ensure continued compliance with the same.'),
-  LegalBlock.text('Particularly, you represent, warrant and covenant to Torkk that:'),
+  LegalBlock.text(
+    'We provide the SAAS Platform on which you may discover your Customers and may choose to provide ride services on your own by means of Vehicles, in accordance with terms and conditions that you may agree with your Customers who request for and/ or avail such ride services (“Customers”) and the Captain. Torkk may collect Captain Information (defined below) at the time of onboarding of the Captain, to establish the identity of the Captains. Torkk reserves the right to store, process, access and use the Captain Information for business purposes and needs, marketing, service, development, analytics, research, as Torkk may deem fit and in accordance with Torkk’s Privacy Policy and applicable law. The Captain hereby expressly consents to such collection and use of Captain Information.',
+  ),
+  LegalBlock.text(
+    'Subject to applicable laws, Torkk may provide to a third party, governmental agency, judicial body, any Captain Information or information relating to the Captain, if there is a complaint, dispute or conflict, including any accident involving a Captain on one hand and end-consumer, or a third party on the other hand.',
+  ),
+  LegalBlock.text(
+    '“Captain Information” shall mean and include any personal data or Information collected from the Captain, including know your customer documents, mobile number, and any other Information that Torkk may deem fit.',
+  ),
+  LegalBlock.text(
+    'By using the Platform, you authorize Torkk, whether directly or indirectly through third parties, to collect information about you including Captain Information, or make any inquiries necessary to validate your identity including background checks as mandated by law and in accordance with our Privacy Policy. Please read the Privacy Policy to understand how we collect, process and share your information, including Captain Information, personal information and sensitive personal data or information (collectively, “Information”).',
+  ),
+  LegalBlock.text(
+    'When you provide any Information to Torkk, you will provide only true, accurate, current, and complete Information. You understand and acknowledge that the responsibility to provide correct Information, including your contact information, lies solely with you. We will not be responsible to verify the accuracy of the Information provided by you.',
+  ),
+  LegalBlock.text(
+    'To use the Platform, you should be eligible as per the onboarding criteria and provide such documents as requested by Torkk (from time to time) as per applicable law and Torkk’s internal policies, and ensure continued compliance with the same.',
+  ),
+  LegalBlock.text(
+    'Particularly, you represent, warrant and covenant to Torkk that:',
+  ),
   LegalBlock.text('You have at least 2 years of driving experience;'),
-  LegalBlock.text('No proceeding is pending against you regarding and neither have been convicted of (a) driving under the influence of drugs or alcohol or (b) any cognizable offence under the Code of Criminal Procedure, 1973, including fraud, sexual offences, use of a motor vehicle to commit cognizable offence, or of any crime involving property damage, theft, acts of violence, or acts of terror, in the past 3 years; and You have cleared and have no pending challans applicable to the Vehicle prior to integration with the Platform.'),
-  LegalBlock.text('You must register on the Platform and create an account on the Platform (“Your Account”) by providing accurate Information as sought during the registration process.'),
-  LegalBlock.text('Further, we may ask you for Information or documents that will allow us, whether directly or indirectly through third parties, to reasonably identify you, requiring you to take steps to confirm your right over your email address or financial instruments, or verifying your information against third party databases or through other sources. We reserve the right to terminate, suspend, or limit access to the Platform in the event we are unable to obtain or verify this Information.'),
-  LegalBlock.text('You are solely responsible for maintaining the confidentiality of your credentials (Customer name, password, etc.) provided upon registration by you, and the Company is not liable for any loss you may incur as a result of someone else using Your Account, either with or without your knowledge. You agree to accept responsibility for all activities that occur in or from Your Account, and agree to establish reasonable security procedures and controls to limit access to the password or other identifying information of Your Account to unauthorized individuals, which includes choosing passwords and other credentials in a manner that will protect the security of your Information. Your credentials include your Customer name and password to Your Account and to any third-party account you have used to login to Your Account.'),
-  LegalBlock.text('Torkk will not be liable for any breach of security or unauthorized use of Your Account. The Company will not be liable if you do not download the correct mobile application including correct and compatible version of the Torkk mobile application.'),
-  LegalBlock.text('You agree that Torkk (either directly or indirectly through its affiliates or third parties) may communicate with you in connection with the SAAS based platform services offered by Torkk on the Platform to You, either electronically (for example, push notifications), or through phone calls, WhatsApp messenger application, email, or in writing through other modes.'),
-  LegalBlock.text('Once you have registered Your Account, you will be discoverable on the Platform to your Customers and will be able to offer and provide ride services based on the pick-up location and drop off location chosen by your Customers and the ride fare mutually agreed between you and your Customers.'),
-  LegalBlock.text('After the acceptance of the ride service request by you, you can communicate with your Customers on the Platform until the start of the ride.'),
-  LegalBlock.text('The Platform will reflect an indicative price for the distance between your chosen pick up and drop off location. The ride fare will be decided by you and the Captain mutually. Torkk is not involved or responsible for fixing the ride fare for the ride service.'),
+  LegalBlock.text(
+    'No proceeding is pending against you regarding and neither have been convicted of (a) driving under the influence of drugs or alcohol or (b) any cognizable offence under the Code of Criminal Procedure, 1973, including fraud, sexual offences, use of a motor vehicle to commit cognizable offence, or of any crime involving property damage, theft, acts of violence, or acts of terror, in the past 3 years; and You have cleared and have no pending challans applicable to the Vehicle prior to integration with the Platform.',
+  ),
+  LegalBlock.text(
+    'You must register on the Platform and create an account on the Platform (“Your Account”) by providing accurate Information as sought during the registration process.',
+  ),
+  LegalBlock.text(
+    'Further, we may ask you for Information or documents that will allow us, whether directly or indirectly through third parties, to reasonably identify you, requiring you to take steps to confirm your right over your email address or financial instruments, or verifying your information against third party databases or through other sources. We reserve the right to terminate, suspend, or limit access to the Platform in the event we are unable to obtain or verify this Information.',
+  ),
+  LegalBlock.text(
+    'You are solely responsible for maintaining the confidentiality of your credentials (Customer name, password, etc.) provided upon registration by you, and the Company is not liable for any loss you may incur as a result of someone else using Your Account, either with or without your knowledge. You agree to accept responsibility for all activities that occur in or from Your Account, and agree to establish reasonable security procedures and controls to limit access to the password or other identifying information of Your Account to unauthorized individuals, which includes choosing passwords and other credentials in a manner that will protect the security of your Information. Your credentials include your Customer name and password to Your Account and to any third-party account you have used to login to Your Account.',
+  ),
+  LegalBlock.text(
+    'Torkk will not be liable for any breach of security or unauthorized use of Your Account. The Company will not be liable if you do not download the correct mobile application including correct and compatible version of the Torkk mobile application.',
+  ),
+  LegalBlock.text(
+    'You agree that Torkk (either directly or indirectly through its affiliates or third parties) may communicate with you in connection with the SAAS based platform services offered by Torkk on the Platform to You, either electronically (for example, push notifications), or through phone calls, WhatsApp messenger application, email, or in writing through other modes.',
+  ),
+  LegalBlock.text(
+    'Once you have registered Your Account, you will be discoverable on the Platform to your Customers and will be able to offer and provide ride services based on the pick-up location and drop off location chosen by your Customers and the ride fare mutually agreed between you and your Customers.',
+  ),
+  LegalBlock.text(
+    'After the acceptance of the ride service request by you, you can communicate with your Customers on the Platform until the start of the ride.',
+  ),
+  LegalBlock.text(
+    'The Platform will reflect an indicative price for the distance between your chosen pick up and drop off location. The ride fare will be decided by you and the Captain mutually. Torkk is not involved or responsible for fixing the ride fare for the ride service.',
+  ),
   LegalBlock.heading('II. GENERAL COVENANT'),
-  LegalBlock.text('In relation to your access of the Platform and to provide the ride services, you covenant and agree to the following:'),
-  LegalBlock.text('For the purposes of registration/ creation of an account on the Platform and providing the ride services, you confirm that you are 18 years of age.'),
-  LegalBlock.text('You are not restricted by any legal, regulatory, judicial, quasi-judicial or other authority, to access the Platform or provide the ride.'),
-  LegalBlock.text('You will provide the ride services solely as permitted and in accordance with these T&Cs, while operating on SAAS Platform'),
-  LegalBlock.text('These T&Cs impose valid and legally binding obligations on you and are enforceable against you.'),
+  LegalBlock.text(
+    'In relation to your access of the Platform and to provide the ride services, you covenant and agree to the following:',
+  ),
+  LegalBlock.text(
+    'For the purposes of registration/ creation of an account on the Platform and providing the ride services, you confirm that you are 18 years of age.',
+  ),
+  LegalBlock.text(
+    'You are not restricted by any legal, regulatory, judicial, quasi-judicial or other authority, to access the Platform or provide the ride.',
+  ),
+  LegalBlock.text(
+    'You will provide the ride services solely as permitted and in accordance with these T&Cs, while operating on SAAS Platform',
+  ),
+  LegalBlock.text(
+    'These T&Cs impose valid and legally binding obligations on you and are enforceable against you.',
+  ),
   LegalBlock.heading('III. PAYMENT TERMS'),
-  LegalBlock.text('The Company has the discretion to charge subscription fees from the Captain in consideration for the SAAS Platform provided by Torkk, as updated on the Platform from time to time, which will be subject to applicable taxes.'),
-  LegalBlock.text('Captain will collect the ride fare, directly from their Customers, for ride services rendered to their Customers.'),
-  LegalBlock.text('Torkk may display an estimated ride fare range based on market rates that apply to the route and approximate distance your Customers have chosen on the Platform which you may use as guidance for you to quote or accept the ride fare. However, Torkk makes no guarantee or warranty with respect to the accuracy or reliability of the ride fare displayed and is merely provided for guidance. Captain may levy on their Customers cancellation fee, refund, or other charges including applicable taxes in connection with the ride services. These charges, fees, and any other payments owed by Captain’s Customers to the Captain or owed by the Captain to their Customers are part of the contractual arrangement between Captain’s Customers and the Captain for the ride services and are required to be settled between Captain’s Customers and the Captain. In no event will Torkk be responsible or liable for any such payments.'),
-  LegalBlock.text('If the Company is not able to provide leads to the Captain on account of platform or app related issues, then the Company may compensate the Captain at its own discretion. This compensation is offered by the Company in the form of liquidated damages against the subscription fee charged from the Captain to access the Platform.'),
-  LegalBlock.text('The Captain will issue appropriate invoices as required under applicable law including Goods and Services Tax laws, to their Customers for or in connection with the ride services. Torkk will not issue any invoice to Captain’s Customers or enable the Captain to issue any invoices in connection with the ride services to their Customers, as the transaction in connection with such ride services, including payments of ride fare, are to be settled directly between Captain’s Customers and the Captain, and Torkk has no role to play in the same.'),
-  LegalBlock.text('Captain agrees and acknowledges that Torkk is not in any way responsible for the settlement of any payments owed to you by your Customers or owed by you to your Customers.'),
-  LegalBlock.text('These T&Cs are subject to all prevailing statutory taxes, duties, fees, charges and/or costs, however denominated, as may be in force and in connection with any future taxes that may be introduced at any point of time.'),
-  LegalBlock.text('You are responsible for the collection and remission of all taxes associated with the ride services provided by you, or any transactions from your use of the platform, and Torkk will not be held accountable in relation to any transactions between the Captain’s Customers and Captains where any tax related issue has occurred.'),
-  LegalBlock.text('The Company reserves the right to vary, or discontinue, any of the platform based services and/ or making the platform available in their entirety.'),
+  LegalBlock.text(
+    'The Company has the discretion to charge subscription fees from the Captain in consideration for the SAAS Platform provided by Torkk, as updated on the Platform from time to time, which will be subject to applicable taxes.',
+  ),
+  LegalBlock.text(
+    'Captain will collect the ride fare, directly from their Customers, for ride services rendered to their Customers.',
+  ),
+  LegalBlock.text(
+    'Torkk may display an estimated ride fare range based on market rates that apply to the route and approximate distance your Customers have chosen on the Platform which you may use as guidance for you to quote or accept the ride fare. However, Torkk makes no guarantee or warranty with respect to the accuracy or reliability of the ride fare displayed and is merely provided for guidance. Captain may levy on their Customers cancellation fee, refund, or other charges including applicable taxes in connection with the ride services. These charges, fees, and any other payments owed by Captain’s Customers to the Captain or owed by the Captain to their Customers are part of the contractual arrangement between Captain’s Customers and the Captain for the ride services and are required to be settled between Captain’s Customers and the Captain. In no event will Torkk be responsible or liable for any such payments.',
+  ),
+  LegalBlock.text(
+    'If the Company is not able to provide leads to the Captain on account of platform or app related issues, then the Company may compensate the Captain at its own discretion. This compensation is offered by the Company in the form of liquidated damages against the subscription fee charged from the Captain to access the Platform.',
+  ),
+  LegalBlock.text(
+    'The Captain will issue appropriate invoices as required under applicable law including Goods and Services Tax laws, to their Customers for or in connection with the ride services. Torkk will not issue any invoice to Captain’s Customers or enable the Captain to issue any invoices in connection with the ride services to their Customers, as the transaction in connection with such ride services, including payments of ride fare, are to be settled directly between Captain’s Customers and the Captain, and Torkk has no role to play in the same.',
+  ),
+  LegalBlock.text(
+    'Captain agrees and acknowledges that Torkk is not in any way responsible for the settlement of any payments owed to you by your Customers or owed by you to your Customers.',
+  ),
+  LegalBlock.text(
+    'These T&Cs are subject to all prevailing statutory taxes, duties, fees, charges and/or costs, however denominated, as may be in force and in connection with any future taxes that may be introduced at any point of time.',
+  ),
+  LegalBlock.text(
+    'You are responsible for the collection and remission of all taxes associated with the ride services provided by you, or any transactions from your use of the platform, and Torkk will not be held accountable in relation to any transactions between the Captain’s Customers and Captains where any tax related issue has occurred.',
+  ),
+  LegalBlock.text(
+    'The Company reserves the right to vary, or discontinue, any of the platform based services and/ or making the platform available in their entirety.',
+  ),
   LegalBlock.heading('IV. YOUR CONDUCT'),
   LegalBlock.text('1. In relation to the Platform, the Captain agrees to:'),
   LegalBlock.text('Not authorize others to use Your Account on the Platform;'),
-  LegalBlock.text('Not assign or otherwise transfer Your Account to any other person or legal entity;'),
-  LegalBlock.text('Not use the Platform for unlawful purposes, including but not limited to sending or storing any unlawful material or for fraudulent purposes;'),
-  LegalBlock.text('Not carry-out any activity which is prohibited by any law in any manner (including but not limited to, taking calls, consume alcohol or drugs or other illegal substances, or be under the influence of drugs or other illegal substances, when providing ride services) which may impact Torkk in any manner.;'),
-  LegalBlock.text('Not impair the proper operation of the network/ Platform and will not use any device, software, routine, file or other tool or technology, which includes any viruses, trojan horses, worms, time bombs or cancelbots, intended to damage, interfere with or affect functionality or operation of the Platform, to surreptitiously intercept or expropriate any system, data or information in connection with the content hosted/ available on the Platform, or to affect the operation of any other websites or the internet;'),
-  LegalBlock.text('Not take any action that imposes an unreasonable or disproportionately large load on the infrastructure associated with the Platform, including but not limited to denial-of-service attacks, “spam” or any other such unsolicited overload technique;'),
+  LegalBlock.text(
+    'Not assign or otherwise transfer Your Account to any other person or legal entity;',
+  ),
+  LegalBlock.text(
+    'Not use the Platform for unlawful purposes, including but not limited to sending or storing any unlawful material or for fraudulent purposes;',
+  ),
+  LegalBlock.text(
+    'Not carry-out any activity which is prohibited by any law in any manner (including but not limited to, taking calls, consume alcohol or drugs or other illegal substances, or be under the influence of drugs or other illegal substances, when providing ride services) which may impact Torkk in any manner.;',
+  ),
+  LegalBlock.text(
+    'Not impair the proper operation of the network/ Platform and will not use any device, software, routine, file or other tool or technology, which includes any viruses, trojan horses, worms, time bombs or cancelbots, intended to damage, interfere with or affect functionality or operation of the Platform, to surreptitiously intercept or expropriate any system, data or information in connection with the content hosted/ available on the Platform, or to affect the operation of any other websites or the internet;',
+  ),
+  LegalBlock.text(
+    'Not take any action that imposes an unreasonable or disproportionately large load on the infrastructure associated with the Platform, including but not limited to denial-of-service attacks, “spam” or any other such unsolicited overload technique;',
+  ),
   LegalBlock.text('Not try to harm the Platform in any way whatsoever;'),
-  LegalBlock.text('Not copy, or distribute any content on the Platform without written permission from the Company; and'),
-  LegalBlock.text('Not use the Platform with an incompatible or unauthorized device.'),
-  LegalBlock.text('2. In addition to the foregoing, you will not upload, display, share, host, publish or transmit any information that:'),
-  LegalBlock.text('Either belongs to another person or to which you do not have any right whatsoever;'),
-  LegalBlock.text('Is harmful, offensive, harassing, obscene, pornographic, invasive of another’s privacy, hateful, racially or ethnically objectionable, disparaging, relating to or encouraging money laundering or gambling, or an online game that causes your Customer’s harm, or otherwise unlawful in any manner whatsoever, or promoting enmity between different groups on the grounds of religion or caste with the intent to incite violence;'),
-  LegalBlock.text('Infringes any patent, trademark, copyright or any other proprietary rights;'),
+  LegalBlock.text(
+    'Not copy, or distribute any content on the Platform without written permission from the Company; and',
+  ),
+  LegalBlock.text(
+    'Not use the Platform with an incompatible or unauthorized device.',
+  ),
+  LegalBlock.text(
+    '2. In addition to the foregoing, you will not upload, display, share, host, publish or transmit any information that:',
+  ),
+  LegalBlock.text(
+    'Either belongs to another person or to which you do not have any right whatsoever;',
+  ),
+  LegalBlock.text(
+    'Is harmful, offensive, harassing, obscene, pornographic, invasive of another’s privacy, hateful, racially or ethnically objectionable, disparaging, relating to or encouraging money laundering or gambling, or an online game that causes your Customer’s harm, or otherwise unlawful in any manner whatsoever, or promoting enmity between different groups on the grounds of religion or caste with the intent to incite violence;',
+  ),
+  LegalBlock.text(
+    'Infringes any patent, trademark, copyright or any other proprietary rights;',
+  ),
   LegalBlock.text('Harms minors in any way or is harmful to child;'),
-  LegalBlock.text('Includes any commercial material or content (including solicitation of funds, advertising, or marketing of any goods or services);'),
-  LegalBlock.text('Deceives or misleads the addressee about the origin of such messages, or communicates any misinformation or information which is patently false and untrue or misleading in nature or in respect of any business of the Central Government, is identified as fake or false or misleading by such fact check unit specified by the Government;'),
+  LegalBlock.text(
+    'Includes any commercial material or content (including solicitation of funds, advertising, or marketing of any goods or services);',
+  ),
+  LegalBlock.text(
+    'Deceives or misleads the addressee about the origin of such messages, or communicates any misinformation or information which is patently false and untrue or misleading in nature or in respect of any business of the Central Government, is identified as fake or false or misleading by such fact check unit specified by the Government;',
+  ),
   LegalBlock.text('Impersonates another person;'),
-  LegalBlock.text('Contains software viruses or any other computer code, files or programs designed to interrupt, destroy or limit the functionality of any computer resource;'),
-  LegalBlock.text('Threatens the unity, integrity, defence, security or sovereignty of India, friendly relations with foreign states, or public order or causes incitement to the commission of any cognizable offence or prevents investigation of any offence or is insulting any other nation;'),
-  LegalBlock.text('Is in the nature of an online game that is not verified as a permissible online game;'),
-  LegalBlock.text('Is in the nature of advertisement or surrogate advertisement or promotion of an online game that is not a permissible online game, or of any online gaming intermediary offering such an online game; or Violates any law for the time being in force.'),
-  LegalBlock.text('3. The Company reserves the right to immediately terminate the use of the Platform by the Captain if he does not comply with any of the above rules in Clauses IV.1 and IV.2 above.'),
-  LegalBlock.text('4. In consideration of safety aspects, the Captain will not be permitted to operate on the Platform for more than such number of hours on a calendar day as mandated under the applicable laws and should take a mandatory break of such number of hours before subsequent login into the Platform and offering the ride services, as required by applicable law.'),
-  LegalBlock.text('5. The Captain consents to provide identity documents as required under Torkk’s policies, directly or indirectly through a third party appointed by the Company.'),
+  LegalBlock.text(
+    'Contains software viruses or any other computer code, files or programs designed to interrupt, destroy or limit the functionality of any computer resource;',
+  ),
+  LegalBlock.text(
+    'Threatens the unity, integrity, defence, security or sovereignty of India, friendly relations with foreign states, or public order or causes incitement to the commission of any cognizable offence or prevents investigation of any offence or is insulting any other nation;',
+  ),
+  LegalBlock.text(
+    'Is in the nature of an online game that is not verified as a permissible online game;',
+  ),
+  LegalBlock.text(
+    'Is in the nature of advertisement or surrogate advertisement or promotion of an online game that is not a permissible online game, or of any online gaming intermediary offering such an online game; or Violates any law for the time being in force.',
+  ),
+  LegalBlock.text(
+    '3. The Company reserves the right to immediately terminate the use of the Platform by the Captain if he does not comply with any of the above rules in Clauses IV.1 and IV.2 above.',
+  ),
+  LegalBlock.text(
+    '4. In consideration of safety aspects, the Captain will not be permitted to operate on the Platform for more than such number of hours on a calendar day as mandated under the applicable laws and should take a mandatory break of such number of hours before subsequent login into the Platform and offering the ride services, as required by applicable law.',
+  ),
+  LegalBlock.text(
+    '5. The Captain consents to provide identity documents as required under Torkk’s policies, directly or indirectly through a third party appointed by the Company.',
+  ),
   LegalBlock.heading('V. REPRESENTATIONS, WARRANTIES AND COVENANTS'),
   LegalBlock.text('1. The Captains and the Company represent the following:'),
-  LegalBlock.text('They have all requisite power and authority to, deliver and perform, the obligations imposed herein; The execution and performance of the obligations do not and will not violate any provision of any existing agreement, law, rule, regulation, any order, or judicial pronouncement which is applicable to each party; and'),
-  LegalBlock.text('They have not been convicted by any court in India or any other country of any crimes including but not limited to involving moral turpitude.'),
-  LegalBlock.text('2. The Captains hereby represent, warrant and covenant the following:'),
-  LegalBlock.text('They have all rights, licenses, and permits as may be required under applicable laws to perform the ride services in accordance with these T&Cs;'),
-  LegalBlock.text('They are in compliance with the Motor Vehicles Act, 1988 (“MV Act”), and any other applicable laws (including rules, regulations and orders notified thereunder) as required to be complied with by any person driving Vehicles or providing the ride services;'),
-  LegalBlock.text('At the time of onboarding with the Platform, they have not been convicted within the past 3 years, for the offence of driving under the influence of alcohol or any cognizable offence under the Code of Criminal Procedure, \'1973 or the Indian Penal Code, 1860 (as may be applicable) including fraud, sexual offences, use of a motor vehicle to commit a cognizable offence, a crime involving property damage or theft, acts of violence, or acts of terror;'),
-  LegalBlock.text('They hold and will maintain updated/ renewed licenses, insurance and permits necessary for the use of Vehicle;'),
-  LegalBlock.text('They will follow traffic regulations and all applicable laws;'),
-  LegalBlock.text('They will not carry any weapons, firearms, ammunition, explosive devices and dangerous substances during performance of the ride services;'),
-  LegalBlock.text('Platform will not be responsible for the any action of the Captain (including but not limited to cancellation/ refusals).'),
+  LegalBlock.text(
+    'They have all requisite power and authority to, deliver and perform, the obligations imposed herein; The execution and performance of the obligations do not and will not violate any provision of any existing agreement, law, rule, regulation, any order, or judicial pronouncement which is applicable to each party; and',
+  ),
+  LegalBlock.text(
+    'They have not been convicted by any court in India or any other country of any crimes including but not limited to involving moral turpitude.',
+  ),
+  LegalBlock.text(
+    '2. The Captains hereby represent, warrant and covenant the following:',
+  ),
+  LegalBlock.text(
+    'They have all rights, licenses, and permits as may be required under applicable laws to perform the ride services in accordance with these T&Cs;',
+  ),
+  LegalBlock.text(
+    'They are in compliance with the Motor Vehicles Act, 1988 (“MV Act”), and any other applicable laws (including rules, regulations and orders notified thereunder) as required to be complied with by any person driving Vehicles or providing the ride services;',
+  ),
+  LegalBlock.text(
+    'At the time of onboarding with the Platform, they have not been convicted within the past 3 years, for the offence of driving under the influence of alcohol or any cognizable offence under the Code of Criminal Procedure, \'1973 or the Indian Penal Code, 1860 (as may be applicable) including fraud, sexual offences, use of a motor vehicle to commit a cognizable offence, a crime involving property damage or theft, acts of violence, or acts of terror;',
+  ),
+  LegalBlock.text(
+    'They hold and will maintain updated/ renewed licenses, insurance and permits necessary for the use of Vehicle;',
+  ),
+  LegalBlock.text(
+    'They will follow traffic regulations and all applicable laws;',
+  ),
+  LegalBlock.text(
+    'They will not carry any weapons, firearms, ammunition, explosive devices and dangerous substances during performance of the ride services;',
+  ),
+  LegalBlock.text(
+    'Platform will not be responsible for the any action of the Captain (including but not limited to cancellation/ refusals).',
+  ),
   LegalBlock.heading('VI. RELATIONSHIP BETWEEN THE PARTIES'),
-  LegalBlock.text('The Captain will be accessing the SAAS Platform to discover the leads of Captain’s Customers. No other relationship exists between the Captain and the Company. The Company and the Captain are independent legal entities, and nothing in these T&Cs will be construed to create a partnership, joint venture, an association of persons, agency (disclosed or undisclosed), franchise, sales representative, or employment relationship between the Company and the Captain. It is clarified that neither party will have any right to conclude any contract for and/ or on the behalf of the other party in any manner.'),
+  LegalBlock.text(
+    'The Captain will be accessing the SAAS Platform to discover the leads of Captain’s Customers. No other relationship exists between the Captain and the Company. The Company and the Captain are independent legal entities, and nothing in these T&Cs will be construed to create a partnership, joint venture, an association of persons, agency (disclosed or undisclosed), franchise, sales representative, or employment relationship between the Company and the Captain. It is clarified that neither party will have any right to conclude any contract for and/ or on the behalf of the other party in any manner.',
+  ),
   LegalBlock.heading('VII. CONFIDENTIALITY'),
-  LegalBlock.text('The Captain will keep confidential all Confidential Information including details of Captain’s Customers, market information, all work products and documents related thereto, and the contents of the SAAS Platform and will not sell or otherwise make that information available to any third parties. Except as otherwise agreed, the data of Captain’s Customers will be the exclusive property of the Company or the Captain’s Customers, and the Captain will not use the same for any purpose or distribute such data in any form or means except for the purpose of providing the ride services and other than as permitted by the Company and will keep it confidential at all times.'),
-  LegalBlock.text('“Confidential Information” will mean and include all non-public information relating to us or disclosed by us or our affiliates to you that is designated as confidential or that, given the nature of the information or the circumstances surrounding its disclosure, reasonably should be considered as confidential. Confidential information includes but is not limited to: (a) contents/ information relating to ride services and Platform; (b) information relating to our or our affiliates or business partners’ technology, software, customers, business plans, product plans and designs, promotional and marketing activities, finances and other business affairs; (c) third-party information including that of Captain’s Customers which we are obligated to keep confidential; (d) the nature, content and existence of any discussions or negotiations between you and us or our affiliates; and (e) any other information which should be reasonably kept confidential.'),
+  LegalBlock.text(
+    'The Captain will keep confidential all Confidential Information including details of Captain’s Customers, market information, all work products and documents related thereto, and the contents of the SAAS Platform and will not sell or otherwise make that information available to any third parties. Except as otherwise agreed, the data of Captain’s Customers will be the exclusive property of the Company or the Captain’s Customers, and the Captain will not use the same for any purpose or distribute such data in any form or means except for the purpose of providing the ride services and other than as permitted by the Company and will keep it confidential at all times.',
+  ),
+  LegalBlock.text(
+    '“Confidential Information” will mean and include all non-public information relating to us or disclosed by us or our affiliates to you that is designated as confidential or that, given the nature of the information or the circumstances surrounding its disclosure, reasonably should be considered as confidential. Confidential information includes but is not limited to: (a) contents/ information relating to ride services and Platform; (b) information relating to our or our affiliates or business partners’ technology, software, customers, business plans, product plans and designs, promotional and marketing activities, finances and other business affairs; (c) third-party information including that of Captain’s Customers which we are obligated to keep confidential; (d) the nature, content and existence of any discussions or negotiations between you and us or our affiliates; and (e) any other information which should be reasonably kept confidential.',
+  ),
   LegalBlock.heading('VIII. PROPRIETARY RIGHTS'),
-  LegalBlock.text('The Company is the sole owner and lawful licensee of all the rights to Platform or any other digital media and its contents. The content means its design, layout, text, images, graphics, sounds, video, the website/ Platform, etc. or any other digital media content embodying trade secrets and Intellectual Property Rights protected under worldwide copyright and other laws. All titles, ownership and Intellectual Property Rights in the Platform and its content (except third party links) will remain with the Company, its affiliates, agents, authorized representatives, or licensors as the case may be.'),
-  LegalBlock.text('The term “Intellectual Property Rights” means all intellectual property rights or similar proprietary rights, including: (i) patent rights and utility models, (ii) copyrights and database rights including moral rights, (iii) trademarks, trade names, domain names and trade dress and the associated goodwill, (iv) trade secrets, and (v) industrial design rights; and for each of the foregoing includes any registrations of, applications to register, and renewals and extensions of, any of the foregoing in any jurisdiction in the world. All rights not otherwise claimed under this T&Cs or by the Company are hereby reserved. The information contained in this Platform is intended, solely to provide general information for the personal use of the reader, who accepts full responsibility for its use.'),
-  LegalBlock.text('All related icons and logos are registered trademarks or service marks or word marks of the Company in various jurisdictions and are protected under applicable copyrights, trademarks and other proprietary rights laws. The unauthorized copying, modification, use or publication of these marks is strictly prohibited. Subject to your compliance with these T&Cs, the Company grants you a limited, non- exclusive, revocable, non-transferable license to download and install a copy of the Torkk mobile application on a single mobile device that you own or control and to run such copy of the Torkk mobile application solely for your own personal use, for the term of these T&Cs.'),
-  LegalBlock.text('Captain data: As between Torkk and Captain, all right, title and interest in: (i) the Information, (ii) other information input into the SAAS Platform by Captain or its authorized Captain’s Customers (“Other Information”), and (iii) all Intellectual Property Rights in each of the foregoing, belong to and are retained solely by the Captain. Information and Other Information are collectively referred to as “Your Information”. Captain grants to the Company an unlimited, non-exclusive, royalty-free, worldwide license to use Your Information and perform all acts with respect to Your Information, as may be necessary for Torkk to operate, maintain and improve the SAAS Platform ride, and a non-exclusive, perpetual, irrevocable, worldwide, royalty-free, fully paid-up license to use, reproduce, modify and distribute the Other Information as a part of the Aggregated Statistics (defined below). Captain is solely responsible for the accuracy, quality, veracity, integrity, legality, reliability, and appropriateness of Your Information. The Company agrees to access and use Your Information solely for Captain’s/ Captain’s Customers benefit and as set forth in these T&Cs or the Privacy Policy.'),
-  LegalBlock.text('Aggregated statistics: Notwithstanding anything else in these T&Cs, the Company may monitor Captain’s use of the SAAS Platform, and use data and information related to such use and Your Information in an aggregate and anonymous manner, including to compile statistical and performance information related to the provision and operation of the SAAS Platform and the services (“Aggregated Statistics”). As between Torkk and Captain, all right, title and interest in the Aggregated Statistics and all Intellectual Property Rights therein, belong to and are retained solely by Torkk. Captain acknowledges that Torkk will be compiling Aggregated Statistics based on Your Information and Information input by other customers/ other Captains into the Platform. Captain agrees that Torkk may: (i) make such Aggregated Statistics publicly available, and (ii) use such information to the extent and in the manner required by applicable law and for purposes of data gathering, analysis, service enhancement and marketing, provided that such data and information does not identify Captain.'),
+  LegalBlock.text(
+    'The Company is the sole owner and lawful licensee of all the rights to Platform or any other digital media and its contents. The content means its design, layout, text, images, graphics, sounds, video, the website/ Platform, etc. or any other digital media content embodying trade secrets and Intellectual Property Rights protected under worldwide copyright and other laws. All titles, ownership and Intellectual Property Rights in the Platform and its content (except third party links) will remain with the Company, its affiliates, agents, authorized representatives, or licensors as the case may be.',
+  ),
+  LegalBlock.text(
+    'The term “Intellectual Property Rights” means all intellectual property rights or similar proprietary rights, including: (i) patent rights and utility models, (ii) copyrights and database rights including moral rights, (iii) trademarks, trade names, domain names and trade dress and the associated goodwill, (iv) trade secrets, and (v) industrial design rights; and for each of the foregoing includes any registrations of, applications to register, and renewals and extensions of, any of the foregoing in any jurisdiction in the world. All rights not otherwise claimed under this T&Cs or by the Company are hereby reserved. The information contained in this Platform is intended, solely to provide general information for the personal use of the reader, who accepts full responsibility for its use.',
+  ),
+  LegalBlock.text(
+    'All related icons and logos are registered trademarks or service marks or word marks of the Company in various jurisdictions and are protected under applicable copyrights, trademarks and other proprietary rights laws. The unauthorized copying, modification, use or publication of these marks is strictly prohibited. Subject to your compliance with these T&Cs, the Company grants you a limited, non- exclusive, revocable, non-transferable license to download and install a copy of the Torkk mobile application on a single mobile device that you own or control and to run such copy of the Torkk mobile application solely for your own personal use, for the term of these T&Cs.',
+  ),
+  LegalBlock.text(
+    'Captain data: As between Torkk and Captain, all right, title and interest in: (i) the Information, (ii) other information input into the SAAS Platform by Captain or its authorized Captain’s Customers (“Other Information”), and (iii) all Intellectual Property Rights in each of the foregoing, belong to and are retained solely by the Captain. Information and Other Information are collectively referred to as “Your Information”. Captain grants to the Company an unlimited, non-exclusive, royalty-free, worldwide license to use Your Information and perform all acts with respect to Your Information, as may be necessary for Torkk to operate, maintain and improve the SAAS Platform ride, and a non-exclusive, perpetual, irrevocable, worldwide, royalty-free, fully paid-up license to use, reproduce, modify and distribute the Other Information as a part of the Aggregated Statistics (defined below). Captain is solely responsible for the accuracy, quality, veracity, integrity, legality, reliability, and appropriateness of Your Information. The Company agrees to access and use Your Information solely for Captain’s/ Captain’s Customers benefit and as set forth in these T&Cs or the Privacy Policy.',
+  ),
+  LegalBlock.text(
+    'Aggregated statistics: Notwithstanding anything else in these T&Cs, the Company may monitor Captain’s use of the SAAS Platform, and use data and information related to such use and Your Information in an aggregate and anonymous manner, including to compile statistical and performance information related to the provision and operation of the SAAS Platform and the services (“Aggregated Statistics”). As between Torkk and Captain, all right, title and interest in the Aggregated Statistics and all Intellectual Property Rights therein, belong to and are retained solely by Torkk. Captain acknowledges that Torkk will be compiling Aggregated Statistics based on Your Information and Information input by other customers/ other Captains into the Platform. Captain agrees that Torkk may: (i) make such Aggregated Statistics publicly available, and (ii) use such information to the extent and in the manner required by applicable law and for purposes of data gathering, analysis, service enhancement and marketing, provided that such data and information does not identify Captain.',
+  ),
   LegalBlock.text('The Captain will not do the following:'),
-  LegalBlock.text('License, sublicense, sell, resell, transfer, assign, distribute or otherwise commercially exploit or make available to any third party the Platform in any way;'),
+  LegalBlock.text(
+    'License, sublicense, sell, resell, transfer, assign, distribute or otherwise commercially exploit or make available to any third party the Platform in any way;',
+  ),
   LegalBlock.text('Modify or make derivative works based upon the Platform;'),
-  LegalBlock.text('Create internet “links” or “frame” or “mirror” any application on any other server or wireless or internet- based device; or'),
+  LegalBlock.text(
+    'Create internet “links” or “frame” or “mirror” any application on any other server or wireless or internet- based device; or',
+  ),
   LegalBlock.text('Reverse engineer or access the Platform in order to:'),
-  LegalBlock.text('design or build a competitive product or service, design or build a product using similar ideas, features, functions or graphics of the Platform, or copy any ideas, features, functions or graphics of the Platform, or launch an automated program or script, including, but not limited to, web spiders, web crawlers, web robots, web ants, web indexers, bots, viruses or worms, or any program which may make multiple server requests per second, or unduly burdens or hinders the operation and/or performance of the Platform.'),
+  LegalBlock.text(
+    'design or build a competitive product or service, design or build a product using similar ideas, features, functions or graphics of the Platform, or copy any ideas, features, functions or graphics of the Platform, or launch an automated program or script, including, but not limited to, web spiders, web crawlers, web robots, web ants, web indexers, bots, viruses or worms, or any program which may make multiple server requests per second, or unduly burdens or hinders the operation and/or performance of the Platform.',
+  ),
   LegalBlock.heading('IX. INDEMNITY'),
-  LegalBlock.text('The Captain agrees to indemnify, defend and hold harmless, the Company, its affiliates, licensees and its officers, directors, agents and employees, from and against any claim, liability, obligation, loss, damage, deficiency, assessment, judgment, cost or expense (including attorneys’ fees and court costs) which result from a breach or alleged breach of these T&Cs by you including but not limited to, (i) your use or misuse of the Platform or SAAS services on the platform; (ii) your breach or violation of any of these T&Cs; and (iii) any claims from any third-party as a result of or in connection with provision of ride services provided by You, or the Platform services.'),
+  LegalBlock.text(
+    'The Captain agrees to indemnify, defend and hold harmless, the Company, its affiliates, licensees and its officers, directors, agents and employees, from and against any claim, liability, obligation, loss, damage, deficiency, assessment, judgment, cost or expense (including attorneys’ fees and court costs) which result from a breach or alleged breach of these T&Cs by you including but not limited to, (i) your use or misuse of the Platform or SAAS services on the platform; (ii) your breach or violation of any of these T&Cs; and (iii) any claims from any third-party as a result of or in connection with provision of ride services provided by You, or the Platform services.',
+  ),
   LegalBlock.heading('X. DISCLAIMERS'),
-  LegalBlock.text('1. THE COMPANY MAKES NO REPRESENTATION, WARRANTY , OR GUARANTEE AS TO THE RELIABILITY , TIMELINESS, QUALITY , SUITABILITY , AVAILABILITY , ACCURACY OR COMPLETENESS OF THE SAAS SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM. THE COMPANY DOES NOT REPRESENT OR WARRANT THAT'),
-  LegalBlock.text('(A) THE USE OF THE SAAS SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE SECURE, TIMELY , UNINTERRUPTED OR ERROR-FREE OR OPERATE IN COMBINATION WITH ANY OTHER HARDWARE,'),
-  LegalBlock.text('SOFTWARE, SYSTEM OR DATA, (B) THE PLATFORM / SERVICE WILL MEET YOUR REQUIREMENTS OR'),
-  LegalBlock.text('EXPECTATIONS, (C) ANY STORED DATA WILL BE ACCURATE OR RELIABLE, (D) THE QUALITY OF ANY PLATFORM RELATED SERVICES, INFORMATION OBTAINED BY YOU THROUGH THE PLATFORM WILL MEET'),
-  LegalBlock.text('YOUR REQUIREMENTS OR EXPECTATIONS, (E) ERRORS OR DEFECTS IN THE PLATFORM SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE CORRECTED, OR (F) THE PLATFORM OR THE SERVER(S) ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS. THE PLATFORM IS PROVIDED TO YOU STRICTLY ON AN “AS IS” BASIS.'),
-  LegalBlock.text('2. All conditions, representations and warranties, whether express, implied, statutory or otherwise, including, without limitation, any implied warranty of merchantability, fitness for a particular purpose, or non-infringement of third-party rights, are hereby excluded and disclaimed to the highest and maximum extent. The Company makes no representation, warranty, or guarantee as to the reliability, safety, timeliness, quality, suitability or availability of the Platform. You acknowledge and agree that the entire risk arising out of your use of the Platform remains solely and absolutely with you and you will have no recourse whatsoever to the Company.'),
-  LegalBlock.text('3. The Company does not represent or endorse the accuracy or reliability of any information or advertisement contained on, distributed through, or linked, downloaded or accessed from any of the services contained on this Platform, or the quality of any products, information or other materials displayed, or obtained by you as a result of any product, information or other materials displayed, or obtained by you as a result of an advertisement or any other information or offer in or in connection with a service.'),
-  LegalBlock.text('4. All rights not otherwise claimed under these T&Cs or by the Company are hereby reserved. The information contained in this Platform is intended, solely to provide general information for the personal use of the reader, who accepts full responsibility for its use.'),
-  LegalBlock.text('5. Neither party hereto will be responsible for delays or failures in performance resulting from acts beyond its reasonable control and without its fault or negligence. Such excusable delays or failures may be caused by, among other things, strikes, lock-out, riots, rebellions, accidental explosions, floods, storms, acts of God and similar occurrences.'),
-  LegalBlock.text('6. The information, recommendations provided to you on or through the website, or the Platform is for general information purposes only and does not constitute advice.'),
-  LegalBlock.text('7. The Company will reasonably keep the Platform and its contents correct and up to date and offer you uninterrupted access but does not guarantee that the Platform is free of errors, defects, malware and viruses or that the contents in the Platform are correct, up to date and accurate. Torkk assumes no liability whatsoever for any monetary or other damage or loss suffered by you on account of the delay, failure, interruption or errors in the operation of the Platform.'),
-  LegalBlock.text('8. The Company will further not be liable for damages resulting from the use of or the inability to use the SAAS Platform, including but not limited to damages resulting from failure or delay in delivery of electronic communications, interception or manipulation of electronic communications by third parties or by computer programs used for electronic communications and transmission of viruses.'),
-  LegalBlock.text('9. Access to the SAAS Platform may be unavailable, delayed, limited or slowed, from time to time, due to the inherent nature of the internet and among other things also due to:'),
-  LegalBlock.text('Servers, networks, hardware failure (including your own computer or mobile), telecommunication lines and connections, and other electronic and mechanical equipment;'),
-  LegalBlock.text('Software failure, including among other things, bugs, errors, viruses, configuration problems, incompatibility of systems, utilities or applications, the operation of firewalls or screening programs, unreadable codes, or irregularities within particular documents or other content;'),
+  LegalBlock.text(
+    '1. THE COMPANY MAKES NO REPRESENTATION, WARRANTY , OR GUARANTEE AS TO THE RELIABILITY , TIMELINESS, QUALITY , SUITABILITY , AVAILABILITY , ACCURACY OR COMPLETENESS OF THE SAAS SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM. THE COMPANY DOES NOT REPRESENT OR WARRANT THAT',
+  ),
+  LegalBlock.text(
+    '(A) THE USE OF THE SAAS SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE SECURE, TIMELY , UNINTERRUPTED OR ERROR-FREE OR OPERATE IN COMBINATION WITH ANY OTHER HARDWARE,',
+  ),
+  LegalBlock.text(
+    'SOFTWARE, SYSTEM OR DATA, (B) THE PLATFORM / SERVICE WILL MEET YOUR REQUIREMENTS OR',
+  ),
+  LegalBlock.text(
+    'EXPECTATIONS, (C) ANY STORED DATA WILL BE ACCURATE OR RELIABLE, (D) THE QUALITY OF ANY PLATFORM RELATED SERVICES, INFORMATION OBTAINED BY YOU THROUGH THE PLATFORM WILL MEET',
+  ),
+  LegalBlock.text(
+    'YOUR REQUIREMENTS OR EXPECTATIONS, (E) ERRORS OR DEFECTS IN THE PLATFORM SERVICES PROVIDED BY TORKK AND/OR THE PLATFORM WILL BE CORRECTED, OR (F) THE PLATFORM OR THE SERVER(S) ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS. THE PLATFORM IS PROVIDED TO YOU STRICTLY ON AN “AS IS” BASIS.',
+  ),
+  LegalBlock.text(
+    '2. All conditions, representations and warranties, whether express, implied, statutory or otherwise, including, without limitation, any implied warranty of merchantability, fitness for a particular purpose, or non-infringement of third-party rights, are hereby excluded and disclaimed to the highest and maximum extent. The Company makes no representation, warranty, or guarantee as to the reliability, safety, timeliness, quality, suitability or availability of the Platform. You acknowledge and agree that the entire risk arising out of your use of the Platform remains solely and absolutely with you and you will have no recourse whatsoever to the Company.',
+  ),
+  LegalBlock.text(
+    '3. The Company does not represent or endorse the accuracy or reliability of any information or advertisement contained on, distributed through, or linked, downloaded or accessed from any of the services contained on this Platform, or the quality of any products, information or other materials displayed, or obtained by you as a result of any product, information or other materials displayed, or obtained by you as a result of an advertisement or any other information or offer in or in connection with a service.',
+  ),
+  LegalBlock.text(
+    '4. All rights not otherwise claimed under these T&Cs or by the Company are hereby reserved. The information contained in this Platform is intended, solely to provide general information for the personal use of the reader, who accepts full responsibility for its use.',
+  ),
+  LegalBlock.text(
+    '5. Neither party hereto will be responsible for delays or failures in performance resulting from acts beyond its reasonable control and without its fault or negligence. Such excusable delays or failures may be caused by, among other things, strikes, lock-out, riots, rebellions, accidental explosions, floods, storms, acts of God and similar occurrences.',
+  ),
+  LegalBlock.text(
+    '6. The information, recommendations provided to you on or through the website, or the Platform is for general information purposes only and does not constitute advice.',
+  ),
+  LegalBlock.text(
+    '7. The Company will reasonably keep the Platform and its contents correct and up to date and offer you uninterrupted access but does not guarantee that the Platform is free of errors, defects, malware and viruses or that the contents in the Platform are correct, up to date and accurate. Torkk assumes no liability whatsoever for any monetary or other damage or loss suffered by you on account of the delay, failure, interruption or errors in the operation of the Platform.',
+  ),
+  LegalBlock.text(
+    '8. The Company will further not be liable for damages resulting from the use of or the inability to use the SAAS Platform, including but not limited to damages resulting from failure or delay in delivery of electronic communications, interception or manipulation of electronic communications by third parties or by computer programs used for electronic communications and transmission of viruses.',
+  ),
+  LegalBlock.text(
+    '9. Access to the SAAS Platform may be unavailable, delayed, limited or slowed, from time to time, due to the inherent nature of the internet and among other things also due to:',
+  ),
+  LegalBlock.text(
+    'Servers, networks, hardware failure (including your own computer or mobile), telecommunication lines and connections, and other electronic and mechanical equipment;',
+  ),
+  LegalBlock.text(
+    'Software failure, including among other things, bugs, errors, viruses, configuration problems, incompatibility of systems, utilities or applications, the operation of firewalls or screening programs, unreadable codes, or irregularities within particular documents or other content;',
+  ),
   LegalBlock.text('Overload of system capacities;'),
-  LegalBlock.text('Damage caused by severe weather, earthquakes, wars, insurrection, riots, civil commotion, act of God, accident, fire, water damage, explosion, mechanical breakdown or natural disasters;'),
-  LegalBlock.text('Interruption (whether partial or total) of power supplies or other utility service, strike or other stoppage (whether partial or total) of labour;'),
-  LegalBlock.text('Governmental or regulatory restrictions, exchange rulings, court or tribunal orders or other human intervention; or'),
-  LegalBlock.text('Any other cause (whether similar or dissimilar to the above) beyond control of Torkk.'),
-  LegalBlock.text('10. The Captains are independent service providers of ride services. The Company is not responsible for the behaviour, actions, or inactions of Captains or quality of the Vehicle or the ride services. Any contract for the ride services including payment for such services is exclusively between Captain’s Customers and the Captain and the Company is not a party to the same.'),
-  LegalBlock.text('11. For the avoidance of doubt, it is clarified that the Company itself does not provide the ride services and is not a provider of the said services. Torkk’s role is limited to enabling lead generation and discovery of Captain’s Customers, and linking third party service providers who provide or offer to provide ride services directly to Captain’s Customers.'),
+  LegalBlock.text(
+    'Damage caused by severe weather, earthquakes, wars, insurrection, riots, civil commotion, act of God, accident, fire, water damage, explosion, mechanical breakdown or natural disasters;',
+  ),
+  LegalBlock.text(
+    'Interruption (whether partial or total) of power supplies or other utility service, strike or other stoppage (whether partial or total) of labour;',
+  ),
+  LegalBlock.text(
+    'Governmental or regulatory restrictions, exchange rulings, court or tribunal orders or other human intervention; or',
+  ),
+  LegalBlock.text(
+    'Any other cause (whether similar or dissimilar to the above) beyond control of Torkk.',
+  ),
+  LegalBlock.text(
+    '10. The Captains are independent service providers of ride services. The Company is not responsible for the behaviour, actions, or inactions of Captains or quality of the Vehicle or the ride services. Any contract for the ride services including payment for such services is exclusively between Captain’s Customers and the Captain and the Company is not a party to the same.',
+  ),
+  LegalBlock.text(
+    '11. For the avoidance of doubt, it is clarified that the Company itself does not provide the ride services and is not a provider of the said services. Torkk’s role is limited to enabling lead generation and discovery of Captain’s Customers, and linking third party service providers who provide or offer to provide ride services directly to Captain’s Customers.',
+  ),
   LegalBlock.heading('XI. LIMITATION OF LIABILITY'),
-  LegalBlock.text('The Company is not responsible for the behaviour, actions or inactions of the Captain or, quality of the Vehicle. Any contract for the provision of ride services is exclusively between the Captain’s Customers and the Captain and the Company is not a party to the same.'),
-  LegalBlock.text('IN NO EVENT WILL TORKK BE LIABLE FOR ANY INDIRECT , PUNITIVE, INCIDENTAL, SPECIAL OR'),
-  LegalBlock.text('CONSEQUENTIAL DAMAGES OR FOR ANY DAMAGES WHATSOEVER, WHETHER BASED ON CONTRACT,'),
-  LegalBlock.text('TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, EVEN IF IT HAS BEEN ADVISED OF THE POSSIBILITY THEREOF.'),
-  LegalBlock.text('IN ADDITION, AND WITHOUT LIMITING THE FOREGOING, TO THE FULLEST EXTENT PERMITTED BY'),
-  LegalBlock.text('APPLICABLE LAW, IN NO EVENT WILL TORKK’s AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THESE T&Cs OR THE SERVICES RENDERED HEREUNDER, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE, PRODUCT LIABILITY , OR OTHER THEORY), WARRANTY , OR OTHERWISE, EXCEED THE AMOUNT OF INR 1000/-.'),
+  LegalBlock.text(
+    'The Company is not responsible for the behaviour, actions or inactions of the Captain or, quality of the Vehicle. Any contract for the provision of ride services is exclusively between the Captain’s Customers and the Captain and the Company is not a party to the same.',
+  ),
+  LegalBlock.text(
+    'IN NO EVENT WILL TORKK BE LIABLE FOR ANY INDIRECT , PUNITIVE, INCIDENTAL, SPECIAL OR',
+  ),
+  LegalBlock.text(
+    'CONSEQUENTIAL DAMAGES OR FOR ANY DAMAGES WHATSOEVER, WHETHER BASED ON CONTRACT,',
+  ),
+  LegalBlock.text(
+    'TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, EVEN IF IT HAS BEEN ADVISED OF THE POSSIBILITY THEREOF.',
+  ),
+  LegalBlock.text(
+    'IN ADDITION, AND WITHOUT LIMITING THE FOREGOING, TO THE FULLEST EXTENT PERMITTED BY',
+  ),
+  LegalBlock.text(
+    'APPLICABLE LAW, IN NO EVENT WILL TORKK’s AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THESE T&Cs OR THE SERVICES RENDERED HEREUNDER, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE, PRODUCT LIABILITY , OR OTHER THEORY), WARRANTY , OR OTHERWISE, EXCEED THE AMOUNT OF INR 1000/-.',
+  ),
   LegalBlock.heading('XII. TERMINATION'),
-  LegalBlock.text('Company is entitled to terminate these T&Cs at all times and with immediate effect, at its sole discretion, (by disabling the Captain’s registration on the Platform and use of the Platform) for any one or more of the following reasons:'),
-  LegalBlock.text('Any violation or breach of any term of these T&Cs or non-compliance with the requirements under applicable laws;'),
-  LegalBlock.text('If the Captain, in the opinion of the Company, misuses the Platform; or'),
-  LegalBlock.text('Where, in their opinion, continuance of the services of Captain is detrimental to the business interest of Torkk due to the acts of the Captain.'),
-  LegalBlock.text('The Company may terminate these T&Cs immediately on the above grounds and is not obliged to give notice of the termination of these T&Cs in advance.'),
-  LegalBlock.text('Torkk, in addition to its right to terminate these T&Cs, in its sole discretion reserves the right to legally prosecute the Captain immediately, if there is reason to believe that the Captain has indulged in any fraudulent activity or contravened the T&Cs of the Platform or violated any applicable laws and Torkk will not be responsible for any consequences to the Captain arising from the same.'),
+  LegalBlock.text(
+    'Company is entitled to terminate these T&Cs at all times and with immediate effect, at its sole discretion, (by disabling the Captain’s registration on the Platform and use of the Platform) for any one or more of the following reasons:',
+  ),
+  LegalBlock.text(
+    'Any violation or breach of any term of these T&Cs or non-compliance with the requirements under applicable laws;',
+  ),
+  LegalBlock.text(
+    'If the Captain, in the opinion of the Company, misuses the Platform; or',
+  ),
+  LegalBlock.text(
+    'Where, in their opinion, continuance of the services of Captain is detrimental to the business interest of Torkk due to the acts of the Captain.',
+  ),
+  LegalBlock.text(
+    'The Company may terminate these T&Cs immediately on the above grounds and is not obliged to give notice of the termination of these T&Cs in advance.',
+  ),
+  LegalBlock.text(
+    'Torkk, in addition to its right to terminate these T&Cs, in its sole discretion reserves the right to legally prosecute the Captain immediately, if there is reason to believe that the Captain has indulged in any fraudulent activity or contravened the T&Cs of the Platform or violated any applicable laws and Torkk will not be responsible for any consequences to the Captain arising from the same.',
+  ),
   LegalBlock.text('Upon termination:'),
   LegalBlock.text('Captain will stop accessing the Platform; and'),
-  LegalBlock.text('Captain will cease holding out as a ride service provider using with Torkk’s SAAS Platform in any manner .'),
-  LegalBlock.heading('XIII. GOVERNING LAW , JURISDICTION AND DISPUTE RESOLUTION'),
-  LegalBlock.text('These T&Cs will be governed by and interpreted in all respects in accordance with the laws of the Republic of India.'),
-  LegalBlock.text('Subject to the provisions made in Clause XIII.3, the parties hereby submit to the exclusive jurisdiction of the courts of Bangalore, India.'),
-  LegalBlock.text('All disputes arising out of or in relation to these T&Cs will be settled amicably by the parties. In the event, no amicable settlement is arrived at within a period of 15 (fifteen) days from the date of first initiation of the dispute by one party to other, the parties will resolve the dispute by means of arbitration pursuant to the Arbitration and Conciliation Act, 1996.'),
-  LegalBlock.text('The arbitration proceedings will be conducted by an arbitral tribunal comprising of 1 arbitrator mutually appointed by you and the Company.'),
-  LegalBlock.text('The arbitration proceedings will be conducted in English language only and the seat for arbitration will be Bangalore, India.'),
-  LegalBlock.text('The award of the arbitral tribunal will be final and binding.'),
+  LegalBlock.text(
+    'Captain will cease holding out as a ride service provider using with Torkk’s SAAS Platform in any manner .',
+  ),
+  LegalBlock.heading(
+    'XIII. GOVERNING LAW , JURISDICTION AND DISPUTE RESOLUTION',
+  ),
+  LegalBlock.text(
+    'These T&Cs will be governed by and interpreted in all respects in accordance with the laws of the Republic of India.',
+  ),
+  LegalBlock.text(
+    'Subject to the provisions made in Clause XIII.3, the parties hereby submit to the exclusive jurisdiction of the courts of Bangalore, India.',
+  ),
+  LegalBlock.text(
+    'All disputes arising out of or in relation to these T&Cs will be settled amicably by the parties. In the event, no amicable settlement is arrived at within a period of 15 (fifteen) days from the date of first initiation of the dispute by one party to other, the parties will resolve the dispute by means of arbitration pursuant to the Arbitration and Conciliation Act, 1996.',
+  ),
+  LegalBlock.text(
+    'The arbitration proceedings will be conducted by an arbitral tribunal comprising of 1 arbitrator mutually appointed by you and the Company.',
+  ),
+  LegalBlock.text(
+    'The arbitration proceedings will be conducted in English language only and the seat for arbitration will be Bangalore, India.',
+  ),
+  LegalBlock.text(
+    'The award of the arbitral tribunal will be final and binding.',
+  ),
   LegalBlock.heading('XIV. ASSIGNMENT'),
-  LegalBlock.text('You may not assign your rights under these T&Cs without prior written approval of the Company. Torkk may freely assign its rights and obligations without prior notice to or consent from Captain.'),
+  LegalBlock.text(
+    'You may not assign your rights under these T&Cs without prior written approval of the Company. Torkk may freely assign its rights and obligations without prior notice to or consent from Captain.',
+  ),
   LegalBlock.heading('XV. AMENDMENT'),
-  LegalBlock.text('These T&Cs may be amended from time to time and as and when required, at the sole discretion of the Company. If Torkk makes any changes to these T&Cs that it deems to be material, Torkk will make a reasonable effort to inform you of such changes, but it is your responsibility to review the T&Cs posted to the Platform from time to time to see if it has been changed. The updated version of these T&Cs will supersede the current version and such updated version will be immediately effective upon being posted on the Platform. The continued use of the Platform following the notification of modification of the T&Cs or after being updated on the Platform will be construed to mean the acceptance of the said modified T&Cs.'),
+  LegalBlock.text(
+    'These T&Cs may be amended from time to time and as and when required, at the sole discretion of the Company. If Torkk makes any changes to these T&Cs that it deems to be material, Torkk will make a reasonable effort to inform you of such changes, but it is your responsibility to review the T&Cs posted to the Platform from time to time to see if it has been changed. The updated version of these T&Cs will supersede the current version and such updated version will be immediately effective upon being posted on the Platform. The continued use of the Platform following the notification of modification of the T&Cs or after being updated on the Platform will be construed to mean the acceptance of the said modified T&Cs.',
+  ),
   LegalBlock.heading('XVI. SEVERABILITY'),
-  LegalBlock.text('If any portion of these T&Cs are found to be unenforceable, the remaining portion will remain in full force and effect.'),
+  LegalBlock.text(
+    'If any portion of these T&Cs are found to be unenforceable, the remaining portion will remain in full force and effect.',
+  ),
   LegalBlock.heading('XVII. NOTICES'),
-  LegalBlock.text('The Company may give notice by means of a general notice on the Platform, or by electronic mail to your email address on record in the Company’s account information, or by written communication sent by regular mail to the Captain’s address on record in the Company’s account information.'),
-  LegalBlock.text('Captain needs to send any notice at email id: captaincare@Torkk.bike .'),
+  LegalBlock.text(
+    'The Company may give notice by means of a general notice on the Platform, or by electronic mail to your email address on record in the Company’s account information, or by written communication sent by regular mail to the Captain’s address on record in the Company’s account information.',
+  ),
+  LegalBlock.text(
+    'Captain needs to send any notice at email id: captaincare@Torkk.bike .',
+  ),
   LegalBlock.heading('XVIII. CUSTOMER CARE AND GRIEVANCE REDRESSAL'),
-  LegalBlock.text('Any opinions, issues or suggestion regarding the Platform can be provided / resolved by reaching out to the customer care number or email mentioned below:'),
+  LegalBlock.text(
+    'Any opinions, issues or suggestion regarding the Platform can be provided / resolved by reaching out to the customer care number or email mentioned below:',
+  ),
   LegalBlock.text('Customer Care details: shoutout@Torkk.bike'),
-  LegalBlock.text('You can also reach out to the Customer Care through our 24*7 call support only with respect to any technical issues faced by you on the SAAS Platform or for safety and security situation. The Customer Care shall not be otherwise responsible for handling any issues relating to the ride services provided by You to your Customers (including relating to the ride fare, collection of ride fare, service quality etc.).'),
+  LegalBlock.text(
+    'You can also reach out to the Customer Care through our 24*7 call support only with respect to any technical issues faced by you on the SAAS Platform or for safety and security situation. The Customer Care shall not be otherwise responsible for handling any issues relating to the ride services provided by You to your Customers (including relating to the ride fare, collection of ride fare, service quality etc.).',
+  ),
 ];

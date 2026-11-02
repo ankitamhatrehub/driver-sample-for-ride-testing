@@ -17,10 +17,22 @@ class NoScratchCardScreen extends StatelessWidget {
       title: 'Scratch Card',
       onBack: onBack,
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(12), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(12),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
-          const CoinGiftMark(icon: Icons.close_rounded, color: Color(0xFFEF4444)),
-          Text('No Scratch Card Available', textAlign: TextAlign.center, style: coinsTitle()),
+          const CoinGiftMark(
+            icon: Icons.close_rounded,
+            color: Color(0xFFEF4444),
+          ),
+          Text(
+            'No Scratch Card Available',
+            textAlign: TextAlign.center,
+            style: coinsTitle(),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(16)),
             child: Text(

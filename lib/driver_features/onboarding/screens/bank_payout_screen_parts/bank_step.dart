@@ -17,19 +17,27 @@ class _BankStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = done ? AppColors.green600 : (active ? AppColors.primary : AppColors.slate300);
+    final color = done
+        ? AppColors.green600
+        : (active ? AppColors.primary : AppColors.slate300);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
           children: [
             Icon(
-              done ? Icons.check_circle : (active ? Icons.circle : Icons.circle_outlined),
+              done
+                  ? Icons.check_circle
+                  : (active ? Icons.circle : Icons.circle_outlined),
               color: color,
               size: context.w(18),
             ),
             if (!last)
-              Container(width: 2, height: context.h(36), color: done ? AppColors.green600 : AppColors.slate200),
+              Container(
+                width: 2,
+                height: context.h(36),
+                color: done ? AppColors.green600 : AppColors.slate200,
+              ),
           ],
         ),
         SizedBox(width: context.w(10)),
@@ -43,14 +51,21 @@ class _BankStep extends StatelessWidget {
                   label,
                   style: AppTypography.regular.copyWith(
                     fontSize: 13,
-                    fontWeight: active || done ? FontWeight.w700 : FontWeight.w400,
-                    color: done || active ? context.legible(AppColors.textPrimary) : context.legible(AppColors.secondaryTextColor),
+                    fontWeight: active || done
+                        ? FontWeight.w700
+                        : FontWeight.w400,
+                    color: done || active
+                        ? context.legible(AppColors.textPrimary)
+                        : context.legible(AppColors.secondaryTextColor),
                   ),
                 ),
                 if (note != null)
                   Text(
                     note!,
-                    style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 12,
+                      color: context.torkk.textSecondary,
+                    ),
                   ),
               ],
             ),

@@ -34,11 +34,36 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
   bool _showError = false;
 
   static final List<_VehicleOption> _vehicles = [
-    _VehicleOption('Cab', AppStrings.vehicleCab, AppStrings.fourWheeler, AppAssets.cab),
-    _VehicleOption('Cab EV', AppStrings.vehicleEvCab, AppStrings.fourWheeler, AppAssets.evCab),
-    _VehicleOption('Cab XL', AppStrings.vehicleXlCab, AppStrings.fourWheeler, AppAssets.xlCab),
-     _VehicleOption('Auto', AppStrings.vehicleAuto, AppStrings.threeWheeler, AppAssets.auto),
-     _VehicleOption('Bike', AppStrings.vehicleBike, AppStrings.twoWheeler, AppAssets.bike),
+    _VehicleOption(
+      'Cab',
+      AppStrings.vehicleCab,
+      AppStrings.fourWheeler,
+      AppAssets.cab,
+    ),
+    _VehicleOption(
+      'Cab EV',
+      AppStrings.vehicleEvCab,
+      AppStrings.fourWheeler,
+      AppAssets.evCab,
+    ),
+    _VehicleOption(
+      'Cab XL',
+      AppStrings.vehicleXlCab,
+      AppStrings.fourWheeler,
+      AppAssets.xlCab,
+    ),
+    _VehicleOption(
+      'Auto',
+      AppStrings.vehicleAuto,
+      AppStrings.threeWheeler,
+      AppAssets.auto,
+    ),
+    _VehicleOption(
+      'Bike',
+      AppStrings.vehicleBike,
+      AppStrings.twoWheeler,
+      AppAssets.bike,
+    ),
   ];
 
   void _select(_VehicleOption vehicle) {
@@ -63,7 +88,14 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
         leading: widget.onBack == null
             ? null
             : IconButton(
-                icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: context.themed(
+                    light: Colors.black,
+                    dark: context.torkk.textPrimary,
+                  ),
+                  size: 20,
+                ),
                 onPressed: widget.onBack,
               ),
         titleSpacing: widget.onBack == null ? context.w(20) : 0,
@@ -92,7 +124,12 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -128,7 +165,11 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
               SizedBox(height: context.h(8)),
               Row(
                 children: [
-                  Icon(Icons.info, color: context.legible(AppColors.error), size: context.w(18)),
+                  Icon(
+                    Icons.info,
+                    color: context.legible(AppColors.error),
+                    size: context.w(18),
+                  ),
                   SizedBox(width: context.w(8)),
                   Expanded(
                     child: Text(
@@ -181,9 +222,14 @@ class _VehicleCard extends StatelessWidget {
       onTap: onTap,
       child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+          padding: EdgeInsets.symmetric(
+            horizontal: context.w(12),
+            vertical: context.h(12),
+          ),
           decoration: BoxDecoration(
-            color: selected ? context.adaptiveTint(const Color(0xFFF6F3FB)) : context.torkk.surface,
+            color: selected
+                ? context.adaptiveTint(const Color(0xFFF6F3FB))
+                : context.torkk.surface,
             borderRadius: BorderRadius.circular(context.r(16)),
             border: Border.all(
               color: selected ? AppColors.primary : AppColors.fieldBorder,

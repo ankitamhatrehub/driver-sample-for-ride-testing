@@ -26,13 +26,21 @@ class _IconInfoRow extends StatelessWidget {
               color: context.adaptiveTint(const Color(0xFFFAF5FF)),
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
-            child: Icon(icon, color: context.legible(AppColors.primary), size: context.w(16)),
+            child: Icon(
+              icon,
+              color: context.legible(AppColors.primary),
+              size: context.w(16),
+            ),
           ),
           SizedBox(width: context.w(12)),
           Expanded(
             child: Text(
               text,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.2, color: context.torkk.textPrimary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                height: 1.2,
+                color: context.torkk.textPrimary,
+              ),
             ),
           ),
         ],

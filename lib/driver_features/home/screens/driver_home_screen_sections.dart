@@ -41,11 +41,11 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
 
     if (rideId == null || !mounted) return;
 
+    // Resume inside the new ride UI: the next poll fills _rides and
+    // _syncFlowRide opens the ride at its accepted / in-progress step.
     debugPrint('[DEBUG HOME] Restoring active ride $rideId');
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      context.push(AppRoutes.navigation);
-    });
+    if (mounted) setState(() => _showRideFlow = true);
+    await _fetchRides();
   }
 
   Future<void> _forceLogoutDueToMissingProfile() async {
@@ -200,7 +200,9 @@ extension _DriverHomeScreenStateSections on _DriverHomeScreenState {
       return;
     }
     for (final ride in _rides) {
-      if (ride is! Map || (ride['status'] ?? '').toString() != 'requested') {
+      final status = ride is Map ? (ride['status'] ?? '').toString() : '';
+      final running = status == 'accepted' || status == 'in_progress';
+      if (ride is! Map || (status != 'requested' && !running)) {
         debugPrint(
           'RIDE_FLOW_11 | skip: not a "requested" ride -> ${ride is Map ? ride['status'] : ride}',
         );

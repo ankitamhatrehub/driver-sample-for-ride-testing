@@ -20,13 +20,27 @@ class _PreviewTile extends StatelessWidget {
             border: Border.all(color: context.torkk.border),
           ),
           child: imagePath == null
-              ? Icon(Icons.badge_outlined, color: AppColors.slate300, size: context.w(32))
+              ? Icon(
+                  Icons.badge_outlined,
+                  color: AppColors.slate300,
+                  size: context.w(32),
+                )
               : Image.file(File(imagePath!), fit: BoxFit.cover),
         ),
         TextButton.icon(
           onPressed: onRetake,
-          icon: Icon(Icons.refresh, size: context.w(16), color: context.legible(AppColors.primary)),
-          label: Text(AppStrings.retake, style: AppTypography.regular.copyWith(color: context.legible(AppColors.primary), fontSize: 13)),
+          icon: Icon(
+            Icons.refresh,
+            size: context.w(16),
+            color: context.legible(AppColors.primary),
+          ),
+          label: Text(
+            AppStrings.retake,
+            style: AppTypography.regular.copyWith(
+              color: context.legible(AppColors.primary),
+              fontSize: 13,
+            ),
+          ),
         ),
       ],
     );

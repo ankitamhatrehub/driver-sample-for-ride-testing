@@ -194,18 +194,20 @@ class _DriverEarningsScreenState extends State<DriverEarningsScreen> {
                                   ? Image.network(
                                       photo,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => Icon(
-                                        Icons.person,
-                                        color: context.torkk.textSecondary,
-                                      ),
+                                      errorBuilder: (_, error, stackTrace) =>
+                                          Icon(
+                                            Icons.person,
+                                            color: context.torkk.textSecondary,
+                                          ),
                                     )
                                   : Image.file(
                                       File(photo),
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, error, stackTrace) => Icon(
-                                        Icons.person,
-                                        color: context.torkk.textSecondary,
-                                      ),
+                                      errorBuilder: (_, error, stackTrace) =>
+                                          Icon(
+                                            Icons.person,
+                                            color: context.torkk.textSecondary,
+                                          ),
                                     ))
                             : Icon(
                                 Icons.person,

@@ -103,7 +103,10 @@ extension _DriverEarningsScreenStateSections on _DriverEarningsScreenState {
               children: [
                 Text(
                   'Earnings statement CSV has been downloaded to your device storage:',
-                  style: TextStyle(fontSize: 13.5, color: context.torkk.textBody),
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    color: context.torkk.textBody,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Container(
@@ -137,7 +140,8 @@ extension _DriverEarningsScreenStateSections on _DriverEarningsScreenState {
               ),
               ElevatedButton(
                 onPressed: () => Navigator.pop(ctx),
-                style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFF2563EB)), 
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: onColorFor(const Color(0xFF2563EB)),
                   backgroundColor: const Color(0xFF2563EB),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -421,7 +425,8 @@ extension _DriverEarningsScreenStateSections on _DriverEarningsScreenState {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(ctx),
-                  style: ElevatedButton.styleFrom(foregroundColor: onColorFor(const Color(0xFF4F46E5)), 
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: onColorFor(const Color(0xFF4F46E5)),
                     backgroundColor: const Color(0xFF4F46E5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),

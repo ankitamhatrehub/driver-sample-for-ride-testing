@@ -30,7 +30,15 @@ class FinishRideDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Cancel', style: TextStyle(color: context.themed(light: Colors.grey, dark: context.torkk.textSecondary))),
+          child: Text(
+            'Cancel',
+            style: TextStyle(
+              color: context.themed(
+                light: Colors.grey,
+                dark: context.torkk.textSecondary,
+              ),
+            ),
+          ),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

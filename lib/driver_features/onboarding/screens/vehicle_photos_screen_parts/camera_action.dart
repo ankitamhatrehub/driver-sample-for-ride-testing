@@ -1,7 +1,11 @@
 part of 'package:rider_app/driver_features/onboarding/screens/vehicle_photos_screen.dart';
 
 class _CameraAction extends StatelessWidget {
-  const _CameraAction({required this.icon, required this.label, required this.onTap});
+  const _CameraAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
 
   final IconData icon;
   final String label;
@@ -15,7 +19,13 @@ class _CameraAction extends StatelessWidget {
         children: [
           Icon(icon, color: Colors.white, size: context.w(22)),
           SizedBox(height: context.h(4)),
-          Text(label, style: AppTypography.regular.copyWith(fontSize: 12, color: Colors.white)),
+          Text(
+            label,
+            style: AppTypography.regular.copyWith(
+              fontSize: 12,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );

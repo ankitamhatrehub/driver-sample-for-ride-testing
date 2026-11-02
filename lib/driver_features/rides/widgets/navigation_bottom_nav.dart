@@ -8,10 +8,7 @@ import 'package:rider_app/driver_features/profile/screens/driver_profile_screen.
 class NavigationBottomNav extends StatelessWidget {
   final String driverPhotoUrl;
 
-  const NavigationBottomNav({
-    super.key,
-    required this.driverPhotoUrl,
-  });
+  const NavigationBottomNav({super.key, required this.driverPhotoUrl});
 
   @override
   Widget build(BuildContext context) {

@@ -34,11 +34,7 @@ class DriverPrivacyScreen extends StatelessWidget {
             ),
           ),
         ),
-        Divider(
-          height: 1,
-          thickness: 1,
-          color: context.torkk.border,
-        ),
+        Divider(height: 1, thickness: 1, color: context.torkk.border),
       ],
     );
   }
@@ -136,10 +132,20 @@ class DriverPrivacyScreen extends StatelessWidget {
             onTap: () => Navigator.maybePop(context),
             child: Container(
               decoration: BoxDecoration(
-                color: context.themed(light: const Color(0xFF475569), dark: context.torkk.surfaceMuted),
+                color: context.themed(
+                  light: const Color(0xFF475569),
+                  dark: context.torkk.surfaceMuted,
+                ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close, color: context.themed(light: Colors.white, dark: context.torkk.textPrimary), size: 20),
+              child: Icon(
+                Icons.close,
+                color: context.themed(
+                  light: Colors.white,
+                  dark: context.torkk.textPrimary,
+                ),
+                size: 20,
+              ),
             ),
           ),
         ),

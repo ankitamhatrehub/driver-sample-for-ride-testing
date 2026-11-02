@@ -19,8 +19,11 @@ class VehiclePage extends StatelessWidget {
           selectedVehicle: _session.vehicleType,
           isLoading: _session.loading,
           onBack: _session.returnToReview
-              ? () =>
-                    leaveOnboardingStep(context, AppRoutes.vehicleDetails, AppRoutes.welcome)
+              ? () => leaveOnboardingStep(
+                  context,
+                  AppRoutes.vehicleDetails,
+                  AppRoutes.welcome,
+                )
               : null,
           onHelp: () => openAiChat(context),
           onSelected: (value) {
@@ -30,7 +33,11 @@ class VehiclePage extends StatelessWidget {
           onContinue: () async {
             await _session.saveVehicle();
             if (!context.mounted) return;
-            leaveOnboardingStep(context, AppRoutes.vehicleDetails, AppRoutes.kyc);
+            leaveOnboardingStep(
+              context,
+              AppRoutes.vehicleDetails,
+              AppRoutes.kyc,
+            );
           },
         );
       },

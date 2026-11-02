@@ -49,7 +49,10 @@ class BankDetails {
     }
 
     return BankDetails(
-      accountHolderName: pick(['account_holder_name', 'bank_account_holder_name']),
+      accountHolderName: pick([
+        'account_holder_name',
+        'bank_account_holder_name',
+      ]),
       accountNumber: pick(['account_number', 'bank_account_number']),
       ifscCode: pick(['ifsc_code', 'bank_ifsc_code']),
       bankName: pick(['bank_name']),

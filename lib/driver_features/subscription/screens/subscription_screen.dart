@@ -90,9 +90,20 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return switch (_stack.last) {
-      _Page.expiredGate => ExpiredGateScreen(onBack: _back, onRecharge: _recharge),
-      _Page.expiredPlan => CurrentPlanScreen(active: false, onBack: _back, onRenew: () => _push(_Page.plans)),
-      _Page.activePlan => CurrentPlanScreen(active: true, onBack: _back, onRenew: () => _push(_Page.plans)),
+      _Page.expiredGate => ExpiredGateScreen(
+        onBack: _back,
+        onRecharge: _recharge,
+      ),
+      _Page.expiredPlan => CurrentPlanScreen(
+        active: false,
+        onBack: _back,
+        onRenew: () => _push(_Page.plans),
+      ),
+      _Page.activePlan => CurrentPlanScreen(
+        active: true,
+        onBack: _back,
+        onRenew: () => _push(_Page.plans),
+      ),
       _Page.plans => AvailablePlansScreen(
         selected: _selected,
         onSelect: (index) => setState(() => _selected = index),
@@ -106,7 +117,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         onPay: _pay,
         onBack: _back,
       ),
-      _Page.processing => PaymentProcessingScreen(onCompleted: _paymentFinished),
+      _Page.processing => PaymentProcessingScreen(
+        onCompleted: _paymentFinished,
+      ),
       _Page.success => PaymentSuccessScreen(
         methodLabel: payMethodLabel(_method),
         onContinue: _finish,

@@ -18,7 +18,11 @@ class RewardPendingScreen extends StatelessWidget {
       child: Column(
         children: [
           const Spacer(),
-          Image.asset(AppAssets.rewardPending, width: context.w(140), height: context.w(140)),
+          Image.asset(
+            AppAssets.rewardPending,
+            width: context.w(140),
+            height: context.w(140),
+          ),
           SizedBox(height: context.h(16)),
           Text('Reward is Pending', style: coinsTitle()),
           Padding(

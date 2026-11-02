@@ -28,7 +28,10 @@ class DriverChatWebSocketService {
               _messageController.add(jsonMsg);
             }
           } catch (_) {
-            _messageController.add({'text': data.toString(), 'sender': 'customer'});
+            _messageController.add({
+              'text': data.toString(),
+              'sender': 'customer',
+            });
           }
         },
         onError: (err) {

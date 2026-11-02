@@ -18,7 +18,10 @@ class DriverApiService {
     required String driverPhone,
     String city = '',
   }) async {
-    final rides = await fetchActiveRideModels(driverPhone: driverPhone, city: city);
+    final rides = await fetchActiveRideModels(
+      driverPhone: driverPhone,
+      city: city,
+    );
     return [for (final ride in rides) ride.toMap()];
   }
 
@@ -30,8 +33,12 @@ class DriverApiService {
       AppUrls.activeRides(driverPhone: driverPhone, city: city),
     );
     debugPrint('RIDE_FLOW_02 | API request GET $uri');
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
-    debugPrint('RIDE_FLOW_03 | API response HTTP ${response.statusCode} body=${response.body}');
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 5));
+    debugPrint(
+      'RIDE_FLOW_03 | API response HTTP ${response.statusCode} body=${response.body}',
+    );
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch active rides: ${response.statusCode}');
     }
@@ -47,7 +54,9 @@ class DriverApiService {
       }
       // `rides` can be null or missing when there are none.
       if (list == null) {
-        debugPrint('RIDE_FLOW_03A | API response has no rides list: ${response.body}');
+        debugPrint(
+          'RIDE_FLOW_03A | API response has no rides list: ${response.body}',
+        );
         return [];
       }
     }
@@ -60,17 +69,48 @@ class DriverApiService {
     ];
   }
 
+  /// POST with request / response logging for the ride-flow APIs, so the
+  /// URL, request body, status code and response body show in the console.
+  static Future<http.Response> _loggedPost(
+    String label,
+    String url,
+    Map<String, dynamic> body, {
+    Duration? timeout,
+  }) async {
+    debugPrint('[RIDE API] $label -> POST $url body=${json.encode(body)}');
+    final request = apiClient.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(body),
+    );
+    try {
+      final response = timeout == null
+          ? await request
+          : await request.timeout(timeout);
+      debugPrint(
+        '[RIDE API] $label <- status=${response.statusCode} body=${response.body}',
+      );
+      return response;
+    } catch (e) {
+      debugPrint('[RIDE API] $label <- FAILED before a response: $e');
+      rethrow;
+    }
+  }
+
   static Future<void> acceptRide({
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await apiClient
-        .post(
-          Uri.parse(AppUrls.acceptRide),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
-        )
-        .timeout(const Duration(seconds: 5));
+    print(
+      '[DEBUG ACCEPT RIDE API] Calling accept-ride API for ride: $rideId,\n driver: $driverPhone',
+    );
+    final response = await _loggedPost('accept-ride', AppUrls.acceptRide, {
+      'ride_id': rideId,
+      'driver_phone': driverPhone,
+    }, timeout: const Duration(seconds: 5));
+    print(
+      '[DEBUG ACCEPT RIDE API] Response status: ${response.statusCode},\n body: ${response.body}',
+    );
     if (response.statusCode != 200) {
       throw Exception('accept_failed_${response.statusCode}');
     }
@@ -80,13 +120,17 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    final response = await apiClient
-        .post(
-          Uri.parse(AppUrls.startRide),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({'ride_id': rideId, 'driver_phone': driverPhone}),
-        )
-        .timeout(const Duration(seconds: 5));
+    print(
+      '[DEBUG START RIDE API] Calling start-ride API for ride: $rideId,\n driver: $driverPhone',
+    );
+
+    final response = await _loggedPost('start-ride', AppUrls.startRide, {
+      'ride_id': rideId,
+      'driver_phone': driverPhone,
+    }, timeout: const Duration(seconds: 5));
+    print(
+      '[DEBUG START RIDE API] Response status: ${response.statusCode},\n body: ${response.body}',
+    );
     if (response.statusCode != 200) {
       throw Exception('Failed to start ride');
     }
@@ -100,18 +144,12 @@ class DriverApiService {
     debugPrint(
       '[DEBUG PICKUP API] Calling pickup-customer API for ride: $rideId, code: $rideCode',
     );
-    final response = await apiClient
-        .post(
-          Uri.parse(AppUrls.pickupCustomer),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({
-            'ride_id': rideId,
-            'driver_phone': driverPhone,
-            'ride_code': rideCode,
-          }),
-        )
-        .timeout(const Duration(seconds: 5));
-    debugPrint('[DEBUG PICKUP API] Response status: ${response.statusCode}');
+    final response = await _loggedPost(
+      'pickup-customer',
+      AppUrls.pickupCustomer,
+      {'ride_id': rideId, 'driver_phone': driverPhone, 'ride_code': rideCode},
+      timeout: const Duration(seconds: 5),
+    );
     if (response.statusCode != 200) {
       String message = 'Failed to update pickup status';
       try {
@@ -129,17 +167,11 @@ class DriverApiService {
     required String driverPhone,
     String paymentMethod = 'cash',
   }) async {
-    final response = await apiClient
-        .post(
-          Uri.parse(AppUrls.completeRide),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({
-            'ride_id': rideId,
-            'driver_phone': driverPhone,
-            'payment_method': paymentMethod,
-          }),
-        )
-        .timeout(const Duration(seconds: 10));
+    final response = await _loggedPost('complete-ride', AppUrls.completeRide, {
+      'ride_id': rideId,
+      'driver_phone': driverPhone,
+      'payment_method': paymentMethod,
+    }, timeout: const Duration(seconds: 10));
     if (response.statusCode == 200) {
       // Response: {status, fare, payment_method, already}.
       final data = json.decode(response.body);
@@ -157,11 +189,7 @@ class DriverApiService {
 
   /// Tells the backend the drop-off was reached (no timeout, response ignored).
   static Future<void> markReached({required Object? rideId}) async {
-    await apiClient.post(
-      Uri.parse(AppUrls.reached),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'ride_id': rideId}),
-    );
+    await _loggedPost('reached', AppUrls.reached, {'ride_id': rideId});
   }
 
   static Future<void> setPaymentMethod({
@@ -169,17 +197,12 @@ class DriverApiService {
     required String driverPhone,
     required String paymentMethod,
   }) async {
-    final response = await apiClient
-        .post(
-          Uri.parse(AppUrls.setPaymentMethod),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({
-            'ride_id': rideId,
-            'driver_phone': driverPhone,
-            'payment_method': paymentMethod,
-          }),
-        )
-        .timeout(const Duration(seconds: 5));
+    final response =
+        await _loggedPost('set-payment-method', AppUrls.setPaymentMethod, {
+          'ride_id': rideId,
+          'driver_phone': driverPhone,
+          'payment_method': paymentMethod,
+        }, timeout: const Duration(seconds: 5));
     if (response.statusCode != 200) {
       throw Exception('Failed to set payment method');
     }
@@ -234,10 +257,14 @@ class DriverApiService {
     String transactionId,
   ) async {
     final uri = Uri.parse(AppUrls.transactionDetails(transactionId));
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 10));
     debugPrint('[TXN DETAILS] ${response.statusCode} ${response.body}');
     if (response.statusCode != 200) {
-      throw Exception('Failed to fetch transaction details: ${response.statusCode}');
+      throw Exception(
+        'Failed to fetch transaction details: ${response.statusCode}',
+      );
     }
     final decoded = json.decode(response.body);
     if (decoded is Map) {
@@ -251,12 +278,18 @@ class DriverApiService {
   }
 
   /// GET /api/wallet/transaction-history?phone=...
-  static Future<List<dynamic>> fetchTransactionHistory(String driverPhone) async {
+  static Future<List<dynamic>> fetchTransactionHistory(
+    String driverPhone,
+  ) async {
     final uri = Uri.parse(AppUrls.transactionHistory(driverPhone));
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 10));
     debugPrint('[TXN HISTORY] ${response.statusCode} ${response.body}');
     if (response.statusCode != 200) {
-      throw Exception('Failed to fetch transaction history: ${response.statusCode}');
+      throw Exception(
+        'Failed to fetch transaction history: ${response.statusCode}',
+      );
     }
     final decoded = json.decode(response.body);
     if (decoded is List) return decoded;
@@ -272,9 +305,13 @@ class DriverApiService {
 
   /// GET /api/driver/orders?type=current|completed|cancelled|scheduled
   /// -> `{status, type, count, data: [order]}`
-  static Future<List<Map<String, dynamic>>> fetchOrders({required String type}) async {
+  static Future<List<Map<String, dynamic>>> fetchOrders({
+    required String type,
+  }) async {
     final uri = Uri.parse(AppUrls.driverOrders(type: type));
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 10));
     debugPrint('[ORDERS $type] ${response.statusCode} ${response.body}');
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch orders: ${response.statusCode}');
@@ -285,7 +322,8 @@ class DriverApiService {
     if (list is! List) return [];
     return [
       for (final item in list)
-        if (item is Map) DriverOrderModel.fromJson(Map<String, dynamic>.from(item)).toMap(),
+        if (item is Map)
+          DriverOrderModel.fromJson(Map<String, dynamic>.from(item)).toMap(),
     ];
   }
 
@@ -295,14 +333,20 @@ class DriverApiService {
     required String type,
   }) async {
     final uri = Uri.parse(AppUrls.driverOrderDetail(id: id, type: type));
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
-    debugPrint('[ORDER DETAIL $type/$id] ${response.statusCode} ${response.body}');
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 10));
+    debugPrint(
+      '[ORDER DETAIL $type/$id] ${response.statusCode} ${response.body}',
+    );
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch order details: ${response.statusCode}');
     }
     final decoded = json.decode(response.body);
     if (decoded is! Map) throw Exception('Unexpected order details response');
-    return DriverOrderModel.fromResponse(Map<String, dynamic>.from(decoded)).toMap();
+    return DriverOrderModel.fromResponse(
+      Map<String, dynamic>.from(decoded),
+    ).toMap();
   }
 
   /// POST /api/drivers/schedule  { title, start_time, end_time } (HH:mm:ss).
@@ -313,9 +357,15 @@ class DriverApiService {
     required String startTime,
     required String endTime,
   }) async {
-    final payload = {'title': title, 'start_time': startTime, 'end_time': endTime};
+    final payload = {
+      'title': title,
+      'start_time': startTime,
+      'end_time': endTime,
+    };
     print("url: ${AppUrls.driverSchedule}");
-    debugPrint('SCHEDULE_API_01 | POST ${AppUrls.driverSchedule} body=${json.encode(payload)}');
+    debugPrint(
+      'SCHEDULE_API_01 | POST ${AppUrls.driverSchedule} body=${json.encode(payload)}',
+    );
     final response = await apiClient
         .post(
           Uri.parse(AppUrls.driverSchedule),
@@ -323,7 +373,9 @@ class DriverApiService {
           body: json.encode(payload),
         )
         .timeout(const Duration(seconds: 10));
-    debugPrint('SCHEDULE_API_02 | HTTP ${response.statusCode} body=${response.body}');
+    debugPrint(
+      'SCHEDULE_API_02 | HTTP ${response.statusCode} body=${response.body}',
+    );
     dynamic decoded;
     try {
       decoded = response.body.isEmpty ? null : json.decode(response.body);
@@ -355,7 +407,9 @@ class DriverApiService {
       'bank_name': bankName,
       'branch_name': branchName,
     };
-    debugPrint('BANK_API_01 | POST ${AppUrls.bankDetails} body=${json.encode(payload)}');
+    debugPrint(
+      'BANK_API_01 | POST ${AppUrls.bankDetails} body=${json.encode(payload)}',
+    );
     final response = await apiClient
         .post(
           Uri.parse(AppUrls.bankDetails),
@@ -363,7 +417,9 @@ class DriverApiService {
           body: json.encode(payload),
         )
         .timeout(const Duration(seconds: 10));
-    debugPrint('BANK_API_02 | HTTP ${response.statusCode} body=${response.body}');
+    debugPrint(
+      'BANK_API_02 | HTTP ${response.statusCode} body=${response.body}',
+    );
     dynamic decoded;
     try {
       decoded = response.body.isEmpty ? null : json.decode(response.body);
@@ -384,8 +440,12 @@ class DriverApiService {
   static Future<List<dynamic>> fetchChatHistory(String conversationId) async {
     final uri = Uri.parse(AppUrls.chatHistory(conversationId));
     debugPrint('AI_CHAT_API_01 | GET $uri');
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 10));
-    debugPrint('AI_CHAT_API_02 | HTTP ${response.statusCode} body=${response.body}');
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 10));
+    debugPrint(
+      'AI_CHAT_API_02 | HTTP ${response.statusCode} body=${response.body}',
+    );
     if (response.statusCode == 404) return [];
     if (response.statusCode != 200) {
       throw Exception('Failed to load chat history (${response.statusCode})');
@@ -396,7 +456,8 @@ class DriverApiService {
       for (final key in const ['messages', 'history', 'data', 'results']) {
         final value = decoded[key];
         if (value is List) return value;
-        if (value is Map && value['messages'] is List) return value['messages'] as List;
+        if (value is Map && value['messages'] is List)
+          return value['messages'] as List;
       }
       return [];
     }
@@ -413,7 +474,9 @@ class DriverApiService {
     print('conversationId: $conversationId');
     print('message: $message');
     final payload = {'conversation_id': conversationId, 'message': message};
-    debugPrint('AI_CHAT_API_03 | POST ${AppUrls.chatMessage} body=${json.encode(payload)}');
+    debugPrint(
+      'AI_CHAT_API_03 | POST ${AppUrls.chatMessage} body=${json.encode(payload)}',
+    );
     final response = await apiClient
         .post(
           Uri.parse(AppUrls.chatMessage),
@@ -449,7 +512,9 @@ class DriverApiService {
           body: json.encode({'email': email}),
         )
         .timeout(const Duration(seconds: 10));
-        print('DriverApiService.updateEmail response: ${response.statusCode} ${response.body}');
+    print(
+      'DriverApiService.updateEmail response: ${response.statusCode} ${response.body}',
+    );
     if (response.statusCode == 200 || response.statusCode == 204) return;
     var message = 'Failed to update email (${response.statusCode})';
     try {
@@ -467,7 +532,9 @@ class DriverApiService {
     final uri = Uri.parse(AppUrls.driverTrips(driverPhone));
     debugPrint('[DEBUG FETCH TRIPS] Request URI: $uri');
 
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 5));
     debugPrint('[DEBUG FETCH TRIPS] Response status: ${response.statusCode}');
     debugPrint('[DEBUG FETCH TRIPS] Response body: ${response.body}');
 
@@ -505,7 +572,9 @@ class DriverApiService {
     final uri = Uri.parse(AppUrls.driverEarnings(driverPhone));
     debugPrint('[DEBUG FETCH EARNINGS] Request URI: $uri');
 
-    final response = await apiClient.get(uri).timeout(const Duration(seconds: 5));
+    final response = await apiClient
+        .get(uri)
+        .timeout(const Duration(seconds: 5));
     debugPrint(
       '[DEBUG FETCH EARNINGS] Response status: ${response.statusCode}',
     );
@@ -535,7 +604,9 @@ class DriverApiService {
     final response = await apiClient
         .get(Uri.parse(AppUrls.driverProfile(driverPhone)))
         .timeout(const Duration(seconds: 5));
-        print('DriverApiService.fetchProfile response: ${response.statusCode} \n${response.body}');
+    print(
+      'DriverApiService.fetchProfile response: ${response.statusCode} \n${response.body}',
+    );
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }
@@ -551,20 +622,24 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) async {
-    return (await fetchRideModel(rideId: rideId, driverPhone: driverPhone)).toMap();
+    return (await fetchRideModel(
+      rideId: rideId,
+      driverPhone: driverPhone,
+    )).toMap();
   }
 
   static Future<RideModel> fetchRideModel({
     required int rideId,
     required String driverPhone,
   }) async {
+    final url = AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone);
+    debugPrint('[RIDE API] ride-detail -> GET $url');
     final response = await apiClient
-        .get(
-          Uri.parse(
-            AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone),
-          ),
-        )
+        .get(Uri.parse(url))
         .timeout(const Duration(seconds: 5));
+    debugPrint(
+      '[RIDE API] ride-detail <- status=${response.statusCode} body=${response.body}',
+    );
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch ride detail');
     }
@@ -579,9 +654,14 @@ class DriverApiService {
     required int rideId,
     required String driverPhone,
   }) {
-    return apiClient.get(
-      Uri.parse(AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone)),
-    );
+    final url = AppUrls.rideDetail(rideId: rideId, driverPhone: driverPhone);
+    debugPrint('[RIDE API] ride-detail(raw) -> GET $url');
+    return apiClient.get(Uri.parse(url)).then((response) {
+      debugPrint(
+        '[RIDE API] ride-detail(raw) <- status=${response.statusCode} body=${response.body}',
+      );
+      return response;
+    });
   }
 
   static Future<String> uploadProfilePhoto({
@@ -596,7 +676,9 @@ class DriverApiService {
           body: json.encode({'phone': driverPhone, 'image_data': base64Image}),
         )
         .timeout(const Duration(seconds: 15));
-print('Upload profile photo response: ${response.statusCode} \n${response.body}');
+    print(
+      'Upload profile photo response: ${response.statusCode} \n${response.body}',
+    );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return data['profile_photo_url'] ?? '';
@@ -651,7 +733,7 @@ print('Upload profile photo response: ${response.statusCode} \n${response.body}'
         .post(
           Uri.parse(AppUrls.updateProfile),
           headers: {'Content-Type': 'application/json'},
-          
+
           body: json.encode({
             'phone': phone,
             'name': name,

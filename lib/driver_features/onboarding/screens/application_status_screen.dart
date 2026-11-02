@@ -100,7 +100,9 @@ class ApplicationStatusScreen extends StatelessWidget {
       return const _ActionClipboard();
     }
     return Image.asset(
-      outcome == ApplicationOutcome.approved ? AppAssets.verifiedIcon : AppAssets.applicationIcon,
+      outcome == ApplicationOutcome.approved
+          ? AppAssets.verifiedIcon
+          : AppAssets.applicationIcon,
       width: context.w(200),
       fit: BoxFit.contain,
     );

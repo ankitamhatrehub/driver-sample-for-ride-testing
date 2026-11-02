@@ -6,7 +6,12 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class CoinMoneyCard extends StatelessWidget {
-  const CoinMoneyCard({super.key, required this.label, required this.value, required this.color});
+  const CoinMoneyCard({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
 
   final String label;
   final String value;
@@ -25,7 +30,10 @@ class CoinMoneyCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 11,
+              color: context.torkk.textSecondary,
+            ),
           ),
           SizedBox(height: context.h(6)),
           Text(
@@ -65,7 +73,10 @@ class CoinLinkRow extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(context.r(14)),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.w(12),
+          vertical: context.h(12),
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(14)),
           border: Border.all(color: context.torkk.border),
@@ -85,10 +96,17 @@ class CoinLinkRow extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            Icon(Icons.chevron_right_rounded, color: AppColors.slate400, size: context.w(20)),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.slate400,
+              size: context.w(20),
+            ),
           ],
         ),
       ),
@@ -137,11 +155,17 @@ class CoinInfoTile extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Text(
                 subtitle,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  color: context.torkk.textSecondary,
+                ),
               ),
             ],
           ),

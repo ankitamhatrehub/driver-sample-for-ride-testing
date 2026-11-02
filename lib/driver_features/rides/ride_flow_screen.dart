@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -66,7 +67,14 @@ class RideFlowScreen extends StatefulWidget {
 }
 
 class _RideFlowScreenState extends State<RideFlowScreen> {
-  _Phase _phase = _Phase.request;
+  /// A ride resumed after app restart opens at its real step, not the request.
+  late _Phase _phase = switch ((widget.ride['status'] ?? '')
+      .toString()
+      .toLowerCase()) {
+    'accepted' => _Phase.toPickup,
+    'in_progress' || 'picked_up' => _Phase.active,
+    _ => _Phase.request,
+  };
   late Map<String, dynamic> _ride = Map<String, dynamic>.from(widget.ride);
   bool _busy = false;
   double _earnings = 0;
@@ -104,8 +112,16 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     if (identical(oldWidget.ride, widget.ride)) return;
     _ride = {..._ride, ...widget.ride};
     final status = (_ride['status'] ?? '').toString().toLowerCase();
-    final gone = status == 'cancelled' || status == 'canceled' || status == 'unavailable';
-    final live = _phase != _Phase.completed && _phase != _Phase.rate && _phase != _Phase.reward && _phase != _Phase.unavailable && _phase != _Phase.expired;
+    final gone =
+        status == 'cancelled' ||
+        status == 'canceled' ||
+        status == 'unavailable';
+    final live =
+        _phase != _Phase.completed &&
+        _phase != _Phase.rate &&
+        _phase != _Phase.reward &&
+        _phase != _Phase.unavailable &&
+        _phase != _Phase.expired;
     if (gone && live) {
       _timer?.cancel();
       setState(() => _phase = _Phase.unavailable);
@@ -167,8 +183,11 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     return id is int ? id : int.tryParse('$id');
   }
 
+  bool get _isSample => _rideId == 9901 || _rideId == 9902;
+
   /// Sample rides (ids 9901/9902) are local only; skip the backend for them.
-  bool get _callsApi => _rideId != null && _rideId != 9901 && _rideId != 9902 && widget.driverPhone.isNotEmpty;
+  bool get _callsApi =>
+      _rideId != null && !_isSample && widget.driverPhone.isNotEmpty;
 
   String _text(List<String> keys, String fallback) {
     for (final key in keys) {
@@ -178,24 +197,59 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     return fallback;
   }
 
-  String get _customerName => _text(['customer_name', 'user_name', 'passenger_name', 'name'], 'Customer');
+  String get _customerName => _text([
+    'customer_name',
+    'user_name',
+    'passenger_name',
+    'name',
+  ], 'Customer');
   String get _pickupAddress => _text(['pickup_address'], '-');
   String get _dropAddress => _text(['drop_address'], '-');
-  String get _vehicleLabel => _text(['vehicle_type', 'service_type'], 'CAB').toUpperCase();
-  String get _customerPhone => _text(['customer_phone', 'user_phone', 'phone', 'rider_phone'], '');
+  String get _vehicleLabel =>
+      _text(['vehicle_type', 'service_type'], 'CAB').toUpperCase();
+
+  /// Vehicle picture for the ride's vehicle type (cab.png, bike.png, ...).
+  String get _vehicleAsset {
+    final type = _vehicleLabel.toLowerCase();
+    if (type.contains('bike')) return AppAssets.bike;
+    if (type.contains('auto')) return AppAssets.auto;
+    if (type.contains('xl')) return AppAssets.xlCab;
+    if (type.contains('ev')) return AppAssets.evCab;
+    return AppAssets.cab;
+  }
+
+  /// Masked number issued by the backend for this ride. The driver never sees
+  /// the customer's real number, and the customer never sees the driver's.
+  String get _virtualNumber => _text([
+    'virtual_number',
+    'masked_number',
+    'proxy_number',
+    'call_number',
+  ], '');
 
   String get _fareLabel {
-    final fare = num.tryParse(_text(['estimated_fare', 'fare', 'total_fare'], ''));
+    final fare = num.tryParse(
+      _text(['estimated_fare', 'fare', 'total_fare'], ''),
+    );
     return fare == null ? '-' : '₹${fare.round()}';
   }
 
   String get _distanceText {
     final km = num.tryParse(_text(['distance_km'], ''));
-    return km == null ? '-' : '${km % 1 == 0 ? km.toInt() : km.toStringAsFixed(1)} km';
+    return km == null
+        ? '-'
+        : '${km % 1 == 0 ? km.toInt() : km.toStringAsFixed(1)} km';
   }
 
   String get _durationText {
-    final mins = num.tryParse(_text(['duration_mins', 'duration_minutes', 'eta_mins', 'estimated_duration'], ''));
+    final mins = num.tryParse(
+      _text([
+        'duration_mins',
+        'duration_minutes',
+        'eta_mins',
+        'estimated_duration',
+      ], ''),
+    );
     return mins == null ? '-' : '${mins.round()} min';
   }
 
@@ -210,7 +264,12 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   }
 
   void _toast(String message, {bool error = true}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), backgroundColor: error ? Colors.red : Colors.green));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: error ? Colors.red : Colors.green,
+      ),
+    );
   }
 
   String _errorText(Object e) => e.toString().replaceFirst('Exception: ', '');
@@ -220,8 +279,17 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     if (_busy || _sheetLocked) return;
     setState(() => _busy = true);
     try {
+      if (!_callsApi) {
+        debugPrint(
+          '[RIDE API] accept-ride SKIPPED: rideId=$_rideId '
+          'driverPhone="${widget.driverPhone}" (sample ride or empty phone)',
+        );
+      }
       if (_callsApi) {
-        await DriverApiService.acceptRide(rideId: _rideId!, driverPhone: widget.driverPhone);
+        await DriverApiService.acceptRide(
+          rideId: _rideId!,
+          driverPhone: widget.driverPhone,
+        );
         final prefs = await SharedPreferences.getInstance();
         await prefs.setInt('active_ride_id', _rideId!);
         await prefs.remove('active_ride_picked_up');
@@ -229,20 +297,34 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       if (!mounted) return;
       setState(() => _busy = false);
       _openNextSheet(_Phase.toPickup);
-    } catch (_) {
+    } catch (e) {
+      debugPrint(
+        '[RIDE API] accept-ride failed ($e); '
+        'showing "unavailable"',
+      );
       if (!mounted) return;
       setState(() => _busy = false);
       _openNextSheet(_Phase.unavailable);
     }
   }
 
-  void _startTrip() {
+  /// Navigate on "Heading to Pickup": only moves the UI on, no API.
+  void _startTrip() => _startNav(_Phase.arrived);
+
+  /// "Start Ride" on the waiting sheet: tells the backend the ride started,
+  /// then asks for the customer's OTP. A failure is logged and does not block.
+  void _startRide() {
     if (_callsApi) {
-      DriverApiService.startRide(rideId: _rideId!, driverPhone: widget.driverPhone).catchError((Object e) {
+      DriverApiService.startRide(
+        rideId: _rideId!,
+        driverPhone: widget.driverPhone,
+      ).catchError((Object e) {
         debugPrint('[RIDE FLOW] start-ride failed: $e');
       });
+    } else {
+      debugPrint('[RIDE API] start-ride SKIPPED: rideId=$_rideId driverPhone="${widget.driverPhone}"');
     }
-    _startNav(_Phase.arrived);
+    _go(_Phase.otp);
   }
 
   Future<void> _verifyOtp() async {
@@ -250,7 +332,11 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     setState(() => _busy = true);
     try {
       if (_callsApi) {
-        await DriverApiService.pickupCustomer(rideId: _rideId!, driverPhone: widget.driverPhone, rideCode: _otp.text);
+        await DriverApiService.pickupCustomer(
+          rideId: _rideId!,
+          driverPhone: widget.driverPhone,
+          rideCode: _otp.text,
+        );
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('active_ride_picked_up', true);
       }
@@ -265,6 +351,51 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     }
   }
 
+  /// Same payment handling the old trip-summary screen did: if the customer
+  /// already paid online (transaction id on the ride) it is UPI, otherwise the
+  /// saved method (default cash). The method is sent to the backend with
+  /// set-payment-method so the customer's app shows the right payment screen.
+  Future<String> _settlePaymentMethod() async {
+    var method = _text(['payment_method'], 'cash').toLowerCase();
+    var paidOnline = false;
+    try {
+      final response = await DriverApiService.fetchRideDetailResponse(
+        rideId: _rideId!,
+        driverPhone: widget.driverPhone,
+      );
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+        final data = body is Map && body['ride'] is Map ? body['ride'] : body;
+        if (data is Map) {
+          final txn = (data['transaction_id'] ?? '').toString();
+          final saved = (data['payment_method'] ?? '').toString().toLowerCase();
+          if (txn.isNotEmpty && txn.toUpperCase() != 'CASH') {
+            method = 'upi';
+            paidOnline = true;
+          } else if (saved == 'cash' || saved == 'upi') {
+            method = saved;
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('[RIDE FLOW] payment status check failed: $e');
+    }
+    if (method != 'cash' && method != 'upi') method = 'cash';
+    if (!paidOnline) {
+      try {
+        await DriverApiService.setPaymentMethod(
+          rideId: _rideId!,
+          driverPhone: widget.driverPhone,
+          paymentMethod: method,
+        );
+      } catch (e) {
+        debugPrint('[RIDE FLOW] set-payment-method failed: $e');
+      }
+    }
+    _ride['payment_method'] = method;
+    return method;
+  }
+
   Future<void> _endRide() async {
     if (_busy) return;
     setState(() => _busy = true);
@@ -275,10 +406,11 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         } catch (e) {
           debugPrint('[RIDE FLOW] reached failed: $e');
         }
+        final method = await _settlePaymentMethod();
         _earnings = await DriverApiService.completeRide(
           rideId: _rideId!,
           driverPhone: widget.driverPhone,
-          paymentMethod: _text(['payment_method'], 'cash'),
+          paymentMethod: method,
         );
         final prefs = await SharedPreferences.getInstance();
         await prefs.remove('active_ride_id');
@@ -297,48 +429,65 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   }
 
   void _callCustomer() {
-    final phone = _customerPhone;
-    if (phone.isEmpty) {
-      _toast('Customer phone number not available');
+    final number = _virtualNumber;
+    if (number.isEmpty) {
+      _toast('Virtual number not available yet');
       return;
     }
-    launchUrl(Uri.parse('tel:$phone'));
+    launchUrl(Uri.parse('tel:$number'));
   }
 
   bool get _showSos => switch (_phase) {
-        _Phase.toPickup || _Phase.arrived || _Phase.waiting || _Phase.active || _Phase.drop => true,
-        _ => false,
-      };
+    _Phase.toPickup ||
+    _Phase.arrived ||
+    _Phase.waiting ||
+    _Phase.active ||
+    _Phase.drop => true,
+    _ => false,
+  };
 
   @override
   Widget build(BuildContext context) {
     return switch (_phase) {
       _Phase.loading => const Stack(
-          children: [
-            Positioned.fill(child: ModalBarrier(color: Color(0x21000000), dismissible: false)),
-            RideDetailsLoadingOverlay(),
-          ],
-        ),
+        children: [
+          Positioned.fill(
+            child: ModalBarrier(color: Color(0x21000000), dismissible: false),
+          ),
+          RideDetailsLoadingOverlay(),
+        ],
+      ),
       _Phase.request => _requestOverlay(context),
       _Phase.otp => _otpPage(context),
       _Phase.completed => _completedPage(context),
       _Phase.rate => _ratePage(context),
       _Phase.reward => _rewardPage(context),
-      _Phase.unavailable => _noticePage(context, icon: Icons.directions_car_filled_rounded, title: 'Ride no longer available', body: 'This ride has been taken by another driver or no longer available.'),
-      _Phase.expired => _noticePage(context, icon: Icons.wifi_off_rounded, title: 'Request Expired', body: "You didn't respond in time."),
+      _Phase.unavailable => _noticePage(
+        context,
+        icon: Icons.directions_car_filled_rounded,
+        title: 'Ride no longer available',
+        body:
+            'This ride has been taken by another driver or no longer available.',
+      ),
+      _Phase.expired => _noticePage(
+        context,
+        icon: Icons.wifi_off_rounded,
+        title: 'Request Expired',
+        body: "You didn't respond in time.",
+      ),
       _ => _mapPage(context),
     };
   }
 
   _Phase get _backPhase => switch (_phase) {
-        _Phase.toPickup => _Phase.request,
-        _Phase.arrived => _Phase.toPickup,
-        _Phase.waiting => _Phase.arrived,
-        _Phase.active => _Phase.otp,
-        _Phase.navigating => _navBack,
-        _Phase.drop => _Phase.navigating,
-        _ => _Phase.request,
-      };
+    _Phase.toPickup => _Phase.request,
+    _Phase.arrived => _Phase.toPickup,
+    _Phase.waiting => _Phase.arrived,
+    _Phase.active => _Phase.otp,
+    _Phase.navigating => _navBack,
+    _Phase.drop => _Phase.navigating,
+    _ => _Phase.request,
+  };
 
   OutlineInputBorder _commentBorder(BuildContext context) {
     return OutlineInputBorder(
@@ -348,7 +497,13 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   }
 
   Widget _ratePage(BuildContext context) {
-    const tags = ['Polite', 'On time', 'Good Communication', 'Safe ride', 'Helpful'];
+    const tags = [
+      'Polite',
+      'On time',
+      'Good Communication',
+      'Safe ride',
+      'Helpful',
+    ];
     final accent = Theme.of(context).colorScheme.primary;
     return _page(
       context,
@@ -363,7 +518,13 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
             height: context.h(48),
             child: OutlinedButton(
               onPressed: () => _go(_Phase.reward),
-              style: OutlinedButton.styleFrom(foregroundColor: accent, side: BorderSide(color: accent), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14)))),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: accent,
+                side: BorderSide(color: accent),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(context.r(14)),
+                ),
+              ),
               child: const Text('Skip'),
             ),
           ),
@@ -372,18 +533,44 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: context.w(20)),
         children: [
-          Center(child: CircleAvatar(radius: context.w(28), backgroundColor: context.adaptiveTint(const Color(0xFFF3E8FF)), child: Icon(Icons.person, color: context.legible(Color(0xFFBA2879))))),
+          Center(
+            child: CircleAvatar(
+              radius: context.w(28),
+              backgroundColor: context.adaptiveTint(const Color(0xFFF3E8FF)),
+              child: Icon(
+                Icons.person,
+                color: context.legible(Color(0xFFBA2879)),
+              ),
+            ),
+          ),
           SizedBox(height: context.h(8)),
-          Text(_customerName, textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 16)),
+          Text(
+            _customerName,
+            textAlign: TextAlign.center,
+            style: AppTypography.bold.copyWith(fontSize: 16),
+          ),
           SizedBox(height: context.h(10)),
-          Text('How was your Ride?', textAlign: TextAlign.center, style: AppTypography.bold.copyWith(fontSize: 18, letterSpacing: -0.3)),
+          Text(
+            'How was your Ride?',
+            textAlign: TextAlign.center,
+            style: AppTypography.bold.copyWith(
+              fontSize: 18,
+              letterSpacing: -0.3,
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               for (var i = 1; i <= 5; i++)
                 IconButton(
                   onPressed: () => setState(() => _stars = i),
-                  icon: Icon(Icons.star_rounded, color: i <= _stars ? const Color(0xFFF59E0B) : const Color(0xFFE2E8F0), size: 32),
+                  icon: Icon(
+                    Icons.star_rounded,
+                    color: i <= _stars
+                        ? const Color(0xFFF59E0B)
+                        : const Color(0xFFE2E8F0),
+                    size: 32,
+                  ),
                 ),
             ],
           ),
@@ -394,14 +581,29 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
             children: [
               for (final tag in tags)
                 GestureDetector(
-                  onTap: () => setState(() => _pickedTags.contains(tag) ? _pickedTags.remove(tag) : _pickedTags.add(tag)),
+                  onTap: () => setState(
+                    () => _pickedTags.contains(tag)
+                        ? _pickedTags.remove(tag)
+                        : _pickedTags.add(tag),
+                  ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: _pickedTags.contains(tag) ? accent.withValues(alpha: 0.12) : context.adaptiveTint(Color(0xFFF8FAFC)),
+                      color: _pickedTags.contains(tag)
+                          ? accent.withValues(alpha: 0.12)
+                          : context.adaptiveTint(Color(0xFFF8FAFC)),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(tag, style: AppTypography.regular.copyWith(fontSize: 12, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      tag,
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
             ],
@@ -419,7 +621,11 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
                 maxLines: null,
                 textAlignVertical: TextAlignVertical.top,
                 onChanged: (_) => setState(() {}),
-                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textPrimary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 13,
+                  height: 1.4,
+                  color: context.torkk.textPrimary,
+                ),
                 decoration: InputDecoration(
                   hintText: 'Add a comment (Optional)',
                   hintStyle: AppTypography.regular.copyWith(
@@ -444,15 +650,27 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           SizedBox(height: context.h(6)),
           Align(
             alignment: Alignment.centerRight,
-            child: Text('${_comment.text.length}/200', style: AppTypography.regular.copyWith(fontSize: 11, color: AppColors.slate400)),
+            child: Text(
+              '${_comment.text.length}/200',
+              style: AppTypography.regular.copyWith(
+                fontSize: 11,
+                color: AppColors.slate400,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _back(VoidCallback onTap) => IconButton(onPressed: onTap, icon: Icon(Icons.arrow_back_ios_new, size: 18, color: context.torkk.textPrimary));
-
+  Widget _back(VoidCallback onTap) => IconButton(
+    onPressed: onTap,
+    icon: Icon(
+      Icons.arrow_back_ios_new,
+      size: 18,
+      color: context.torkk.textPrimary,
+    ),
+  );
 }
 
 Future<BitmapDescriptor> _blueDot() {
@@ -464,12 +682,41 @@ Future<BitmapDescriptor> _blueDot() {
   });
 }
 
+/// The ride's vehicle picture (cab.png, bike.png, ...) as a small map marker,
+/// shown at the ride's start point. Falls back to the blue dot.
+Future<BitmapDescriptor> _vehicleMarker(String asset) async {
+  try {
+    final data = await rootBundle.load(asset);
+    final bytes = data.buffer.asUint8List();
+    final probe = await (await ui.instantiateImageCodec(bytes)).getNextFrame();
+    final portrait = probe.image.height > probe.image.width;
+    final codec = await ui.instantiateImageCodec(
+      bytes,
+      targetWidth: portrait ? null : 160,
+      targetHeight: portrait ? 160 : null,
+    );
+    final image = (await codec.getNextFrame()).image;
+    final png = await image.toByteData(format: ui.ImageByteFormat.png);
+    // 160 px drawn at about 56 logical px on the map.
+    return BitmapDescriptor.bytes(
+      png!.buffer.asUint8List(),
+      imagePixelRatio: 160 / 56,
+    );
+  } catch (_) {
+    return _blueDot();
+  }
+}
+
 Future<BitmapDescriptor> _redPin() {
   return _markerImage(64, (canvas) {
     final path = Path()
       ..moveTo(32, 58)
       ..quadraticBezierTo(14, 36, 14, 24)
-      ..arcToPoint(const Offset(50, 24), radius: const Radius.circular(18), clockwise: true)
+      ..arcToPoint(
+        const Offset(50, 24),
+        radius: const Radius.circular(18),
+        clockwise: true,
+      )
       ..quadraticBezierTo(50, 36, 32, 58)
       ..close();
     canvas.drawPath(path, Paint()..color = const Color(0xFFEA4335));
@@ -480,23 +727,59 @@ Future<BitmapDescriptor> _redPin() {
 /// Map marker bitmap: always drawn on white, so its text colors are fixed.
 Future<BitmapDescriptor> _distanceLabel(String distance, String duration) {
   return _markerImage(120, (canvas) {
-    final rect = RRect.fromRectAndRadius(const Rect.fromLTWH(4, 4, 78, 40), const Radius.circular(6));
-    canvas.drawRRect(rect.shift(const Offset(0, 1)), Paint()..color = const Color(0x1A000000));
+    final rect = RRect.fromRectAndRadius(
+      const Rect.fromLTWH(4, 4, 78, 40),
+      const Radius.circular(6),
+    );
+    canvas.drawRRect(
+      rect.shift(const Offset(0, 1)),
+      Paint()..color = const Color(0x1A000000),
+    );
     canvas.drawRRect(rect, Paint()..color = Colors.white);
-    _paintLine(canvas, distance, const Offset(12, 8), TextStyle(color: Color.fromARGB(255, 30, 41, 59), fontSize: 13, fontWeight: FontWeight.w700, height: 1));
-    _paintLine(canvas, duration, const Offset(12, 24), TextStyle(color: Color.fromARGB(255, 100, 116, 139), fontSize: 11, fontWeight: FontWeight.w500, height: 1));
+    _paintLine(
+      canvas,
+      distance,
+      const Offset(12, 8),
+      TextStyle(
+        color: Color.fromARGB(255, 30, 41, 59),
+        fontSize: 13,
+        fontWeight: FontWeight.w700,
+        height: 1,
+      ),
+    );
+    _paintLine(
+      canvas,
+      duration,
+      const Offset(12, 24),
+      TextStyle(
+        color: Color.fromARGB(255, 100, 116, 139),
+        fontSize: 11,
+        fontWeight: FontWeight.w500,
+        height: 1,
+      ),
+    );
   }, logical: 60);
 }
 
 void _paintLine(Canvas canvas, String text, Offset offset, TextStyle style) {
-  final painter = TextPainter(text: TextSpan(text: text, style: style), textDirection: TextDirection.ltr)..layout();
+  final painter = TextPainter(
+    text: TextSpan(text: text, style: style),
+    textDirection: TextDirection.ltr,
+  )..layout();
   painter.paint(canvas, offset);
 }
 
-Future<BitmapDescriptor> _markerImage(int size, void Function(Canvas canvas) draw, {double? logical}) async {
+Future<BitmapDescriptor> _markerImage(
+  int size,
+  void Function(Canvas canvas) draw, {
+  double? logical,
+}) async {
   final recorder = ui.PictureRecorder();
   draw(Canvas(recorder));
   final image = await recorder.endRecording().toImage(size, size);
   final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-  return BitmapDescriptor.bytes(bytes!.buffer.asUint8List(), imagePixelRatio: size / (logical ?? size / 2));
+  return BitmapDescriptor.bytes(
+    bytes!.buffer.asUint8List(),
+    imagePixelRatio: size / (logical ?? size / 2),
+  );
 }

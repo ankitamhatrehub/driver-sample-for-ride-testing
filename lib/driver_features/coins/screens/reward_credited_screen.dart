@@ -8,7 +8,11 @@ import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/coins/widgets/coin_tiles.dart';
 
 class RewardCreditedScreen extends StatelessWidget {
-  const RewardCreditedScreen({super.key, required this.onBack, required this.onContinue});
+  const RewardCreditedScreen({
+    super.key,
+    required this.onBack,
+    required this.onContinue,
+  });
 
   final VoidCallback onBack;
   final VoidCallback onContinue;
@@ -18,10 +22,17 @@ class RewardCreditedScreen extends StatelessWidget {
     return StatusResult(
       onBack: onBack,
       celebration: true,
-      icon: Image.asset(AppAssets.rewardCoins, width: context.w(120), height: context.w(120)),
+      icon: Image.asset(
+        AppAssets.rewardCoins,
+        width: context.w(120),
+        height: context.w(120),
+      ),
       title: 'Reward Credited',
       subtitle: 'You have received 50 coins from scratch card reward',
-      button: UnifiedButton(label: AppStrings.continueAction, onPressed: onContinue),
+      button: UnifiedButton(
+        label: AppStrings.continueAction,
+        onPressed: onContinue,
+      ),
       child: Column(
         children: [
           const CoinInfoTile(

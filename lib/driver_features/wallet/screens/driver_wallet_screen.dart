@@ -120,7 +120,10 @@ class _DriverWalletScreenState extends State<DriverWalletScreen> {
   Widget build(BuildContext context) {
     final primaryColor = const Color(0xFF4F46E5);
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = context.themed(light: Colors.black, dark: context.torkk.textPrimary);
+    final textColor = context.themed(
+      light: Colors.black,
+      dark: context.torkk.textPrimary,
+    );
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -305,7 +308,10 @@ class _DriverWalletScreenState extends State<DriverWalletScreen> {
                               child: Text(
                                 'No completed rides recorded yet.',
                                 style: TextStyle(
-                                  color: context.themed(light: Colors.black38, dark: context.torkk.textSecondary),
+                                  color: context.themed(
+                                    light: Colors.black38,
+                                    dark: context.torkk.textSecondary,
+                                  ),
                                   fontSize: 13,
                                 ),
                               ),
@@ -325,7 +331,9 @@ class _DriverWalletScreenState extends State<DriverWalletScreen> {
                                 decoration: BoxDecoration(
                                   color: context.torkk.surface,
                                   borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(color: context.torkk.border),
+                                  border: Border.all(
+                                    color: context.torkk.border,
+                                  ),
                                 ),
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.symmetric(

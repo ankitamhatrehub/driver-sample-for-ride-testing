@@ -249,4 +249,3 @@ class _DriverCustomerChatScreenState extends State<DriverCustomerChatScreen> {
     );
   }
 }
-

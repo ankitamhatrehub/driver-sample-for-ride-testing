@@ -5,23 +5,15 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 class RideCancelledDialog extends StatelessWidget {
   final VoidCallback onDismiss;
 
-  const RideCancelledDialog({
-    super.key,
-    required this.onDismiss,
-  });
+  const RideCancelledDialog({super.key, required this.onDismiss});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       backgroundColor: context.torkk.surface,
       elevation: 16,
-      insetPadding: const EdgeInsets.symmetric(
-        horizontal: 28,
-        vertical: 24,
-      ),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -30,9 +22,7 @@ class RideCancelledDialog extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(
-                  0xFFEF4444,
-                ).withValues(alpha: 0.12),
+                color: const Color(0xFFEF4444).withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -71,9 +61,7 @@ class RideCancelledDialog extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(
-                        0xFF6366F1,
-                      ).withValues(alpha: 0.35),
+                      color: const Color(0xFF6366F1).withValues(alpha: 0.35),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),

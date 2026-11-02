@@ -163,7 +163,8 @@ class OnboardingSession extends ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         try {
           final data = json.decode(response.body);
-          receivedOtp = data['otp']?.toString() ?? data['data']?['otp']?.toString();
+          receivedOtp =
+              data['otp']?.toString() ?? data['data']?['otp']?.toString();
         } catch (e) {
           debugPrint('[Route] OTP parse failed: $e');
         }
@@ -185,7 +186,7 @@ class OnboardingSession extends ChangeNotifier {
     loading = true;
     otpError = false;
     notifyListeners();
-        try {
+    try {
       if (clean == '9999999999' && otp.text == '123456') {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_phone', clean);
@@ -204,29 +205,31 @@ class OnboardingSession extends ChangeNotifier {
         phone: clean,
         otp: otp.text,
       );
-debugPrint('[verifyOtp] Status: ${response.statusCode}');
+      debugPrint('[verifyOtp] Status: ${response.statusCode}');
 
       if (response.statusCode != 200 && response.statusCode != 201) {
         otpError = true;
         return const OtpVerifyResult.failed();
       }
-print('dg - 07 [verifyOtp] OTP verified successfully for $clean');
+      print('dg - 07 [verifyOtp] OTP verified successfully for $clean');
       final data = json.decode(response.body);
-      final extractedToken = (data['token'] ??
-              data['access_token'] ??
-              data['auth_token'] ??
-              data['jwt'] ??
-              data['data']?['token'] ??
-              data['data']?['access_token'])
-          ?.toString();
-     
-      final existing = data['is_existing_driver'] == true ||
+      final extractedToken =
+          (data['token'] ??
+                  data['access_token'] ??
+                  data['auth_token'] ??
+                  data['jwt'] ??
+                  data['data']?['token'] ??
+                  data['data']?['access_token'])
+              ?.toString();
+
+      final existing =
+          data['is_existing_driver'] == true ||
           data['is_existing_user'] == true ||
           data['existing'] == true ||
           data['is_existing'] == true;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_phone', clean);
-print('dg - 09 [verifyOtp] Saved user phone: $clean');
+      print('dg - 09 [verifyOtp] Saved user phone: $clean');
       if (extractedToken != null && extractedToken.isNotEmpty) {
         token = extractedToken;
         await TokenStore.save(extractedToken);
@@ -240,7 +243,9 @@ print('dg - 09 [verifyOtp] Saved user phone: $clean');
       }
 
       if (existing) {
-        print('dg - 10 [verifyOtp] Existing driver detected, applying profile data');
+        print(
+          'dg - 10 [verifyOtp] Existing driver detected, applying profile data',
+        );
         gender = (data['gender'] ?? 'Male').toString();
         if (gender.isEmpty) gender = 'Male';
         name.text = (data['name'] ?? '').toString();
@@ -259,12 +264,13 @@ print('dg - 09 [verifyOtp] Saved user phone: $clean');
         clearOtp();
         return const OtpVerifyResult.dashboard();
       }
-print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
+      print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
       await KycResume.markVerified();
       clearOtp();
-       print('dg - 12 [verifyOtp] KYC marked as verified, proceeding to vehicle selection');
+      print(
+        'dg - 12 [verifyOtp] KYC marked as verified, proceeding to vehicle selection',
+      );
       return const OtpVerifyResult.vehicle();
-     
     } catch (e) {
       return OtpVerifyResult.error('Network error: $e');
     } finally {
@@ -278,7 +284,10 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
     notifyListeners();
     try {
       final clean = phone.text.replaceAll(' ', '').replaceAll('-', '');
-      await DriverApiService.updateVehicleType(driverPhone: clean, vehicleType: vehicleType);
+      await DriverApiService.updateVehicleType(
+        driverPhone: clean,
+        vehicleType: vehicleType,
+      );
     } catch (e) {
       debugPrint('[Route] vehicle save: $e');
     } finally {
@@ -293,7 +302,8 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
 
   Future<String?> verifyAadhaar() async {
     final number = aadhaar.text.replaceAll(' ', '').replaceAll('-', '');
-    if (number.length != 12) return 'Please enter a valid 12-digit Aadhaar Number';
+    if (number.length != 12)
+      return 'Please enter a valid 12-digit Aadhaar Number';
     loading = true;
     notifyListeners();
     try {
@@ -309,7 +319,9 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
         panNumber: panNumber,
       );
 
-      debugPrint('[verifyAadhaar] Status: ${response.statusCode}, Body: ${response.body}');
+      debugPrint(
+        '[verifyAadhaar] Status: ${response.statusCode}, Body: ${response.body}',
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         try {
@@ -351,7 +363,8 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
   Future<void> applyDigilockerDownload(Map<String, dynamic> data) async {
     final aadhaarData = data['aadhaar_xml_data'] ?? {};
     final entered = aadhaar.text;
-    name.text = (aadhaarData['full_name'] ?? data['full_name'] ?? name.text).toString();
+    name.text = (aadhaarData['full_name'] ?? data['full_name'] ?? name.text)
+        .toString();
     dob.text = (aadhaarData['dob'] ?? data['dob'] ?? dob.text).toString();
     final masked = (aadhaarData['masked_aadhaar'] ?? '').toString();
     if (entered.replaceAll(' ', '').length == 12) {
@@ -359,7 +372,8 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
     } else if (masked.isNotEmpty) {
       aadhaar.text = masked;
     }
-    final genderRaw = (aadhaarData['gender'] ?? data['gender'] ?? 'M').toString();
+    final genderRaw = (aadhaarData['gender'] ?? data['gender'] ?? 'M')
+        .toString();
     gender = (genderRaw == 'F' || genderRaw == 'Female') ? 'Female' : 'Male';
     publishAccent?.call(gender == 'Female');
 
@@ -413,20 +427,20 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
     try {
       final clean = phone.text.replaceAll(' ', '').replaceAll('-', '');
       final response = await OnboardingApi.register({
-              'phone': clean,
-              'name': name.text,
-              'dob': dob.text,
-              'gender': gender,
-              'aadhaar_number': aadhaar.text,
-              'dl_number': dlNumber.text,
-              'rc_number': rcNumber.text,
-              'vehicle_type': vehicleType,
-              'bank_name': bankName.text,
-              'bank_account_number': bankAccount.text,
-              'bank_ifsc_code': bankIfsc.text,
-              'bank_account_holder_name': bankHolder.text,
-              'email': email.text,
-            });
+        'phone': clean,
+        'name': name.text,
+        'dob': dob.text,
+        'gender': gender,
+        'aadhaar_number': aadhaar.text,
+        'dl_number': dlNumber.text,
+        'rc_number': rcNumber.text,
+        'vehicle_type': vehicleType,
+        'bank_name': bankName.text,
+        'bank_account_number': bankAccount.text,
+        'bank_ifsc_code': bankIfsc.text,
+        'bank_account_holder_name': bankHolder.text,
+        'email': email.text,
+      });
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_name', name.text);
       await prefs.setString('user_gender', gender);
@@ -437,13 +451,15 @@ print('dg - 11 [verifyOtp] New driver detected, marking KYC as verified');
       try {
         if (response.statusCode == 200 || response.statusCode == 201) {
           final body = json.decode(response.body);
-          if (body['driver_id'] != null) await prefs.setInt('driver_id', body['driver_id']);
-          final regToken = (body['token'] ??
-                  body['access_token'] ??
-                  body['auth_token'] ??
-                  body['jwt'] ??
-                  body['data']?['token'])
-              ?.toString();
+          if (body['driver_id'] != null)
+            await prefs.setInt('driver_id', body['driver_id']);
+          final regToken =
+              (body['token'] ??
+                      body['access_token'] ??
+                      body['auth_token'] ??
+                      body['jwt'] ??
+                      body['data']?['token'])
+                  ?.toString();
           if (regToken != null && regToken.isNotEmpty) {
             token = regToken;
             await TokenStore.save(regToken);

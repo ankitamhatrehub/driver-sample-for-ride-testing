@@ -174,6 +174,4 @@ class _ScheduledRideScreenState extends State<ScheduledRideScreen> {
       ),
     );
   }
-
 }
-

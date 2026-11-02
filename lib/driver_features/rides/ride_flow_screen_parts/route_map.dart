@@ -6,6 +6,7 @@ class _RouteMap extends StatefulWidget {
     required this.drop,
     required this.distance,
     required this.duration,
+    required this.vehicleAsset,
     this.navigating = false,
   });
 
@@ -13,6 +14,7 @@ class _RouteMap extends StatefulWidget {
   final LatLng drop;
   final String distance;
   final String duration;
+  final String vehicleAsset;
   final bool navigating;
 
   @override

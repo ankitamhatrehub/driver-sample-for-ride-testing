@@ -27,7 +27,9 @@ class DrivingLicenceDetails {
     required String fallbackDob,
   }) {
     final decoded = jsonDecode(body);
-    final root = decoded is Map ? Map<String, dynamic>.from(decoded) : <String, dynamic>{};
+    final root = decoded is Map
+        ? Map<String, dynamic>.from(decoded)
+        : <String, dynamic>{};
     final data = _map(root['data']);
     final extracted = _map(root['extracted']);
     final source = data.isNotEmpty ? data : extracted;
@@ -43,12 +45,35 @@ class DrivingLicenceDetails {
 
     return DrivingLicenceDetails(
       name: pick(['name', 'full_name', 'holder_name']),
-      licenseNumber: pick(['license_number', 'licence_number', 'dl_number', 'id_number']).isEmpty
+      licenseNumber:
+          pick([
+            'license_number',
+            'licence_number',
+            'dl_number',
+            'id_number',
+          ]).isEmpty
           ? fallbackNumber
-          : pick(['license_number', 'licence_number', 'dl_number', 'id_number']),
-      dob: pick(['dob', 'date_of_birth']).isEmpty ? fallbackDob : pick(['dob', 'date_of_birth']),
-      vehicleClass: _vehicleClass(source['vehicle_classes'] ?? source['vehicle_class'] ?? root['vehicle_classes']),
-      validity: pick(['doe', 'expiry', 'expiry_date', 'validity', 'valid_till']),
+          : pick([
+              'license_number',
+              'licence_number',
+              'dl_number',
+              'id_number',
+            ]),
+      dob: pick(['dob', 'date_of_birth']).isEmpty
+          ? fallbackDob
+          : pick(['dob', 'date_of_birth']),
+      vehicleClass: _vehicleClass(
+        source['vehicle_classes'] ??
+            source['vehicle_class'] ??
+            root['vehicle_classes'],
+      ),
+      validity: pick([
+        'doe',
+        'expiry',
+        'expiry_date',
+        'validity',
+        'valid_till',
+      ]),
     );
   }
 }
@@ -72,12 +97,14 @@ Future<DrivingLicenceDetails> verifyDrivingLicence({
     'document_number': idNumber,
     'phone': phone,
   };
-  debugPrint('[DL][api] POST ${AppUrls.verifyDl} body: ${json.encode(requestBody)}');
+  debugPrint(
+    '[DL][api] POST ${AppUrls.verifyDl} body: ${json.encode(requestBody)}',
+  );
   final response = await apiClient
       .post(
         Uri.parse(AppUrls.verifyDl),
         headers: {'Content-Type': 'application/json'},
-        body: json.encode(requestBody)
+        body: json.encode(requestBody),
       )
       .timeout(const Duration(seconds: 20));
   debugPrint('[DL][api] status ${response.statusCode}, ${response.body} bytes');
@@ -108,7 +135,12 @@ String _vehicleClass(dynamic value) {
     return value
         .map((item) {
           if (item is Map) {
-            return _text(item['class'] ?? item['cov'] ?? item['vehicle_class'] ?? item['desc']);
+            return _text(
+              item['class'] ??
+                  item['cov'] ??
+                  item['vehicle_class'] ??
+                  item['desc'],
+            );
           }
           return _text(item);
         })

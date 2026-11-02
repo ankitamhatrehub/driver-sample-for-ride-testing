@@ -72,7 +72,8 @@ class DriverProfile {
       bankName: (json['bank_name'] ?? '').toString(),
       bankAccountNumber: (json['bank_account_number'] ?? '').toString(),
       bankIfscCode: (json['bank_ifsc_code'] ?? '').toString(),
-      bankAccountHolderName: (json['bank_account_holder_name'] ?? '').toString(),
+      bankAccountHolderName: (json['bank_account_holder_name'] ?? '')
+          .toString(),
       upiId: (json['upi_id'] ?? '').toString(),
       eligibleForParcels: json['eligible_for_parcels'] == true,
     );
@@ -150,7 +151,8 @@ class DriverProfile {
       bankName: bankName ?? this.bankName,
       bankAccountNumber: bankAccountNumber ?? this.bankAccountNumber,
       bankIfscCode: bankIfscCode ?? this.bankIfscCode,
-      bankAccountHolderName: bankAccountHolderName ?? this.bankAccountHolderName,
+      bankAccountHolderName:
+          bankAccountHolderName ?? this.bankAccountHolderName,
       upiId: upiId ?? this.upiId,
       eligibleForParcels: eligibleForParcels ?? this.eligibleForParcels,
     );

@@ -7,6 +7,9 @@ class PayoutsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfilePage(title: AppStrings.payouts, child: const SizedBox.shrink());
+    return ProfilePage(
+      title: AppStrings.payouts,
+      child: const SizedBox.shrink(),
+    );
   }
 }

@@ -108,16 +108,20 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
 
   String get _dynamicEtaText {
     final pickupLat = _asDouble(_ride?['pickup_lat']);
-    final pickupLng =
-        _ride?['pickup_lng'] != null ? _asDouble(_ride?['pickup_lng']) : null;
+    final pickupLng = _ride?['pickup_lng'] != null
+        ? _asDouble(_ride?['pickup_lng'])
+        : null;
     final dropLat = _asDouble(_ride?['drop_lat']);
-    final dropLng =
-        _ride?['drop_lng'] != null ? _asDouble(_ride?['drop_lng']) : null;
+    final dropLng = _ride?['drop_lng'] != null
+        ? _asDouble(_ride?['drop_lng'])
+        : null;
 
-    final targetLat =
-        _tripPhase == TripPhase.goingToPickup ? pickupLat : dropLat;
-    final targetLng =
-        _tripPhase == TripPhase.goingToPickup ? pickupLng : dropLng;
+    final targetLat = _tripPhase == TripPhase.goingToPickup
+        ? pickupLat
+        : dropLat;
+    final targetLng = _tripPhase == TripPhase.goingToPickup
+        ? pickupLng
+        : dropLng;
 
     double? distMeters;
 
@@ -378,8 +382,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
               if (mounted) {
                 setState(() {
                   if (profile['name'] != null &&
-                      profile['name'].toString().isNotEmpty) {
-                  }
+                      profile['name'].toString().isNotEmpty) {}
                   if (profile['profile_photo'] != null &&
                       profile['profile_photo'].toString().isNotEmpty) {
                     _driverPhotoUrl = profile['profile_photo'].toString();
@@ -747,7 +750,8 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
 
   void _onSliderAction() {
     if (_tripPhase == TripPhase.goingToDrop) {
-      final bool isParcel = _ride?['is_parcel'] == true || _ride?['service_type'] == 'parcel';
+      final bool isParcel =
+          _ride?['is_parcel'] == true || _ride?['service_type'] == 'parcel';
       if (isParcel) {
         _showDeliveryOtpSheet();
       } else {
@@ -798,23 +802,24 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
       },
       onChat: _openChat,
       onCall: _callCustomer,
-      onLocationTap: ({
-        required String title,
-        required String address,
-        required String distanceText,
-        required Color color,
-        double? lat,
-        double? lng,
-      }) {
-        _showLocationDetailBottomSheet(
-          title: title,
-          address: address,
-          distanceText: distanceText,
-          color: color,
-          lat: lat,
-          lng: lng,
-        );
-      },
+      onLocationTap:
+          ({
+            required String title,
+            required String address,
+            required String distanceText,
+            required Color color,
+            double? lat,
+            double? lng,
+          }) {
+            _showLocationDetailBottomSheet(
+              title: title,
+              address: address,
+              distanceText: distanceText,
+              color: color,
+              lat: lat,
+              lng: lng,
+            );
+          },
       sliderButton: _buildSliderButton(),
     );
   }
@@ -908,7 +913,9 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withValues(alpha: 0.2),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.2,
+                                        ),
                                         blurRadius: 8,
                                         offset: const Offset(0, 2),
                                       ),
@@ -929,7 +936,8 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                     setState(() {
                                       if (isNavigatingMode) {
                                         _uiMode =
-                                            _tripPhase == TripPhase.goingToPickup
+                                            _tripPhase ==
+                                                TripPhase.goingToPickup
                                             ? DriverRideUiMode.waiting
                                             : DriverRideUiMode.accept;
                                       } else {
@@ -1008,8 +1016,7 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ProfileScreen(),
+                                  builder: (context) => const ProfileScreen(),
                                 ),
                               );
                             },
@@ -1039,17 +1046,25 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                     ? Image.network(
                                         _driverPhotoUrl,
                                         fit: BoxFit.cover,
-                                        errorBuilder: (_, error, stackTrace) => Container(
-                                          color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
-                                          child: Icon(
-                                            Icons.person,
-                                            color: context.torkk.textBody,
-                                            size: 24,
-                                          ),
-                                        ),
+                                        errorBuilder: (_, error, stackTrace) =>
+                                            Container(
+                                              color: context.themed(
+                                                light: Colors.grey.shade200,
+                                                dark:
+                                                    context.torkk.surfaceMuted,
+                                              ),
+                                              child: Icon(
+                                                Icons.person,
+                                                color: context.torkk.textBody,
+                                                size: 24,
+                                              ),
+                                            ),
                                       )
                                     : Container(
-                                        color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                                        color: context.themed(
+                                          light: Colors.grey.shade200,
+                                          dark: context.torkk.surfaceMuted,
+                                        ),
                                         child: Icon(
                                           Icons.person,
                                           color: context.torkk.textBody,
@@ -1144,7 +1159,9 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.2),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.2,
+                                      ),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
@@ -1323,7 +1340,9 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: context.adaptiveTint(const Color(0xFFE2E8F0)),
+                                    color: context.adaptiveTint(
+                                      const Color(0xFFE2E8F0),
+                                    ),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Text(
@@ -1359,7 +1378,9 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 24,
                                 ),
-                                color: context.adaptiveTint(const Color(0xFFE2E8F0)),
+                                color: context.adaptiveTint(
+                                  const Color(0xFFE2E8F0),
+                                ),
                               ),
                               _buildBottomNav(),
                             ],
@@ -1373,4 +1394,3 @@ class _DriverNavigationScreenState extends State<DriverNavigationScreen> {
     );
   }
 }
-

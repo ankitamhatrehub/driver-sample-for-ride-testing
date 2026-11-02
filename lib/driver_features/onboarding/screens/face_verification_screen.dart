@@ -61,15 +61,15 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
       _FacePage.beforeStart => _before(context),
       _FacePage.allowCamera => _allowCamera(context),
       _FacePage.capture => LiveFaceCamera(
-          onCaptured: (file) {
-            setState(() => _selfiePath = file.path);
-            _go(_FacePage.verifying);
-          },
-        ),
+        onCaptured: (file) {
+          setState(() => _selfiePath = file.path);
+          _go(_FacePage.verifying);
+        },
+      ),
       _FacePage.verifying => _VerifyingFace(
-          selfiePath: _selfiePath,
-          onFinished: () => _go(_FacePage.verified),
-        ),
+        selfiePath: _selfiePath,
+        onFinished: () => _go(_FacePage.verified),
+      ),
       _FacePage.verified => _verified(context),
       _FacePage.failed => _failed(context),
     };
@@ -80,7 +80,12 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
       title: AppStrings.verifyYourIdentity,
       onBack: widget.onBack,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(12), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(12),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -92,16 +97,28 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
               fit: BoxFit.contain,
             ),
             SizedBox(height: context.h(20)),
-            Text(AppStrings.verifyYourIdentity, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
+            Text(
+              AppStrings.verifyYourIdentity,
+              style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
+            ),
             SizedBox(height: context.h(6)),
             Text(
               AppStrings.verifyIdentitySubtitle,
-              style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 12,
+                color: context.torkk.textSecondary,
+              ),
             ),
             SizedBox(height: context.h(40)),
-            _InfoRow(icon: AppAssets.personCheckIcon, text: AppStrings.identityRealPerson),
+            _InfoRow(
+              icon: AppAssets.personCheckIcon,
+              text: AppStrings.identityRealPerson,
+            ),
             SizedBox(height: context.h(12)),
-            _InfoRow(icon: AppAssets.documentIcon, text: AppStrings.identityRequired),
+            _InfoRow(
+              icon: AppAssets.documentIcon,
+              text: AppStrings.identityRequired,
+            ),
             SizedBox(height: context.h(12)),
             _InfoRow(icon: AppAssets.timeIcon, text: AppStrings.identityQuick),
             SizedBox(height: context.h(28)),
@@ -120,15 +137,26 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
       title: AppStrings.verifyYourIdentity,
       onBack: () => setState(() => _page = _FacePage.intro),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(40), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(40),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppStrings.beforeYouStart, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
+            Text(
+              AppStrings.beforeYouStart,
+              style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
+            ),
             SizedBox(height: context.h(4)),
             Text(
               AppStrings.beforeYouStartSubtitle,
-              style: AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 14,
+                color: context.torkk.textSecondary,
+              ),
             ),
             SizedBox(height: context.h(24)),
             _CheckRow(
@@ -165,8 +193,6 @@ class _FaceVerificationScreenState extends State<FaceVerificationScreen> {
       ),
     );
   }
-
 }
 
 enum _StepState { done, active, waiting }
-

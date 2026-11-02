@@ -39,26 +39,44 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
   bool _reading = false;
 
   bool get _ready =>
-      _frontPath != null && _backPath != null && widget.aadhaarController.text.trim().length == 12;
+      _frontPath != null &&
+      _backPath != null &&
+      widget.aadhaarController.text.trim().length == 12;
 
   Future<void> _pick({required bool front}) async {
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       backgroundColor: context.torkk.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(16)))),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(context.r(16)),
+        ),
+      ),
       builder: (context) {
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary)),
-                title: Text(AppStrings.camera, style: AppTypography.bold.copyWith(fontSize: 15)),
+                leading: Icon(
+                  Icons.photo_camera_outlined,
+                  color: context.legible(AppColors.primary),
+                ),
+                title: Text(
+                  AppStrings.camera,
+                  style: AppTypography.bold.copyWith(fontSize: 15),
+                ),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
-                leading: Icon(Icons.photo_outlined, color: context.legible(AppColors.primary)),
-                title: Text(AppStrings.gallery, style: AppTypography.bold.copyWith(fontSize: 15)),
+                leading: Icon(
+                  Icons.photo_outlined,
+                  color: context.legible(AppColors.primary),
+                ),
+                title: Text(
+                  AppStrings.gallery,
+                  style: AppTypography.bold.copyWith(fontSize: 15),
+                ),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
             ],
@@ -67,7 +85,10 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
       },
     );
     if (source == null) return;
-    final photo = await ImagePicker().pickImage(source: source, imageQuality: 90);
+    final photo = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 90,
+    );
     if (photo == null || !mounted) return;
     setState(() {
       _reading = true;
@@ -83,7 +104,8 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
       final match = RegExp(r'\d{4}\s?\d{4}\s?\d{4}').firstMatch(text);
       final number = match?.group(0)?.replaceAll(RegExp(r'\s'), '') ?? '';
       if (!mounted) return;
-      if (number.length == 12 && (front || widget.aadhaarController.text.isEmpty)) {
+      if (number.length == 12 &&
+          (front || widget.aadhaarController.text.isEmpty)) {
         widget.aadhaarController.text = number;
       }
     } catch (_) {
@@ -99,11 +121,19 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
       title: AppStrings.aadhaarVerification,
       onBack: widget.onBack,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(8),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppStrings.uploadYourAadhaar, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2)),
+            Text(
+              AppStrings.uploadYourAadhaar,
+              style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2),
+            ),
             SizedBox(height: context.h(10)),
             Row(
               children: [
@@ -112,7 +142,8 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
                     label: AppStrings.frontSide,
                     icon: Icons.description_outlined,
                     path: _frontPath,
-                    reading: _reading && _frontPath != null && _backPath == null,
+                    reading:
+                        _reading && _frontPath != null && _backPath == null,
                     onTap: () => _pick(front: true),
                   ),
                 ),
@@ -129,7 +160,10 @@ class _AadhaarManualScreenState extends State<AadhaarManualScreen> {
               ],
             ),
             SizedBox(height: context.h(18)),
-            Text('${AppStrings.aadhaarCardNumber} *', style: AppTypography.regular.copyWith(fontSize: 13)),
+            Text(
+              '${AppStrings.aadhaarCardNumber} *',
+              style: AppTypography.regular.copyWith(fontSize: 13),
+            ),
             SizedBox(height: context.h(8)),
             AppTextField(
               controller: widget.aadhaarController,
@@ -188,22 +222,41 @@ class _SideTile extends StatelessWidget {
           child: reading
               ? const CircularProgressIndicator(color: AppColors.primary)
               : path == null
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(icon, color: context.legible(AppColors.primary), size: context.w(28)),
-                        SizedBox(height: context.h(8)),
-                        Text(label, style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, fontSize: 13, height: 1.2)),
-                        Text(
-                          AppStrings.tapToUpload,
-                          style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
-                        ),
-                      ],
-                    )
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(radius - 2),
-                      child: Image.file(File(path!), fit: BoxFit.cover, width: double.infinity, height: double.infinity),
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      icon,
+                      color: context.legible(AppColors.primary),
+                      size: context.w(28),
                     ),
+                    SizedBox(height: context.h(8)),
+                    Text(
+                      label,
+                      style: AppTypography.bold.copyWith(
+                        color: context.torkk.textPrimary,
+                        fontSize: 13,
+                        height: 1.2,
+                      ),
+                    ),
+                    Text(
+                      AppStrings.tapToUpload,
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 12,
+                        color: context.torkk.textSecondary,
+                      ),
+                    ),
+                  ],
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(radius - 2),
+                  child: Image.file(
+                    File(path!),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
         ),
       ),
     );
@@ -221,7 +274,10 @@ class _DashPainter extends CustomPainter {
       ..color = const Color(0xFFD8B4FE)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4;
-    final path = Path()..addRRect(RRect.fromRectAndRadius(Offset.zero & size, Radius.circular(radius)));
+    final path = Path()
+      ..addRRect(
+        RRect.fromRectAndRadius(Offset.zero & size, Radius.circular(radius)),
+      );
     for (final metric in path.computeMetrics()) {
       var distance = 0.0;
       while (distance < metric.length) {
@@ -232,5 +288,6 @@ class _DashPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _DashPainter oldDelegate) => oldDelegate.radius != radius;
+  bool shouldRepaint(covariant _DashPainter oldDelegate) =>
+      oldDelegate.radius != radius;
 }

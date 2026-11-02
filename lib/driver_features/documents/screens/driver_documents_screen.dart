@@ -72,11 +72,7 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
                     ),
                   ],
                 ),
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: textColor,
-                  size: 26,
-                ),
+                Icon(Icons.chevron_right_rounded, color: textColor, size: 26),
               ],
             ),
           ),
@@ -183,4 +179,3 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
     );
   }
 }
-

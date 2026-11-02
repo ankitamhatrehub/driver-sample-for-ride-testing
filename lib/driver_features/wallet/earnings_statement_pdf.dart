@@ -28,25 +28,36 @@ Future<void> downloadEarningsStatementPdf(
     doc.addPage(
       pw.MultiPage(
         build: (_) => [
-          pw.Text('TORKK DRIVER EARNINGS STATEMENT', style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
+          pw.Text(
+            'TORKK DRIVER EARNINGS STATEMENT',
+            style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+          ),
           pw.SizedBox(height: 10),
-          pw.Text('Driver: ${driverName.isEmpty ? 'Driver Partner' : driverName}'),
+          pw.Text(
+            'Driver: ${driverName.isEmpty ? 'Driver Partner' : driverName}',
+          ),
           pw.Text('Phone: $phone'),
           pw.Text('Period: $periodLabel'),
           pw.Text('Generated: ${DateTime.now().toString().split('.').first}'),
           pw.SizedBox(height: 16),
-          pw.Text('Summary', style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+          pw.Text(
+            'Summary',
+            style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
+          ),
           pw.SizedBox(height: 6),
           pw.TableHelper.fromTextArray(
             headers: ['Item', 'Amount'],
-            data: [for (final e in summary) [e.key, money(e.value)]],
+            data: [
+              for (final e in summary) [e.key, money(e.value)],
+            ],
             cellAlignments: {1: pw.Alignment.centerRight},
           ),
         ],
       ),
     );
     final bytes = Uint8List.fromList(await doc.save());
-    final name = 'TORKK_Statement_${phone.isEmpty ? 'Driver' : phone}_${DateTime.now().millisecondsSinceEpoch}';
+    final name =
+        'TORKK_Statement_${phone.isEmpty ? 'Driver' : phone}_${DateTime.now().millisecondsSinceEpoch}';
 
     try {
       await FileSaver.instance.saveToDownloads(
@@ -55,19 +66,27 @@ Future<void> downloadEarningsStatementPdf(
         fileExtension: 'pdf',
         mimeType: MimeType.pdf,
       );
-      messenger.showSnackBar(const SnackBar(content: Text('Statement saved to Downloads')));
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Statement saved to Downloads')),
+      );
     } catch (e) {
       debugPrint('Saving to Downloads failed ($e), opening share sheet');
       final dir = await getApplicationDocumentsDirectory();
       final file = await File('${dir.path}/$name.pdf').writeAsBytes(bytes);
       await SharePlus.instance.share(
-        ShareParams(files: [XFile(file.path)], text: 'TORKK Driver Earnings Statement'),
+        ShareParams(
+          files: [XFile(file.path)],
+          text: 'TORKK Driver Earnings Statement',
+        ),
       );
     }
   } catch (e) {
     debugPrint('Error generating statement PDF: $e');
     messenger.showSnackBar(
-      const SnackBar(content: Text('Could not generate the statement'), backgroundColor: Colors.red),
+      const SnackBar(
+        content: Text('Could not generate the statement'),
+        backgroundColor: Colors.red,
+      ),
     );
   }
 }

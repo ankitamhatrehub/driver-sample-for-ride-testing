@@ -26,7 +26,12 @@ class _InfoRow extends StatelessWidget {
               color: context.adaptiveTint(const Color(0xFFFAF5FF)),
               borderRadius: BorderRadius.circular(context.r(8)),
             ),
-            child: Image.asset(icon, width: context.w(18), height: context.w(18), fit: BoxFit.contain),
+            child: Image.asset(
+              icon,
+              width: context.w(18),
+              height: context.w(18),
+              fit: BoxFit.contain,
+            ),
           ),
           SizedBox(width: context.w(12)),
           Expanded(
@@ -34,7 +39,14 @@ class _InfoRow extends StatelessWidget {
               text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.2, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary)),
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                height: 1.2,
+                color: context.themed(
+                  light: Colors.black,
+                  dark: context.torkk.textPrimary,
+                ),
+              ),
             ),
           ),
         ],

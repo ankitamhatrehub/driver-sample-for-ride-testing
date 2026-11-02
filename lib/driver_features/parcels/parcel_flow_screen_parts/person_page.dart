@@ -64,7 +64,9 @@ class _PersonPage extends StatelessWidget {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
+                          backgroundColor: context.adaptiveTint(
+                            const Color(0xFFF1F5F9),
+                          ),
                           child: Icon(Icons.person, color: AppColors.slate400),
                         ),
                         SizedBox(width: context.w(10)),
@@ -96,7 +98,9 @@ class _PersonPage extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: context.adaptiveTint(const Color(0xFFDCFCE7)),
+                            color: context.adaptiveTint(
+                              const Color(0xFFDCFCE7),
+                            ),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -152,14 +156,18 @@ class _PersonPage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.location_on, color: context.legible(Color(0xFF16A34A))),
+                        Icon(
+                          Icons.location_on,
+                          color: context.legible(Color(0xFF16A34A)),
+                        ),
                         SizedBox(width: context.w(8)),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               address,
-                              style: AppTypography.bold.copyWith(color: context.torkk.textPrimary, 
+                              style: AppTypography.bold.copyWith(
+                                color: context.torkk.textPrimary,
                                 fontSize: 14,
                                 height: 1.2,
                               ),

@@ -6,18 +6,21 @@ class _RouteMapState extends State<_RouteMap> {
 
   LatLng get _from => widget.pickup;
   LatLng get _to => widget.drop;
-  LatLng get _middle => LatLng((_from.latitude + _to.latitude) / 2, (_from.longitude + _to.longitude) / 2);
+  LatLng get _middle => LatLng(
+    (_from.latitude + _to.latitude) / 2,
+    (_from.longitude + _to.longitude) / 2,
+  );
 
   LatLngBounds get _bounds => LatLngBounds(
-        southwest: LatLng(
-          _from.latitude < _to.latitude ? _from.latitude : _to.latitude,
-          _from.longitude < _to.longitude ? _from.longitude : _to.longitude,
-        ),
-        northeast: LatLng(
-          _from.latitude > _to.latitude ? _from.latitude : _to.latitude,
-          _from.longitude > _to.longitude ? _from.longitude : _to.longitude,
-        ),
-      );
+    southwest: LatLng(
+      _from.latitude < _to.latitude ? _from.latitude : _to.latitude,
+      _from.longitude < _to.longitude ? _from.longitude : _to.longitude,
+    ),
+    northeast: LatLng(
+      _from.latitude > _to.latitude ? _from.latitude : _to.latitude,
+      _from.longitude > _to.longitude ? _from.longitude : _to.longitude,
+    ),
+  );
 
   @override
   void initState() {
@@ -28,17 +31,33 @@ class _RouteMapState extends State<_RouteMap> {
   @override
   void didUpdateWidget(covariant _RouteMap oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.navigating == widget.navigating && oldWidget.pickup == widget.pickup && oldWidget.drop == widget.drop) return;
+    if (oldWidget.navigating == widget.navigating &&
+        oldWidget.vehicleAsset == widget.vehicleAsset &&
+        oldWidget.pickup == widget.pickup &&
+        oldWidget.drop == widget.drop)
+      return;
     _loadMarkers();
     _frame();
   }
 
   Future<void> _loadMarkers() async {
-    final pickup = await _blueDot();
+    final pickup = await _vehicleMarker(widget.vehicleAsset);
     final drop = await _redPin();
     final markers = <Marker>{
-      Marker(markerId: const MarkerId('pickup'), position: _from, icon: pickup, anchor: const Offset(0.5, 0.5), zIndexInt: 2),
-      Marker(markerId: const MarkerId('drop'), position: _to, icon: drop, anchor: const Offset(0.5, 1), zIndexInt: 2),
+      Marker(
+        markerId: const MarkerId('pickup'),
+        position: _from,
+        icon: pickup,
+        anchor: const Offset(0.5, 0.5),
+        zIndexInt: 2,
+      ),
+      Marker(
+        markerId: const MarkerId('drop'),
+        position: _to,
+        icon: drop,
+        anchor: const Offset(0.5, 1),
+        zIndexInt: 2,
+      ),
     };
     if (widget.navigating) {
       markers.add(

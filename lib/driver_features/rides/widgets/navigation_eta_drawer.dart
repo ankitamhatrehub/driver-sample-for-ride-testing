@@ -30,9 +30,7 @@ class NavigationEtaDrawer extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: context.torkk.surface,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(24),
-          ),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.12),

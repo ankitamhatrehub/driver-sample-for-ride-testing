@@ -24,7 +24,8 @@ class AadhaarPage extends StatelessWidget {
           onHelp: () => openAiChat(context),
           onStartDigilocker: () async {
             final error = await launchDigilocker(context);
-            if (context.mounted && error != null) showOnboardingSnack(context, error);
+            if (context.mounted && error != null)
+              showOnboardingSnack(context, error);
           },
           onSubmitUpload: () async {
             final error = await _session.verifyAadhaar();

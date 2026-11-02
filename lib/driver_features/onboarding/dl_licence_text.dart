@@ -40,7 +40,9 @@ String _licenseNumber(String raw) {
   final match = RegExp(r'[A-Z]{2}[0-9OILSBZ]{13}').firstMatch(compact);
   if (match == null) return '';
   final token = match.group(0)!;
-  final tail = token.substring(2).replaceAllMapped(RegExp(r'[OILSBZ]'), _digitLookalike);
+  final tail = token
+      .substring(2)
+      .replaceAllMapped(RegExp(r'[OILSBZ]'), _digitLookalike);
   final candidate = '${token.substring(0, 2)}$tail';
   if (RegExp(r'^[A-Z]{2}\d{13}$').hasMatch(candidate)) return candidate;
   return '';
@@ -60,10 +62,15 @@ String _digitLookalike(Match match) {
 String _dateOfBirth(String raw, DateTime today) {
   final lines = raw.split(RegExp(r'\r?\n'));
   for (var i = 0; i < lines.length; i++) {
-    if (!RegExp(r'd\.?\s*o\.?\s*b|date of birth|\bbirth\b', caseSensitive: false).hasMatch(lines[i])) {
+    if (!RegExp(
+      r'd\.?\s*o\.?\s*b|date of birth|\bbirth\b',
+      caseSensitive: false,
+    ).hasMatch(lines[i])) {
       continue;
     }
-    final window = i + 1 < lines.length ? '${lines[i]} ${lines[i + 1]}' : lines[i];
+    final window = i + 1 < lines.length
+        ? '${lines[i]} ${lines[i + 1]}'
+        : lines[i];
     final labeled = _firstBirthDate(window, today);
     if (labeled != null) return labeled;
   }
@@ -75,7 +82,8 @@ String? _oldestBirthDate(String raw, DateTime today) {
   for (final match in _datePattern.allMatches(raw)) {
     final formatted = _formatBirth(match, today);
     if (formatted == null) continue;
-    if (oldest == null || formatted.substring(6).compareTo(oldest.substring(6)) < 0) {
+    if (oldest == null ||
+        formatted.substring(6).compareTo(oldest.substring(6)) < 0) {
       oldest = formatted;
     }
   }

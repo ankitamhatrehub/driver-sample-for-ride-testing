@@ -537,7 +537,9 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
                                 vertical: context.h(4),
                               ),
                               decoration: BoxDecoration(
-                                color: context.adaptiveTint(const Color(0xFFFFF7ED)),
+                                color: context.adaptiveTint(
+                                  const Color(0xFFFFF7ED),
+                                ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -647,7 +649,10 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.card_giftcard_rounded, color: Theme.of(context).colorScheme.onPrimary),
+                    Icon(
+                      Icons.card_giftcard_rounded,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                     SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -671,7 +676,10 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: Theme.of(context).colorScheme.onPrimary),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ],
                 ),
               ),
@@ -853,7 +861,11 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
         shape: BoxShape.circle,
         border: Border.all(color: context.torkk.border),
       ),
-      child: Icon(icon, size: context.w(16), color: context.legible(Color(0xFF2563EB))),
+      child: Icon(
+        icon,
+        size: context.w(16),
+        color: context.legible(Color(0xFF2563EB)),
+      ),
     );
   }
 
@@ -1042,7 +1054,11 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
         ),
         icon: icon == null
             ? const SizedBox.shrink()
-            : Icon(icon, size: 16, color: Theme.of(context).colorScheme.onPrimary),
+            : Icon(
+                icon,
+                size: 16,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         label: Text(
           label,
           style: AppTypography.bold.copyWith(

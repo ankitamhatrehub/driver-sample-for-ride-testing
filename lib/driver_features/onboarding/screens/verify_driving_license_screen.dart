@@ -25,7 +25,14 @@ part 'verify_driving_license/preview_tile.dart';
 part 'verify_driving_license/upload_tile.dart';
 part 'verify_driving_license_screen_pages.dart';
 
-enum _DlPage { choose, digilockerVerified, manualForm, unclear, manualVerified, rejected }
+enum _DlPage {
+  choose,
+  digilockerVerified,
+  manualForm,
+  unclear,
+  manualVerified,
+  rejected,
+}
 
 /// Driving licence step. The screens live here, not in the old onboarding controller.
 class VerifyDrivingLicenseScreen extends StatefulWidget {
@@ -41,10 +48,12 @@ class VerifyDrivingLicenseScreen extends StatefulWidget {
   });
 
   @override
-  State<VerifyDrivingLicenseScreen> createState() => _VerifyDrivingLicenseScreenState();
+  State<VerifyDrivingLicenseScreen> createState() =>
+      _VerifyDrivingLicenseScreenState();
 }
 
-class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen> {
+class _VerifyDrivingLicenseScreenState
+    extends State<VerifyDrivingLicenseScreen> {
   _DlPage _page = _DlPage.choose;
   bool _useDigilocker = false;
   bool _frontUploaded = false;
@@ -67,8 +76,9 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   }
 
   /// Debug trace for the DL flow. Numbers are masked so logs carry no full ID.
-  static String _mask(String v) =>
-      v.length <= 4 ? '***' : '${v.substring(0, 2)}***${v.substring(v.length - 2)}';
+  static String _mask(String v) => v.length <= 4
+      ? '***'
+      : '${v.substring(0, 2)}***${v.substring(v.length - 2)}';
 
   void _log(String message) => debugPrint('[DL] $message');
 
@@ -81,20 +91,36 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       backgroundColor: context.torkk.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(16)))),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(context.r(16)),
+        ),
+      ),
       builder: (context) {
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary)),
-                title: Text(AppStrings.camera, style: AppTypography.bold.copyWith(fontSize: 15)),
+                leading: Icon(
+                  Icons.photo_camera_outlined,
+                  color: context.legible(AppColors.primary),
+                ),
+                title: Text(
+                  AppStrings.camera,
+                  style: AppTypography.bold.copyWith(fontSize: 15),
+                ),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
-                leading: Icon(Icons.photo_outlined, color: context.legible(AppColors.primary)),
-                title: Text(AppStrings.gallery, style: AppTypography.bold.copyWith(fontSize: 15)),
+                leading: Icon(
+                  Icons.photo_outlined,
+                  color: context.legible(AppColors.primary),
+                ),
+                title: Text(
+                  AppStrings.gallery,
+                  style: AppTypography.bold.copyWith(fontSize: 15),
+                ),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
             ],
@@ -103,7 +129,10 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
       },
     );
     if (source == null) return;
-    final photo = await ImagePicker().pickImage(source: source, imageQuality: 90);
+    final photo = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 90,
+    );
     if (photo == null || !mounted) return;
     setState(() {
       _useDigilocker = false;
@@ -125,13 +154,16 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
       final fields = parseDrivingLicenceText(text);
       if (!mounted) return;
       setState(() {
-        if (fields.licenseNumber.isNotEmpty && (front || _licenseController.text.trim().isEmpty)) {
+        if (fields.licenseNumber.isNotEmpty &&
+            (front || _licenseController.text.trim().isEmpty)) {
           _licenseController.text = fields.licenseNumber;
         }
-        if (fields.dob.isNotEmpty && (front || _dobController.text.trim().isEmpty)) {
+        if (fields.dob.isNotEmpty &&
+            (front || _dobController.text.trim().isEmpty)) {
           _dobController.text = fields.dob;
         }
-        if (_licenseController.text.trim().isNotEmpty || _dobController.text.trim().isNotEmpty) {
+        if (_licenseController.text.trim().isNotEmpty ||
+            _dobController.text.trim().isNotEmpty) {
           _page = _DlPage.manualForm;
         } else {
           _page = _DlPage.unclear;
@@ -151,27 +183,41 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
   }
 
   Future<void> _verifyReadLicence() async {
-    print('Verifying read licence: _licenseController=${_licenseController.text}, _dobController=${_dobController.text}');
-    final idNumber = _licenseController.text.trim().toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+    print(
+      'Verifying read licence: _licenseController=${_licenseController.text}, _dobController=${_dobController.text}',
+    );
+    final idNumber = _licenseController.text.trim().toUpperCase().replaceAll(
+      RegExp(r'[^A-Z0-9]'),
+      '',
+    );
     final prefs = await SharedPreferences.getInstance();
     // Same phone the driver logged in with (saved after OTP verify).
     final savedPhone = prefs.getString('user_phone') ?? '';
-    final phone = (savedPhone.isNotEmpty ? savedPhone : OnboardingSession.instance.phone.text)
-        .replaceAll(' ', '')
-        .replaceAll('-', '');
+    final phone =
+        (savedPhone.isNotEmpty
+                ? savedPhone
+                : OnboardingSession.instance.phone.text)
+            .replaceAll(' ', '')
+            .replaceAll('-', '');
     if (idNumber.isEmpty || phone.isEmpty) {
       _go(_DlPage.rejected);
       return;
     }
     setState(() => _verifying = true);
     try {
-      final details = await verifyDrivingLicence(idNumber: idNumber, phone: phone);
-      print('Verification successful: name=${details.name}, licenseNumber=${_mask(details.licenseNumber)}, dob=${details.dob}, vehicleClass=${details.vehicleClass}, validity=${details.validity}');
+      final details = await verifyDrivingLicence(
+        idNumber: idNumber,
+        phone: phone,
+      );
+      print(
+        'Verification successful: name=${details.name}, licenseNumber=${_mask(details.licenseNumber)}, dob=${details.dob}, vehicleClass=${details.vehicleClass}, validity=${details.validity}',
+      );
       await prefs.setString('driving_licence_number', details.licenseNumber);
       if (!mounted) return;
       setState(() {
         _verifying = false;
-        if (details.validity.isNotEmpty) _expiryController.text = details.validity;
+        if (details.validity.isNotEmpty)
+          _expiryController.text = details.validity;
         _page = _DlPage.manualVerified;
       });
     } catch (_) {
@@ -205,9 +251,23 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
       lastDate: DateTime(2100),
     );
     if (picked == null) return;
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     setState(() {
-      _expiryController.text = '${picked.day} ${months[picked.month - 1]} ${picked.year}';
+      _expiryController.text =
+          '${picked.day} ${months[picked.month - 1]} ${picked.year}';
     });
   }
 
@@ -218,26 +278,33 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
       _DlPage.digilockerVerified => _digilockerVerified(context),
       _DlPage.manualForm => _manualForm(context),
       _DlPage.unclear => DocumentValidationScreen(
-          title: AppStrings.documentUnclear,
-          message: AppStrings.documentUnclearHint,
-          onBack: () => _go(_DlPage.choose),
-          onHelp: widget.onHelp,
-          onRetake: () => _go(_DlPage.choose),
-        ),
+        title: AppStrings.documentUnclear,
+        message: AppStrings.documentUnclearHint,
+        onBack: () => _go(_DlPage.choose),
+        onHelp: widget.onHelp,
+        onRetake: () => _go(_DlPage.choose),
+      ),
       _DlPage.manualVerified => _verified(context),
       _DlPage.rejected => _rejected(context),
     };
   }
 
   Widget _choose(BuildContext context) {
-    print('Choose page: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded');
+    print(
+      'Choose page: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded',
+    );
     return OnboardingStepScaffold(
       title: AppStrings.verifyDrivingLicence,
       subtitle: AppStrings.verifyDrivingLicenceSubtitle,
       onBack: widget.onBack,
       onHelp: widget.onHelp,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(8),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           children: [
             // _DigilockerCard(
@@ -286,11 +353,13 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
               label: AppStrings.continueAction,
               enabled: _useDigilocker || (_frontUploaded && _backUploaded),
               onPressed: () {
-                print('Continue pressed: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded');
+                print(
+                  'Continue pressed: _useDigilocker=$_useDigilocker, _frontUploaded=$_frontUploaded, _backUploaded=$_backUploaded',
+                );
                 if (_useDigilocker) {
                   _go(_DlPage.digilockerVerified);
                 } else if (_frontUploaded && _backUploaded) {
-                 print('Proceeding to manual form for verification');
+                  print('Proceeding to manual form for verification');
                   _go(_DlPage.manualForm);
                 }
               },
@@ -300,6 +369,4 @@ class _VerifyDrivingLicenseScreenState extends State<VerifyDrivingLicenseScreen>
       ),
     );
   }
-
 }
-

@@ -14,11 +14,25 @@ class TransactionDetailsScreen extends StatefulWidget {
   final WalletTxn txn;
 
   @override
-  State<TransactionDetailsScreen> createState() => _TransactionDetailsScreenState();
+  State<TransactionDetailsScreen> createState() =>
+      _TransactionDetailsScreenState();
 }
 
 class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
-  static const _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  static const _months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
   bool _loading = true;
   Map<String, dynamic> _data = {};
@@ -53,7 +67,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   String _pick(List<String> keys) {
     for (final k in keys) {
       final v = _data[k];
-      if (v != null && v.toString().trim().isNotEmpty) return v.toString().trim();
+      if (v != null && v.toString().trim().isNotEmpty)
+        return v.toString().trim();
     }
     return '';
   }
@@ -67,7 +82,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   }
 
   String _dateTime() {
-    final d = DateTime.tryParse(_pick(['created_at', 'date', 'timestamp', 'completed_at']))?.toLocal() ?? txn.date;
+    final d =
+        DateTime.tryParse(
+          _pick(['created_at', 'date', 'timestamp', 'completed_at']),
+        )?.toLocal() ??
+        txn.date;
     if (d == null) return '-';
     final h12 = d.hour % 12 == 0 ? 12 : d.hour % 12;
     final m = d.minute.toString().padLeft(2, '0');
@@ -86,10 +105,17 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       );
     }
 
-    final name = _pick(['customer_name', 'user_name', 'passenger_name', 'name']);
+    final name = _pick([
+      'customer_name',
+      'user_name',
+      'passenger_name',
+      'name',
+    ]);
     final amountRaw = _pick(['amount', 'total', 'fare', 'earning', 'earnings']);
     final vehicle = _pick(['vehicle_type', 'vehicle', 'seats']);
-    final kindText = txn.parcel ? 'Parcel' : (vehicle.isEmpty ? 'Ride' : 'Ride • $vehicle');
+    final kindText = txn.parcel
+        ? 'Parcel'
+        : (vehicle.isEmpty ? 'Ride' : 'Ride • $vehicle');
     final pickup = _pick(['pickup_address', 'pickup', 'from']);
     final drop = _pick(['drop_address', 'drop', 'to']);
     final distance = _pick(['distance_km', 'distance']);
@@ -102,29 +128,59 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       if (distance.isNotEmpty) '$distance km',
       if (duration.isNotEmpty) '$duration mins',
     ].join('  •  ');
-    final paidText = payment.toLowerCase() == 'cash' ? AppStrings.paidCash : _orDash(_titleCase(payment));
+    final paidText = payment.toLowerCase() == 'cash'
+        ? AppStrings.paidCash
+        : _orDash(_titleCase(payment));
 
     return ProfilePage(
       title: 'Transaction Details',
       child: ListView(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
         children: [
           Row(
             children: [
               CircleAvatar(
                 radius: context.w(18),
                 backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
-                child: Icon(Icons.person, color: AppColors.slate400, size: context.w(18)),
+                child: Icon(
+                  Icons.person,
+                  color: AppColors.slate400,
+                  size: context.w(18),
+                ),
               ),
               SizedBox(width: context.w(10)),
-              Expanded(child: Text(name.isEmpty ? txn.name : name, style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2, letterSpacing: -0.2))),
-              Text(_money(amountRaw), style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3)),
+              Expanded(
+                child: Text(
+                  name.isEmpty ? txn.name : name,
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 16,
+                    height: 1.2,
+                    letterSpacing: -0.2,
+                  ),
+                ),
+              ),
+              Text(
+                _money(amountRaw),
+                style: AppTypography.bold.copyWith(
+                  fontSize: 18,
+                  height: 1.2,
+                  letterSpacing: -0.3,
+                ),
+              ),
             ],
           ),
           SizedBox(height: context.h(8)),
           Text(
             kindText,
-            style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textPrimary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.torkk.textPrimary,
+            ),
           ),
           if (route.isNotEmpty) ...[
             SizedBox(height: context.h(8)),
@@ -134,14 +190,30 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             SizedBox(height: context.h(4)),
             Row(
               children: [
-                Icon(Icons.location_on_outlined, size: context.w(14), color: AppColors.slate400),
+                Icon(
+                  Icons.location_on_outlined,
+                  size: context.w(14),
+                  color: AppColors.slate400,
+                ),
                 SizedBox(width: context.w(4)),
-                Text(meta, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
+                Text(
+                  meta,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    color: context.torkk.textSecondary,
+                  ),
+                ),
               ],
             ),
           ],
           SizedBox(height: context.h(16)),
-          Text('Transaction Details', style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(
+            'Transaction Details',
+            style: AppTypography.regular.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           SizedBox(height: context.h(8)),
           Container(
             padding: EdgeInsets.all(context.w(14)),
@@ -155,15 +227,44 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   context,
                   'Status',
                   _orDash(_titleCase(status)),
-                  valueColor: status.toLowerCase() == 'completed' || status.toLowerCase() == 'success'
+                  valueColor:
+                      status.toLowerCase() == 'completed' ||
+                          status.toLowerCase() == 'success'
                       ? const Color(0xFF16A34A)
                       : null,
                 ),
-                _line(context, 'Transaction ID', _orDash(_pick(['transaction_id', 'txn_id', 'id']).isEmpty ? txn.id : _pick(['transaction_id', 'txn_id', 'id']))),
-                _line(context, 'Transaction Type', _orDash(_pick(['type', 'transaction_type']).isEmpty ? (txn.parcel ? 'Parcel Earnings' : 'Ride Earnings') : _titleCase(_pick(['type', 'transaction_type'])))),
+                _line(
+                  context,
+                  'Transaction ID',
+                  _orDash(
+                    _pick(['transaction_id', 'txn_id', 'id']).isEmpty
+                        ? txn.id
+                        : _pick(['transaction_id', 'txn_id', 'id']),
+                  ),
+                ),
+                _line(
+                  context,
+                  'Transaction Type',
+                  _orDash(
+                    _pick(['type', 'transaction_type']).isEmpty
+                        ? (txn.parcel ? 'Parcel Earnings' : 'Ride Earnings')
+                        : _titleCase(_pick(['type', 'transaction_type'])),
+                  ),
+                ),
                 _line(context, 'Amount', _money(amountRaw)),
                 _line(context, 'Data & Time', _dateTime()),
-                _line(context, 'Job Reference', _orDash(_pick(['job_reference', 'reference', 'ride_id', 'booking_id']))),
+                _line(
+                  context,
+                  'Job Reference',
+                  _orDash(
+                    _pick([
+                      'job_reference',
+                      'reference',
+                      'ride_id',
+                      'booking_id',
+                    ]),
+                  ),
+                ),
               ],
             ),
           ),
@@ -178,9 +279,22 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.paymentStatus, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
+                Text(
+                  AppStrings.paymentStatus,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    color: context.torkk.textSecondary,
+                  ),
+                ),
                 SizedBox(height: context.h(2)),
-                Text(paidText, style: AppTypography.bold.copyWith(fontSize: 15, height: 1.2, letterSpacing: -0.2)),
+                Text(
+                  paidText,
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 15,
+                    height: 1.2,
+                    letterSpacing: -0.2,
+                  ),
+                ),
               ],
             ),
           ),
@@ -189,13 +303,33 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
     );
   }
 
-  Widget _line(BuildContext context, String label, String value, {Color? valueColor}) {
+  Widget _line(
+    BuildContext context,
+    String label,
+    String value, {
+    Color? valueColor,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary))),
-          Text(value, style: AppTypography.regular.copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: valueColor ?? context.legible(AppColors.textPrimary))),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                color: context.torkk.textSecondary,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: valueColor ?? context.legible(AppColors.textPrimary),
+            ),
+          ),
         ],
       ),
     );

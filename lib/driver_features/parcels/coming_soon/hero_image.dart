@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 

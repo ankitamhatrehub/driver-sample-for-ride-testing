@@ -153,12 +153,16 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
   @override
   Widget build(BuildContext context) {
     final defaultLatLng = widget.currentPosition != null
-        ? LatLng(widget.currentPosition!.latitude, widget.currentPosition!.longitude)
+        ? LatLng(
+            widget.currentPosition!.latitude,
+            widget.currentPosition!.longitude,
+          )
         : const LatLng(28.6139, 77.2090);
 
     final isFemale = widget.driverGender.trim().toLowerCase() == 'female';
-    final avatarBorderColor =
-        isFemale ? const Color(0xFFEC4899) : const Color(0xFF1D4ED8);
+    final avatarBorderColor = isFemale
+        ? const Color(0xFFEC4899)
+        : const Color(0xFF1D4ED8);
 
     return Stack(
       children: [
@@ -228,7 +232,8 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                     setState(() {
                       _showOnlineText = true;
                     });
-                  } else if (widget.visibleRides.isNotEmpty && _showOnlineText) {
+                  } else if (widget.visibleRides.isNotEmpty &&
+                      _showOnlineText) {
                     setState(() {
                       _showOnlineText = false;
                     });
@@ -242,7 +247,10 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                   curve: Curves.easeInOut,
                   padding: (widget.visibleRides.isNotEmpty && !_showOnlineText)
                       ? EdgeInsets.zero
-                      : const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+                      : const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 10,
+                        ),
                   decoration: BoxDecoration(
                     color: const Color(0xFF22C55E),
                     borderRadius: BorderRadius.circular(24),
@@ -285,10 +293,7 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                   height: 44,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      color: avatarBorderColor,
-                      width: 2.5,
-                    ),
+                    border: Border.all(color: avatarBorderColor, width: 2.5),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withAlpha(38),
@@ -303,7 +308,10 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                             widget.profilePhotoUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (_, _, _) => Container(
-                              color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                              color: context.themed(
+                                light: Colors.grey.shade200,
+                                dark: context.torkk.surfaceMuted,
+                              ),
                               child: Icon(
                                 Icons.person,
                                 color: context.torkk.textBody,
@@ -312,7 +320,10 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
                             ),
                           )
                         : Container(
-                            color: context.themed(light: Colors.grey.shade200, dark: context.torkk.surfaceMuted),
+                            color: context.themed(
+                              light: Colors.grey.shade200,
+                              dark: context.torkk.surfaceMuted,
+                            ),
                             child: Icon(
                               Icons.person,
                               color: context.torkk.textBody,
@@ -466,5 +477,3 @@ class _OnlineRideSearchViewState extends State<OnlineRideSearchView> {
     );
   }
 }
-
-

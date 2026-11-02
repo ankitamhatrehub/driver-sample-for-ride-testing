@@ -5,18 +5,12 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 class SpeedometerWidget extends StatelessWidget {
   final int speedKmH;
 
-  const SpeedometerWidget({
-    super.key,
-    required this.speedKmH,
-  });
+  const SpeedometerWidget({super.key, required this.speedKmH});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: context.torkk.surface,
         borderRadius: BorderRadius.circular(16),

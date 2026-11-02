@@ -63,20 +63,36 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       backgroundColor: context.torkk.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(context.r(16)))),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(context.r(16)),
+        ),
+      ),
       builder: (context) {
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.photo_camera_outlined, color: context.legible(AppColors.primary)),
-                title: Text(AppStrings.camera, style: AppTypography.bold.copyWith(fontSize: 15)),
+                leading: Icon(
+                  Icons.photo_camera_outlined,
+                  color: context.legible(AppColors.primary),
+                ),
+                title: Text(
+                  AppStrings.camera,
+                  style: AppTypography.bold.copyWith(fontSize: 15),
+                ),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
-                leading: Icon(Icons.photo_outlined, color: context.legible(AppColors.primary)),
-                title: Text(AppStrings.gallery, style: AppTypography.bold.copyWith(fontSize: 15)),
+                leading: Icon(
+                  Icons.photo_outlined,
+                  color: context.legible(AppColors.primary),
+                ),
+                title: Text(
+                  AppStrings.gallery,
+                  style: AppTypography.bold.copyWith(fontSize: 15),
+                ),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
             ],
@@ -85,7 +101,10 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
       },
     );
     if (source == null) return;
-    final photo = await ImagePicker().pickImage(source: source, imageQuality: 90);
+    final photo = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 90,
+    );
     if (photo == null || !mounted) return;
     setState(() {
       if (front) {
@@ -102,14 +121,16 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
       final number = parseRegistrationNumber(text);
       if (!mounted) return;
       setState(() {
-        if (number != null && (front || _numberController.text.trim().isEmpty)) {
+        if (number != null &&
+            (front || _numberController.text.trim().isEmpty)) {
           _numberController.text = number;
         }
         if (_numberController.text.trim().isEmpty) _page = _RcPage.unclear;
       });
     } catch (_) {
       if (!mounted) return;
-      if (_numberController.text.trim().isEmpty) setState(() => _page = _RcPage.unclear);
+      if (_numberController.text.trim().isEmpty)
+        setState(() => _page = _RcPage.unclear);
     } finally {
       if (mounted) {
         setState(() {
@@ -152,12 +173,12 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
     return switch (_page) {
       _RcPage.form => _form(context),
       _RcPage.unclear => DocumentValidationScreen(
-          title: AppStrings.documentUnclear,
-          message: AppStrings.documentUnclearHint,
-          onBack: () => _go(_RcPage.form),
-          onHelp: widget.onHelp,
-          onRetake: () => _go(_RcPage.form),
-        ),
+        title: AppStrings.documentUnclear,
+        message: AppStrings.documentUnclearHint,
+        onBack: () => _go(_RcPage.form),
+        onHelp: widget.onHelp,
+        onRetake: () => _go(_RcPage.form),
+      ),
       _RcPage.preview => _preview(context),
       _RcPage.extracted => _extracted(context),
     };
@@ -170,7 +191,12 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
       onBack: widget.onBack,
       onHelp: widget.onHelp,
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(8),
+          context.w(24),
+          context.h(16),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -186,7 +212,10 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
             SizedBox(height: context.h(4)),
             Text(
               AppStrings.rcDocumentHint,
-              style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 12,
+                color: context.torkk.textSecondary,
+              ),
             ),
             SizedBox(height: context.h(10)),
             Row(
@@ -217,7 +246,10 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
             SizedBox(height: context.h(24)),
             UnifiedButton(
               label: AppStrings.continueAction,
-              enabled: _frontPath != null && _backPath != null && _numberController.text.trim().isNotEmpty,
+              enabled:
+                  _frontPath != null &&
+                  _backPath != null &&
+                  _numberController.text.trim().isNotEmpty,
               onPressed: _continueFromForm,
             ),
           ],
@@ -225,7 +257,6 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
       ),
     );
   }
-
 }
 
 class _UploadedFile extends StatelessWidget {
@@ -238,7 +269,9 @@ class _UploadedFile extends StatelessWidget {
   Widget build(BuildContext context) {
     final file = path == null ? null : File(path!);
     final name = path == null ? '' : path!.split(Platform.pathSeparator).last;
-    final size = file == null || !file.existsSync() ? '' : _sizeLabel(file.lengthSync());
+    final size = file == null || !file.existsSync()
+        ? ''
+        : _sizeLabel(file.lengthSync());
     return Row(
       children: [
         Container(
@@ -252,23 +285,43 @@ class _UploadedFile extends StatelessWidget {
             border: Border.all(color: context.torkk.border),
           ),
           child: path == null
-              ? Icon(Icons.badge_outlined, size: context.w(18), color: AppColors.slate400)
+              ? Icon(
+                  Icons.badge_outlined,
+                  size: context.w(18),
+                  color: AppColors.slate400,
+                )
               : Image.file(File(path!), fit: BoxFit.cover),
         ),
         SizedBox(width: context.w(10)),
-        Icon(Icons.check_circle, color: AppColors.green600, size: context.w(16)),
+        Icon(
+          Icons.check_circle,
+          color: AppColors.green600,
+          size: context.w(16),
+        ),
         SizedBox(width: context.w(8)),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.rcDocument, style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2)),
+              Text(
+                AppStrings.rcDocument,
+                style: AppTypography.bold.copyWith(fontSize: 13, height: 1.2),
+              ),
               if (name.isNotEmpty)
-                Text(name, style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
+                Text(
+                  name,
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 12,
+                    color: context.torkk.textSecondary,
+                  ),
+                ),
               if (size.isNotEmpty)
                 Text(
                   '$size • ${AppStrings.rcUploaded}',
-                  style: AppTypography.regular.copyWith(fontSize: 11, color: context.torkk.textSecondary),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 11,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
             ],
           ),
@@ -277,9 +330,19 @@ class _UploadedFile extends StatelessWidget {
           onTap: onReplace,
           child: Row(
             children: [
-              Icon(Icons.edit_outlined, size: context.w(14), color: context.legible(AppColors.primary)),
+              Icon(
+                Icons.edit_outlined,
+                size: context.w(14),
+                color: context.legible(AppColors.primary),
+              ),
               SizedBox(width: context.w(4)),
-              Text(AppStrings.replaceAction, style: AppTypography.bold.copyWith(fontSize: 13, color: context.legible(AppColors.primary))),
+              Text(
+                AppStrings.replaceAction,
+                style: AppTypography.bold.copyWith(
+                  fontSize: 13,
+                  color: context.legible(AppColors.primary),
+                ),
+              ),
             ],
           ),
         ),

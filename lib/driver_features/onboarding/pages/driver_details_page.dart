@@ -37,7 +37,11 @@ class DriverDetailsPage extends StatelessWidget {
             _session.photoPath = path;
             _session.touch();
           },
-          onBack: () => leaveOnboardingStep(context, AppRoutes.driverDetails, AppRoutes.kyc),
+          onBack: () => leaveOnboardingStep(
+            context,
+            AppRoutes.driverDetails,
+            AppRoutes.kyc,
+          ),
           onContinue: () {
             _session.returnToReview = false;
             _session.reviewEntry = '';

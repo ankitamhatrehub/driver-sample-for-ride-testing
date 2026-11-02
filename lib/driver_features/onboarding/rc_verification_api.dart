@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:rider_app/service/api_client.dart';
 import 'package:rider_app/common/constants/app_urls.dart';
 
@@ -16,9 +15,14 @@ class VehicleRcDetails {
   final String model;
   final String vehicleType;
 
-  factory VehicleRcDetails.fromBody(String body, {required String fallbackNumber}) {
+  factory VehicleRcDetails.fromBody(
+    String body, {
+    required String fallbackNumber,
+  }) {
     final decoded = jsonDecode(body);
-    final root = decoded is Map ? Map<String, dynamic>.from(decoded) : <String, dynamic>{};
+    final root = decoded is Map
+        ? Map<String, dynamic>.from(decoded)
+        : <String, dynamic>{};
     final data = _map(root['data']);
     final extracted = _map(root['extracted']);
     final source = data.isNotEmpty ? data : extracted;
@@ -36,7 +40,11 @@ class VehicleRcDetails {
     return VehicleRcDetails(
       registrationNumber: number.isEmpty ? fallbackNumber : number,
       model: pick(['maker_model', 'model', 'vehicle_model']),
-      vehicleType: pick(['vehicle_category_description', 'vehicle_category', 'vehicle_type']),
+      vehicleType: pick([
+        'vehicle_category_description',
+        'vehicle_category',
+        'vehicle_type',
+      ]),
     );
   }
 }
@@ -62,7 +70,9 @@ Future<VehicleRcDetails> verifyVehicleRc({required String idNumber}) async {
       )
       .timeout(const Duration(seconds: 20));
 
-  if (response.statusCode < 200 || response.statusCode >= 300 || !_accepted(response.body)) {
+  if (response.statusCode < 200 ||
+      response.statusCode >= 300 ||
+      !_accepted(response.body)) {
     throw RcVerificationException(_errorMessage(response.body));
   }
   return VehicleRcDetails.fromBody(response.body, fallbackNumber: idNumber);

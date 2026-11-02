@@ -35,7 +35,14 @@ class ConnectingDigilockerScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: onBack,
-          icon: Icon(Icons.arrow_back_ios_new, color: context.themed(light: Colors.black, dark: context.torkk.textPrimary), size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: context.themed(
+              light: Colors.black,
+              dark: context.torkk.textPrimary,
+            ),
+            size: 20,
+          ),
         ),
         backgroundColor: context.torkk.background,
         surfaceTintColor: Colors.transparent,
@@ -44,7 +51,12 @@ class ConnectingDigilockerScreen extends StatelessWidget {
       body: SafeArea(
         top: false,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(context.w(24), context.h(8), context.w(24), context.h(16)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(24),
+            context.h(8),
+            context.w(24),
+            context.h(16),
+          ),
           child: Column(
             children: [
               Expanded(
@@ -74,7 +86,9 @@ class ConnectingDigilockerScreen extends StatelessWidget {
                     ],
                     Center(
                       child: ticking
-                          ? _TickSequence(onFinished: onTickingFinished ?? () {})
+                          ? _TickSequence(
+                              onFinished: onTickingFinished ?? () {},
+                            )
                           : IntrinsicWidth(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,12 +205,18 @@ class _ConnectStep extends StatelessWidget {
                       : active
                       ? _active
                       : context.torkk.surface,
-                  border: done || active ? null : Border.all(color: AppColors.slate300, width: 1.5),
+                  border: done || active
+                      ? null
+                      : Border.all(color: AppColors.slate300, width: 1.5),
                 ),
                 child: done
                     ? const Icon(Icons.check, color: Colors.white, size: 14)
                     : active
-                    ? const Icon(Icons.cloud_upload, color: Colors.white, size: 12)
+                    ? const Icon(
+                        Icons.cloud_upload,
+                        color: Colors.white,
+                        size: 12,
+                      )
                     : null,
               ),
               if (showLine)
@@ -218,8 +238,15 @@ class _ConnectStep extends StatelessWidget {
           child: Text(
             label,
             style: done || active
-                ? AppTypography.bold.copyWith(fontSize: 16, height: 1.2, color: context.torkk.textPrimary)
-                : AppTypography.regular.copyWith(fontSize: 14, color: context.torkk.textSecondary),
+                ? AppTypography.bold.copyWith(
+                    fontSize: 16,
+                    height: 1.2,
+                    color: context.torkk.textPrimary,
+                  )
+                : AppTypography.regular.copyWith(
+                    fontSize: 14,
+                    color: context.torkk.textSecondary,
+                  ),
           ),
         ),
       ],

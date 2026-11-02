@@ -299,7 +299,12 @@ extension _DriverTripsScreenStateSections on _DriverTripsScreenState {
             style: TextStyle(
               fontSize: 13,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: color ?? context.themed(light: Colors.black87, dark: context.torkk.textPrimary),
+              color:
+                  color ??
+                  context.themed(
+                    light: Colors.black87,
+                    dark: context.torkk.textPrimary,
+                  ),
             ),
           ),
         ],
@@ -380,7 +385,10 @@ extension _DriverTripsScreenStateSections on _DriverTripsScreenState {
                     icon: Icon(
                       Icons.info_outline_rounded,
                       size: 20,
-                      color: context.themed(light: Colors.blueGrey, dark: context.torkk.textSecondary),
+                      color: context.themed(
+                        light: Colors.blueGrey,
+                        dark: context.torkk.textSecondary,
+                      ),
                     ),
                     onPressed: () => _showInvoiceDialog(context, trip),
                   ),

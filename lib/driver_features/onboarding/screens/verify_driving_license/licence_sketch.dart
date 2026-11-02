@@ -28,8 +28,15 @@ class _LicenceSketch extends StatelessWidget {
                 Container(
                   width: context.w(36),
                   height: context.w(36),
-                  decoration: const BoxDecoration(color: Color(0xFFE7E0F4), shape: BoxShape.circle),
-                  child: Icon(Icons.person, color: const Color(0xFFB7A8D6), size: context.w(22)),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFE7E0F4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.person,
+                    color: const Color(0xFFB7A8D6),
+                    size: context.w(22),
+                  ),
                 ),
                 SizedBox(width: context.w(10)),
                 Expanded(
@@ -73,7 +80,10 @@ class _LicenceSketch extends StatelessWidget {
         widthFactor: widthFactor,
         child: Container(
           height: context.h(6),
-          decoration: BoxDecoration(color: const Color(0xFFE4DDF3), borderRadius: BorderRadius.circular(4)),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE4DDF3),
+            borderRadius: BorderRadius.circular(4),
+          ),
         ),
       ),
     );

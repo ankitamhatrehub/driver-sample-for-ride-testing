@@ -16,7 +16,9 @@ Future<bool> showAvailabilityDialog(
     icon: AppDialogBadge(
       icon: goingOnline ? Icons.wifi_rounded : Icons.wifi_off_rounded,
       color: goingOnline ? const Color(0xFF10B981) : AppColors.error,
-      background: goingOnline ? const Color(0xFFD1FAE5) : const Color(0xFFFEE2E2),
+      background: goingOnline
+          ? const Color(0xFFD1FAE5)
+          : const Color(0xFFFEE2E2),
     ),
     title: goingOnline ? AppStrings.goOnline : AppStrings.goOffline,
     subtitle: goingOnline ? AppStrings.goOnlineBody : AppStrings.goOfflineBody,

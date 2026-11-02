@@ -35,7 +35,7 @@ void showOnboardingSnack(BuildContext context, String message) {
 }
 
 void openAiChat(BuildContext context) {
-  Navigator.of(
-    context,
-  ).push(MaterialPageRoute<void>(builder: (_) => const NewFeatureComingSoonScreen()));
+  Navigator.of(context).push(
+    MaterialPageRoute<void>(builder: (_) => const NewFeatureComingSoonScreen()),
+  );
 }

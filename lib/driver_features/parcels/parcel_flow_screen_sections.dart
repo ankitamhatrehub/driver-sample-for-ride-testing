@@ -19,7 +19,10 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [context.adaptiveTint(Color(0xF2FFFFFF)), context.adaptiveTint(Color(0x00FFFFFF))],
+                    colors: [
+                      context.adaptiveTint(Color(0xF2FFFFFF)),
+                      context.adaptiveTint(Color(0x00FFFFFF)),
+                    ],
                   ),
                 ),
               ),
@@ -222,7 +225,11 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
         CircleAvatar(
           radius: context.w(16),
           backgroundColor: accent,
-          child: Icon(Icons.person, color: Theme.of(context).colorScheme.onPrimary, size: context.w(18)),
+          child: Icon(
+            Icons.person,
+            color: Theme.of(context).colorScheme.onPrimary,
+            size: context.w(18),
+          ),
         ),
       ],
     );
@@ -689,7 +696,9 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                 children: [
                   CircleAvatar(
                     radius: context.w(16),
-                    backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
+                    backgroundColor: context.adaptiveTint(
+                      const Color(0xFFF1F5F9),
+                    ),
                     child: Icon(
                       Icons.person,
                       size: context.w(18),
@@ -871,7 +880,9 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                 children: [
                   CircleAvatar(
                     radius: context.w(18),
-                    backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
+                    backgroundColor: context.adaptiveTint(
+                      const Color(0xFFF1F5F9),
+                    ),
                     child: Icon(
                       Icons.person,
                       color: AppColors.slate400,
@@ -1055,7 +1066,12 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
       title: sender ? 'Verify Parcel at Pickup' : 'Verify Parcel at Delivery',
       onBack: () => _go(sender ? _Phase.verifyIntro : _Phase.arrivedDrop),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(24), context.h(18), context.w(24), 0),
+        padding: EdgeInsets.fromLTRB(
+          context.w(24),
+          context.h(18),
+          context.w(24),
+          0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1065,8 +1081,13 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
             ),
             SizedBox(height: context.h(8)),
             Text(
-              sender ? 'Ask the Sender for their 4-digit OTP.' : 'Ask the Receiver for their 4-digit OTP.',
-              style: AppTypography.regular.copyWith(fontSize: 14.5, color: context.torkk.textSecondary),
+              sender
+                  ? 'Ask the Sender for their 4-digit OTP.'
+                  : 'Ask the Receiver for their 4-digit OTP.',
+              style: AppTypography.regular.copyWith(
+                fontSize: 14.5,
+                color: context.torkk.textSecondary,
+              ),
             ),
             SizedBox(height: context.h(28)),
             _ParcelOtpBoxes(controller: _otp, focusNode: _otpFocus, length: 4),
@@ -1126,14 +1147,26 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                         height: context.h(48),
                         child: OutlinedButton.icon(
                           onPressed: _pickPhoto,
-                          icon: Icon(Icons.photo_camera_outlined, size: 18, color: Theme.of(context).colorScheme.primary),
+                          icon: Icon(
+                            Icons.photo_camera_outlined,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           label: Text(
                             'Retake',
-                            style: AppTypography.bold.copyWith(fontSize: 14, height: 1, color: Theme.of(context).colorScheme.primary),
+                            style: AppTypography.bold.copyWith(
+                              fontSize: 14,
+                              height: 1,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: context.torkk.border),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(12))),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                context.r(12),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -1147,9 +1180,15 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           side: BorderSide(color: context.torkk.border),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(12))),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(context.r(12)),
+                          ),
                         ),
-                        child: Icon(Icons.more_horiz, color: context.torkk.textSecondary, size: context.w(20)),
+                        child: Icon(
+                          Icons.more_horiz,
+                          color: context.torkk.textSecondary,
+                          size: context.w(20),
+                        ),
                       ),
                     ),
                   ],
@@ -1159,7 +1198,10 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
           ),
           SizedBox(height: context.h(12)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(10)),
+            padding: EdgeInsets.symmetric(
+              horizontal: context.w(12),
+              vertical: context.h(10),
+            ),
             decoration: BoxDecoration(
               color: context.torkk.surfaceMuted,
               borderRadius: BorderRadius.circular(context.r(14)),
@@ -1169,16 +1211,36 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
               children: [
                 CircleAvatar(
                   radius: context.w(18),
-                  backgroundColor: context.adaptiveTint(const Color(0xFFE2E8F0)),
-                  child: Icon(Icons.person, color: AppColors.slate400, size: context.w(18)),
+                  backgroundColor: context.adaptiveTint(
+                    const Color(0xFFE2E8F0),
+                  ),
+                  child: Icon(
+                    Icons.person,
+                    color: AppColors.slate400,
+                    size: context.w(18),
+                  ),
                 ),
                 SizedBox(width: context.w(10)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Receiver', style: AppTypography.regular.copyWith(fontSize: 11, height: 1, color: AppColors.slate400)),
+                    Text(
+                      'Receiver',
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 11,
+                        height: 1,
+                        color: AppColors.slate400,
+                      ),
+                    ),
                     SizedBox(height: context.h(2)),
-                    Text('Amit', style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
+                    Text(
+                      'Amit',
+                      style: AppTypography.bold.copyWith(
+                        fontSize: 14,
+                        height: 1.2,
+                        letterSpacing: -0.2,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -1208,11 +1270,19 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
           Positioned(
             top: 0,
             bottom: 0,
-            child: Container(width: context.w(28), color: const Color(0x33B45309)),
+            child: Container(
+              width: context.w(28),
+              color: const Color(0x33B45309),
+            ),
           ),
           Container(
             width: context.w(168),
-            padding: EdgeInsets.fromLTRB(context.w(10), context.h(10), context.w(10), context.h(8)),
+            padding: EdgeInsets.fromLTRB(
+              context.w(10),
+              context.h(10),
+              context.w(10),
+              context.h(8),
+            ),
             decoration: BoxDecoration(
               color: context.torkk.surface,
               borderRadius: BorderRadius.circular(context.r(4)),
@@ -1240,10 +1310,17 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                 SizedBox(height: context.h(4)),
                 Text(
                   'PKG-8923-8891-TRK',
-                  style: AppTypography.regular.copyWith(fontSize: 8, height: 1, letterSpacing: 0.2),
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 8,
+                    height: 1,
+                    letterSpacing: 0.2,
+                  ),
                 ),
                 SizedBox(height: context.h(6)),
-                Container(height: 1, color: context.adaptiveTint(const Color(0xFFE2E8F0))),
+                Container(
+                  height: 1,
+                  color: context.adaptiveTint(const Color(0xFFE2E8F0)),
+                ),
               ],
             ),
           ),
@@ -1266,17 +1343,29 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
             height: context.h(48),
             child: OutlinedButton.icon(
               onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const IssueCategoryScreen()),
+                MaterialPageRoute<void>(
+                  builder: (_) => const IssueCategoryScreen(),
+                ),
               ),
-              icon: const Icon(Icons.warning_amber_rounded, color: Color(0xFFEF4444), size: 18),
+              icon: const Icon(
+                Icons.warning_amber_rounded,
+                color: Color(0xFFEF4444),
+                size: 18,
+              ),
               label: Text(
                 'Report an Issue',
-                style: AppTypography.bold.copyWith(fontSize: 14, height: 1, color: const Color(0xFFEF4444)),
+                style: AppTypography.bold.copyWith(
+                  fontSize: 14,
+                  height: 1,
+                  color: const Color(0xFFEF4444),
+                ),
               ),
               style: OutlinedButton.styleFrom(
                 backgroundColor: context.torkk.surface,
                 side: const BorderSide(color: Color(0xFFEF4444)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(16))),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(context.r(16)),
+                ),
               ),
             ),
           ),
@@ -1293,24 +1382,55 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
               children: [
                 ColorFiltered(
                   colorFilter: const ColorFilter.matrix(<double>[
-                    1, 0, 0, 0, 0,
-                    0, 1, 0, 0, 0,
-                    0, 0, 1, 0, 0,
-                    1, 1, 1, 0, 0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
                   ]),
-                  child: Image.asset(AppAssets.celebration, width: context.w(340), fit: BoxFit.contain),
+                  child: Image.asset(
+                    AppAssets.celebration,
+                    width: context.w(340),
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.check_circle, color: Color(0xFF16A34A), size: 36),
+                    const Icon(
+                      Icons.check_circle,
+                      color: Color(0xFF16A34A),
+                      size: 36,
+                    ),
                     SizedBox(height: context.h(8)),
                     Container(
                       width: context.w(72),
                       height: context.w(72),
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(color: context.torkk.surfaceMuted, shape: BoxShape.circle),
-                      child: Icon(Icons.inventory_2_rounded, color: const Color(0xFFE8A15A), size: context.w(36)),
+                      decoration: BoxDecoration(
+                        color: context.torkk.surfaceMuted,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.inventory_2_rounded,
+                        color: const Color(0xFFE8A15A),
+                        size: context.w(36),
+                      ),
                     ),
                   ],
                 ),
@@ -1320,23 +1440,49 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
           Text(
             'Parcel Delivered',
             textAlign: TextAlign.center,
-            style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2, letterSpacing: -0.3),
+            style: AppTypography.bold.copyWith(
+              fontSize: 20,
+              height: 1.2,
+              letterSpacing: -0.3,
+            ),
           ),
           SizedBox(height: context.h(4)),
           Text(
             'Successfully delivered to',
             textAlign: TextAlign.center,
-            style: AppTypography.regular.copyWith(fontSize: 13, height: 1.3, color: context.torkk.textSecondary),
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              height: 1.3,
+              color: context.torkk.textSecondary,
+            ),
           ),
           Text(
             'Amit Verma',
             textAlign: TextAlign.center,
-            style: AppTypography.bold.copyWith(fontSize: 14, height: 1.3, letterSpacing: -0.2),
+            style: AppTypography.bold.copyWith(
+              fontSize: 14,
+              height: 1.3,
+              letterSpacing: -0.2,
+            ),
           ),
           SizedBox(height: context.h(16)),
-          _moneyRow(context, Icons.receipt_long_outlined, const Color(0xFFFFF7ED), const Color(0xFFF97316), 'Ride Fare', '₹ 285'),
+          _moneyRow(
+            context,
+            Icons.receipt_long_outlined,
+            const Color(0xFFFFF7ED),
+            const Color(0xFFF97316),
+            'Ride Fare',
+            '₹ 285',
+          ),
           SizedBox(height: context.h(8)),
-          _moneyRow(context, Icons.account_balance_wallet_outlined, const Color(0xFFEFF6FF), const Color(0xFF3B82F6), 'Payment', 'Paid Cash'),
+          _moneyRow(
+            context,
+            Icons.account_balance_wallet_outlined,
+            const Color(0xFFEFF6FF),
+            const Color(0xFF3B82F6),
+            'Payment',
+            'Paid Cash',
+          ),
           SizedBox(height: context.h(12)),
           Container(
             padding: EdgeInsets.symmetric(
@@ -1346,7 +1492,11 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(context.r(14)),
               gradient: LinearGradient(
-                colors: [Color(0xFF0F3FBF),Color(0xFF61217E),Color(0xFFBA2879)],
+                colors: [
+                  Color(0xFF0F3FBF),
+                  Color(0xFF61217E),
+                  Color(0xFFBA2879),
+                ],
               ),
             ),
             child: const Row(
@@ -1662,10 +1812,20 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
     );
   }
 
-  Widget _moneyRow(BuildContext context, IconData icon, Color iconBg, Color iconColor, String label, String value) {
+  Widget _moneyRow(
+    BuildContext context,
+    IconData icon,
+    Color iconBg,
+    Color iconColor,
+    String label,
+    String value,
+  ) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(12),
+        vertical: context.h(12),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.r(12)),
         border: Border.all(color: context.torkk.border),
@@ -1676,16 +1836,33 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
             width: context.w(36),
             height: context.w(36),
             alignment: Alignment.center,
-            decoration: BoxDecoration(color: iconBg, borderRadius: BorderRadius.circular(context.r(10))),
+            decoration: BoxDecoration(
+              color: iconBg,
+              borderRadius: BorderRadius.circular(context.r(10)),
+            ),
             child: Icon(icon, color: iconColor, size: context.w(18)),
           ),
           SizedBox(width: context.w(10)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: AppTypography.regular.copyWith(fontSize: 12, height: 1, color: AppColors.slate400)),
+              Text(
+                label,
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  height: 1,
+                  color: AppColors.slate400,
+                ),
+              ),
               SizedBox(height: context.h(4)),
-              Text(value, style: AppTypography.bold.copyWith(fontSize: 14, height: 1.2, letterSpacing: -0.2)),
+              Text(
+                value,
+                style: AppTypography.bold.copyWith(
+                  fontSize: 14,
+                  height: 1.2,
+                  letterSpacing: -0.2,
+                ),
+              ),
             ],
           ),
         ],
@@ -1793,11 +1970,11 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
   //   );
   // }
   Widget _fillButton(
-      BuildContext context,
-      String label,
-      VoidCallback onTap, {
-        IconData? icon,
-      }) {
+    BuildContext context,
+    String label,
+    VoidCallback onTap, {
+    IconData? icon,
+  }) {
     return Padding(
       padding: EdgeInsets.fromLTRB(context.w(0), 0, 0, 0),
       child: SizedBox(
@@ -1825,7 +2002,11 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
               ),
               if (icon != null) ...[
                 SizedBox(width: context.w(8)),
-                Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 16),
+                Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  size: 16,
+                ),
               ],
             ],
           ),

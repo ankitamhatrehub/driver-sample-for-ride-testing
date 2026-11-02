@@ -19,7 +19,12 @@ class IdentityVerifiedScreen extends StatelessWidget {
       backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(context.w(24), context.h(48), context.w(24), context.h(16)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(24),
+            context.h(48),
+            context.w(24),
+            context.h(16),
+          ),
           child: Column(
             children: [
               Image.asset(
@@ -36,23 +41,36 @@ class IdentityVerifiedScreen extends StatelessWidget {
               Text(
                 AppStrings.identityVerifiedSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(color: context.torkk.textSecondary, fontSize: 14),
+                style: AppTypography.regular.copyWith(
+                  color: context.torkk.textSecondary,
+                  fontSize: 14,
+                ),
               ),
               const Spacer(),
               Row(
                 children: [
-                  Icon(Icons.verified, color: AppColors.green600, size: context.w(18)),
+                  Icon(
+                    Icons.verified,
+                    color: AppColors.green600,
+                    size: context.w(18),
+                  ),
                   SizedBox(width: context.w(8)),
                   Expanded(
                     child: Text(
                       AppStrings.documentsSecurelyVerified,
-                      style: AppTypography.regular.copyWith(fontSize: 13, color: context.legible(AppColors.green700)),
+                      style: AppTypography.regular.copyWith(
+                        fontSize: 13,
+                        color: context.legible(AppColors.green700),
+                      ),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: context.h(16)),
-              UnifiedButton(label: AppStrings.continueAction, onPressed: onContinue),
+              UnifiedButton(
+                label: AppStrings.continueAction,
+                onPressed: onContinue,
+              ),
             ],
           ),
         ),

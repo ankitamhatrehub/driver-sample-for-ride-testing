@@ -6,7 +6,11 @@ part 'driver_trips_screen_sections.dart';
 
 // --- DRIVER TRIP HISTORY SCREEN ---
 class DriverTripsScreen extends StatefulWidget {
-  const DriverTripsScreen({super.key, this.parcelsOnly = false, this.title = 'Trip Activity History'});
+  const DriverTripsScreen({
+    super.key,
+    this.parcelsOnly = false,
+    this.title = 'Trip Activity History',
+  });
 
   final bool parcelsOnly;
   final String title;
@@ -62,7 +66,9 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
   @override
   Widget build(BuildContext context) {
     final source = widget.parcelsOnly
-        ? _trips.where((t) => t['is_parcel'] == true || t['service_type'] == 'parcel')
+        ? _trips.where(
+            (t) => t['is_parcel'] == true || t['service_type'] == 'parcel',
+          )
         : _trips;
     final completedRides = source
         .where((t) => t['status'] == 'completed')
@@ -81,7 +87,10 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: context.torkk.background,
-          foregroundColor: context.themed(light: Colors.black, dark: context.torkk.textSecondary),
+          foregroundColor: context.themed(
+            light: Colors.black,
+            dark: context.torkk.textSecondary,
+          ),
           elevation: 0,
           bottom: const TabBar(
             labelColor: Color(0xFF4F46E5),

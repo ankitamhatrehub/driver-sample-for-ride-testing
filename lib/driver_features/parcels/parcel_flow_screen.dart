@@ -320,7 +320,7 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
               backgroundColor: context.adaptiveTint(const Color(0xFFF3E8FF)),
               child: Icon(
                 Icons.person,
-                color: context.legible(Color(0xFFBA2879))
+                color: context.legible(Color(0xFFBA2879)),
               ),
             ),
           ),
@@ -406,7 +406,11 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
                 maxLines: null,
                 textAlignVertical: TextAlignVertical.top,
                 onChanged: (_) => setState(() {}),
-                style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textPrimary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 13,
+                  height: 1.4,
+                  color: context.torkk.textPrimary,
+                ),
                 decoration: InputDecoration(
                   hintText: 'Add a comment (Optional)',
                   hintStyle: AppTypography.regular.copyWith(
@@ -448,6 +452,4 @@ class _ParcelFlowScreenState extends State<ParcelFlowScreen> {
     final file = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (file != null && mounted) setState(() => _photoPath = file.path);
   }
-
 }
-

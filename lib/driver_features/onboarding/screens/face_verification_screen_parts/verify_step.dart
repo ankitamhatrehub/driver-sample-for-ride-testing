@@ -1,7 +1,11 @@
 part of 'package:rider_app/driver_features/onboarding/screens/face_verification_screen.dart';
 
 class _VerifyStep extends StatelessWidget {
-  const _VerifyStep({required this.label, required this.state, this.last = false});
+  const _VerifyStep({
+    required this.label,
+    required this.state,
+    this.last = false,
+  });
 
   final String label;
   final _StepState state;
@@ -58,7 +62,9 @@ class _VerifyStep extends StatelessWidget {
               style: AppTypography.regular.copyWith(
                 fontSize: 14,
                 fontWeight: done || active ? FontWeight.w700 : FontWeight.w400,
-                color: done || active ? context.legible(AppColors.textPrimary) : context.legible(AppColors.secondaryTextColor),
+                color: done || active
+                    ? context.legible(AppColors.textPrimary)
+                    : context.legible(AppColors.secondaryTextColor),
               ),
             ),
           ),

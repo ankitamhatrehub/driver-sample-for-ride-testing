@@ -48,7 +48,10 @@ class BiometricSetupStep extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15,
-              color: context.themed(light: Colors.blueGrey.shade500, dark: context.torkk.textSecondary),
+              color: context.themed(
+                light: Colors.blueGrey.shade500,
+                dark: context.torkk.textSecondary,
+              ),
               height: 1.4,
             ),
           ),
@@ -209,7 +212,10 @@ class _BiometricVerifyStepState extends State<BiometricVerifyStep> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: context.themed(light: Colors.blueGrey, dark: context.torkk.textSecondary),
+                color: context.themed(
+                  light: Colors.blueGrey,
+                  dark: context.torkk.textSecondary,
+                ),
               ),
             ),
           ],

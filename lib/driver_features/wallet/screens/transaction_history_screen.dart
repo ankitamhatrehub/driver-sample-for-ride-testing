@@ -16,13 +16,24 @@ class TransactionHistoryScreen extends StatefulWidget {
   final bool showEmpty;
 
   @override
-  State<TransactionHistoryScreen> createState() => _TransactionHistoryScreenState();
+  State<TransactionHistoryScreen> createState() =>
+      _TransactionHistoryScreenState();
 }
 
 class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
   static const _months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   bool _loading = true;
@@ -44,11 +55,15 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
       final prefs = await SharedPreferences.getInstance();
       final phone = prefs.getString('user_phone') ?? '';
       final data = await DriverApiService.fetchTransactionHistory(phone);
-      final txns = data
-          .whereType<Map>()
-          .map((e) => WalletTxn.fromJson(Map<String, dynamic>.from(e)))
-          .toList()
-        ..sort((a, b) => (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)));
+      final txns =
+          data
+              .whereType<Map>()
+              .map((e) => WalletTxn.fromJson(Map<String, dynamic>.from(e)))
+              .toList()
+            ..sort(
+              (a, b) =>
+                  (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)),
+            );
       if (!mounted) return;
       setState(() {
         _txns = txns;
@@ -71,13 +86,16 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
     final day = DateTime(d.year, d.month, d.day);
     final label = '${d.day} ${_months[d.month - 1]}';
     if (day == today) return 'Today , $label';
-    if (day == today.subtract(const Duration(days: 1))) return 'Yesterday , $label';
+    if (day == today.subtract(const Duration(days: 1)))
+      return 'Yesterday , $label';
     return label;
   }
 
   @override
   Widget build(BuildContext context) {
-    print('TransactionHistoryScreen build: loading=$_loading error=$_error txns=${_txns.length}');
+    print(
+      'TransactionHistoryScreen build: loading=$_loading error=$_error txns=${_txns.length}',
+    );
     if (widget.showEmpty) return const _EmptyTransactions();
     if (_loading) {
       return ProfilePage(
@@ -92,7 +110,13 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(_error!, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
+              Text(
+                _error!,
+                style: AppTypography.regular.copyWith(
+                  fontSize: 13,
+                  color: context.torkk.textSecondary,
+                ),
+              ),
               TextButton(onPressed: _load, child: const Text('Retry')),
             ],
           ),
@@ -117,7 +141,12 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
       child: RefreshIndicator(
         onRefresh: _load,
         child: ListView(
-          padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(20)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(20),
+            context.h(8),
+            context.w(20),
+            context.h(20),
+          ),
           children: children,
         ),
       ),
@@ -128,7 +157,13 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: AppTypography.regular.copyWith(fontSize: 13, color: context.torkk.textSecondary)),
+        Text(
+          title,
+          style: AppTypography.regular.copyWith(
+            fontSize: 13,
+            color: context.torkk.textSecondary,
+          ),
+        ),
         SizedBox(height: context.h(8)),
         Container(
           decoration: BoxDecoration(
@@ -142,29 +177,59 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute<void>(builder: (_) => TransactionDetailsScreen(txn: items[i])),
+                      MaterialPageRoute<void>(
+                        builder: (_) => TransactionDetailsScreen(txn: items[i]),
+                      ),
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.w(12), vertical: context.h(12)),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.w(12),
+                      vertical: context.h(12),
+                    ),
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: context.w(16),
-                          backgroundColor: context.adaptiveTint(const Color(0xFFF1F5F9)),
-                          child: Icon(Icons.person, color: AppColors.slate400, size: context.w(16)),
+                          backgroundColor: context.adaptiveTint(
+                            const Color(0xFFF1F5F9),
+                          ),
+                          child: Icon(
+                            Icons.person,
+                            color: AppColors.slate400,
+                            size: context.w(16),
+                          ),
                         ),
                         SizedBox(width: context.w(10)),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(items[i].name, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600)),
-                              Text('${items[i].kind}  ·  ${items[i].time}', style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary)),
+                              Text(
+                                items[i].name,
+                                style: AppTypography.regular.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                '${items[i].kind}  ·  ${items[i].time}',
+                                style: AppTypography.regular.copyWith(
+                                  fontSize: 12,
+                                  color: context.torkk.textSecondary,
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        Text(items[i].amount, style: AppTypography.regular.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: const Color(0xFF16A34A))),
+                        Text(
+                          items[i].amount,
+                          style: AppTypography.regular.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF16A34A),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -186,17 +251,32 @@ class _EmptyTransactions extends StatelessWidget {
     return ProfilePage(
       title: AppStrings.transactionHistory,
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), context.h(8), context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
+        ),
         child: SizedBox(
           width: double.infinity,
           height: context.h(48),
           child: FilledButton(
-            onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+            onPressed: () =>
+                Navigator.of(context).popUntil((route) => route.isFirst),
             style: FilledButton.styleFrom(
               backgroundColor: profileAccent(context),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(context.r(14)),
+              ),
             ),
-            child: Text('Back to Home', style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: Theme.of(context).colorScheme.onPrimary)),
+            child: Text(
+              'Back to Home',
+              style: AppTypography.bold.copyWith(
+                fontSize: 15,
+                height: 1,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
           ),
         ),
       ),
@@ -214,32 +294,58 @@ class _EmptyTransactions extends StatelessWidget {
                   height: context.w(96),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(context.r(16)),
-                    border: Border.all(color: profileAccent(context), width: 1.4),
+                    border: Border.all(
+                      color: profileAccent(context),
+                      width: 1.4,
+                    ),
                   ),
-                  child: Icon(Icons.notes_rounded, color: const Color(0xFFCBD5E1), size: context.w(28)),
+                  child: Icon(
+                    Icons.notes_rounded,
+                    color: const Color(0xFFCBD5E1),
+                    size: context.w(28),
+                  ),
                 ),
                 Positioned(
                   top: context.h(18),
                   right: context.w(18),
-                  child: const Icon(Icons.check_circle, color: Color(0xFF16A34A), size: 18),
+                  child: const Icon(
+                    Icons.check_circle,
+                    color: Color(0xFF16A34A),
+                    size: 18,
+                  ),
                 ),
                 Positioned(
                   right: context.w(8),
                   bottom: context.h(16),
-                  child: const Icon(Icons.cancel, color: Color(0xFFEF4444), size: 22),
+                  child: const Icon(
+                    Icons.cancel,
+                    color: Color(0xFFEF4444),
+                    size: 22,
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(height: context.h(16)),
-          Text('No Transactions yet', style: AppTypography.bold.copyWith(fontSize: 18, height: 1.2, letterSpacing: -0.3)),
+          Text(
+            'No Transactions yet',
+            style: AppTypography.bold.copyWith(
+              fontSize: 18,
+              height: 1.2,
+              letterSpacing: -0.3,
+            ),
+          ),
           SizedBox(height: context.h(6)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.w(36)),
             child: Text(
               'Your transaction will appear here after you complete rides , parcels  or make any wallet activity.',
               textAlign: TextAlign.center,
-              style: AppTypography.regular.copyWith(fontSize: 13, height: 1.4, color: context.torkk.textSecondary),
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                height: 1.4,
+                color: context.torkk.textSecondary,
+              ),
             ),
           ),
           const Spacer(),

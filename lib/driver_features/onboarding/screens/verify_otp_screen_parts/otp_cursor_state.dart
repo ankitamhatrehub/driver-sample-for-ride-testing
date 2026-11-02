@@ -1,6 +1,7 @@
 part of 'package:rider_app/driver_features/onboarding/screens/verify_otp_screen.dart';
 
-class _OtpCursorState extends State<_OtpCursor> with SingleTickerProviderStateMixin {
+class _OtpCursorState extends State<_OtpCursor>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _blink;
 
   @override

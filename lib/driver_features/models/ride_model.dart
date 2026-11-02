@@ -73,7 +73,9 @@ class RideModel {
   /// Accepts the bare ride object or the `{status, ride: {...}}` wrapper.
   factory RideModel.fromResponse(Map<String, dynamic> body) {
     final inner = body['ride'];
-    return RideModel.fromJson(inner is Map ? Map<String, dynamic>.from(inner) : body);
+    return RideModel.fromJson(
+      inner is Map ? Map<String, dynamic>.from(inner) : body,
+    );
   }
 
   factory RideModel.fromJson(Map<String, dynamic> json) {

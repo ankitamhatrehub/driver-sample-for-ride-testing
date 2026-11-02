@@ -58,7 +58,9 @@ class SubscriptionPlanCard extends StatelessWidget {
                       subtitle,
                       style: AppTypography.regular.copyWith(
                         fontSize: 11,
-                        color: subtitleColor ?? context.legible(AppColors.slate500),
+                        color:
+                            subtitleColor ??
+                            context.legible(AppColors.slate500),
                       ),
                     ),
                   ],
@@ -91,7 +93,9 @@ class SubscriptionAmountBlock extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(child: Text('Plan Amount', style: subscriptionMuted(context))),
+            Expanded(
+              child: Text('Plan Amount', style: subscriptionMuted(context)),
+            ),
           ],
         ),
         Align(
@@ -108,8 +112,12 @@ class SubscriptionAmountBlock extends StatelessWidget {
         SizedBox(height: context.h(8)),
         const Row(
           children: [
-            Expanded(child: SubscriptionDateColumn('Activation Date', '20 Aug 2026')),
-            Expanded(child: SubscriptionDateColumn('Expiry Date', '20 Aug 2027')),
+            Expanded(
+              child: SubscriptionDateColumn('Activation Date', '20 Aug 2026'),
+            ),
+            Expanded(
+              child: SubscriptionDateColumn('Expiry Date', '20 Aug 2027'),
+            ),
           ],
         ),
       ],
@@ -168,7 +176,11 @@ class SubscriptionInfoRow extends StatelessWidget {
 }
 
 class SubscriptionStatusChip extends StatelessWidget {
-  const SubscriptionStatusChip({super.key, required this.label, required this.active});
+  const SubscriptionStatusChip({
+    super.key,
+    required this.label,
+    required this.active,
+  });
 
   final String label;
   final bool active;

@@ -80,7 +80,9 @@ class _DriverEmergencyContactScreenState
     String hint = '',
   }) {
     final textColor = context.torkk.textPrimary;
-    final fillColor = context.themed(light: const Color(0xFFE2E8F0), dark: context.torkk.surface).withValues(alpha: 0.6);
+    final fillColor = context
+        .themed(light: const Color(0xFFE2E8F0), dark: context.torkk.surface)
+        .withValues(alpha: 0.6);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +102,10 @@ class _DriverEmergencyContactScreenState
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
-              color: context.themed(light: Colors.grey.shade400, dark: context.torkk.textSecondary),
+              color: context.themed(
+                light: Colors.grey.shade400,
+                dark: context.torkk.textSecondary,
+              ),
             ),
             filled: true,
             fillColor: fillColor,
@@ -147,10 +152,20 @@ class _DriverEmergencyContactScreenState
             onTap: () => Navigator.maybePop(context),
             child: Container(
               decoration: BoxDecoration(
-                color: context.themed(light: const Color(0xFF475569), dark: context.torkk.surfaceMuted),
+                color: context.themed(
+                  light: const Color(0xFF475569),
+                  dark: context.torkk.surfaceMuted,
+                ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close, color: context.themed(light: Colors.white, dark: context.torkk.textPrimary), size: 20),
+              child: Icon(
+                Icons.close,
+                color: context.themed(
+                  light: Colors.white,
+                  dark: context.torkk.textPrimary,
+                ),
+                size: 20,
+              ),
             ),
           ),
         ),
@@ -224,10 +239,13 @@ class _DriverEmergencyContactScreenState
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _saveContacts,
-                  style: ElevatedButton.styleFrom(foregroundColor: onColorFor(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: onColorFor(
                       context.torkk.actionFill(const Color(0xFF1D4ED8)),
                     ),
-                    backgroundColor: context.torkk.actionFill(const Color(0xFF1D4ED8)),
+                    backgroundColor: context.torkk.actionFill(
+                      const Color(0xFF1D4ED8),
+                    ),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),

@@ -58,6 +58,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   Timer? _pollingTimer;
   List<dynamic> _rides = [];
   bool _fetchingRides = false;
+
   bool _loadingRideDetails = false;
   bool _showRideFlow = false;
   Map<String, dynamic>? _flowRide;
@@ -845,70 +846,41 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   index: _currentIndex,
                   children: [
                     // HOME Tab
-                    _isOnline && visibleRides.isNotEmpty
-                        ? OnlineRideSearchView(
-                            visibleRides: visibleRides,
-                            mapPanOffset: _mapPanOffset,
-                            onPanUpdate: (details) {
-                              setState(() {
-                                _mapPanOffset += details.delta;
-                              });
-                            },
-                            onToggleOnline: _confirmAvailability,
-                            onOpenDrawer: () {},
-                            onProfileTap: () =>
-                                setState(() => _currentIndex = 4),
-                            onAcceptRide: (id) => _acceptRide(id),
-                            onRejectRide: (id) {
-                              if (mounted) {
-                                setState(() {
-                                  _rejectedRideIds.add(id);
-                                });
-                              }
-                            },
-                            onSimulateTestRide: _simulateTestRide,
-                            profilePhotoUrl: _profilePhotoUrl,
-                            currentPosition: _currentPosition,
-                            driverGender: _driverGender,
-                            onNotificationsTap: _openNotifications,
-                            onMapCreated: (controller) {
-                              _homeMapController = controller;
-                            },
-                          )
-                        : DriverHomeView(
-                            isOnline: _isOnline,
-                            driverName: _driverName,
-                            locationLabel: _currentAddress.isNotEmpty
-                                ? _currentAddress
-                                : _driverCity,
-                            todayEarnings: _todayEarnings,
-                            completedJobs: _completedJobs,
-                            currentPosition: _currentPosition,
-                            onToggle: _confirmAvailability,
-                            onNotifications: _openNotifications,
-                            onHelp: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const DriverLiveChatScreen(),
-                                ),
-                              );
-                            },
-                            onEarnings: () => setState(() => _currentIndex = 3),
-                            onJobs: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DriverHistoryScreen(),
-                                ),
-                              );
-                            },
-                            onUpdateLocation: _refreshLocation,
-                            onMapCreated: (controller) {
-                              _homeMapController = controller;
-                            },
+                    // The new ride UI (RideFlowScreen) is drawn over this home
+                    // view, so the old OnlineRideSearchView is no longer used.
+                    DriverHomeView(
+                      isOnline: _isOnline,
+                      driverName: _driverName,
+                      locationLabel: _currentAddress.isNotEmpty
+                          ? _currentAddress
+                          : _driverCity,
+                      todayEarnings: _todayEarnings,
+                      completedJobs: _completedJobs,
+                      currentPosition: _currentPosition,
+                      onToggle: _confirmAvailability,
+                      onNotifications: _openNotifications,
+                      onHelp: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (_) => const DriverLiveChatScreen(),
                           ),
+                        );
+                      },
+                      onEarnings: () => setState(() => _currentIndex = 3),
+                      onJobs: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DriverHistoryScreen(),
+                          ),
+                        );
+                      },
+                      onUpdateLocation: _refreshLocation,
+                      onMapCreated: (controller) {
+                        _homeMapController = controller;
+                      },
+                    ),
                     OrdersScreen(
                       onBack: () => setState(() => _currentIndex = 0),
                     ),

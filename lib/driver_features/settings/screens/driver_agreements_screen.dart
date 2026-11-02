@@ -34,11 +34,7 @@ class DriverAgreementsScreen extends StatelessWidget {
             ),
           ),
         ),
-        Divider(
-          height: 1,
-          thickness: 1,
-          color: context.torkk.border,
-        ),
+        Divider(height: 1, thickness: 1, color: context.torkk.border),
       ],
     );
   }
@@ -69,7 +65,10 @@ class DriverAgreementsScreen extends StatelessWidget {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: context.themed(light: Colors.grey.shade300, dark: context.torkk.border),
+                  color: context.themed(
+                    light: Colors.grey.shade300,
+                    dark: context.torkk.border,
+                  ),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -101,10 +100,13 @@ class DriverAgreementsScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => Navigator.pop(ctx),
-                style: ElevatedButton.styleFrom(foregroundColor: onColorFor(
-                      context.torkk.actionFill(const Color(0xFF1D4ED8)),
-                    ),
-                  backgroundColor: context.torkk.actionFill(const Color(0xFF1D4ED8)),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: onColorFor(
+                    context.torkk.actionFill(const Color(0xFF1D4ED8)),
+                  ),
+                  backgroundColor: context.torkk.actionFill(
+                    const Color(0xFF1D4ED8),
+                  ),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -143,10 +145,20 @@ class DriverAgreementsScreen extends StatelessWidget {
             onTap: () => Navigator.maybePop(context),
             child: Container(
               decoration: BoxDecoration(
-                color: context.themed(light: const Color(0xFF475569), dark: context.torkk.surfaceMuted),
+                color: context.themed(
+                  light: const Color(0xFF475569),
+                  dark: context.torkk.surfaceMuted,
+                ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close, color: context.themed(light: Colors.white, dark: context.torkk.textPrimary), size: 20),
+              child: Icon(
+                Icons.close,
+                color: context.themed(
+                  light: Colors.white,
+                  dark: context.torkk.textPrimary,
+                ),
+                size: 20,
+              ),
             ),
           ),
         ),

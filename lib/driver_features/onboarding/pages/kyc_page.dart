@@ -24,8 +24,11 @@ class KycPage extends StatelessWidget {
           faceVerified: _session.faceVerified,
           bankVerified: _session.bankVerified,
           profileSubmitted: false,
-          onBack: () =>
-              leaveOnboardingStep(context, AppRoutes.kyc, AppRoutes.vehicleDetails),
+          onBack: () => leaveOnboardingStep(
+            context,
+            AppRoutes.kyc,
+            AppRoutes.vehicleDetails,
+          ),
           onHelp: () => openAiChat(context),
           onAadhaarTap: () => context.go(AppRoutes.kycAadhaar),
           onDlTap: () => context.go(AppRoutes.kycDrivingLicence),

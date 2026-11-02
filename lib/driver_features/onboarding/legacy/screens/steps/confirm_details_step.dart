@@ -110,7 +110,11 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
             color: context.torkk.textPrimary,
           ),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, size: 20, color: context.legible(Color(0xFF6366F1))),
+            prefixIcon: Icon(
+              icon,
+              size: 20,
+              color: context.legible(Color(0xFF6366F1)),
+            ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 14,
               vertical: 12,
@@ -142,15 +146,10 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
         backgroundColor: context.torkk.surface,
         elevation: 16,
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 24,
-        ),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Padding(
           padding: const EdgeInsets.all(22.0),
           child: Column(
@@ -262,9 +261,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
                         side: const BorderSide(
                           color: Color(0xFFCBD5E1),
                           width: 1.2,
@@ -290,10 +287,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF6366F1),
-                            Color(0xFF4F46E5),
-                          ],
+                          colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
                         ),
                         boxShadow: [
                           BoxShadow(
@@ -325,9 +319,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 14,
-                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
                           shape: RoundedRectangleBorder(

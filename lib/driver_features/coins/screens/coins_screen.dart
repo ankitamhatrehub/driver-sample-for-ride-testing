@@ -77,7 +77,10 @@ class _CoinsScreenState extends State<CoinsScreen> {
         onBack: _back,
         onClaim: () => _open(_CoinsPage.credited),
       ),
-      _CoinsPage.credited => RewardCreditedScreen(onBack: _back, onContinue: _homeOnly),
+      _CoinsPage.credited => RewardCreditedScreen(
+        onBack: _back,
+        onContinue: _homeOnly,
+      ),
       _CoinsPage.claimed => AlreadyClaimedScreen(
         onBack: _back,
         onTryAgain: () {

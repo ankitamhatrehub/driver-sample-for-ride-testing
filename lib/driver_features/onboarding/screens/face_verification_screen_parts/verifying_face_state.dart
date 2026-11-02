@@ -1,6 +1,7 @@
 part of 'package:rider_app/driver_features/onboarding/screens/face_verification_screen.dart';
 
-class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProviderStateMixin {
+class _VerifyingFaceState extends State<_VerifyingFace>
+    with SingleTickerProviderStateMixin {
   static final _labels = [
     AppStrings.photoCaptured,
     AppStrings.analyzingFace,
@@ -15,7 +16,10 @@ class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProvide
   @override
   void initState() {
     super.initState();
-    _spin = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat();
+    _spin = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1400),
+    )..repeat();
     _timer = Timer.periodic(const Duration(milliseconds: 900), (timer) {
       if (!mounted) return;
       if (_done >= _labels.length) {
@@ -47,7 +51,12 @@ class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProvide
       backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(context.w(28), context.h(36), context.w(28), context.h(16)),
+          padding: EdgeInsets.fromLTRB(
+            context.w(28),
+            context.h(36),
+            context.w(28),
+            context.h(16),
+          ),
           child: Column(
             children: [
               SizedBox(
@@ -65,22 +74,36 @@ class _VerifyingFaceState extends State<_VerifyingFace> with SingleTickerProvide
                     ),
                     CircleAvatar(
                       radius: context.w(46),
-                      backgroundColor: context.adaptiveTint(const Color(0xFFF5F3FF)),
-                      backgroundImage: widget.selfiePath == null ? null : FileImage(File(widget.selfiePath!)),
+                      backgroundColor: context.adaptiveTint(
+                        const Color(0xFFF5F3FF),
+                      ),
+                      backgroundImage: widget.selfiePath == null
+                          ? null
+                          : FileImage(File(widget.selfiePath!)),
                       child: widget.selfiePath == null
-                          ? Icon(Icons.person, color: context.legible(AppColors.primary), size: context.w(32))
+                          ? Icon(
+                              Icons.person,
+                              color: context.legible(AppColors.primary),
+                              size: context.w(32),
+                            )
                           : null,
                     ),
                   ],
                 ),
               ),
               SizedBox(height: context.h(24)),
-              Text(AppStrings.verifyingYourFace, style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2)),
+              Text(
+                AppStrings.verifyingYourFace,
+                style: AppTypography.bold.copyWith(fontSize: 20, height: 1.2),
+              ),
               SizedBox(height: context.h(6)),
               Text(
                 AppStrings.verifyingFaceSubtitle,
                 textAlign: TextAlign.center,
-                style: AppTypography.regular.copyWith(fontSize: 12, color: context.torkk.textSecondary),
+                style: AppTypography.regular.copyWith(
+                  fontSize: 12,
+                  color: context.torkk.textSecondary,
+                ),
               ),
               SizedBox(height: context.h(28)),
               Padding(

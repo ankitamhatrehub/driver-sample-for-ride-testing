@@ -26,7 +26,10 @@ class DriverSubscriptionPassScreen extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: context.themed(light: const Color(0xFF475569), dark: context.torkk.surface),
+                    color: context.themed(
+                      light: const Color(0xFF475569),
+                      dark: context.torkk.surface,
+                    ),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -96,4 +99,3 @@ class DriverSubscriptionPassScreen extends StatelessWidget {
     );
   }
 }
-

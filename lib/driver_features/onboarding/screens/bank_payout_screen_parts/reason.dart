@@ -9,10 +9,20 @@ class _Reason extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.cancel, color: context.legible(AppColors.error), size: context.w(16)),
+        Icon(
+          Icons.cancel,
+          color: context.legible(AppColors.error),
+          size: context.w(16),
+        ),
         SizedBox(width: context.w(8)),
         Expanded(
-          child: Text(text, style: AppTypography.regular.copyWith(fontSize: 13, color: context.legible(AppColors.error))),
+          child: Text(
+            text,
+            style: AppTypography.regular.copyWith(
+              fontSize: 13,
+              color: context.legible(AppColors.error),
+            ),
+          ),
         ),
       ],
     );

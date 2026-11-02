@@ -25,10 +25,19 @@ class PaymentFailedScreen extends StatelessWidget {
     return SubscriptionPage(
       onBack: onBack,
       bottom: Padding(
-        padding: EdgeInsets.fromLTRB(context.w(20), 0, context.w(20), context.h(16)),
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          0,
+          context.w(20),
+          context.h(16),
+        ),
         child: Column(
           children: [
-            SubscriptionButton(label: 'Retry Payment', onTap: onRetry, padded: false),
+            SubscriptionButton(
+              label: 'Retry Payment',
+              onTap: onRetry,
+              padded: false,
+            ),
             SizedBox(height: context.h(10)),
             SizedBox(
               width: double.infinity,
@@ -38,11 +47,17 @@ class PaymentFailedScreen extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: accent,
                   side: BorderSide(color: accent),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.r(14))),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(context.r(14)),
+                  ),
                 ),
                 child: Text(
                   'Change Payment Method',
-                  style: AppTypography.bold.copyWith(fontSize: 15, height: 1, color: accent),
+                  style: AppTypography.bold.copyWith(
+                    fontSize: 15,
+                    height: 1,
+                    color: accent,
+                  ),
                 ),
               ),
             ),
@@ -53,9 +68,16 @@ class PaymentFailedScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: context.w(20)),
         children: [
           SizedBox(height: context.h(28)),
-          const SubscriptionAlertBadge(color: Color(0xFFEF4444), halo: Color(0xFFFEE2E2)),
+          const SubscriptionAlertBadge(
+            color: Color(0xFFEF4444),
+            halo: Color(0xFFFEE2E2),
+          ),
           SizedBox(height: context.h(16)),
-          Text('Payment Failed', textAlign: TextAlign.center, style: subscriptionTitle()),
+          Text(
+            'Payment Failed',
+            textAlign: TextAlign.center,
+            style: subscriptionTitle(),
+          ),
           SizedBox(height: context.h(6)),
           Text(
             "We couldn't process your payment.\nPlease try again",
@@ -65,7 +87,8 @@ class PaymentFailedScreen extends StatelessWidget {
           SizedBox(height: context.h(18)),
           const SubscriptionWarningBox(
             title: 'Reason',
-            body: 'Payment was declined by your bank. Please try again or use a different payment method',
+            body:
+                'Payment was declined by your bank. Please try again or use a different payment method',
           ),
         ],
       ),

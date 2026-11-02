@@ -1,7 +1,11 @@
 part of 'package:rider_app/driver_features/onboarding/screens/vehicle_photos_screen.dart';
 
 class _PhotoResultCard extends StatelessWidget {
-  const _PhotoResultCard({required this.label, required this.failed, this.onRetake});
+  const _PhotoResultCard({
+    required this.label,
+    required this.failed,
+    this.onRetake,
+  });
 
   final String label;
   final bool failed;
@@ -23,25 +27,39 @@ class _PhotoResultCard extends StatelessWidget {
               Icon(
                 failed ? Icons.error : Icons.check_circle,
                 size: context.w(14),
-                color: failed ? context.legible(AppColors.error) : AppColors.green600,
+                color: failed
+                    ? context.legible(AppColors.error)
+                    : AppColors.green600,
               ),
               SizedBox(width: context.w(4)),
               Expanded(
-                child: Text(label, style: AppTypography.bold.copyWith(fontSize: 11, height: 1.2)),
+                child: Text(
+                  label,
+                  style: AppTypography.bold.copyWith(fontSize: 11, height: 1.2),
+                ),
               ),
             ],
           ),
           Text(
-            failed ? AppStrings.verificationFailedLabel : AppStrings.kycVerified,
+            failed
+                ? AppStrings.verificationFailedLabel
+                : AppStrings.kycVerified,
             style: AppTypography.regular.copyWith(
               fontSize: 10,
-              color: failed ? context.legible(AppColors.error) : AppColors.green600,
+              color: failed
+                  ? context.legible(AppColors.error)
+                  : AppColors.green600,
             ),
           ),
           SizedBox(height: context.h(6)),
           ClipRRect(
             borderRadius: BorderRadius.circular(context.r(8)),
-            child: Image.asset(AppAssets.cab, height: context.h(72), width: double.infinity, fit: BoxFit.cover),
+            child: Image.asset(
+              AppAssets.cab,
+              height: context.h(72),
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           if (onRetake != null) ...[
             SizedBox(height: context.h(6)),
@@ -50,9 +68,19 @@ class _PhotoResultCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.refresh, size: context.w(14), color: context.legible(AppColors.primary)),
+                  Icon(
+                    Icons.refresh,
+                    size: context.w(14),
+                    color: context.legible(AppColors.primary),
+                  ),
                   SizedBox(width: context.w(4)),
-                  Text(AppStrings.retake, style: AppTypography.regular.copyWith(fontSize: 12, color: context.legible(AppColors.primary))),
+                  Text(
+                    AppStrings.retake,
+                    style: AppTypography.regular.copyWith(
+                      fontSize: 12,
+                      color: context.legible(AppColors.primary),
+                    ),
+                  ),
                 ],
               ),
             ),

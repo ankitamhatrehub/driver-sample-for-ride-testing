@@ -48,18 +48,23 @@ class OtpPage extends StatelessWidget {
             onResendOtp: () async {
               _session.clearOtp();
               final error = await _session.sendOtp();
-              if (context.mounted && error != null) showOnboardingSnack(context, error);
+              if (context.mounted && error != null)
+                showOnboardingSnack(context, error);
             },
             onVerify: () async {
               if (_session.otp.text.isEmpty) {
-                showOnboardingSnack(context, AppTranslations.tr('enter_verification_code'));
+                showOnboardingSnack(
+                  context,
+                  AppTranslations.tr('enter_verification_code'),
+                );
                 return;
               }
               print('Verifying OTP: ${_session.otp.text}');
               final result = await _session.verifyOtp();
               print('OTP verification result: $result');
               if (!context.mounted) return;
-              if (result.message != null) showOnboardingSnack(context, result.message!);
+              if (result.message != null)
+                showOnboardingSnack(context, result.message!);
               if (result.openDashboard) {
                 goDashboard(context);
               } else if (result.openVehicle) {

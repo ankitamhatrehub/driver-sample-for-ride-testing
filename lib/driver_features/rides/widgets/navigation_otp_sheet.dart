@@ -55,7 +55,10 @@ void showRideOtpBottomSheet({
                 const SizedBox(height: 6),
                 Text(
                   subtitle ?? 'Ask the Passenger for OTP',
-                  style: TextStyle(fontSize: 14, color: context.torkk.textSecondary),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
                 if ((rideCode ?? '').isNotEmpty) ...[
                   const SizedBox(height: 12),
@@ -96,7 +99,9 @@ void showRideOtpBottomSheet({
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: isFilled
-                                  ? context.adaptiveTint(const Color(0xFFEFF6FF))
+                                  ? context.adaptiveTint(
+                                      const Color(0xFFEFF6FF),
+                                    )
                                   : context.torkk.border,
                               borderRadius: BorderRadius.circular(24),
                               border: Border.all(

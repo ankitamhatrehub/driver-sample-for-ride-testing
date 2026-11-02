@@ -162,7 +162,9 @@ extension _DriverNavigationScreenStateSections on _DriverNavigationScreenState {
           if (encoded != null && encoded.isNotEmpty) {
             final points = _decodePolyline(encoded);
             if (points.length >= 2) {
-              debugPrint('[DEBUG NAV] Using OSRM road route (${points.length} pts)');
+              debugPrint(
+                '[DEBUG NAV] Using OSRM road route (${points.length} pts)',
+              );
               _cachedRouteKey = cacheKey;
               _cachedRoutePoints = points;
               return points;
@@ -310,11 +312,14 @@ extension _DriverNavigationScreenStateSections on _DriverNavigationScreenState {
   }
 
   void _showRideOtpSheet() {
-    final bool isParcel = _ride?['is_parcel'] == true || _ride?['service_type'] == 'parcel';
+    final bool isParcel =
+        _ride?['is_parcel'] == true || _ride?['service_type'] == 'parcel';
     showRideOtpBottomSheet(
       context: context,
       rideCode: (_ride?['ride_code'] ?? '').toString(),
-      subtitle: isParcel ? 'Ask the Sender for Pickup OTP' : 'Ask the Passenger for OTP',
+      subtitle: isParcel
+          ? 'Ask the Sender for Pickup OTP'
+          : 'Ask the Passenger for OTP',
       onVerify: (otp) => _verifyAndPickupCustomer(otp),
     );
   }
@@ -350,7 +355,8 @@ extension _DriverNavigationScreenStateSections on _DriverNavigationScreenState {
     await prefs.remove('active_ride_picked_up');
 
     if (mounted) {
-      final bool isParcel = _ride!['is_parcel'] == true || _ride!['service_type'] == 'parcel';
+      final bool isParcel =
+          _ride!['is_parcel'] == true || _ride!['service_type'] == 'parcel';
       final customerName = isParcel
           ? (_ride!['receiver_name'] ?? _ride!['customer_name'] ?? 'Receiver')
           : (_ride!['customer_name'] ?? 'Customer');
@@ -364,7 +370,8 @@ extension _DriverNavigationScreenStateSections on _DriverNavigationScreenState {
             estimatedFare:
                 (_ride!['estimated_fare'] as num?)?.toDouble() ?? 0.0,
             customerName: customerName.toString(),
-            customerPhone: _ride!['receiver_phone'] ?? _ride!['customer_phone'] ?? '',
+            customerPhone:
+                _ride!['receiver_phone'] ?? _ride!['customer_phone'] ?? '',
           ),
         ),
       );

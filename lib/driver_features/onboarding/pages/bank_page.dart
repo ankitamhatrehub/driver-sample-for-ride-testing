@@ -13,7 +13,8 @@ class BankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BankPayoutScreen(
-      onBack: () => leaveOnboardingStep(context, AppRoutes.kycBank, AppRoutes.kyc),
+      onBack: () =>
+          leaveOnboardingStep(context, AppRoutes.kycBank, AppRoutes.kyc),
       onHelp: () => openAiChat(context),
       onFinished: (details) {
         _session.rememberBank(details);
