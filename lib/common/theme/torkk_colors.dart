@@ -22,6 +22,8 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
     required this.switchTrackOff,
     required this.accent,
     required this.onAccent,
+    required this.statusOnline,
+    required this.statusOffline,
     required this.isDark,
   });
 
@@ -49,6 +51,11 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
   /// Primary action color and the color drawn on top of it.
   final Color accent;
   final Color onAccent;
+
+  /// Online / offline status colors. Dark mode uses softer, dimmer shades so
+  /// the status card does not glare against the dark surface.
+  final Color statusOnline;
+  final Color statusOffline;
   final bool isDark;
 
   /// Fill for a primary call-to-action. Light mode keeps [lightFill] (the
@@ -71,6 +78,8 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
     switchTrackOff: AppColors.gray200,
     accent: AppColors.maleBlue,
     onAccent: Colors.white,
+    statusOnline: Color(0xFF22C55E),
+    statusOffline: Color(0xFFEF4444),
     isDark: false,
   );
 
@@ -88,6 +97,8 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
     switchTrackOff: Color(0xFF3A3B42),
     accent: Color(0xFFEEEBDA),
     onAccent: Color(0xFF282B4A),
+    statusOnline: Color(0xFF4E9F73),
+    statusOffline: Color(0xFFC46A6D),
     isDark: true,
   );
 
@@ -109,6 +120,8 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
     Color? switchTrackOff,
     Color? accent,
     Color? onAccent,
+    Color? statusOnline,
+    Color? statusOffline,
     bool? isDark,
   }) {
     return TorkkColors(
@@ -125,6 +138,8 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
       switchTrackOff: switchTrackOff ?? this.switchTrackOff,
       accent: accent ?? this.accent,
       onAccent: onAccent ?? this.onAccent,
+      statusOnline: statusOnline ?? this.statusOnline,
+      statusOffline: statusOffline ?? this.statusOffline,
       isDark: isDark ?? this.isDark,
     );
   }
@@ -146,6 +161,8 @@ class TorkkColors extends ThemeExtension<TorkkColors> {
       switchTrackOff: Color.lerp(switchTrackOff, other.switchTrackOff, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
       onAccent: Color.lerp(onAccent, other.onAccent, t)!,
+      statusOnline: Color.lerp(statusOnline, other.statusOnline, t)!,
+      statusOffline: Color.lerp(statusOffline, other.statusOffline, t)!,
       isDark: t < 0.5 ? isDark : other.isDark,
     );
   }

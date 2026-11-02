@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'package:rider_app/common/constants/app_colors.dart';
+import 'package:rider_app/driver_features/home/home_brand.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -20,6 +22,9 @@ class HomeGlassButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = context.w(40);
+    final female =
+        Theme.of(context).colorScheme.primary == AppColors.femalePink;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -42,11 +47,8 @@ class HomeGlassButton extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0x33FFFFFF),
-                border: Border.all(
-                  color: context.torkk.border,
-                  width: context.w(1.07),
-                ),
+                color: homeHelpButtonFill(female),
+                border: Border.all(color: homeHelpButtonBorder, width: 1),
               ),
               child: asset != null
                   ? Image.asset(
@@ -54,6 +56,7 @@ class HomeGlassButton extends StatelessWidget {
                       width: context.w(20),
                       height: context.w(20),
                       fit: BoxFit.contain,
+                      color: Colors.white,
                     )
                   : Icon(
                       icon,

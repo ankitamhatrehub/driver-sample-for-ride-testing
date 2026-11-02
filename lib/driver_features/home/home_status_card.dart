@@ -27,8 +27,11 @@ class HomeStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = context.isDarkTheme;
     final statusColor = isOnline
-        ? const Color(0xFF22C55E)
-        : const Color(0xFFEF4444);
+        ? context.torkk.statusOnline
+        : context.torkk.statusOffline;
+    // Dark mode: the green / red wash is lightened toward white so it reads
+    // soft instead of heavy.
+    final washColor = Color.lerp(statusColor, Colors.white, 0.35)!;
     return Container(
       padding: EdgeInsets.all(context.w(14)),
       decoration: BoxDecoration(
@@ -38,7 +41,7 @@ class HomeStatusCard extends StatelessWidget {
           end: Alignment.bottomRight,
           // Dark mode: status-colored glow fading into the surface.
           colors: dark
-              ? [statusColor.withValues(alpha: 0.28), context.torkk.surface]
+              ? [washColor.withValues(alpha: 0.32), context.torkk.surface]
               : isOnline
               ? [
                   context.adaptiveTint(Color(0xFFF8F6FE)),
@@ -51,19 +54,19 @@ class HomeStatusCard extends StatelessWidget {
         ),
         border: Border.all(
           color: dark
-              ? statusColor.withValues(alpha: 0.6)
+              ? washColor.withValues(alpha: 0.45)
               : female
               ? const Color(0xB2FBCFE8)
               : const Color(0xB2F3E8FF),
-          width: dark ? 1.5 : 1,
+          width: 1,
         ),
         boxShadow: [
           BoxShadow(
             color: dark
-                ? statusColor.withValues(alpha: 0.22)
+                ? Colors.black.withValues(alpha: 0.25)
                 : const Color(0x0D000000),
-            offset: dark ? const Offset(0, 4) : const Offset(0, 1),
-            blurRadius: dark ? 18 : 2,
+            offset: dark ? const Offset(0, 3) : const Offset(0, 1),
+            blurRadius: dark ? 10 : 2,
           ),
         ],
       ),
@@ -78,18 +81,18 @@ class HomeStatusCard extends StatelessWidget {
                 height: context.w(28),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isOnline
-                      ? context.adaptiveTint(Color(0xFFDCFCE7))
-                      : context.adaptiveTint(Color(0xFFFEE2E2)),
+                  color: dark
+                      ? statusColor.withValues(alpha: 0.16)
+                      : isOnline
+                      ? const Color(0xFFDCFCE7)
+                      : const Color(0xFFFEE2E2),
                   shape: BoxShape.circle,
                 ),
                 child: Container(
                   width: context.w(12),
                   height: context.w(12),
                   decoration: BoxDecoration(
-                    color: isOnline
-                        ? const Color(0xFF22C55E)
-                        : const Color(0xFFEF4444),
+                    color: statusColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -135,20 +138,25 @@ class HomeStatusCard extends StatelessWidget {
     final tint = context.isDarkTheme
         ? (female ? AppColors.femalePink : AppColors.maleBlue)
         : Theme.of(context).colorScheme.primary;
+    // White outline icon in dark mode; light mode keeps the theme color
+    // because white would vanish on the light card.
+    final iconColor = context.isDarkTheme ? Colors.white : tint;
     return Row(
       children: [
         Container(
-          width: context.w(34),
-          height: context.w(34),
+          width: context.w(32),
+          height: context.w(32),
           decoration: BoxDecoration(
-            color: tint.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(context.r(12)),
-            border: Border.all(color: tint.withValues(alpha: 0.35)),
+            borderRadius: BorderRadius.circular(context.r(8)),
+            border: Border.all(
+              color: iconColor.withValues(alpha: 0.5),
+              width: 0.5,
+            ),
           ),
           child: Icon(
             Icons.location_on_rounded,
-            color: tint,
-            size: context.w(20),
+            color: iconColor,
+            size: context.w(16),
           ),
         ),
         SizedBox(width: context.w(10)),
@@ -156,13 +164,13 @@ class HomeStatusCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                AppStrings.currentLocation,
-                style: AppTypography.regular.copyWith(
-                  fontSize: 11,
-                  color: context.torkk.textSecondary,
-                ),
-              ),
+              // Text(
+              //   AppStrings.currentLocation,
+              //   style: AppTypography.regular.copyWith(
+              //     fontSize: 11,
+              //     color: context.torkk.textSecondary,
+              //   ),
+              // ),
               if (place.isNotEmpty)
                 Text(
                   place,
@@ -232,6 +240,13 @@ class HomeStatusCard extends StatelessWidget {
       height: 25 / 20,
       letterSpacing: -0.5,
     );
+    if (context.isDarkTheme) {
+      // Dark mode: one plain white line, no gradient word.
+      return Text(
+        isOnline ? AppStrings.youAreOnline : AppStrings.youAreOffline,
+        style: style.copyWith(color: Colors.white),
+      );
+    }
     return Text.rich(
       TextSpan(
         children: [
@@ -260,14 +275,26 @@ class _AvailabilitySwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = context.isDarkTheme;
+    // Dark mode: deep track with a brighter knob of the same hue.
+    final track = !dark
+        ? (online ? context.torkk.statusOnline : context.torkk.statusOffline)
+        : (online ? const Color(0xFF1F4A33) : const Color(0xFF4A2326));
+    final knob = !dark
+        ? Colors.white
+        : (online ? const Color(0xFF6FCF97) : const Color(0xFFE0868A));
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
       width: context.w(44),
       height: context.h(22),
       padding: EdgeInsets.all(context.h(3)),
       decoration: BoxDecoration(
-        color: online ? const Color(0xFF22C55E) : const Color(0xFFEF4444),
+        color: track,
         borderRadius: BorderRadius.circular(context.r(9999)),
+        border: Border.all(
+          color: dark ? knob.withValues(alpha: 0.8) : const Color(0x99FFFFFF),
+          width: 1,
+        ),
         boxShadow: const [
           BoxShadow(
             color: Color(0x0D000000),
@@ -281,10 +308,7 @@ class _AvailabilitySwitch extends StatelessWidget {
         child: Container(
           width: context.h(16),
           height: context.h(16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: knob, shape: BoxShape.circle),
         ),
       ),
     );

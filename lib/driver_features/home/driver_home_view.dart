@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/home/home_header.dart';
+import 'package:rider_app/driver_features/home/home_map_style.dart';
 import 'package:rider_app/driver_features/home/home_plan_card.dart';
 import 'package:rider_app/driver_features/home/home_stats_card.dart';
 import 'package:rider_app/driver_features/home/home_status_card.dart';
@@ -81,6 +82,7 @@ class _DriverHomeViewState extends State<DriverHomeView> {
             myLocationEnabled: position != null,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
+            style: context.isDarkTheme ? homeDarkMapStyle : null,
             compassEnabled: false,
             mapToolbarEnabled: false,
             onMapCreated: (controller) {
@@ -99,9 +101,11 @@ class _DriverHomeViewState extends State<DriverHomeView> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                // No white fade in dark mode; the map shows through.
                 colors: context.isDarkTheme
-                    ? const [Color(0x00FFFFFF), Color(0x00FFFFFF)]
+                    ? [
+                        context.torkk.background.withValues(alpha: 0.85),
+                        context.torkk.background.withValues(alpha: 0),
+                      ]
                     : [const Color(0xF2FFFFFF), const Color(0x00FFFFFF)],
               ),
             ),

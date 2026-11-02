@@ -17,3 +17,10 @@ LinearGradient homeBrandWash(bool female, double opacity) {
     stops: const [0, 0.5, 1],
   );
 }
+
+/// Solid brand fill (blue / pink) behind the white help icon.
+Color homeHelpButtonFill(bool female) =>
+    female ? const Color(0xFFBA2879) : const Color(0xFF1D4ED8);
+
+/// Thin light grey outline around the help button.
+const Color homeHelpButtonBorder = Color(0x80D1D5DB);
