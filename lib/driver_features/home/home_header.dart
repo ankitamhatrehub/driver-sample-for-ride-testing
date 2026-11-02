@@ -47,10 +47,11 @@ class HomeHeader extends StatelessWidget {
                     _greeting,
                     style: AppTypography.regular.copyWith(
                       fontSize: 12,
+                      fontWeight: FontWeight.w700,
                       // The map stays light in dark mode, so keep the text dark.
                       color: context.isDarkTheme
-                          ? const Color(0xFF475569)
-                          : context.torkk.textSecondary,
+                          ? const Color(0xFF1E293B)
+                          : const Color(0xFF334155),
                     ),
                   ),
                   Text(

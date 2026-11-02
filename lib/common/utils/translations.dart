@@ -114,7 +114,7 @@ class AppTranslations {
       'ordersScheduled': 'Scheduled',
       'ordersOngoing': 'Ongoing',
       'ordersOnline': 'Online',
-      'ordersEmpty': 'No orders in this tab',
+      'ordersEmpty': 'No orders Yet',
       'ordersEmptyCurrent': 'Orders you accept will show up here while they are in progress.',
       'ordersEmptyCompleted': 'Your finished trips and deliveries will appear here.',
       'ordersEmptyCancelled': 'Good news! You have no cancelled orders.',
