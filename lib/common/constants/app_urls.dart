@@ -56,6 +56,19 @@ class AppUrls {
   static const String saveEmergencyContacts =
       '$apiBase/user/emergency-contacts/save';
 
+  // Coins
+  static const String coinsAccount = '$apiBase/coins/account';
+  static String coinsLedger(String type, {int limit = 20}) =>
+      '$apiBase/coins/ledger?type=${Uri.encodeComponent(type)}&limit=$limit';
+  static const String coinsEarningRules = '$apiBase/driver/coins/earning-rules';
+  static const String coinsMilestones = '$apiBase/driver/coins/milestones';
+  static const String coinsDailyMissions =
+      '$apiBase/driver/coins/daily-missions';
+  static const String scratchCardAvailable =
+      '$apiBase/coins/scratch-cards/available';
+  static String scratchCardClaim(String cardId) =>
+      '$apiBase/coins/scratch-cards/${Uri.encodeComponent(cardId)}/claim';
+
   // SOS
   static const String sosStart = '$apiBase/safety/sos';
   static const String sosStop = '$apiBase/safety/stop-sos';
@@ -129,10 +142,7 @@ class AppUrls {
   // ---------------------------------------------------------------------------
   // Realtime WebSocket Endpoints
   // ---------------------------------------------------------------------------
-  static String chatWebSocket({
-    required String phone,
-    String rideId = '0',
-  }) =>
+  static String chatWebSocket({required String phone, String rideId = '0'}) =>
       '$wsBase/ws/chat?phone=${Uri.encodeComponent(phone)}&ride_id=$rideId';
 
   // ---------------------------------------------------------------------------
@@ -179,10 +189,7 @@ class AppUrls {
   }) =>
       'https://www.google.com/maps/dir/?api=1&destination=$destLat,$destLng&travelmode=driving';
 
-  static String googleMapsSearch({
-    required double lat,
-    required double lng,
-  }) =>
+  static String googleMapsSearch({required double lat, required double lng}) =>
       'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
 
   static String upiQrCode({

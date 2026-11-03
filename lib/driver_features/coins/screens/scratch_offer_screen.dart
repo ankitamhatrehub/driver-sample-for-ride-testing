@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:rider_app/driver_features/coins/models/coin_models.dart';
+
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
@@ -11,9 +13,12 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 class ScratchOfferScreen extends StatelessWidget {
   const ScratchOfferScreen({
     super.key,
+    required this.card,
     required this.onBack,
     required this.onScratch,
   });
+
+  final ScratchCard? card;
 
   final VoidCallback onBack;
   final VoidCallback onScratch;
@@ -54,7 +59,7 @@ class ScratchOfferScreen extends StatelessWidget {
                 ),
                 SizedBox(height: context.h(12)),
                 Text(
-                  'Scratch Card',
+                  (card?.title ?? '').isEmpty ? 'Scratch Card' : card!.title,
                   style: AppTypography.bold.copyWith(
                     fontSize: 16,
                     height: 1.2,
@@ -63,7 +68,9 @@ class ScratchOfferScreen extends StatelessWidget {
                 ),
                 SizedBox(height: context.h(4)),
                 Text(
-                  'Win up to 500 coins, discounts',
+                  (card?.description ?? '').isEmpty
+                      ? 'Win up to 500 coins, discounts'
+                      : card!.description,
                   style: AppTypography.regular.copyWith(
                     fontSize: 12,
                     color: context.torkk.textSecondary,

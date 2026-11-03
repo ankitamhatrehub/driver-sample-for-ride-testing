@@ -9,9 +9,14 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 class ScratchWonScreen extends StatelessWidget {
   const ScratchWonScreen({
     super.key,
+    required this.coins,
+    required this.claiming,
     required this.onBack,
     required this.onClaim,
   });
+
+  final int coins;
+  final bool claiming;
 
   final VoidCallback onBack;
   final VoidCallback onClaim;
@@ -94,7 +99,7 @@ class ScratchWonScreen extends StatelessWidget {
                   ),
                   SizedBox(height: context.h(4)),
                   Text(
-                    '50 Coins',
+                    '$coins Coins',
                     textAlign: TextAlign.center,
                     style: AppTypography.bold.copyWith(
                       fontSize: 28,
@@ -106,7 +111,7 @@ class ScratchWonScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: context.w(48)),
                     child: Text(
-                      'Great job ! Your reward has been credited to your Account.',
+                      'Great job ! Tap Claim to add this reward to your account.',
                       textAlign: TextAlign.center,
                       style: AppTypography.regular.copyWith(
                         fontSize: 13,
@@ -126,7 +131,11 @@ class ScratchWonScreen extends StatelessWidget {
                 context.w(20),
                 context.h(16),
               ),
-              child: UnifiedButton(label: 'Claim', onPressed: onClaim),
+              child: UnifiedButton(
+                label: 'Claim',
+                onPressed: onClaim,
+                isLoading: claiming,
+              ),
             ),
           ],
         ),

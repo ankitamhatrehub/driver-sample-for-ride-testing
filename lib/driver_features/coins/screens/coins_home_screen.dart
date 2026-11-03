@@ -4,6 +4,8 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/driver_features/coins/models/coin_models.dart';
+import 'package:rider_app/driver_features/coins/widgets/coin_async.dart';
 import 'package:rider_app/driver_features/coins/widgets/coin_tiles.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 
@@ -17,7 +19,18 @@ class CoinsHomeScreen extends StatelessWidget {
     required this.onHistory,
     required this.onHowTo,
     required this.onView,
+    required this.account,
+    required this.card,
+    required this.loading,
+    required this.error,
+    required this.onRetry,
   });
+
+  final CoinAccount? account;
+  final ScratchCard? card;
+  final bool loading;
+  final String? error;
+  final VoidCallback onRetry;
 
   final VoidCallback onBack;
   final VoidCallback onHistory;
@@ -26,6 +39,19 @@ class CoinsHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final account = this.account;
+    if (account == null) {
+      return ProfilePage(
+        title: AppStrings.torkkCoin,
+        onBack: onBack,
+        child: loading
+            ? const CoinLoading()
+            : CoinError(
+                message: error ?? 'Could not load your coins.',
+                onRetry: onRetry,
+              ),
+      );
+    }
     return ProfilePage(
       title: AppStrings.torkkCoin,
       onBack: onBack,
@@ -74,7 +100,7 @@ class CoinsHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '1,240',
+                          coinNumber(account.coins),
                           style: AppTypography.bold.copyWith(
                             fontSize: 28,
                             height: 1.1,
@@ -96,7 +122,7 @@ class CoinsHomeScreen extends StatelessWidget {
               Expanded(
                 child: CoinMoneyCard(
                   label: AppStrings.totalEarned,
-                  value: '+ ₹680.00',
+                  value: '+ ${coinNumber(account.earned)}',
                   color: const Color(0xFF16A34A),
                 ),
               ),
@@ -104,7 +130,7 @@ class CoinsHomeScreen extends StatelessWidget {
               Expanded(
                 child: CoinMoneyCard(
                   label: AppStrings.totalRedeemed,
-                  value: '₹3,420.00',
+                  value: coinNumber(account.redeemed),
                   color: Color(0xFFEF4444),
                 ),
               ),
@@ -141,7 +167,7 @@ class CoinsHomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(context.r(9999)),
                       ),
                       child: Text(
-                        'Job Id : #33435',
+                        card?.id ?? 'No card',
                         style: AppTypography.regular.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -190,14 +216,22 @@ class CoinsHomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppStrings.youHaveScratchCard,
+                                  card == null
+                                      ? 'No scratch card yet'
+                                      : card!.title.isEmpty
+                                      ? AppStrings.youHaveScratchCard
+                                      : card!.title,
                                   style: AppTypography.regular.copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 Text(
-                                  AppStrings.scratchNowSeeWhatYouWin,
+                                  card == null
+                                      ? AppStrings.completeEligibleJobs
+                                      : card!.description.isEmpty
+                                      ? AppStrings.scratchNowSeeWhatYouWin
+                                      : card!.description,
                                   style: AppTypography.regular.copyWith(
                                     fontSize: 11,
                                     color: context.torkk.textSecondary,
