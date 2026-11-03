@@ -828,6 +828,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             backgroundColor: context.torkk.background,
             bottomNavigationBar: CircularBottomNav(
               currentIndex: _currentIndex,
+              onAiChat: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const DriverLiveChatScreen(),
+                  ),
+                );
+              },
               onItemSelected: (idx) {
                 // Parcel tab (index 2): coming soon for now, so don't switch tabs.
                 if (idx == 2) {

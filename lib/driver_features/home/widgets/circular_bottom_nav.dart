@@ -14,10 +14,14 @@ class CircularBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onItemSelected;
 
+  /// Opens the AI assistant from the round button beside the bar.
+  final VoidCallback onAiChat;
+
   const CircularBottomNav({
     super.key,
     required this.currentIndex,
     required this.onItemSelected,
+    required this.onAiChat,
   });
 
   static final List<_NavItem> _items = [
@@ -65,55 +69,128 @@ class CircularBottomNav extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(context.r(47)),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x14000000),
-                offset: Offset(0, 8),
-                blurRadius: 24,
-              ),
-            ],
-          ),
-          child: Container(
-            height: context.h(68),
-            padding: const EdgeInsets.all(1),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(context.r(47)),
-              gradient: _gradient(context, 0.35),
+        child: Row(
+          children: [
+            Expanded(child: _bar(context)),
+            SizedBox(width: context.w(10)),
+            _aiButton(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Frosted circle matching the bar, with a soft gradient orb whose edges melt
+  /// into the white surface (no ring, no hard edge).
+  Widget _aiButton(BuildContext context) {
+    final size = context.h(60);
+    final orb = size * 0.68;
+    return GestureDetector(
+      onTap: onAiChat,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: const Color(0x0F000000)),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x14000000),
+              offset: Offset(0, 8),
+              blurRadius:24,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(context.r(46)),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                child: Container(
-                  color: context.torkk.surface,
-                  padding: EdgeInsets.fromLTRB(
-                    context.w(8),
-                    context.h(6),
-                    context.w(8),
-                    context.h(6),
+          ],
+        ),
+        child: ClipOval(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+            child: Container(
+              color: context.torkk.surface,
+              alignment: Alignment.center,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Wide, faint glow, then the feathered orb on top of it.
+                  ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+                    child: Container(
+                      width: orb,
+                      height: orb,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: _gradient(context, 0.65),
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      for (var i = 0; i < _items.length; i++)
-                        i == currentIndex
-                            ? _selected(
-                                context,
-                                _items[i],
-                                () => onItemSelected(i),
-                              )
-                            : Expanded(
-                                child: _plain(
-                                  context,
-                                  _items[i],
-                                  () => onItemSelected(i),
-                                ),
-                              ),
-                    ],
+                  ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+                    child: Container(
+                      width: orb * 0.82,
+                      height: orb * 0.82,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: _gradient(context, 0.95),
+                      ),
+                    ),
                   ),
-                ),
+                  Icon(
+                    Icons.auto_awesome_rounded,
+                    color: Colors.white,
+                    size: size * 0.3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _bar(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(context.r(47)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x14000000),
+            offset: Offset(0, 8),
+            blurRadius: 24,
+          ),
+        ],
+      ),
+      child: Container(
+        height: context.h(60),
+        padding: const EdgeInsets.all(1),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(context.r(47)),
+          gradient: _gradient(context, 0.35),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(context.r(46)),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+            child: Container(
+              color: context.torkk.surface,
+              padding: EdgeInsets.fromLTRB(
+                context.w(8),
+                context.h(5),
+                context.w(8),
+                context.h(5),
+              ),
+              child: Row(
+                children: [
+                  for (var i = 0; i < _items.length; i++)
+                    i == currentIndex
+                        ? _selected(context, _items[i], () => onItemSelected(i))
+                        : Expanded(
+                            child: _plain(
+                              context,
+                              _items[i],
+                              () => onItemSelected(i),
+                            ),
+                          ),
+                ],
               ),
             ),
           ),
@@ -126,13 +203,13 @@ class CircularBottomNav extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: context.w(76),
-        height: context.h(54),
+        width: context.w(64),
+        height: context.h(48),
         padding: EdgeInsets.fromLTRB(
           context.w(9),
-          context.h(10),
+          context.h(7),
           context.w(9),
-          context.h(10),
+          context.h(7),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.r(34)),
