@@ -19,42 +19,44 @@ class TicketFullDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: 'Tickets Details',
-      bottom: Padding(
-        padding: EdgeInsets.fromLTRB(
-          context.w(20),
-          context.h(8),
-          context.w(20),
-          context.h(16),
-        ),
-        child: SizedBox(
-          width: double.infinity,
-          height: context.h(48),
-          child: OutlinedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => FollowUpScreen(ticket: ticket),
+      bottom: !ticket.canFollowUp
+          ? null
+          : Padding(
+              padding: EdgeInsets.fromLTRB(
+                context.w(20),
+                context.h(8),
+                context.w(20),
+                context.h(16),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: context.h(48),
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => FollowUpScreen(ticket: ticket),
+                      ),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: profileAccent(context),
+                    side: BorderSide(color: profileAccent(context)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(context.r(14)),
+                    ),
+                  ),
+                  child: Text(
+                    'Follow up',
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 15,
+                      height: 1,
+                      color: profileAccent(context),
+                    ),
+                  ),
                 ),
-              );
-            },
-            style: OutlinedButton.styleFrom(
-              foregroundColor: profileAccent(context),
-              side: BorderSide(color: profileAccent(context)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(context.r(14)),
               ),
             ),
-            child: Text(
-              'Follow up',
-              style: AppTypography.bold.copyWith(
-                fontSize: 15,
-                height: 1,
-                color: profileAccent(context),
-              ),
-            ),
-          ),
-        ),
-      ),
       child: ListView(
         padding: EdgeInsets.fromLTRB(
           context.w(20),
@@ -105,6 +107,25 @@ class TicketFullDetailsScreen extends StatelessWidget {
                       width: context.w(64),
                       height: context.w(64),
                       fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              for (final url in ticket.attachments.take(4))
+                Padding(
+                  padding: EdgeInsets.only(right: context.w(8)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(context.r(10)),
+                    child: Image.network(
+                      url,
+                      width: context.w(64),
+                      height: context.w(64),
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, _, _) => Container(
+                        width: context.w(64),
+                        height: context.w(64),
+                        color: context.torkk.surfaceMuted,
+                        child: const Icon(Icons.broken_image_outlined),
+                      ),
                     ),
                   ),
                 ),

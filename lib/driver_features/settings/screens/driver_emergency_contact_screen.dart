@@ -1,32 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
-
-/// SharedPreferences key holding the saved emergency contacts (JSON list of
-/// `{name, phone, relation}` maps).
-const String emergencyContactsKey = 'emergency_contacts';
-
-Future<List<Map<String, String>>> loadEmergencyContacts() async {
-  final prefs = await SharedPreferences.getInstance();
-  final raw = prefs.getString(emergencyContactsKey);
-  if (raw == null) return [];
-  return (jsonDecode(raw) as List)
-      .map((e) => Map<String, String>.from(e as Map))
-      .toList();
-}
-
-Future<void> saveEmergencyContacts(List<Map<String, String>> contacts) async {
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setString(emergencyContactsKey, jsonEncode(contacts));
-}
+import 'package:rider_app/service/emergency_contacts_api_service.dart';
 
 /// Form to add one emergency contact. Pops with `true` once saved.
 class DriverEmergencyContactScreen extends StatefulWidget {
@@ -41,7 +21,6 @@ class _DriverEmergencyContactScreenState
     extends State<DriverEmergencyContactScreen> {
   final _nameCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
-  final _relationCtrl = TextEditingController();
   String? _nameError;
   String? _phoneError;
   bool _saving = false;
@@ -50,7 +29,6 @@ class _DriverEmergencyContactScreenState
   void dispose() {
     _nameCtrl.dispose();
     _phoneCtrl.dispose();
-    _relationCtrl.dispose();
     super.dispose();
   }
 
@@ -64,18 +42,25 @@ class _DriverEmergencyContactScreenState
     if (_nameError != null || _phoneError != null) return;
 
     setState(() => _saving = true);
-    final contacts = await loadEmergencyContacts();
-    contacts.add({
-      'name': name,
-      'phone': phone,
-      'relation': _relationCtrl.text.trim(),
-    });
-    await saveEmergencyContacts(contacts);
-    if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Emergency contact added')));
-    Navigator.of(context).pop(true);
+    try {
+      final contacts = await EmergencyContactsApiService.fetch();
+      contacts.add({'name': name, 'phone': phone});
+      await EmergencyContactsApiService.save(contacts);
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Emergency contact added')));
+      Navigator.of(context).pop(true);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _saving = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString().replaceFirst('Exception: ', '')),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   Widget _field(
@@ -168,7 +153,6 @@ class _DriverEmergencyContactScreenState
               LengthLimitingTextInputFormatter(10),
             ],
           ),
-          _field('Relation', _relationCtrl, hint: 'e.g. Sister'),
         ],
       ),
     );

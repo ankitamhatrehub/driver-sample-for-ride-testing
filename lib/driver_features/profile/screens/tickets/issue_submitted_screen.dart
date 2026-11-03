@@ -83,7 +83,7 @@ class IssueSubmittedScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '# tk2345',
+                      ticket.ticketNumber,
                       style: AppTypography.bold.copyWith(
                         fontSize: 14,
                         height: 1.2,
@@ -92,7 +92,7 @@ class IssueSubmittedScreen extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () => Clipboard.setData(
-                        const ClipboardData(text: 'tk2345'),
+                        ClipboardData(text: ticket.ticketNumber),
                       ),
                       icon: Icon(
                         Icons.copy_rounded,

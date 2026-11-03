@@ -50,6 +50,24 @@ class AppUrls {
   static const String onlineStatus = '$apiBase/driver/online-status';
   static const String reportIssue = '$apiBase/driver/report-issue';
 
+  // Emergency contacts
+  static String emergencyContacts(String phone) =>
+      '$apiBase/user/emergency-contacts?phone=${Uri.encodeComponent(phone)}';
+  static const String saveEmergencyContacts =
+      '$apiBase/user/emergency-contacts/save';
+
+  // Support tickets
+  static const String supportCategories = '$apiBase/driver/support/categories';
+  static String supportProblems(String categoryId) =>
+      '$supportCategories/${Uri.encodeComponent(categoryId)}/problems';
+  static const String supportTickets = '$apiBase/driver/support/tickets';
+  static String supportTicket(String ticketId) =>
+      '$supportTickets/${Uri.encodeComponent(ticketId)}';
+  static String supportTicketFollowUp(String ticketId) =>
+      '${supportTicket(ticketId)}/follow-up';
+  static String supportTicketReopen(String ticketId) =>
+      '${supportTicket(ticketId)}/reopen';
+
   static String driverProfile(String phone) =>
       '$apiBase/driver/profile?phone=${Uri.encodeComponent(phone)}';
 

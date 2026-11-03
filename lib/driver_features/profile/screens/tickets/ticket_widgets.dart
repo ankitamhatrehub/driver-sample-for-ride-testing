@@ -42,7 +42,7 @@ Widget ticketCard(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ticket.orderId,
+                  ticket.ticketNumber,
                   style: AppTypography.bold.copyWith(
                     fontSize: 14,
                     height: 1.2,
@@ -314,7 +314,46 @@ Widget ticketCommentBox(
   );
 }
 
-Widget ticketFilled(BuildContext context, String label, VoidCallback onTap) {
+/// Shared loading / error / retry body for the ticket screens.
+Widget ticketAsyncBody(
+  BuildContext context, {
+  required bool loading,
+  required String? error,
+  required VoidCallback onRetry,
+  required Widget child,
+}) {
+  if (loading) return const Center(child: CircularProgressIndicator());
+  if (error != null) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(context.w(24)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              error,
+              textAlign: TextAlign.center,
+              style: AppTypography.regular.copyWith(
+                fontSize: 13,
+                color: context.torkk.textSecondary,
+              ),
+            ),
+            SizedBox(height: context.h(12)),
+            OutlinedButton(onPressed: onRetry, child: const Text('Retry')),
+          ],
+        ),
+      ),
+    );
+  }
+  return child;
+}
+
+Widget ticketFilled(
+  BuildContext context,
+  String label,
+  VoidCallback? onTap, {
+  bool loading = false,
+}) {
   return Padding(
     padding: EdgeInsets.fromLTRB(
       context.w(20),
@@ -326,7 +365,7 @@ Widget ticketFilled(BuildContext context, String label, VoidCallback onTap) {
       width: double.infinity,
       height: context.h(48),
       child: FilledButton(
-        onPressed: onTap,
+        onPressed: loading ? null : onTap,
         style: FilledButton.styleFrom(
           backgroundColor: profileAccent(context),
           shape: RoundedRectangleBorder(
@@ -334,7 +373,7 @@ Widget ticketFilled(BuildContext context, String label, VoidCallback onTap) {
           ),
         ),
         child: Text(
-          label,
+          loading ? '...' : label,
           style: AppTypography.bold.copyWith(
             fontSize: 15,
             height: 1,

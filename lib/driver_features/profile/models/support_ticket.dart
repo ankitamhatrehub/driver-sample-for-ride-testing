@@ -1,32 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 enum TicketStatus { underReview, resolved, closed }
 
+const _months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+/// "2026-11-03T10:30:00Z" -> "3 Nov, 2026" (local time). Empty if unparsable.
+String formatTicketDate(Object? iso) {
+  final d = DateTime.tryParse('${iso ?? ''}')?.toLocal();
+  if (d == null) return '';
+  return '${d.day} ${_months[d.month - 1]}, ${d.year}';
+}
+
 class SupportTicket {
   SupportTicket({
-    required this.orderId,
+    required this.ticketId,
+    required this.ticketNumber,
     required this.title,
     required this.date,
     required this.status,
     required this.issue,
     required this.category,
     required this.description,
-    this.created = '12 jan , 02:34 am',
-    this.updated = '12 jan , 02:34 am',
+    this.rawStatus = '',
+    this.created = '',
+    this.updated = '',
+    this.canFollowUp = true,
+    this.canReopen = false,
     List<String>? photos,
-  }) : photos = photos ?? [];
+    List<String>? attachments,
+  }) : photos = photos ?? [],
+       attachments = attachments ?? [];
 
-  final String orderId;
+  /// Parses a list item or detail payload from the support-tickets API.
+  factory SupportTicket.fromJson(Map<String, dynamic> json) {
+    final raw = '${json['status'] ?? ''}';
+    final problem = '${json['problem'] ?? ''}';
+    final created = formatTicketDate(json['created_at']);
+    final status = statusFromApi(raw);
+    return SupportTicket(
+      ticketId: '${json['ticket_id'] ?? ''}',
+      ticketNumber: '${json['ticket_number'] ?? ''}',
+      title: problem,
+      date: created,
+      status: status,
+      rawStatus: raw,
+      issue: '${json['category'] ?? ''}',
+      category: problem,
+      description: '${json['description'] ?? ''}',
+      created: created,
+      updated: formatTicketDate(json['updated_at']),
+      canFollowUp:
+          json['can_follow_up'] as bool? ?? status == TicketStatus.underReview,
+      canReopen: json['can_reopen'] as bool? ?? false,
+      attachments: [
+        for (final a in (json['attachments'] as List? ?? const []))
+          a.toString(),
+      ],
+    );
+  }
+
+  static TicketStatus statusFromApi(String raw) => switch (raw) {
+    'resolved' => TicketStatus.resolved,
+    'closed' => TicketStatus.closed,
+    _ => TicketStatus.underReview,
+  };
+
+  final String ticketId;
+  final String ticketNumber;
   final String title;
   final String date;
   TicketStatus status;
+  final String rawStatus;
   final String issue;
   final String category;
   final String description;
   final String created;
   final String updated;
+  final bool canFollowUp;
+  final bool canReopen;
+
+  /// Local file paths picked by the driver (only on a just-created ticket).
   final List<String> photos;
+
+  /// Uploaded attachment URLs returned by the server.
+  final List<String> attachments;
 
   String get chip {
     return switch (status) {
@@ -44,42 +114,3 @@ class SupportTicket {
     };
   }
 }
-
-final List<SupportTicket> supportTickets = [
-  SupportTicket(
-    orderId: '#ORD98232',
-    title: 'Payment not received',
-    date: '12 Aug, 2026',
-    status: TicketStatus.underReview,
-    issue: 'Delivery Issue',
-    category: 'Parcel Delayed',
-    description: "My parcel is delayed and hasn't arrived yet",
-  ),
-  SupportTicket(
-    orderId: '#ORD98232',
-    title: 'Payment not received',
-    date: '12 Aug, 2026',
-    status: TicketStatus.resolved,
-    issue: 'Delivery Issue',
-    category: 'Parcel Delayed',
-    description: "My parcel is delayed and hasn't arrived yet",
-  ),
-  SupportTicket(
-    orderId: '#ORD98232',
-    title: 'Payment not received',
-    date: '12 Aug, 2026',
-    status: TicketStatus.closed,
-    issue: 'Delivery Issue',
-    category: 'Parcel Delayed',
-    description: "My parcel is delayed and hasn't arrived yet",
-  ),
-  SupportTicket(
-    orderId: '#ORD98232',
-    title: 'Payment not received',
-    date: '12 Aug, 2026',
-    status: TicketStatus.underReview,
-    issue: 'Delivery Issue',
-    category: 'Parcel Delayed',
-    description: "My parcel is delayed and hasn't arrived yet",
-  ),
-];

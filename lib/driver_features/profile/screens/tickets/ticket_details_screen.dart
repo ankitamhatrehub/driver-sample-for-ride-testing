@@ -7,6 +7,7 @@ import 'package:rider_app/driver_features/profile/models/support_ticket.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets/ticket_full_details_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets/follow_up_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets.dart';
+import 'package:rider_app/service/support_api_service.dart';
 
 class TicketDetailsScreen extends StatefulWidget {
   const TicketDetailsScreen({super.key, required this.ticket});
@@ -18,52 +19,125 @@ class TicketDetailsScreen extends StatefulWidget {
 }
 
 class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
+  late SupportTicket _ticket = widget.ticket;
+  bool _busy = false;
+
   @override
-  Widget build(BuildContext context) {
-    final ticket = widget.ticket;
-    final reopen = ticket.status != TicketStatus.underReview;
-    return ProfilePage(
-      title: 'Ticket Details',
-      bottom: Padding(
-        padding: EdgeInsets.fromLTRB(
-          context.w(20),
-          context.h(8),
-          context.w(20),
-          context.h(16),
-        ),
-        child: SizedBox(
-          width: double.infinity,
-          height: context.h(48),
-          child: OutlinedButton(
-            onPressed: () async {
-              if (reopen) {
-                setState(() => ticket.status = TicketStatus.underReview);
-                return;
-              }
-              await Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => FollowUpScreen(ticket: ticket),
-                ),
-              );
-            },
-            style: OutlinedButton.styleFrom(
-              foregroundColor: profileAccent(context),
-              side: BorderSide(color: profileAccent(context)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(context.r(14)),
-              ),
-            ),
-            child: Text(
-              reopen ? 'Reopen Ticket' : 'Follow up',
-              style: AppTypography.bold.copyWith(
-                fontSize: 15,
-                height: 1,
-                color: profileAccent(context),
-              ),
-            ),
+  void initState() {
+    super.initState();
+    _refresh();
+  }
+
+  Future<void> _refresh() async {
+    if (widget.ticket.ticketId.isEmpty) return;
+    try {
+      final ticket = await SupportApiService.fetchTicket(
+        widget.ticket.ticketId,
+      );
+      if (mounted) setState(() => _ticket = ticket);
+    } catch (e) {
+      _showError(e);
+    }
+  }
+
+  void _showError(Object e) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(e.toString().replaceFirst('Exception: ', '')),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  Future<void> _reopen() async {
+    final controller = TextEditingController();
+    final reason = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reopen Ticket'),
+        content: TextField(
+          controller: controller,
+          maxLines: 3,
+          decoration: const InputDecoration(
+            hintText: 'Why is the issue not resolved?',
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
+            child: const Text('Reopen'),
+          ),
+        ],
       ),
+    );
+    controller.dispose();
+    if (reason == null) return;
+    if (reason.isEmpty) {
+      _showError(Exception('Please enter a reason'));
+      return;
+    }
+    setState(() => _busy = true);
+    try {
+      await SupportApiService.reopen(_ticket.ticketId, reason);
+      await _refresh();
+    } catch (e) {
+      _showError(e);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _followUp() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => FollowUpScreen(ticket: _ticket)),
+    );
+    _refresh();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ticket = _ticket;
+    final reopen = ticket.canReopen;
+    final showAction = reopen || ticket.canFollowUp;
+    return ProfilePage(
+      title: 'Ticket Details',
+      bottom: !showAction
+          ? null
+          : Padding(
+              padding: EdgeInsets.fromLTRB(
+                context.w(20),
+                context.h(8),
+                context.w(20),
+                context.h(16),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: context.h(48),
+                child: OutlinedButton(
+                  onPressed: _busy ? null : (reopen ? _reopen : _followUp),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: profileAccent(context),
+                    side: BorderSide(color: profileAccent(context)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(context.r(14)),
+                    ),
+                  ),
+                  child: Text(
+                    reopen ? 'Reopen Ticket' : 'Follow up',
+                    style: AppTypography.bold.copyWith(
+                      fontSize: 15,
+                      height: 1,
+                      color: profileAccent(context),
+                    ),
+                  ),
+                ),
+              ),
+            ),
       child: ListView(
         padding: EdgeInsets.fromLTRB(
           context.w(20),

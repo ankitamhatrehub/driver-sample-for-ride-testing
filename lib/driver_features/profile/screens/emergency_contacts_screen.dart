@@ -5,8 +5,10 @@ import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/settings/screens/driver_emergency_contact_screen.dart';
+import 'package:rider_app/service/emergency_contacts_api_service.dart';
 
 /// Lists the driver's saved emergency contacts with a one-tap call button.
 class EmergencyContactsScreen extends StatefulWidget {
@@ -19,6 +21,8 @@ class EmergencyContactsScreen extends StatefulWidget {
 
 class _EmergencyContactsScreenState extends State<EmergencyContactsScreen> {
   List<Map<String, String>> _contacts = [];
+  bool _loading = true;
+  String? _error;
 
   @override
   void initState() {
@@ -26,25 +30,64 @@ class _EmergencyContactsScreenState extends State<EmergencyContactsScreen> {
     _load();
   }
 
-  Future<void> _load() async {
-    final contacts = await loadEmergencyContacts();
-    if (mounted) setState(() => _contacts = contacts);
+  void _showError(Object e) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(e.toString().replaceFirst('Exception: ', '')),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  Future<void> _load({bool showSpinner = true}) async {
+    if (showSpinner) {
+      setState(() {
+        _loading = true;
+        _error = null;
+      });
+    }
+    try {
+      final contacts = await EmergencyContactsApiService.fetch();
+      if (!mounted) return;
+      setState(() {
+        _contacts = contacts;
+        _error = null;
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = e.toString().replaceFirst('Exception: ', '');
+        _loading = false;
+      });
+    }
   }
 
   Future<void> _add() async {
     await Navigator.of(context).push<bool>(
       MaterialPageRoute(builder: (_) => const DriverEmergencyContactScreen()),
     );
-    _load();
+    _load(showSpinner: false);
   }
 
   Future<void> _remove(int index) async {
+    final removed = _contacts[index];
     setState(() => _contacts.removeAt(index));
-    await saveEmergencyContacts(_contacts);
+    try {
+      await EmergencyContactsApiService.save(_contacts);
+    } catch (e) {
+      _showError(e);
+      if (mounted) setState(() => _contacts.insert(index, removed));
+    }
   }
 
-  Future<void> _call(String phone) =>
-      launchUrl(Uri(scheme: 'tel', path: '+91$phone'));
+  static String _display(String phone) =>
+      phone.startsWith('+') ? phone : '+91 $phone';
+
+  Future<void> _call(String phone) => launchUrl(
+    Uri(scheme: 'tel', path: phone.startsWith('+') ? phone : '+91$phone'),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -63,55 +106,57 @@ class _EmergencyContactsScreenState extends State<EmergencyContactsScreen> {
           onPressed: _add,
         ),
       ),
-      child: _contacts.isEmpty
-          ? Center(
-              child: Text(
-                'No emergency contacts added yet',
-                style: AppTypography.regular.copyWith(
-                  fontSize: 14,
-                  color: context.torkk.textSecondary,
+      child: ticketAsyncBody(
+        context,
+        loading: _loading,
+        error: _error,
+        onRetry: _load,
+        child: _contacts.isEmpty
+            ? Center(
+                child: Text(
+                  'No emergency contacts added yet',
+                  style: AppTypography.regular.copyWith(
+                    fontSize: 14,
+                    color: context.torkk.textSecondary,
+                  ),
                 ),
-              ),
-            )
-          : ListView.separated(
-              padding: EdgeInsets.fromLTRB(
-                context.w(20),
-                context.h(12),
-                context.w(20),
-                context.h(20),
-              ),
-              itemCount: _contacts.length,
-              separatorBuilder: (_, _) => SizedBox(height: context.h(12)),
-              itemBuilder: (context, i) {
-                final c = _contacts[i];
-                return Dismissible(
-                  key: ValueKey('${c['phone']}-$i'),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (_) => _remove(i),
-                  background: Container(
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: context.w(20)),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEF4444),
-                      borderRadius: BorderRadius.circular(context.r(16)),
+              )
+            : ListView.separated(
+                padding: EdgeInsets.fromLTRB(
+                  context.w(20),
+                  context.h(12),
+                  context.w(20),
+                  context.h(20),
+                ),
+                itemCount: _contacts.length,
+                separatorBuilder: (_, _) => SizedBox(height: context.h(12)),
+                itemBuilder: (context, i) {
+                  final c = _contacts[i];
+                  return Dismissible(
+                    key: ValueKey('${c['phone']}-$i'),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (_) => _remove(i),
+                    background: Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.only(right: context.w(20)),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEF4444),
+                        borderRadius: BorderRadius.circular(context.r(16)),
+                      ),
+                      child: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.white,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.delete_outline,
-                      color: Colors.white,
+                    child: _ContactCard(
+                      name: c['name'] ?? '',
+                      subtitle: _display(c['phone'] ?? ''),
+                      onCall: () => _call(c['phone'] ?? ''),
                     ),
-                  ),
-                  child: _ContactCard(
-                    name: (c['relation'] ?? '').isNotEmpty
-                        ? c['relation']!
-                        : c['name'] ?? '',
-                    subtitle: (c['relation'] ?? '').isNotEmpty
-                        ? '${c['name']} · +91 ${c['phone']}'
-                        : '+91 ${c['phone']}',
-                    onCall: () => _call(c['phone'] ?? ''),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+      ),
     );
   }
 }

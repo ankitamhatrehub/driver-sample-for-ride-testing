@@ -37,7 +37,13 @@ class HelpSupportHubScreen extends StatelessWidget {
               ProfileMenuItem(
                 icon: Icons.report_problem_outlined,
                 iconColor: const Color(0xFFF59E0B),
-                label: 'Issues & Tickets',
+                label: 'Raise an Issue',
+                onTap: () => _open(context, const IssueCategoryScreen()),
+              ),
+              ProfileMenuItem(
+                icon: Icons.confirmation_number_outlined,
+                iconColor: const Color(0xFF0EA5E9),
+                label: 'My Tickets',
                 onTap: () => _open(context, const TicketsScreen()),
               ),
               ProfileMenuItem(

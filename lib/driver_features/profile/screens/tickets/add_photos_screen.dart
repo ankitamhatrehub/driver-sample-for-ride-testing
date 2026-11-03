@@ -10,6 +10,7 @@ import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets/additional_details_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets.dart';
+import 'package:rider_app/service/support_api_service.dart';
 
 class AddPhotosScreen extends StatefulWidget {
   const AddPhotosScreen({
@@ -18,8 +19,8 @@ class AddPhotosScreen extends StatefulWidget {
     required this.problem,
   });
 
-  final String category;
-  final String problem;
+  final SupportOption category;
+  final SupportOption problem;
 
   @override
   State<AddPhotosScreen> createState() => _AddPhotosScreenState();
