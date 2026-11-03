@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rider_app/driver_features/chat/screens/driver_live_chat_screen.dart';
 import 'package:rider_app/driver_features/parcels/new_feature_coming_soon_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/driver_features/settings/legal/privacy_policy_screen.dart';
@@ -17,7 +16,7 @@ import 'package:rider_app/driver_features/profile/screens/about_torkk_screen.dar
 import 'package:rider_app/driver_features/profile/screens/bank_information_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/document_kyc_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/faq_screen.dart';
-import 'package:rider_app/driver_features/profile/screens/help_support_screen.dart';
+import 'package:rider_app/driver_features/profile/screens/help_support_hub_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/personal_information_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/privacy_policy_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/profile_notifications_screen.dart';
@@ -129,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
                 icon: Icons.support_agent_rounded,
                 iconColor: const Color(0xFFEC4899),
                 label: AppStrings.helpSupport,
-                onTap: () => _open(context, const DriverLiveChatScreen()),
+                onTap: () => _open(context, const HelpSupportHubScreen()),
               ),
               ProfileMenuItem(
                 icon: Icons.info_outline_rounded,

@@ -1,8 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'dart:convert';
 
-// --- EMERGENCY CONTACT SCREEN ---
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:rider_app/common/theme/app_typography.dart';
+import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/common/utils/screen_utils.dart';
+import 'package:rider_app/common/widgets/unified_button.dart';
+import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
+
+/// SharedPreferences key holding the saved emergency contacts (JSON list of
+/// `{name, phone, relation}` maps).
+const String emergencyContactsKey = 'emergency_contacts';
+
+Future<List<Map<String, String>>> loadEmergencyContacts() async {
+  final prefs = await SharedPreferences.getInstance();
+  final raw = prefs.getString(emergencyContactsKey);
+  if (raw == null) return [];
+  return (jsonDecode(raw) as List)
+      .map((e) => Map<String, String>.from(e as Map))
+      .toList();
+}
+
+Future<void> saveEmergencyContacts(List<Map<String, String>> contacts) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString(emergencyContactsKey, jsonEncode(contacts));
+}
+
+/// Form to add one emergency contact. Pops with `true` once saved.
 class DriverEmergencyContactScreen extends StatefulWidget {
   const DriverEmergencyContactScreen({super.key});
 
@@ -13,258 +39,137 @@ class DriverEmergencyContactScreen extends StatefulWidget {
 
 class _DriverEmergencyContactScreenState
     extends State<DriverEmergencyContactScreen> {
-  final TextEditingController _pNameCtrl = TextEditingController();
-  final TextEditingController _pPhoneCtrl = TextEditingController();
-  final TextEditingController _pRelationCtrl = TextEditingController();
-
-  final TextEditingController _sNameCtrl = TextEditingController();
-  final TextEditingController _sPhoneCtrl = TextEditingController();
-  final TextEditingController _sRelationCtrl = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _loadContacts();
-  }
+  final _nameCtrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
+  final _relationCtrl = TextEditingController();
+  String? _nameError;
+  String? _phoneError;
+  bool _saving = false;
 
   @override
   void dispose() {
-    _pNameCtrl.dispose();
-    _pPhoneCtrl.dispose();
-    _pRelationCtrl.dispose();
-    _sNameCtrl.dispose();
-    _sPhoneCtrl.dispose();
-    _sRelationCtrl.dispose();
+    _nameCtrl.dispose();
+    _phoneCtrl.dispose();
+    _relationCtrl.dispose();
     super.dispose();
   }
 
-  Future<void> _loadContacts() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (mounted) {
-      setState(() {
-        _pNameCtrl.text = prefs.getString('emergency_p_name') ?? '';
-        _pPhoneCtrl.text = prefs.getString('emergency_p_phone') ?? '';
-        _pRelationCtrl.text = prefs.getString('emergency_p_relation') ?? '';
+  Future<void> _save() async {
+    final name = _nameCtrl.text.trim();
+    final phone = _phoneCtrl.text.trim();
+    setState(() {
+      _nameError = name.isEmpty ? 'Enter a name' : null;
+      _phoneError = phone.length != 10 ? 'Enter a valid 10 digit number' : null;
+    });
+    if (_nameError != null || _phoneError != null) return;
 
-        _sNameCtrl.text = prefs.getString('emergency_s_name') ?? '';
-        _sPhoneCtrl.text = prefs.getString('emergency_s_phone') ?? '';
-        _sRelationCtrl.text = prefs.getString('emergency_s_relation') ?? '';
-      });
-    }
+    setState(() => _saving = true);
+    final contacts = await loadEmergencyContacts();
+    contacts.add({
+      'name': name,
+      'phone': phone,
+      'relation': _relationCtrl.text.trim(),
+    });
+    await saveEmergencyContacts(contacts);
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Emergency contact added')));
+    Navigator.of(context).pop(true);
   }
 
-  Future<void> _saveContacts() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('emergency_p_name', _pNameCtrl.text.trim());
-    await prefs.setString('emergency_p_phone', _pPhoneCtrl.text.trim());
-    await prefs.setString('emergency_p_relation', _pRelationCtrl.text.trim());
-
-    await prefs.setString('emergency_s_name', _sNameCtrl.text.trim());
-    await prefs.setString('emergency_s_phone', _sPhoneCtrl.text.trim());
-    await prefs.setString('emergency_s_relation', _sRelationCtrl.text.trim());
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Emergency contacts saved successfully!'),
-          backgroundColor: Color(0xFF1D4ED8),
-        ),
-      );
-    }
-  }
-
-  Widget _buildInputField(
-    BuildContext context,
+  Widget _field(
     String label,
     TextEditingController controller, {
-    String hint = '',
+    String? hint,
+    String? error,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? formatters,
+    String? prefixText,
+    TextCapitalization capitalization = TextCapitalization.words,
   }) {
-    final textColor = context.torkk.textPrimary;
-    final fillColor = context
-        .themed(light: const Color(0xFFE2E8F0), dark: context.torkk.surface)
-        .withValues(alpha: 0.6);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: textColor,
+    return Padding(
+      padding: EdgeInsets.only(bottom: context.h(16)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: AppTypography.regular.copyWith(
+              fontSize: 12,
+              color: context.torkk.textSecondary,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          style: TextStyle(color: textColor),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(
-              color: context.themed(
-                light: Colors.grey.shade400,
-                dark: context.torkk.textSecondary,
-              ),
-            ),
-            filled: true,
-            fillColor: fillColor,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 18,
-              vertical: 14,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(24),
-              borderSide: BorderSide(
-                color: context.legible(Color(0xFF1D4ED8)),
-                width: 1.5,
+          SizedBox(height: context.h(6)),
+          TextField(
+            controller: controller,
+            enabled: !_saving,
+            keyboardType: keyboardType,
+            inputFormatters: formatters,
+            textCapitalization: capitalization,
+            onChanged: (_) {
+              if (error != null) {
+                setState(() {
+                  _nameError = null;
+                  _phoneError = null;
+                });
+              }
+            },
+            decoration: InputDecoration(
+              hintText: hint,
+              prefixText: prefixText,
+              errorText: error,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(context.r(12)),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 16),
-      ],
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = Theme.of(context).scaffoldBackgroundColor;
-    final textColor = context.torkk.textPrimary;
-
-    return Scaffold(
-      backgroundColor: bgColor,
-      appBar: AppBar(
-        backgroundColor: bgColor,
-        elevation: 0,
-        centerTitle: true,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () => Navigator.maybePop(context),
-            child: Container(
-              decoration: BoxDecoration(
-                color: context.themed(
-                  light: const Color(0xFF475569),
-                  dark: context.torkk.surfaceMuted,
-                ),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.close,
-                color: context.themed(
-                  light: Colors.white,
-                  dark: context.torkk.textPrimary,
-                ),
-                size: 20,
-              ),
-            ),
-          ),
+    return ProfilePage(
+      title: 'Add Emergency Contact',
+      subtitle: 'Whom you would contact in an emergency',
+      bottom: Padding(
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(16),
         ),
-        title: Text(
-          'Settings',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: textColor,
-            fontSize: 22,
-          ),
+        child: UnifiedButton(
+          label: 'Save Contact',
+          isLoading: _saving,
+          onPressed: _save,
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Emergency Contact',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w900,
-                  color: textColor,
-                  letterSpacing: -0.3,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Whom you would contact in emergency',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: context.torkk.textSecondary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 28),
-
-              // PRIMARY CONTACT
-              Text(
-                'Primary Contact',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
-                  color: textColor,
-                ),
-              ),
-              const SizedBox(height: 14),
-              _buildInputField(context, 'Name', _pNameCtrl),
-              _buildInputField(context, 'Mobile Number', _pPhoneCtrl),
-              _buildInputField(context, 'Relation', _pRelationCtrl),
-
-              const SizedBox(height: 16),
-
-              // SECONDARY CONTACT
-              Text(
-                'Secondary Contact',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
-                  color: textColor,
-                ),
-              ),
-              const SizedBox(height: 14),
-              _buildInputField(context, 'Name', _sNameCtrl),
-              _buildInputField(context, 'Mobile Number', _sPhoneCtrl),
-              _buildInputField(context, 'Relation', _sRelationCtrl),
-
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _saveContacts,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: onColorFor(
-                      context.torkk.actionFill(const Color(0xFF1D4ED8)),
-                    ),
-                    backgroundColor: context.torkk.actionFill(
-                      const Color(0xFF1D4ED8),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                  ),
-                  child: const Text(
-                    'Save Contacts',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 32),
+      child: ListView(
+        padding: EdgeInsets.fromLTRB(
+          context.w(20),
+          context.h(8),
+          context.w(20),
+          context.h(20),
+        ),
+        children: [
+          _field('Name', _nameCtrl, hint: 'Enter name', error: _nameError),
+          _field(
+            'Mobile number',
+            _phoneCtrl,
+            hint: 'Enter mobile number',
+            error: _phoneError,
+            prefixText: '+91 ',
+            keyboardType: TextInputType.phone,
+            formatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10),
             ],
           ),
-        ),
+          _field('Relation', _relationCtrl, hint: 'e.g. Sister'),
+        ],
       ),
     );
   }
