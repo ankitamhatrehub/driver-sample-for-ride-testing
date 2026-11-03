@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
+import 'package:rider_app/service/sos_api_service.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/widgets/app_confirm_dialog.dart';
@@ -22,7 +23,11 @@ class _Contact {
 }
 
 class SosScreen extends StatefulWidget {
-  const SosScreen({super.key});
+  /// The ride to raise the alert for. Falls back to the ride saved by the ride
+  /// flow when the screen is opened from the profile.
+  const SosScreen({super.key, this.rideId});
+
+  final int? rideId;
 
   @override
   State<SosScreen> createState() => _SosScreenState();
@@ -45,6 +50,12 @@ class _SosScreenState extends State<SosScreen> {
     super.dispose();
   }
 
+  void _showError(Object error) {
+    if (!mounted) return;
+    final text = '$error'.replaceFirst('Exception: ', '');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+  }
+
   void _start() {
     _timer?.cancel();
     setState(() {
@@ -59,11 +70,26 @@ class _SosScreenState extends State<SosScreen> {
         if (_seconds >= 4) _helpOnTheWay = true;
       });
     });
+    _sendStart();
   }
 
-  void _stop() {
+  /// Runs in the background so the alert screen opens at once.
+  Future<void> _sendStart() async {
+    try {
+      await SosApiService.start(rideId: widget.rideId);
+    } catch (e) {
+      _showError(e);
+    }
+  }
+
+  Future<void> _stop() async {
     _timer?.cancel();
     setState(() => _page = _SosPage.reported);
+    try {
+      await SosApiService.stop(rideId: widget.rideId);
+    } catch (e) {
+      _showError(e);
+    }
   }
 
   Future<void> _addContact() async {

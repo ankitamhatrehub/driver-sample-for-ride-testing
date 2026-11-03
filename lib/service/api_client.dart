@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -45,7 +46,7 @@ class AuthClient extends http.BaseClient {
         attachedToken = true;
       }
     }
-    final response = await _inner.send(request);
+    final response = await _logged(request, attachedToken);
     if (response.statusCode == 401 && isProtected(request.url)) {
       debugPrint(
         '[API] 401 on ${request.method} ${request.url.path} '
@@ -60,6 +61,59 @@ class AuthClient extends http.BaseClient {
     }
     return response;
   }
+
+  /// Prints one line before the call (method, URL, body) and one after it
+  /// (status, time, response body) so every API can be checked in the console.
+  /// Debug builds only. The Authorization header is never printed.
+  Future<http.StreamedResponse> _logged(
+    http.BaseRequest request,
+    bool attachedToken,
+  ) async {
+    if (!kDebugMode) return _inner.send(request);
+    final tag = '${request.method} ${request.url}';
+    debugPrint(
+      '[API] before -> $tag (token: $attachedToken) body=${_requestBody(request)}',
+    );
+    final clock = Stopwatch()..start();
+    try {
+      final response = await _inner.send(request);
+      // Read the body to print it, then hand back an identical response.
+      final bytes = await response.stream.toBytes();
+      debugPrint(
+        '[API] after  <- $tag status=${response.statusCode} '
+        '(${clock.elapsedMilliseconds}ms) body=${_clip(utf8.decode(bytes, allowMalformed: true))}',
+      );
+      return http.StreamedResponse(
+        Stream.value(bytes),
+        response.statusCode,
+        contentLength: bytes.length,
+        request: response.request,
+        headers: response.headers,
+        isRedirect: response.isRedirect,
+        persistentConnection: response.persistentConnection,
+        reasonPhrase: response.reasonPhrase,
+      );
+    } catch (e) {
+      debugPrint(
+        '[API] after  <- $tag FAILED (${clock.elapsedMilliseconds}ms): $e',
+      );
+      rethrow;
+    }
+  }
+
+  static String _requestBody(http.BaseRequest request) {
+    if (request is http.Request) {
+      return request.body.isEmpty ? '-' : _clip(request.body);
+    }
+    if (request is http.MultipartRequest) {
+      final files = [for (final f in request.files) '${f.field}:${f.filename}'];
+      return 'multipart fields=${request.fields} files=$files';
+    }
+    return '<stream>';
+  }
+
+  static String _clip(String text) =>
+      text.length <= 3000 ? text : '${text.substring(0, 3000)}... [clipped]';
 
   Future<void> _handleUnauthorized() async {
     if (_handlingUnauthorized) return;

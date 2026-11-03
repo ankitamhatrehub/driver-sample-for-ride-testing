@@ -113,7 +113,14 @@ extension _DriverNavigationScreenStateSections on _DriverNavigationScreenState {
           apiKey: _DriverNavigationScreenState._mapsApiKey,
         ),
       );
+      debugPrint(
+        '[API] before -> GET ${url.toString().replaceAll(RegExp(r'key=[^&]+'), 'key=***')}',
+      );
       final response = await http.get(url).timeout(const Duration(seconds: 12));
+      debugPrint(
+        '[API] after  <- GOOGLE DIRECTIONS status=${response.statusCode} '
+        'body=${response.body.length > 300 ? '${response.body.substring(0, 300)}...' : response.body}',
+      );
       if (response.statusCode == 200) {
         final data = json.decode(response.body) as Map<String, dynamic>;
         final status = data['status']?.toString() ?? '';
@@ -151,7 +158,14 @@ extension _DriverNavigationScreenStateSections on _DriverNavigationScreenState {
           destLng: destination.longitude,
         ),
       );
+      debugPrint(
+        '[API] before -> GET ${url.toString().replaceAll(RegExp(r'key=[^&]+'), 'key=***')}',
+      );
       final response = await http.get(url).timeout(const Duration(seconds: 12));
+      debugPrint(
+        '[API] after  <- OSRM ROUTE status=${response.statusCode} '
+        'body=${response.body.length > 300 ? '${response.body.substring(0, 300)}...' : response.body}',
+      );
       if (response.statusCode == 200) {
         final data = json.decode(response.body) as Map<String, dynamic>;
         final routes = data['routes'];

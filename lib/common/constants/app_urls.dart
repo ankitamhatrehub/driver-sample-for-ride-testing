@@ -56,6 +56,10 @@ class AppUrls {
   static const String saveEmergencyContacts =
       '$apiBase/user/emergency-contacts/save';
 
+  // SOS
+  static const String sosStart = '$apiBase/safety/sos';
+  static const String sosStop = '$apiBase/safety/stop-sos';
+
   // Support tickets
   static const String supportCategories = '$apiBase/driver/support/categories';
   static String supportProblems(String categoryId) =>
