@@ -139,6 +139,14 @@ class AppUrls {
   // ---------------------------------------------------------------------------
   static const String fcmToken = '$apiBase/fcm-token';
 
+  // Driver notifications (list, read state and preferences).
+  static const String notificationPreferences =
+      '$apiBase/driver/notification-preferences';
+  static String driverNotifications({int page = 1, int limit = 20}) =>
+      '$apiBase/driver/notifications?page=$page&limit=$limit';
+  static String notificationRead(String id) =>
+      '$apiBase/driver/notifications/${Uri.encodeComponent(id)}/read';
+
   // ---------------------------------------------------------------------------
   // Realtime WebSocket Endpoints
   // ---------------------------------------------------------------------------

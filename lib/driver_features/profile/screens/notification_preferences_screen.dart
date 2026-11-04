@@ -6,6 +6,7 @@ import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/common/widgets/app_switch.dart';
+import 'package:rider_app/service/notifications_api_service.dart';
 
 class NotificationPreferencesScreen extends StatefulWidget {
   const NotificationPreferencesScreen({super.key});
@@ -17,12 +18,88 @@ class NotificationPreferencesScreen extends StatefulWidget {
 
 class _NotificationPreferencesScreenState
     extends State<NotificationPreferencesScreen> {
-  bool _rides = false;
-  bool _offers = false;
-  bool _payments = true;
+  NotificationPreferences _prefs = const NotificationPreferences(
+    rideParcelUpdates: false,
+    offerRewards: false,
+    paymentUpdates: false,
+  );
+  bool _loading = true;
+  bool _saving = false;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final prefs = await NotificationsApiService.fetchPreferences();
+      if (!mounted) return;
+      setState(() {
+        _prefs = prefs;
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _loading = false;
+        _error = '$e';
+      });
+    }
+  }
+
+  /// Flips a switch right away, saves it, and puts it back if saving fails.
+  Future<void> _change(NotificationPreferences next) async {
+    final previous = _prefs;
+    setState(() {
+      _prefs = next;
+      _saving = true;
+    });
+    try {
+      final saved = await NotificationsApiService.updatePreferences(next);
+      if (!mounted) return;
+      setState(() {
+        _prefs = saved;
+        _saving = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _prefs = previous;
+        _saving = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const ProfilePage(
+        title: 'Notification Preferences',
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_error != null) {
+      return ProfilePage(
+        title: 'Notification Preferences',
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(_error!, textAlign: TextAlign.center),
+              TextButton(onPressed: _load, child: const Text('Retry')),
+            ],
+          ),
+        ),
+      );
+    }
     return ProfilePage(
       title: 'Notification Preferences',
       child: ListView(
@@ -37,24 +114,30 @@ class _NotificationPreferencesScreenState
             icon: Icons.two_wheeler_outlined,
             title: 'Ride & Parcel Updates',
             subtitle: 'Booking, driver details, delivery status and more',
-            value: _rides,
-            onChanged: (value) => setState(() => _rides = value),
+            value: _prefs.rideParcelUpdates,
+            onChanged: _saving
+                ? null
+                : (v) => _change(_prefs.copyWith(rideParcelUpdates: v)),
           ),
           SizedBox(height: context.h(12)),
           _PreferenceTile(
             icon: Icons.card_giftcard_outlined,
             title: 'Offer & Rewards',
-            subtitle: 'Booking, driver details, delivery status and more',
-            value: _offers,
-            onChanged: (value) => setState(() => _offers = value),
+            subtitle: 'Offers, coins, scratch cards and rewards',
+            value: _prefs.offerRewards,
+            onChanged: _saving
+                ? null
+                : (v) => _change(_prefs.copyWith(offerRewards: v)),
           ),
           SizedBox(height: context.h(12)),
           _PreferenceTile(
             icon: Icons.credit_card_rounded,
             title: 'Payment Updates',
-            subtitle: 'Booking, driver details, delivery status and more',
-            value: _payments,
-            onChanged: (value) => setState(() => _payments = value),
+            subtitle: 'Wallet credits, payouts and payment status',
+            value: _prefs.paymentUpdates,
+            onChanged: _saving
+                ? null
+                : (v) => _change(_prefs.copyWith(paymentUpdates: v)),
           ),
         ],
       ),
@@ -75,7 +158,7 @@ class _PreferenceTile extends StatelessWidget {
   final String title;
   final String subtitle;
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
