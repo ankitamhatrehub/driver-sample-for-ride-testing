@@ -3,7 +3,7 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/feature_row.dart';
 
 class FeatureCard extends StatelessWidget {
-  const FeatureCard();
+  const FeatureCard({super.key});
 
   @override
   Widget build(BuildContext context) {

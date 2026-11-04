@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
@@ -16,6 +17,7 @@ class ProfilePage extends StatelessWidget {
     this.bottom,
     this.onBack,
     this.subtitle,
+    this.showAiChat = true,
   });
 
   final String title;
@@ -25,10 +27,22 @@ class ProfilePage extends StatelessWidget {
   final Widget? bottom;
   final VoidCallback? onBack;
 
+  /// Floating AI chat button; off on tab roots, which have it in the nav bar.
+  final bool showAiChat;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.torkk.background,
+      floatingActionButton: showAiChat
+          ? Padding(
+              // Lift above the page's bottom action button, if any.
+              padding: EdgeInsets.only(
+                bottom: bottom != null ? context.h(76) : 0,
+              ),
+              child: AiChatButton(size: context.w(48)),
+            )
+          : null,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
@@ -147,6 +148,7 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
   Widget build(BuildContext context) {
     final primaryColor = const Color(0xFF4F46E5);
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: context.torkk.surfaceMuted,
       appBar: AppBar(
         title: const Text(

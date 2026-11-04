@@ -456,8 +456,9 @@ class DriverApiService {
       for (final key in const ['messages', 'history', 'data', 'results']) {
         final value = decoded[key];
         if (value is List) return value;
-        if (value is Map && value['messages'] is List)
+        if (value is Map && value['messages'] is List) {
           return value['messages'] as List;
+        }
       }
       return [];
     }

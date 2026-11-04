@@ -10,7 +10,7 @@ import 'package:rider_app/driver_features/parcels/coming_soon/notify_button.dart
 
 class FeaturePage extends StatelessWidget {
   final VoidCallback onNotify;
-  const FeaturePage({required this.onNotify});
+  const FeaturePage({super.key, required this.onNotify});
 
   @override
   Widget build(BuildContext context) {

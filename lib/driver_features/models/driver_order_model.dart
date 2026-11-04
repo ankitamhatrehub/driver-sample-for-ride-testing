@@ -140,7 +140,7 @@ class DriverOrderModel {
       if (vehicleType.isNotEmpty) 'vehicle_type': vehicleType,
       if (paymentMethod.isNotEmpty) 'payment_method': paymentMethod,
       if (paymentStatus.isNotEmpty) 'payment_status': paymentStatus,
-      if (fare != null) 'fare': fare,
+      'fare': ?fare,
       if ((driverEarnings ?? 0) > 0) 'driver_earnings': driverEarnings,
       if (receiverName.isNotEmpty) 'customer_name': receiverName,
       if (passengers > 0) ...{

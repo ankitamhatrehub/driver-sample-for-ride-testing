@@ -129,8 +129,9 @@ class _VerifyVehicleRcScreenState extends State<VerifyVehicleRcScreen> {
       });
     } catch (_) {
       if (!mounted) return;
-      if (_numberController.text.trim().isEmpty)
+      if (_numberController.text.trim().isEmpty) {
         setState(() => _page = _RcPage.unclear);
+      }
     } finally {
       if (mounted) {
         setState(() {

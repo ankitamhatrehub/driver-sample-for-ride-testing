@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER SUBSCRIPTION PASS SCREEN (Coming Soon) ---
@@ -12,6 +13,7 @@ class DriverSubscriptionPassScreen extends StatelessWidget {
     final subTextColor = context.torkk.textSecondary;
 
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: bgColor,
       body: SafeArea(
         child: Stack(

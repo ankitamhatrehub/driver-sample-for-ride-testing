@@ -7,7 +7,7 @@ class FeatureRow extends StatelessWidget {
   final Color iconBackground;
   final String label;
 
-  const FeatureRow({
+  const FeatureRow({super.key, 
     required this.icon,
     required this.iconColor,
     required this.iconBackground,

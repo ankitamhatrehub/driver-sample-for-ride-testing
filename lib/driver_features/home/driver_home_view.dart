@@ -57,8 +57,9 @@ class _DriverHomeViewState extends State<DriverHomeView> {
     final previous = oldWidget.currentPosition;
     if (next == null || _mapController == null) return;
     if (previous?.latitude == next.latitude &&
-        previous?.longitude == next.longitude)
+        previous?.longitude == next.longitude) {
       return;
+    }
     _mapController!.animateCamera(
       CameraUpdate.newLatLng(LatLng(next.latitude, next.longitude)),
     );

@@ -216,8 +216,9 @@ class _VerifyDrivingLicenseScreenState
       if (!mounted) return;
       setState(() {
         _verifying = false;
-        if (details.validity.isNotEmpty)
+        if (details.validity.isNotEmpty) {
           _expiryController.text = details.validity;
+        }
         _page = _DlPage.manualVerified;
       });
     } catch (_) {

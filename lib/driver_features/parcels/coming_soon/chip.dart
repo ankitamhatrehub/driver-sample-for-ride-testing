@@ -4,7 +4,7 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 class Chip extends StatelessWidget {
   final IconData icon;
   final String label;
-  const Chip({required this.icon, required this.label});
+  const Chip({super.key, required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {

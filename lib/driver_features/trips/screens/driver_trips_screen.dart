@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 part 'driver_trips_screen_sections.dart';
@@ -80,6 +81,7 @@ class _DriverTripsScreenState extends State<DriverTripsScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        floatingActionButton: const AiChatButton(size: 48),
         backgroundColor: context.torkk.surfaceMuted,
         appBar: AppBar(
           title: Text(

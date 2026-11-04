@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -71,6 +72,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: context.torkk.background,
       body: SafeArea(
         child: Column(
@@ -169,8 +171,9 @@ int _coins(Map<String, dynamic> trip) {
   if (status == 'cancelled' || status == 'canceled' || status == 'rejected') {
     return (AppStrings.ordersCancelled, AppColors.error);
   }
-  if (status == 'scheduled')
+  if (status == 'scheduled') {
     return (AppStrings.ordersScheduled, const Color(0xFFF59E0B));
+  }
   if (status == 'completed' || status == 'complete') {
     return (AppStrings.ordersCompleted, const Color(0xFF16A34A));
   }

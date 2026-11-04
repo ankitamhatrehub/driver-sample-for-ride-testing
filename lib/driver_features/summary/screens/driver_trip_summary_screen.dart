@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -161,6 +162,7 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
           ? _upiId
           : '${widget.driverPhone}@ptsbi';
       return Scaffold(
+        floatingActionButton: const AiChatButton(size: 48),
         backgroundColor: context.torkk.background,
         body: SafeArea(
           child: Padding(
@@ -319,6 +321,7 @@ class _DriverTripSummaryScreenState extends State<DriverTripSummaryScreen> {
     final firstName = widget.customerName.split(' ').first;
 
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       body: Stack(
         children: [
           // Map Background

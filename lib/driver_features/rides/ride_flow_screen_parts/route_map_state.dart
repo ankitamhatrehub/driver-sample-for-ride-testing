@@ -34,8 +34,9 @@ class _RouteMapState extends State<_RouteMap> {
     if (oldWidget.navigating == widget.navigating &&
         oldWidget.vehicleAsset == widget.vehicleAsset &&
         oldWidget.pickup == widget.pickup &&
-        oldWidget.drop == widget.drop)
+        oldWidget.drop == widget.drop) {
       return;
+    }
     _loadMarkers();
     _frame();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- AGREEMENTS SCREEN (Figma Settings -> Agreements) ---
@@ -134,6 +135,7 @@ class DriverAgreementsScreen extends StatelessWidget {
     final textColor = context.torkk.textPrimary;
 
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: bgColor,

@@ -15,16 +15,12 @@ import 'package:rider_app/driver_features/coins/screens/coins_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/about_torkk_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/bank_information_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/document_kyc_screen.dart';
-import 'package:rider_app/driver_features/profile/screens/faq_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/help_support_hub_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/personal_information_screen.dart';
-import 'package:rider_app/driver_features/profile/screens/privacy_policy_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/profile_notifications_screen.dart';
-import 'package:rider_app/driver_features/profile/screens/terms_conditions_screen.dart';
 import 'package:rider_app/driver_features/profile/screens/vehicle_information_screen.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_header.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
-import 'package:rider_app/driver_features/subscription/screens/subscription_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key, this.onBack});
@@ -39,6 +35,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: AppStrings.profile,
+      showAiChat: false,
       onBack: onBack,
       child: ListView(
         padding: EdgeInsets.fromLTRB(

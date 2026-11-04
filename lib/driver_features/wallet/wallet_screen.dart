@@ -94,12 +94,14 @@ class _WalletScreenState extends State<WalletScreen> {
     if (_loading) {
       return ProfilePage(
         title: AppStrings.walletEarning,
+        showAiChat: false,
         onBack: onBack,
         child: const Center(child: CircularProgressIndicator()),
       );
     }
     return ProfilePage(
       title: AppStrings.walletEarning,
+      showAiChat: false,
       onBack: onBack,
       child: RefreshIndicator(
         onRefresh: _load,

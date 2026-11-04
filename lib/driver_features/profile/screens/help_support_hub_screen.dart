@@ -18,6 +18,7 @@ class HelpSupportHubScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProfilePage(
       title: AppStrings.helpSupport,
+      showAiChat: false,
       child: ListView(
         padding: EdgeInsets.fromLTRB(
           context.w(20),

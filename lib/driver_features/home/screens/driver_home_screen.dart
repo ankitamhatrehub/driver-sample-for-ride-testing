@@ -86,7 +86,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   StreamSubscription<Position>? _realtimePositionSubscription;
   BitmapDescriptor? _homeNavPuckIcon;
   GoogleMapController? _homeMapController;
-  Offset _mapPanOffset = Offset.zero;
+  final Offset _mapPanOffset = Offset.zero;
 
   void _startRealtimeLocationStream() {
     _realtimePositionSubscription?.cancel();

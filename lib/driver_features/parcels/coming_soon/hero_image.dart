@@ -4,7 +4,7 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 /// Hero image from `assets/coming_soon/`. The artwork is not bundled in every
 /// build, so a missing file shows a neutral icon instead of throwing.
 class HeroImage extends StatelessWidget {
-  const HeroImage(this.name, {required this.height, required this.fallback});
+  const HeroImage(this.name, {super.key, required this.height, required this.fallback});
 
   final String name;
   final double height;

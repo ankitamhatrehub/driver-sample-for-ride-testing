@@ -44,7 +44,10 @@ class OnboardingStepScaffold extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios_new,
-                    color: context.themed(light: Colors.black, dark: context.torkk.textPrimary),
+                    color: context.themed(
+                      light: Colors.black,
+                      dark: context.torkk.textPrimary,
+                    ),
                     size: 20,
                   ),
                   onPressed: onBack,

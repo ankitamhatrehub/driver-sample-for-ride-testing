@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/driver_features/profile/screens/driver_profile_screen.dart';
@@ -170,6 +171,7 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
     final textColor = context.torkk.textPrimary;
 
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: bgColor,
       body: SafeArea(
         child: Column(

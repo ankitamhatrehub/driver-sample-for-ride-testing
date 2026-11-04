@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/service/driver_api_service.dart';
@@ -67,6 +68,7 @@ class _DriverHistoryScreenState extends State<DriverHistoryScreen> {
     final textColor = context.torkk.textPrimary;
 
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: bgColor,
       body: SafeArea(
         child: Column(

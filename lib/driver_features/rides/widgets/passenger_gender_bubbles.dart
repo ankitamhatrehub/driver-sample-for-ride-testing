@@ -52,8 +52,9 @@ class PassengerGenderBubbles extends StatelessWidget {
     final female = _int(
       ride['female_passengers'] ?? ride['female_count'] ?? ride['females'],
     );
-    if (male != null || female != null)
+    if (male != null || female != null) {
       return (male: male ?? 0, female: female ?? 0);
+    }
     final gender =
         (ride['gender'] ??
                 ride['customer_gender'] ??

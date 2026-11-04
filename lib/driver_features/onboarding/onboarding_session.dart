@@ -302,8 +302,9 @@ class OnboardingSession extends ChangeNotifier {
 
   Future<String?> verifyAadhaar() async {
     final number = aadhaar.text.replaceAll(' ', '').replaceAll('-', '');
-    if (number.length != 12)
+    if (number.length != 12) {
       return 'Please enter a valid 12-digit Aadhaar Number';
+    }
     loading = true;
     notifyListeners();
     try {
@@ -451,8 +452,9 @@ class OnboardingSession extends ChangeNotifier {
       try {
         if (response.statusCode == 200 || response.statusCode == 201) {
           final body = json.decode(response.body);
-          if (body['driver_id'] != null)
+          if (body['driver_id'] != null) {
             await prefs.setInt('driver_id', body['driver_id']);
+          }
           final regToken =
               (body['token'] ??
                       body['access_token'] ??

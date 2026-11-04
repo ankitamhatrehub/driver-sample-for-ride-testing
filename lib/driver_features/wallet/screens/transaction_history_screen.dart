@@ -86,8 +86,9 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
     final day = DateTime(d.year, d.month, d.day);
     final label = '${d.day} ${_months[d.month - 1]}';
     if (day == today) return 'Today , $label';
-    if (day == today.subtract(const Duration(days: 1)))
+    if (day == today.subtract(const Duration(days: 1))) {
       return 'Yesterday , $label';
+    }
     return label;
   }
 

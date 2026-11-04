@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 // --- DRIVER DOCUMENTS SCREEN (Figma Docs) ---
@@ -94,6 +95,7 @@ class _DriverDocumentsScreenState extends State<DriverDocumentsScreen> {
     final textColor = context.torkk.textPrimary;
 
     return Scaffold(
+      floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: bgColor,
