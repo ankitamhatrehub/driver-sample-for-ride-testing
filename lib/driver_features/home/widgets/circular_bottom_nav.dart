@@ -8,6 +8,7 @@ import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 
 /// Floating dashboard bar: Home, Orders, Parcel, Wallet, Profile.
 class CircularBottomNav extends StatelessWidget {
@@ -80,72 +81,8 @@ class CircularBottomNav extends StatelessWidget {
     );
   }
 
-  /// Frosted circle matching the bar, with a soft gradient orb whose edges melt
-  /// into the white surface (no ring, no hard edge).
-  Widget _aiButton(BuildContext context) {
-    final size = context.h(60);
-    final orb = size * 0.68;
-    return GestureDetector(
-      onTap: onAiChat,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: const Color(0x0F000000)),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x14000000),
-              offset: Offset(0, 8),
-              blurRadius:24,
-            ),
-          ],
-        ),
-        child: ClipOval(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-            child: Container(
-              color: context.torkk.surface,
-              alignment: Alignment.center,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  // Wide, faint glow, then the feathered orb on top of it.
-                  ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
-                    child: Container(
-                      width: orb,
-                      height: orb,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: _gradient(context, 0.65),
-                      ),
-                    ),
-                  ),
-                  ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
-                    child: Container(
-                      width: orb * 0.82,
-                      height: orb * 0.82,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: _gradient(context, 0.95),
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    Icons.auto_awesome_rounded,
-                    color: Colors.white,
-                    size: size * 0.3,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget _aiButton(BuildContext context) =>
+      AiChatButton(size: context.h(60), onTap: onAiChat);
 
   Widget _bar(BuildContext context) {
     return Container(

@@ -23,7 +23,6 @@ class DriverHomeView extends StatefulWidget {
     required this.completedJobs,
     required this.onToggle,
     required this.onNotifications,
-    required this.onHelp,
     required this.onEarnings,
     required this.onJobs,
     required this.onUpdateLocation,
@@ -38,7 +37,6 @@ class DriverHomeView extends StatefulWidget {
   final int completedJobs;
   final VoidCallback onToggle;
   final VoidCallback onNotifications;
-  final VoidCallback onHelp;
   final VoidCallback onEarnings;
   final VoidCallback onJobs;
   final VoidCallback onUpdateLocation;
@@ -114,7 +112,6 @@ class _DriverHomeViewState extends State<DriverHomeView> {
         HomeHeader(
           driverName: widget.driverName,
           onNotifications: widget.onNotifications,
-          onHelp: widget.onHelp,
         ),
         Positioned(
           top: context.h(120),

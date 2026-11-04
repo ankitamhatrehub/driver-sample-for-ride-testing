@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rider_app/common/constants/asset_constants.dart';
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
@@ -60,15 +60,9 @@ class OnboardingStepScaffold extends StatelessWidget {
                 ),
                 ?headerAction,
                 if (onHelp != null)
-                  IconButton(
-                    tooltip: 'Help',
-                    onPressed: onHelp,
-                    icon: Image.asset(
-                      AppAssets.helpButton,
-                      width: context.w(40),
-                      height: context.w(40),
-                      fit: BoxFit.contain,
-                    ),
+                  Padding(
+                    padding: EdgeInsets.only(right: context.w(8)),
+                    child: AiChatButton(size: context.w(40), onTap: onHelp),
                   ),
               ],
             ),

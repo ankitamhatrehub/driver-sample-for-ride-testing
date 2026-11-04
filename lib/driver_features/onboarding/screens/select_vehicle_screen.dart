@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/constants/string_constants.dart';
@@ -111,15 +112,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: context.w(16)),
-            child: GestureDetector(
-              onTap: widget.onHelp,
-              child: Image.asset(
-                AppAssets.helpButton,
-                width: context.w(40),
-                height: context.w(40),
-                fit: BoxFit.contain,
-              ),
-            ),
+            child: AiChatButton(size: context.w(40), onTap: widget.onHelp),
           ),
         ],
       ),

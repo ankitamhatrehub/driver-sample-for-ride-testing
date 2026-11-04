@@ -872,14 +872,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       currentPosition: _currentPosition,
                       onToggle: _confirmAvailability,
                       onNotifications: _openNotifications,
-                      onHelp: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (_) => const DriverLiveChatScreen(),
-                          ),
-                        );
-                      },
                       onEarnings: () => setState(() => _currentIndex = 3),
                       onJobs: () {
                         Navigator.push(
