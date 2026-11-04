@@ -12,7 +12,7 @@ class DriverApiService {
   /// Shared client; adds the Bearer token to every protected request.
   static http.Client get client => apiClient;
 
-  /// GET /api/driver/active-rides -> `{status, count, rides: [ride]}`.
+  /// GET /api/driver/rides/active -> `{status, count, rides: [ride]}`.
   /// Each ride is parsed by [RideModel] and returned as a map.
   static Future<List<dynamic>> fetchActiveRides({
     required String driverPhone,

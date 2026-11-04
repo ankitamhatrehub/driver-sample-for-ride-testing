@@ -123,9 +123,9 @@ class AppUrls {
 
   static String activeRides({required String driverPhone, String city = ''}) {
     if (city.isEmpty) {
-      return '$apiBase/driver/active-rides?driver_phone=${Uri.encodeComponent(driverPhone)}';
+      return '$apiBase/driver/rides/active?driver_phone=${Uri.encodeComponent(driverPhone)}';
     }
-    return '$apiBase/driver/active-rides?driver_phone=${Uri.encodeComponent(driverPhone)}&city=${Uri.encodeComponent(city)}';
+    return '$apiBase/driver/rides/active?driver_phone=${Uri.encodeComponent(driverPhone)}&city=${Uri.encodeComponent(city)}';
   }
 
   static String rideDetail({

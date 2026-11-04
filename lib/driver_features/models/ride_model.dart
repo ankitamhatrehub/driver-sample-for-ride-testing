@@ -1,7 +1,7 @@
 /// Typed model for a ride from the driver ride APIs.
 ///
 /// Backend shapes (field names are the JSON keys):
-/// - `GET /driver/active-rides` -> `{status, count, rides: [ride]}`
+/// - `GET /driver/rides/active` -> `{status, count, rides: [ride]}`
 ///   ride: id, customer_name, customer_phone, pickup_address, drop_address,
 ///   pickup_lat/lng, drop_lat/lng, vehicle_type, distance_km,
 ///   estimated_fare, status.

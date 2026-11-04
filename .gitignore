@@ -54,3 +54,5 @@ node_modules/
 upload-keystore.jks
 upload_certificate.pem
 /android/app/key.properties
+# Widget Preview related
+.widget_preview/
