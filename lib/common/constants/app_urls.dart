@@ -22,6 +22,10 @@ class AppUrls {
   static const String sendOtp = '$apiBase/auth/send-otp';
   static const String verifyOtp = '$apiBase/driver/auth/verify-otp';
 
+  // Service-area check (Delhi NCR launch) and the "Notify me" sign-up.
+  static const String locationCheck = '$baseUrl/api/v1/location/check';
+  static const String locationNotifyMe = '$baseUrl/api/v1/location/notify-me';
+
   static const String verifyAadhaar = '$apiBase/driver/verify-aadhaar';
   static const String verifyDl = '$apiBase/driver/verify-dl';
   static const String verifyRc = '$apiBase/driver/verify-rc';

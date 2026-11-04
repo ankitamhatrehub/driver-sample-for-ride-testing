@@ -31,6 +31,8 @@ class AuthClient extends http.BaseClient {
   static final Set<String> _publicPaths = {
     Uri.parse(AppUrls.sendOtp).path,
     Uri.parse(AppUrls.verifyOtp).path,
+    Uri.parse(AppUrls.locationCheck).path,
+    Uri.parse(AppUrls.locationNotifyMe).path,
   };
 
   static bool isProtected(Uri url) =>

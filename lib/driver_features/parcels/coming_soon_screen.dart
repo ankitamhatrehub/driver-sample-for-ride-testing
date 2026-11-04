@@ -8,6 +8,7 @@ import 'package:rider_app/common/theme/torkk_colors.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/feature_page.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/launch_page.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/neighbourhood_page.dart';
+import 'package:rider_app/service/location_availability_service.dart';
 
 /// Neighbourhood launch screen shown when the backend says service is unavailable.
 /// The other frames in the design are additional pages in the same screen.
@@ -15,7 +16,18 @@ class ComingSoonScreen extends StatefulWidget {
   final VoidCallback? onBack;
   final VoidCallback? onChangeLocation;
 
-  const ComingSoonScreen({super.key, this.onBack, this.onChangeLocation});
+  /// Where the driver is, sent with the "Notify me" request. When null the
+  /// current position is read.
+  final double? latitude;
+  final double? longitude;
+
+  const ComingSoonScreen({
+    super.key,
+    this.onBack,
+    this.onChangeLocation,
+    this.latitude,
+    this.longitude,
+  });
 
   @override
   State<ComingSoonScreen> createState() => _ComingSoonScreenState();
@@ -46,11 +58,26 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
     setState(() => _notified = notified);
   }
 
+  /// Saves the driver's "Notify me" request on the server.
   Future<void> _notify() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('notify_torkk_launch', true);
-    if (!mounted) return;
-    setState(() => _notified = true);
+    if (_notified) return;
+    try {
+      final message = await LocationAvailabilityService.notifyMe(
+        latitude: widget.latitude,
+        longitude: widget.longitude,
+      );
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('notify_torkk_launch', true);
+      if (!mounted) return;
+      setState(() => _notified = true);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      if (!mounted) return;
+      final text = '$e'.replaceFirst('Exception: ', '');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+    }
   }
 
   Future<void> _openInstagram() async {

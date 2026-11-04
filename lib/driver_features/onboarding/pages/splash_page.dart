@@ -9,6 +9,7 @@ import 'package:rider_app/app/theme/theme_bloc.dart';
 import 'package:rider_app/app/theme/theme_event.dart';
 import 'package:rider_app/driver_features/onboarding/kyc_resume.dart';
 import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
+import 'package:rider_app/driver_features/onboarding/pages/page_helpers.dart';
 import 'package:rider_app/common/widgets/app_splash_screen.dart';
 
 OnboardingSession get _session => OnboardingSession.instance;
@@ -25,11 +26,17 @@ class SplashPage extends StatelessWidget {
         AccentChanged(isPink: gender == AppStrings.genderFemale),
       );
       _session.gender = gender;
-      context.go(
-        gender == AppStrings.genderFemale
-            ? AppRoutes.dashboardFemale
-            : AppRoutes.dashboardMale,
-      );
+      // Location check, then home (Coming Soon outside Delhi NCR).
+      final blocked = await openHomeIfServiceable(context);
+      // Back from Coming Soon: nothing to show on the splash, so go to login.
+      if (blocked && context.mounted) context.go(AppRoutes.login);
+      // To open home without the location check (testing outside Delhi NCR):
+      // comment the 3 lines above and uncomment the block below.
+      // context.go(
+      //   gender == AppStrings.genderFemale
+      //       ? AppRoutes.dashboardFemale
+      //       : AppRoutes.dashboardMale,
+      // );
       return;
     }
     final where = await KycResume.destination();
