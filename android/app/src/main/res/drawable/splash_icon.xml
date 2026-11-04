@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+ splash icon. The system shows only the middle circle (2/3 of
+     the width) of a 288dp canvas, so the logo is inset by 1/6 on each side to
+     make it fill that circle exactly. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/splash_logo"
+    android:insetLeft="16.67%"
+    android:insetTop="16.67%"
+    android:insetRight="16.67%"
+    android:insetBottom="16.67%" />
