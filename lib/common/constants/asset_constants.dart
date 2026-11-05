@@ -3,7 +3,8 @@ class AppAssets {
   AppAssets._();
 
   static const String appIcon = 'assets/images/app_logo.png';
-  static const String splashScreen = 'assets/images/splash_screen.png';
+  static const String splashIllustration =
+      'assets/images/splash_illustration.webp';
   static const String onboardingImage = 'assets/images/onboarding_image.png';
   static const String aadhaarImage = 'assets/images/aadhar_image.png';
   static const String connectDigilockerImage = 'assets/images/connect_digilocker.png';
