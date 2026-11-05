@@ -103,18 +103,7 @@ class ProfileScreen extends StatelessWidget {
                 label: AppStrings.settings,
                 onTap: () => context.push(AppRoutes.settings),
               ),
-              ProfileMenuItem(
-                icon: Icons.shield_outlined,
-                iconColor: const Color(0xFF14B8A6),
-                label: AppStrings.privacyPolicy,
-                onTap: () => _open(context, const TorkkPrivacyPolicyScreen()),
-              ),
-              ProfileMenuItem(
-                icon: Icons.article_outlined,
-                iconColor: const Color(0xFFF97316),
-                label: AppStrings.termsConditions,
-                onTap: () => _open(context, const TermsConditionsUsersScreen()),
-              ),
+            
               ProfileMenuItem(
                 icon: Icons.help_outline_rounded,
                 iconColor: const Color(0xFF3B82F6),

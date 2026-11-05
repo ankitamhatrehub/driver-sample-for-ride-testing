@@ -435,16 +435,56 @@ class DriverApiService {
     throw Exception(message);
   }
 
+  /// POST /api/chat/start {} - must be called before chatting.
+  /// Returns the conversation id from the response, or null if the server
+  /// did not send one.
+  static Future<String?> startChat() async {
+    debugPrint('[CHAT START] BEFORE -> POST ${AppUrls.chatStart} body={}');
+    final response = await apiClient
+        .post(
+          Uri.parse(AppUrls.chatStart),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({}),
+        )
+        .timeout(const Duration(seconds: 15));
+    debugPrint(
+      '[CHAT START] AFTER <- status=${response.statusCode} body=${response.body}',
+    );
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw Exception('Failed to start chat (${response.statusCode})');
+    }
+    dynamic decoded;
+    try {
+      decoded = response.body.isEmpty ? null : json.decode(response.body);
+    } catch (_) {
+      return null;
+    }
+    String? find(dynamic v) {
+      if (v is! Map) return null;
+      for (final k in const ['conversation_id', 'conversationId', 'id']) {
+        final x = v[k];
+        if (x != null && x.toString().isNotEmpty) return x.toString();
+      }
+      for (final k in const ['data', 'conversation']) {
+        final r = find(v[k]);
+        if (r != null) return r;
+      }
+      return null;
+    }
+
+    return find(decoded);
+  }
+
   /// GET /api/chat/{conversation_id}/history. Returns the raw message list;
   /// an unknown conversation (404) is an empty history.
   static Future<List<dynamic>> fetchChatHistory(String conversationId) async {
     final uri = Uri.parse(AppUrls.chatHistory(conversationId));
-    debugPrint('AI_CHAT_API_01 | GET $uri');
+    debugPrint('[CHAT HISTORY] BEFORE -> GET $uri');
     final response = await apiClient
         .get(uri)
         .timeout(const Duration(seconds: 10));
     debugPrint(
-      'AI_CHAT_API_02 | HTTP ${response.statusCode} body=${response.body}',
+      '[CHAT HISTORY] AFTER <- status=${response.statusCode} body=${response.body}',
     );
     if (response.statusCode == 404) return [];
     if (response.statusCode != 200) {
@@ -471,12 +511,9 @@ class DriverApiService {
     required String conversationId,
     required String message,
   }) async {
-    print('url: ${AppUrls.chatMessage}');
-    print('conversationId: $conversationId');
-    print('message: $message');
     final payload = {'conversation_id': conversationId, 'message': message};
     debugPrint(
-      'AI_CHAT_API_03 | POST ${AppUrls.chatMessage} body=${json.encode(payload)}',
+      '[CHAT SEND] BEFORE -> POST ${AppUrls.chatMessage} body=${json.encode(payload)}',
     );
     final response = await apiClient
         .post(
@@ -485,8 +522,9 @@ class DriverApiService {
           body: json.encode(payload),
         )
         .timeout(const Duration(seconds: 30));
-    debugPrint('statuscode ${response.statusCode}');
-    print('response: ${response.body}');
+    debugPrint(
+      '[CHAT SEND] AFTER <- status=${response.statusCode} body=${response.body}',
+    );
     dynamic decoded;
     try {
       decoded = response.body.isEmpty ? null : json.decode(response.body);

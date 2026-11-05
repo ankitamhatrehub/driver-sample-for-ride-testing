@@ -80,6 +80,17 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
       id = _newUuid();
       await prefs.setString(_prefsKey, id);
     }
+    // The chat must be started on the server first.
+    try {
+      final started = await DriverApiService.startChat();
+      if (started != null && started.isNotEmpty) {
+        id = started;
+        await prefs.setString(_prefsKey, id);
+      }
+    } catch (e) {
+      debugPrint('AI_CHAT_SCREEN_00 | start failed: $e');
+    }
+    if (!mounted) return;
     _conversationId = id;
     debugPrint('AI_CHAT_SCREEN_01 | conversation_id=$id');
     try {

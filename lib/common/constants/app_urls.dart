@@ -44,6 +44,7 @@ class AppUrls {
   static const String updateProfile = '$apiBase/driver/profile'; // remaining
   static const String driverSchedule = '$apiBase/driver/schedule';
   static const String bankDetails = '$apiBase/driver/bank-details';
+  static const String chatStart = '$apiBase/chat/start';
   static const String chatMessage = '$apiBase/chat/message';
   static String chatHistory(String conversationId) =>
       '$apiBase/chat/${Uri.encodeComponent(conversationId)}/history';
