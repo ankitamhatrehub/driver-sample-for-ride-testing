@@ -38,7 +38,6 @@ class SupportApiService {
     int limit = 50,
     String? status,
   }) async {
-    print('[SUPPORT TICKETS] -> GET page=$page limit=$limit status=$status');
     final query =
         'page=$page&limit=$limit'
         '${status == null ? '' : '&status=$status'}';
@@ -113,7 +112,7 @@ class SupportApiService {
   /// POST /tickets/{id}/reopen (JSON)
   static Future<void> reopen(String ticketId, String reason) async {
     final url = AppUrls.supportTicketReopen(ticketId);
-    debugPrint('[SUPPORT REOPEN] -> POST $url reason=$reason');
+    debugPrint('[SUPPORT REOPEN] BEFORE -> POST $url reason=$reason');
     final response = await apiClient
         .post(
           Uri.parse(url),
@@ -121,14 +120,17 @@ class SupportApiService {
           body: jsonEncode({'reason': reason}),
         )
         .timeout(_timeout);
+    debugPrint(
+      '[SUPPORT REOPEN] AFTER <- status=${response.statusCode} body=${response.body}',
+    );
     _decode(response, 'REOPEN');
   }
 
   static Future<Map<String, dynamic>> _get(String url, String tag) async {
-    debugPrint('[SUPPORT $tag] -> GET $url');
+    debugPrint('[SUPPORT $tag] BEFORE -> GET $url');
     final response = await apiClient.get(Uri.parse(url)).timeout(_timeout);
-    print(
-      '[SUPPORT $tag] <- status=${response.statusCode} \nbody=${response.body}',
+    debugPrint(
+      '[SUPPORT $tag] AFTER <- status=${response.statusCode} body=${response.body}',
     );
     return _decode(response, tag);
   }
@@ -139,7 +141,9 @@ class SupportApiService {
     Map<String, String> fields,
     List<String> photoPaths,
   ) async {
-    debugPrint('[SUPPORT $tag] -> POST $url fields=$fields photos=$photoPaths');
+    debugPrint(
+      '[SUPPORT $tag] BEFORE -> POST $url fields=$fields photos=$photoPaths',
+    );
     final request = http.MultipartRequest('POST', Uri.parse(url))
       ..fields.addAll(fields);
     for (final path in photoPaths) {
@@ -147,13 +151,13 @@ class SupportApiService {
     }
     final streamed = await apiClient.send(request).timeout(_uploadTimeout);
     final response = await http.Response.fromStream(streamed);
+    debugPrint(
+      '[SUPPORT $tag] AFTER <- status=${response.statusCode} body=${response.body}',
+    );
     return _decode(response, tag);
   }
 
   static Map<String, dynamic> _decode(http.Response response, String tag) {
-    debugPrint(
-      '[SUPPORT $tag] <- status=${response.statusCode} body=${response.body}',
-    );
     Map<String, dynamic> body = {};
     try {
       final decoded = jsonDecode(response.body);

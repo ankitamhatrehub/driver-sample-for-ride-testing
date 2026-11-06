@@ -27,16 +27,16 @@ class SplashPage extends StatelessWidget {
       );
       _session.gender = gender;
       // Location check, then home (Coming Soon outside Delhi NCR).
-      // final blocked = await openHomeIfServiceable(context);
+      final blocked = await openHomeIfServiceable(context);
       // Back from Coming Soon: nothing to show on the splash, so go to login.
-      // if (blocked && context.mounted) context.go(AppRoutes.login);
+      if (blocked && context.mounted) context.go(AppRoutes.login);
       // To open home without the location check (testing outside Delhi NCR):
       // comment the 3 lines above and uncomment the block below.
-      context.go(
-        gender == AppStrings.genderFemale
-            ? AppRoutes.dashboardFemale
-            : AppRoutes.dashboardMale,
-      );
+      // context.go(
+      //   gender == AppStrings.genderFemale
+      //       ? AppRoutes.dashboardFemale
+      //       : AppRoutes.dashboardMale,
+      // );
       return;
     }
     final where = await KycResume.destination();
