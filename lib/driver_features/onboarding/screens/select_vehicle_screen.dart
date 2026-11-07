@@ -86,19 +86,6 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
       backgroundColor: context.torkk.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: widget.onBack == null
-            ? null
-            : IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_new,
-                  color: context.themed(
-                    light: Colors.black,
-                    dark: context.torkk.textPrimary,
-                  ),
-                  size: 20,
-                ),
-                onPressed: widget.onBack,
-              ),
         titleSpacing: widget.onBack == null ? context.w(20) : 0,
         centerTitle: false,
         toolbarHeight: context.h(64),

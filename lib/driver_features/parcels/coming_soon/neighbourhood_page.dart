@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
+import 'package:rider_app/common/widgets/instagram_link.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/coming_soon_text.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/fill.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon/gradient_line.dart';
@@ -11,14 +12,12 @@ import 'package:rider_app/driver_features/parcels/coming_soon/service_chips.dart
 class NeighbourhoodPage extends StatelessWidget {
   final bool notified;
   final VoidCallback onNotify;
-  final VoidCallback onInstagram;
   final VoidCallback? onChangeLocation;
 
   const NeighbourhoodPage({
     super.key,
     required this.notified,
     required this.onNotify,
-    required this.onInstagram,
     this.onChangeLocation,
   });
 
@@ -66,36 +65,9 @@ class NeighbourhoodPage extends StatelessWidget {
           icon: notified ? Icons.check_rounded : Icons.notifications_rounded,
           onPressed: notified ? null : onNotify,
         ),
-        const SizedBox(height: 4),
-        TextButton(
-          onPressed: onInstagram,
-          child: Text(
-            'Get Updates on Instagram',
-            style: Inter(
-              color: context.legible(const Color(0xFF2D57C7)),
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        if (onChangeLocation != null)
-          TextButton.icon(
-            onPressed: onChangeLocation,
-            icon: Icon(
-              Icons.edit_location_alt_outlined,
-              size: 18,
-              color: context.legible(const Color(0xFF6B21A8)),
-            ),
-            label: Text(
-              'Change or Enter Location',
-              style: Inter(
-                color: context.legible(const Color(0xFF6B21A8)),
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              ),
-            ),
-          ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 25),
+        const InstagramLink(),
+       const SizedBox(height: 16),
       ],
     );
   }

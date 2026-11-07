@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:rider_app/common/routes/app_routes.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
@@ -80,15 +79,6 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
     }
   }
 
-  Future<void> _openInstagram() async {
-    final uri = Uri.parse(
-      'https://www.instagram.com/torkkapp?mdxt=MTQzdzJtNTE3N2V4dA==',
-    );
-    try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (_) {}
-  }
-
   void _handleBack() {
     if (widget.onBack != null) {
       widget.onBack!();
@@ -113,22 +103,7 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              if (showBack)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 4, 16, 0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          size: 20,
-                          color: context.torkk.textPrimary,
-                        ),
-                        onPressed: _handleBack,
-                      ),
-                    ],
-                  ),
-                ),
+              SizedBox(height: 8),
               Expanded(
                 child: PageView(
                   controller: _pages,
@@ -136,7 +111,6 @@ class _ComingSoonScreenState extends State<ComingSoonScreen> {
                     NeighbourhoodPage(
                       notified: _notified,
                       onNotify: _notify,
-                      onInstagram: _openInstagram,
                       onChangeLocation:
                           widget.onChangeLocation ??
                           () async {
