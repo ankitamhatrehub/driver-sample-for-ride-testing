@@ -7,13 +7,16 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:104483179868:android:8a8f14f07802b25c9a0599",
+        "mobilesdk_app_id": "1:104483179868:android:63865ec90b434e0b9a0599",
         "android_client_info": {
-          "package_name": "com.torkk.app"
+          "package_name": "com.blackoriginx.torkkdriver"
         }
       },
       "oauth_client": [],
       "api_key": [
+        {
+          "current_key": "AIzaSyBz9riTLH6PnVDAX_Xwkgqze4bpk0YIltM"
+        },
         {
           "current_key": "AIzaSyDNrwlxB3gaotCANgyy2Q7hVi5K3JsqqBk"
         }
@@ -28,11 +31,14 @@
       "client_info": {
         "mobilesdk_app_id": "1:104483179868:android:8a8f14f07802b25c9a0599",
         "android_client_info": {
-          "package_name": "com.torkk.app.driver"
+          "package_name": "com.torkk.app"
         }
       },
       "oauth_client": [],
       "api_key": [
+        {
+          "current_key": "AIzaSyBz9riTLH6PnVDAX_Xwkgqze4bpk0YIltM"
+        },
         {
           "current_key": "AIzaSyDNrwlxB3gaotCANgyy2Q7hVi5K3JsqqBk"
         }
