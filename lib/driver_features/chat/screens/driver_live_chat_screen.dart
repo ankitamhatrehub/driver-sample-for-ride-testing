@@ -156,6 +156,14 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
   static String? _replyFrom(dynamic body) {
     if (body is String) return body.trim().isEmpty ? null : body.trim();
     if (body is! Map) return null;
+    // Real shape: { message: "Message saved successfully",
+    //   data: { message: {...user msg}, ai_response: { message: "<reply>" } } }
+    // The top-level `message` is only a status text, so read the AI reply first.
+    final ai = body['ai_response'] ?? (body['data'] is Map ? (body['data'] as Map)['ai_response'] : null);
+    if (ai is Map) {
+      final v = ai['message'] ?? ai['content'] ?? ai['text'];
+      if (v is String && v.trim().isNotEmpty) return v.trim();
+    }
     for (final key in const [
       'reply',
       'response',
