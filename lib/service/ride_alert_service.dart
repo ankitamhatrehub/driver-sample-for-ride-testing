@@ -22,7 +22,13 @@ class RideAlertService {
 
   static Future<void> initialize() async {
     const androidInit = AndroidInitializationSettings('@mipmap/launcher_icon');
-    const iosInit = DarwinInitializationSettings();
+    // Permission prompts are NOT shown here: StartupPermissions asks for
+    // notifications first and location second, after the first frame.
+    const iosInit = DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
     await _notifications.initialize(
       settings: const InitializationSettings(
         android: androidInit,
@@ -39,7 +45,6 @@ class RideAlertService {
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
         >();
-    await androidPlugin?.requestNotificationsPermission();
     await androidPlugin?.createNotificationChannel(
       const AndroidNotificationChannel(
         rideChannelId,

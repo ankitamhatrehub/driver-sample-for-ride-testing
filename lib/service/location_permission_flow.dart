@@ -20,12 +20,41 @@ enum LocationAccess { none, foreground, background }
 class LocationPermissionFlow {
   static const _bgPromptedKey = 'location_background_prompted_v1';
 
+  // One flow at a time. If a second caller arrives while the disclosure or the
+  // system prompt is still open, it waits for the same answer instead of
+  // opening a second disclosure screen on top.
+  static Future<LocationAccess>? _inFlight;
+
   static Future<LocationAccess> ensure(
     BuildContext context, {
     bool background = false,
     bool force = false,
+  }) {
+    final running = _inFlight;
+    if (running != null) {
+      debugPrint('[LOCATION FLOW] already running, joining it');
+      return running;
+    }
+    debugPrint(
+      '[LOCATION FLOW] start background=$background force=$force '
+      'from:\n${StackTrace.current.toString().split('\n').skip(1).take(4).join('\n')}',
+    );
+    final flow = _run(
+      context,
+      background: background,
+      force: force,
+    ).whenComplete(() => _inFlight = null);
+    _inFlight = flow;
+    return flow;
+  }
+
+  static Future<LocationAccess> _run(
+    BuildContext context, {
+    required bool background,
+    required bool force,
   }) async {
     var permission = await Geolocator.checkPermission();
+    debugPrint('[LOCATION FLOW] current permission: $permission');
 
     // Blocked for good: only the phone's Settings can change it. The caller
     // decides how to tell the driver (see requestOnlineLocationPermission).

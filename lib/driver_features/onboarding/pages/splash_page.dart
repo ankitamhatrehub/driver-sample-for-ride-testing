@@ -11,6 +11,7 @@ import 'package:rider_app/driver_features/onboarding/kyc_resume.dart';
 import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 import 'package:rider_app/driver_features/onboarding/pages/page_helpers.dart';
 import 'package:rider_app/common/widgets/app_splash_screen.dart';
+import 'package:rider_app/service/startup_permissions.dart';
 
 OnboardingSession get _session => OnboardingSession.instance;
 
@@ -19,6 +20,10 @@ class SplashPage extends StatelessWidget {
 
   Future<void> _next(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
+    if (!context.mounted) return;
+    // Every launch: notifications (asked once), then location if not allowed
+    // yet (disclosure screen first, then the system prompt).
+    await StartupPermissions.run(context);
     if (!context.mounted) return;
     if (prefs.getBool('isLoggedIn') == true) {
       final gender = prefs.getString('user_gender') ?? AppStrings.genderMale;
