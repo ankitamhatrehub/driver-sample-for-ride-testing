@@ -18,10 +18,12 @@ class AddPhotosScreen extends StatefulWidget {
     super.key,
     required this.category,
     required this.problem,
+    this.rideId,
   });
 
   final SupportOption category;
   final SupportOption problem;
+  final String? rideId;
 
   @override
   State<AddPhotosScreen> createState() => _AddPhotosScreenState();
@@ -51,6 +53,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
               category: widget.category,
               problem: widget.problem,
               photos: List<String>.from(_photos),
+              rideId: widget.rideId,
             ),
           ),
         );

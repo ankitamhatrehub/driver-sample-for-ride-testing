@@ -9,7 +9,10 @@ import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets
 import 'package:rider_app/service/support_api_service.dart';
 
 class IssueCategoryScreen extends StatefulWidget {
-  const IssueCategoryScreen({super.key});
+  const IssueCategoryScreen({super.key, this.rideId});
+
+  /// Ride this complaint is about (sent as `ride_id`); null from Help/SOS.
+  final String? rideId;
 
   @override
   State<IssueCategoryScreen> createState() => _IssueCategoryScreenState();
@@ -94,7 +97,10 @@ class _IssueCategoryScreenState extends State<IssueCategoryScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (_) =>
-                          IssueProblemScreen(category: _categories[i]),
+                          IssueProblemScreen(
+                            category: _categories[i],
+                            rideId: widget.rideId,
+                          ),
                     ),
                   );
                 },

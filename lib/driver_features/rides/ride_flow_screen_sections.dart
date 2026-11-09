@@ -908,7 +908,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             child: TextButton.icon(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (_) => const IssueCategoryScreen(),
+                  builder: (_) => IssueCategoryScreen(
+                    rideId: _isSample ? null : _rideId?.toString(),
+                  ),
                 ),
               ),
               style: OutlinedButton.styleFrom(

@@ -15,11 +15,13 @@ class AdditionalDetailsScreen extends StatefulWidget {
     required this.category,
     required this.problem,
     required this.photos,
+    this.rideId,
   });
 
   final SupportOption category;
   final SupportOption problem;
   final List<String> photos;
+  final String? rideId;
 
   @override
   State<AdditionalDetailsScreen> createState() =>
@@ -53,6 +55,7 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
     }
     final text = _note.text.trim();
     setState(() => _submitting = true);
+    print("ticket 01 ==> Submitting ticket with category:===========> ${widget.category.name}, problem: ${widget.problem.name}, note: $note, text: $text, photos: ${widget.photos.length}, rideId: ${widget.rideId}");
     try {
       final ticket = await SupportApiService.createTicket(
         categoryId: widget.category.id,
@@ -61,8 +64,11 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
         problemName: widget.problem.name,
         description: text.isEmpty ? note : text,
         quickNote: note,
-        photoPaths: widget.photos,
+       
+        rideId: widget.rideId ?? '',
+         photoPaths: widget.photos,
       );
+      print("ticket 02 ==> Ticket created successfully: ${ticket.ticketId}, ${ticket.ticketNumber}");
       if (!mounted) return;
       Navigator.of(context).push(
         MaterialPageRoute<void>(
@@ -70,6 +76,7 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
         ),
       );
     } catch (e) {
+      print("ticket 03 ==> Error creating ticket: $e");
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

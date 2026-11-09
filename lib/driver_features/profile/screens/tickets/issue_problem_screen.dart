@@ -9,9 +9,14 @@ import 'package:rider_app/driver_features/profile/screens/tickets/ticket_widgets
 import 'package:rider_app/service/support_api_service.dart';
 
 class IssueProblemScreen extends StatefulWidget {
-  const IssueProblemScreen({super.key, required this.category});
+  const IssueProblemScreen({
+    super.key,
+    required this.category,
+    this.rideId,
+  });
 
   final SupportOption category;
+  final String? rideId;
 
   @override
   State<IssueProblemScreen> createState() => _IssueProblemScreenState();
@@ -89,6 +94,7 @@ class _IssueProblemScreenState extends State<IssueProblemScreen> {
                       builder: (_) => AddPhotosScreen(
                         category: widget.category,
                         problem: item,
+                        rideId: widget.rideId,
                       ),
                     ),
                   );
