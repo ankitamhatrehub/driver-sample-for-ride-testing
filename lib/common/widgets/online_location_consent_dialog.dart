@@ -1,183 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import '../constants/colors.dart';
 import 'package:rider_app/service/location_consent_service.dart';
+import 'package:rider_app/service/location_permission_flow.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
-part 'online_location_consent_dialog_parts/choice_option.dart';
-
-enum OnlineLocationChoice { always, whileInUse, thisTime }
-
-/// Shown every time a driver toggles Online, before the OS location prompt.
-/// Returns the selected choice, or null if the driver stays offline.
-
-Future<OnlineLocationChoice?> showOnlineLocationConsentDialog(
-  BuildContext context,
-) async {
-  return showModalBottomSheet<OnlineLocationChoice>(
-    context: context,
-    isScrollControlled: true,
-    isDismissible: false,
-    enableDrag: false,
-    backgroundColor: context.torkk.surface,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-    ),
-    builder: (ctx) => const _OnlineLocationConsentSheet(),
-  );
-}
-
-class _OnlineLocationConsentSheet extends StatefulWidget {
-  const _OnlineLocationConsentSheet();
-
-  @override
-  State<_OnlineLocationConsentSheet> createState() =>
-      _OnlineLocationConsentSheetState();
-}
-
-class _OnlineLocationConsentSheetState
-    extends State<_OnlineLocationConsentSheet> {
-  OnlineLocationChoice _selected = OnlineLocationChoice.always;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: context.torkk.border,
-                  borderRadius: BorderRadius.circular(99),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.12),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.location_on_rounded,
-                  size: 34,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Location needed to go online',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-                color: context.torkk.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Choose how TORKK Driver can use your location while you are online. '
-              'You can change this every time you go online.',
-              style: TextStyle(
-                fontSize: 14,
-                height: 1.45,
-                color: context.torkk.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 16),
-            _ChoiceOption(
-              title: 'Allow all the time',
-              subtitle:
-                  'Best for drivers — get rides even when the app is in the background',
-              recommended: true,
-              selected: _selected == OnlineLocationChoice.always,
-              onTap: () =>
-                  setState(() => _selected = OnlineLocationChoice.always),
-            ),
-            const SizedBox(height: 8),
-            _ChoiceOption(
-              title: 'While using the app',
-              subtitle: 'Location only when TORKK Driver is open',
-              selected: _selected == OnlineLocationChoice.whileInUse,
-              onTap: () =>
-                  setState(() => _selected = OnlineLocationChoice.whileInUse),
-            ),
-            const SizedBox(height: 8),
-            _ChoiceOption(
-              title: 'Only this time',
-              subtitle: 'Ask again the next time you go online',
-              selected: _selected == OnlineLocationChoice.thisTime,
-              onTap: () =>
-                  setState(() => _selected = OnlineLocationChoice.thisTime),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: context.adaptiveTint(const Color(0xFFEFF6FF)),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Next, your phone may show the system location permission so Android '
-                'can confirm your choice.',
-                style: TextStyle(
-                  fontSize: 12.5,
-                  height: 1.4,
-                  color: Colors.blue.shade900,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(_selected),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(
-                  'Continue',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Center(
-              child: TextButton(
-                onPressed: () => Navigator.of(context).pop(null),
-                child: Text(
-                  'Cancel (Stay Offline)',
-                  style: TextStyle(
-                    color: context.themed(light: Colors.blueGrey, dark: context.torkk.textSecondary),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// In-app online consent + OS location permission based on the driver's choice.
+/// Go Online: prominent disclosure + OS location permission (foreground, then
+/// background as a separate step). Returns true when the driver may go online.
 Future<bool> requestOnlineLocationPermission(BuildContext context) async {
   final serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
@@ -200,9 +28,16 @@ Future<bool> requestOnlineLocationPermission(BuildContext context) async {
 
   var permission = await Geolocator.checkPermission();
 
-  // If location permission is ALREADY granted, skip all modal sheets and return true immediately!
-  if (permission == LocationPermission.whileInUse ||
-      permission == LocationPermission.always) {
+  // Already allowed "all the time": nothing to ask.
+  if (permission == LocationPermission.always) {
+    await LocationConsentService.accept();
+    return true;
+  }
+
+  // Allowed "while using": offer the background step once (never blocks).
+  if (permission == LocationPermission.whileInUse) {
+    if (!context.mounted) return true;
+    await LocationPermissionFlow.ensure(context, background: true);
     await LocationConsentService.accept();
     return true;
   }
@@ -225,15 +60,13 @@ Future<bool> requestOnlineLocationPermission(BuildContext context) async {
     return false;
   }
 
-  // OS permission is denied: show in-app disclosure modal ONCE before OS prompt
-  final choice = await showOnlineLocationConsentDialog(context);
-  if (choice == null) return false;
+  // Disclosure screen -> foreground permission, then a separate disclosure ->
+  // background permission. Going online only needs foreground; a "Deny" on the
+  // background step still lets the driver go online.
   if (!context.mounted) return false;
+  final access = await LocationPermissionFlow.ensure(context, background: true);
 
-  permission = await Geolocator.requestPermission();
-
-  if (permission == LocationPermission.denied ||
-      permission == LocationPermission.deniedForever) {
+  if (access == LocationAccess.none) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -246,8 +79,7 @@ Future<bool> requestOnlineLocationPermission(BuildContext context) async {
   }
 
   await LocationConsentService.accept();
-  return permission == LocationPermission.whileInUse ||
-      permission == LocationPermission.always;
+  return true;
 }
 
 Future<bool?> _showLocationActionDialog({
@@ -351,10 +183,7 @@ Future<bool?> _showLocationActionDialog({
                   onPressed: () => Navigator.pop(ctx, false),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    side: BorderSide(
-                      color: context.torkk.border,
-                      width: 1.2,
-                    ),
+                    side: BorderSide(color: context.torkk.border, width: 1.2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),

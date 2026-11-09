@@ -76,8 +76,7 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
         'iconType': 'red_exit',
         'filter': 'Today',
         'action': 'wallet',
-        'description':
-            'Payout of ₹2,450.00 has been transferred to your registered bank account.',
+        'description': 'Payout of ₹2,450.00 has been transferred to your registered bank account.',
       },
       {
         'title': 'Trip Earnings Credited',
@@ -85,8 +84,7 @@ class _DriverNotificationsScreenState extends State<DriverNotificationsScreen> {
         'iconType': 'green_rupee',
         'filter': 'Today',
         'action': 'earnings',
-        'description':
-            '₹340.00 has been credited to your Torkk wallet for completed trip.',
+        'description':'₹340.00 has been credited to your Torkk wallet for completed trip.',
       },
       {
         'title': 'Daily Performance Bonus Credited',

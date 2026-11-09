@@ -26,14 +26,14 @@ class ServiceAvailability {
 class LocationAvailabilityService {
   static const _timeout = Duration(seconds: 15);
 
-  /// The device position, asking for permission if needed. Null when the
-  /// driver denies permission or no position can be read.
+  /// The device position if location is already allowed. Null when it is not
+  /// allowed or no position can be read.
   static Future<Position?> currentPosition() async {
     try {
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
+      // Never asks the OS for permission here: that only happens after the
+      // in-app disclosure (LocationPermissionFlow). Without permission this
+      // just returns null.
+      final permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied ||
           permission == LocationPermission.deniedForever) {
         debugPrint('[LOCATION API] permission not granted: $permission');

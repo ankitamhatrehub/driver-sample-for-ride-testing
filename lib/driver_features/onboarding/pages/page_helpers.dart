@@ -8,6 +8,7 @@ import 'package:rider_app/driver_features/onboarding/onboarding_session.dart';
 import 'package:rider_app/common/widgets/ai_chat_button.dart';
 import 'package:rider_app/driver_features/parcels/coming_soon_screen.dart';
 import 'package:rider_app/service/location_availability_service.dart';
+import 'package:rider_app/service/location_permission_flow.dart';
 
 OnboardingSession get _session => OnboardingSession.instance;
 
@@ -33,6 +34,11 @@ Future<bool> openHomeIfServiceable(BuildContext context) async {
   }
   var blocked = false;
   if (phone != '9999999999') {
+    // Disclosure screen first, then the OS prompt (foreground only here; the
+    // background step is offered later, when the driver goes online).
+    if (!context.mounted) return false;
+    await LocationPermissionFlow.ensure(context);
+    if (!context.mounted) return false;
     showDialog<void>(
       context: context,
       barrierDismissible: false,

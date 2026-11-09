@@ -18,6 +18,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:rider_app/service/fcm_service.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/service/ride_alert_service.dart';
+import 'package:rider_app/service/location_permission_flow.dart';
 import 'package:rider_app/common/widgets/online_location_consent_dialog.dart';
 import 'package:rider_app/common/utils/translations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -622,12 +623,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     if (_updatingLocation) return;
     _updatingLocation = true;
     try {
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      final access = await LocationPermissionFlow.ensure(context);
+      if (access == LocationAccess.none) {
         _showLocationMessage(
           'Please allow location access to update your location.',
         );

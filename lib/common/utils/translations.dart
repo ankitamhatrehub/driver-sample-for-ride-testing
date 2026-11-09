@@ -22,6 +22,31 @@ class AppTranslations {
   static const Map<String, Map<String, String>> _translations = {
     'en': {
       'app_name': 'Torkk Driver',
+      // --- Location prominent disclosure (Google Play) ---
+      'locAccept': 'Accept',
+      'locDeny': 'Deny',
+      'locDiscTitleFg': 'Allow Torkk Driver to use your location?',
+      'locDiscTitleBg': 'Allow location access in the background?',
+      'locDiscIntroFg':
+          'Please read this before continuing. Torkk Driver needs your permission to collect your location.',
+      'locDiscIntroBg':
+          'To keep you visible for ride requests while you are online, Torkk Driver needs to collect your location even when the app is closed or not in use.',
+      'locDiscCollectTitle': 'What we collect',
+      'locDiscCollectFg':
+          'Your precise device location (GPS) while the app is open on your screen.',
+      'locDiscCollectBg':
+          'Your precise device location (GPS) in the background, including when the app is closed or not in use, for as long as you are online or on an active trip.',
+      'locDiscWhyTitle': 'Why we collect it',
+      'locDiscWhyFg':
+          'To check that Torkk is available in your area, show your position on the map, match you with nearby ride requests, guide navigation during trips and send your location in an SOS alert.',
+      'locDiscWhyBg':
+          'To keep matching you with nearby ride requests, update your live position for the passenger and track trip progress while the app is in the background.',
+      'locDiscShareTitle': 'Who it is shared with',
+      'locDiscShareBody':
+          'Your location is sent to Torkk servers and shown to the passenger on your trip and to our support team. Map and address lookups use Google Maps services. We do not sell your location to advertisers.',
+      'locDiscControlTitle': 'You stay in control',
+      'locDiscControlBody':
+          'You can go offline or change location access any time in your phone Settings. If you tap Deny, the app stays usable, but you will not be able to go online and receive rides.',
       'save': 'Save',
       'cancel': 'Cancel',
       'confirm': 'Confirm',
@@ -610,6 +635,31 @@ class AppTranslations {
     },
     'hi': {
       'app_name': 'टॉर्क ड्राइवर',
+      // --- Location prominent disclosure (Google Play) ---
+      'locAccept': 'स्वीकार करें',
+      'locDeny': 'अस्वीकार करें',
+      'locDiscTitleFg': 'क्या टॉर्क ड्राइवर को आपकी लोकेशन इस्तेमाल करने दें?',
+      'locDiscTitleBg': 'क्या बैकग्राउंड में लोकेशन की अनुमति दें?',
+      'locDiscIntroFg':
+          'आगे बढ़ने से पहले इसे पढ़ें। टॉर्क ड्राइवर को आपकी लोकेशन इकट्ठा करने के लिए आपकी अनुमति चाहिए।',
+      'locDiscIntroBg':
+          'ऑनलाइन रहते हुए आपको राइड रिक्वेस्ट मिलती रहें, इसके लिए टॉर्क ड्राइवर को ऐप बंद होने या इस्तेमाल में न होने पर भी आपकी लोकेशन इकट्ठा करनी होगी।',
+      'locDiscCollectTitle': 'हम क्या इकट्ठा करते हैं',
+      'locDiscCollectFg':
+          'ऐप आपकी स्क्रीन पर खुला होने के दौरान आपके फ़ोन की सटीक लोकेशन (GPS)।',
+      'locDiscCollectBg':
+          'बैकग्राउंड में आपके फ़ोन की सटीक लोकेशन (GPS), जिसमें ऐप बंद होने या इस्तेमाल में न होने का समय भी शामिल है, जब तक आप ऑनलाइन हैं या ट्रिप चल रही है।',
+      'locDiscWhyTitle': 'हम इसे क्यों इकट्ठा करते हैं',
+      'locDiscWhyFg':
+          'यह जाँचने के लिए कि आपके इलाके में टॉर्क उपलब्ध है, नक्शे पर आपकी स्थिति दिखाने, पास की राइड रिक्वेस्ट से मिलाने, ट्रिप में नेविगेशन देने और SOS अलर्ट में आपकी लोकेशन भेजने के लिए।',
+      'locDiscWhyBg':
+          'पास की राइड रिक्वेस्ट से मिलाते रहने, यात्री के लिए आपकी लाइव स्थिति अपडेट करने और ऐप बैकग्राउंड में होने पर भी ट्रिप की प्रगति ट्रैक करने के लिए।',
+      'locDiscShareTitle': 'यह किसके साथ साझा की जाती है',
+      'locDiscShareBody':
+          'आपकी लोकेशन टॉर्क के सर्वर पर भेजी जाती है और आपकी ट्रिप के यात्री तथा हमारी सपोर्ट टीम को दिखती है। नक्शे और पते की खोज में Google Maps सेवाएँ इस्तेमाल होती हैं। हम आपकी लोकेशन विज्ञापनदाताओं को नहीं बेचते।',
+      'locDiscControlTitle': 'नियंत्रण आपके हाथ में है',
+      'locDiscControlBody':
+          'आप कभी भी ऑफ़लाइन हो सकते हैं या फ़ोन की सेटिंग में लोकेशन की अनुमति बदल सकते हैं। "अस्वीकार करें" दबाने पर भी ऐप चलता रहेगा, लेकिन आप ऑनलाइन होकर राइड नहीं ले पाएँगे।',
       'save': 'सहेजें',
       'cancel': 'रद्द करें',
       'confirm': 'पुष्टि करें',

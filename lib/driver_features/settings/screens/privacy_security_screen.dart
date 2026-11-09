@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/widgets/app_snackbar.dart';
+import 'package:rider_app/service/location_permission_flow.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/profile/widgets/profile_widgets.dart';
 import 'package:rider_app/driver_features/settings/screens/change_pin_screen.dart';
@@ -210,6 +212,38 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     await prefs.setBool(key, value);
   }
 
+  /// Turning location sharing ON re-runs the disclosure + permission flow, so
+  /// a driver who denied earlier can re-enable it here (including background).
+  Future<void> _toggleLocation(bool value) async {
+    if (!value) {
+      setState(() => _shareLocation = false);
+      _save('location_sharing', false);
+      return;
+    }
+    final access = await LocationPermissionFlow.ensure(
+      context,
+      background: true,
+      force: true,
+    );
+    if (!mounted) return;
+    if (access == LocationAccess.none) {
+      // Blocked for good: only the phone's Settings can allow it now.
+      if (await Geolocator.checkPermission() ==
+          LocationPermission.deniedForever) {
+        if (!mounted) return;
+        AppSnackBar.showInfo(
+          context,
+          title: 'Location is blocked',
+          message: 'Allow location for Torkk Driver in your phone Settings.',
+        );
+        await Geolocator.openAppSettings();
+      }
+      return;
+    }
+    setState(() => _shareLocation = true);
+    _save('location_sharing', true);
+  }
+
   Future<void> _openPin() async {
     final prefs = await SharedPreferences.getInstance();
     final hasPin = (prefs.getString('account_pin') ?? '').length == 4;
@@ -339,10 +373,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
             title: AppStrings.locationSharing,
             subtitle: AppStrings.locationSharingSubtitle,
             value: _shareLocation,
-            onChanged: (value) {
-              setState(() => _shareLocation = value);
-              _save('location_sharing', value);
-            },
+            onChanged: _toggleLocation,
           ),
         ],
       ),
