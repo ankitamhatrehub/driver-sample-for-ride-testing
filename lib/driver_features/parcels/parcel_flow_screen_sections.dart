@@ -94,43 +94,9 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                 'Successfully received from sender',
               ),
             ),
-          Positioned(
-            right: context.w(16),
-            bottom: context.h(switch (_phase) {
-              _Phase.request => 430,
-              _Phase.toPickup ||
-              _Phase.arrivedPickup ||
-              _Phase.pickedUp ||
-              _Phase.transit ||
-              _Phase.arrivedDrop => 380,
-              _ => 250,
-            }),
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const SosScreen()),
-              ),
-              child: Container(
-                width: context.w(56),
-                height: context.w(56),
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFEF4444),
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  'SOS',
-                  style: AppTypography.bold.copyWith(
-                    fontSize: 13,
-                    color: Colors.white,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
-          ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: switch (_phase) {
+            child: SheetWithSos(sheet: switch (_phase) {
               _Phase.request => _parcelRequestCard(context),
               _Phase.toPickup => _headingSheet(
                 context,
@@ -183,7 +149,7 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
                 onAction: () => _go(_Phase.dropOtp),
               ),
               _ => _sheet(context),
-            },
+            }),
           ),
         ],
       ),
@@ -264,9 +230,9 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
   Widget _parcelRequestCard(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Padding(
-      padding: EdgeInsets.only(left: context.w(7)),
+      padding: EdgeInsets.zero,
       child: Container(
-        width: context.w(378),
+        width: double.infinity,
         padding: EdgeInsets.fromLTRB(
           context.w(20),
           context.h(28),
@@ -602,9 +568,9 @@ extension _ParcelFlowScreenStateSections on _ParcelFlowScreenState {
     const success = Color(0xFF1A995B);
     const dropColor = Color(0xFFEF4444);
     return Padding(
-      padding: EdgeInsets.only(left: context.w(8)),
+      padding: EdgeInsets.zero,
       child: Container(
-        width: context.w(378),
+        width: double.infinity,
         padding: EdgeInsets.fromLTRB(
           context.w(20),
           context.h(28),

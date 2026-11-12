@@ -18,9 +18,9 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
 
   Widget _requestSheet(BuildContext context, Color accent) {
     return Padding(
-      padding: EdgeInsets.only(left: context.w(7)),
+      padding: EdgeInsets.zero,
       child: Container(
-        width: context.w(378),
+        width: double.infinity,
         padding: EdgeInsets.fromLTRB(
           context.w(20),
           context.h(28),
@@ -313,38 +313,12 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
               right: context.w(16),
               child: _scheduledCard(context, accent),
             ),
-          Positioned(
-            right: context.w(16),
-            bottom: context.h(280),
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const SosScreen()),
-              ),
-              child: Container(
-                width: context.w(56),
-                height: context.w(56),
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFEF4444),
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  'SOS',
-                  style: AppTypography.bold.copyWith(
-                    fontSize: 13,
-                    color: Colors.white,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
-          ),
           Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: context.w(8)),
+            alignment: Alignment.bottomCenter,
+            child: SheetWithSos(sheet: Padding(
+              padding: EdgeInsets.zero,
               child: Container(
-                width: context.w(378),
+                width: double.infinity,
                 padding: EdgeInsets.fromLTRB(
                   context.w(20),
                   context.h(28),
@@ -425,6 +399,7 @@ extension _ScheduledRideScreenStateSections on _ScheduledRideScreenState {
                 ),
               ),
             ),
+          ),
           ),
           if (_showHour) ...[
             const Positioned.fill(child: ColoredBox(color: Color(0x66000000))),

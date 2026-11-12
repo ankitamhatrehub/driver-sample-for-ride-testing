@@ -55,41 +55,10 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
                 warn: true,
               ),
             ),
-          Align(alignment: Alignment.bottomCenter, child: _sheet(context)),
-          if (_showSos)
-            Positioned(
-              right: context.w(28),
-              top: context.h(300),
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(builder: (_) => const SosScreen()),
-                ),
-                child: Container(
-                  width: context.w(66),
-                  height: context.w(66),
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFEF4444),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x40000000),
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    'SOS',
-                    style: AppTypography.bold.copyWith(
-                      fontSize: 14,
-                      color: Colors.white,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SheetWithSos(showSos: _showSos, sheet: _sheet(context)),
+          ),
         ],
       ),
     );
@@ -157,9 +126,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
       );
     }
     return Padding(
-      padding: EdgeInsets.only(left: context.w(8)),
+      padding: EdgeInsets.zero,
       child: Container(
-        width: context.w(378),
+        width: double.infinity,
         padding: EdgeInsets.fromLTRB(
           context.w(20),
           context.h(28),
@@ -258,26 +227,36 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     return Stack(
       children: [
         Positioned(
-          left: context.w(7),
+          left: 0,
+          right: 0,
           bottom: 0,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                width: context.w(58),
-                height: context.w(58),
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFEF4444),
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  _offerLabel,
-                  style: AppTypography.bold.copyWith(
-                    fontSize: 13,
-                    color: Colors.white,
-                    height: 1,
-                  ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.w(16)),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: context.w(58),
+                      height: context.w(58),
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFEF4444),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        _offerLabel,
+                        style: AppTypography.bold.copyWith(
+                          fontSize: 13,
+                          color: Colors.white,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: context.h(8)),
@@ -298,7 +277,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
   Widget _requestCard(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     return Container(
-      width: context.w(378),
+      width: double.infinity,
       padding: EdgeInsets.fromLTRB(
         context.w(20),
         context.h(28),
@@ -812,9 +791,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
               child: _outline(context, 'Cancel', () => _cancel(context)),
             ),
             SizedBox(width: context.w(10)),
-            Expanded(
-              child: _fill(context, 'Start Ride', _startRide),
-            ),
+            Expanded(child: _fill(context, 'Start Ride', _startRide)),
           ],
         ),
       ],
