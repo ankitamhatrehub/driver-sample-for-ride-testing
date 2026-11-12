@@ -7,7 +7,6 @@ import 'package:rider_app/common/widgets/app_confirm_dialog.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
-import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 part 'scheduled_ride_screen_parts/map.dart';

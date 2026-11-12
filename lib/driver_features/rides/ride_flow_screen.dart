@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/constants/asset_constants.dart';
+import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/dashboard/ride_details_loading_dialog.dart';
@@ -492,10 +493,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         earning: _earnings,
         riderId: _riderId,
         distanceLabel: _distanceText,
-        onBack: () => _toast(
-          'Collect the payment to finish the ride',
-          error: false,
-        ),
+        onBack: () => _toast(AppStrings.payBackBlocked, error: false),
         onDone: (result) {
           setState(() => _payment = result);
           _go(_Phase.completed);
