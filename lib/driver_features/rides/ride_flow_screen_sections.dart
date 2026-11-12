@@ -131,9 +131,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
         width: double.infinity,
         padding: EdgeInsets.fromLTRB(
           context.w(20),
-          context.h(28),
+          context.h(20),
           context.w(20),
-          context.h(80),
+          context.h(16) + MediaQuery.viewPaddingOf(context).bottom,
         ),
         decoration: BoxDecoration(
           color: context.torkk.surface,
@@ -713,7 +713,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
         if (action.isEmpty)
           TextButton(onPressed: onAction, child: const Text('Customer is here'))
         else ...[
-          SizedBox(height: context.h(50)),
+          SizedBox(height: context.h(20)),
           Row(
             children: [
               Expanded(
