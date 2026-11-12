@@ -103,11 +103,9 @@ class DriverAgreementsScreen extends StatelessWidget {
                 onPressed: () => Navigator.pop(ctx),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: onColorFor(
-                    context.torkk.actionFill(const Color(0xFF1D4ED8)),
+                    context.brandColor,
                   ),
-                  backgroundColor: context.torkk.actionFill(
-                    const Color(0xFF1D4ED8),
-                  ),
+                  backgroundColor: context.brandColor,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),

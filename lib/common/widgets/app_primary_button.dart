@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_colors.dart';
 import '../theme/torkk_colors.dart';
 import 'bouncing_widget.dart';
 import '../utils/screen_utils.dart';
@@ -24,7 +23,7 @@ class AppPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fill = context.torkk.actionFill(AppColors.zinc800);
+    final fill = context.brandColor;
     final labelColor = onColorFor(fill);
     final button = Container(
       width: double.infinity,

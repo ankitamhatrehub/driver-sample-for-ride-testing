@@ -248,7 +248,6 @@ class CoinsHomeScreen extends StatelessWidget {
                         child: UnifiedButton(
                           label: AppStrings.view,
                           onPressed: onView,
-                          backgroundColor: const Color(0xFF0F3FBF),
                         ),
                       ),
                     ],

@@ -118,7 +118,6 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
               width: double.infinity,
               child: UnifiedButton(
                 label: 'OK',
-                backgroundColor: const Color(0xFF1E3FBF),
                 onPressed: () => Navigator.of(dialogContext).pop(),
               ),
             ),
@@ -170,7 +169,6 @@ class _PlanDrivingHoursScreenState extends State<PlanDrivingHoursScreen> {
         ),
         child: UnifiedButton(
           label: _saving ? 'Saving...' : 'Save Schedule',
-          backgroundColor: const Color(0xFF1E3FBF),
           onPressed: _saving ? null : _save,
         ),
       ),

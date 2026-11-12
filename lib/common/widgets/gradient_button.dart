@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
+import '../theme/torkk_colors.dart';
 
 /// A gradient-styled elevated button used throughout the app.
 ///
@@ -29,19 +29,18 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brand = context.brandColor;
     return SizedBox(
       width: width,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           gradient: gradient ??
-              const LinearGradient(
-                colors: AppColors.primaryGradient,
-              ),
+              LinearGradient(colors: [brand, brand]),
           boxShadow: boxShadow ??
               [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.35),
+                  color: brand.withValues(alpha: 0.35),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

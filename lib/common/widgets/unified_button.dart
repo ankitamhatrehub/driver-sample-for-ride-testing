@@ -44,7 +44,7 @@ class UnifiedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = context.torkk.actionFill(AppColors.otpInfoBorder);
+    final themeColor = context.brandColor;
     final color = variant == UnifiedButtonVariant.error
         ? (backgroundColor ?? AppColors.error)
         : (backgroundColor ?? themeColor);

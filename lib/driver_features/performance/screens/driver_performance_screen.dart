@@ -146,7 +146,7 @@ class _DriverPerformanceScreenState extends State<DriverPerformanceScreen>
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = const Color(0xFF4F46E5);
+    final primaryColor = context.brandColor;
     return Scaffold(
       floatingActionButton: const AiChatButton(size: 48),
       backgroundColor: context.torkk.surfaceMuted,

@@ -31,8 +31,8 @@ class DriverLiveChatScreen extends StatefulWidget {
 }
 
 class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
-  static const _accent = Color(0xFF4F46E5);
-  static const _accentSoft = Color(0xFF818CF8);
+  Color get _accent => context.brandColor;
+  Color get _accentSoft => context.brandColor;
   static const _prefsKey = 'ai_chat_conversation_id';
   static const _welcome = _ChatMessage(
     isUser: false,
@@ -251,7 +251,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [_accentSoft, _accent],
@@ -367,10 +367,10 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
       ),
       decoration: BoxDecoration(
         gradient: isUser
-            ? const LinearGradient(
+            ? LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xFF6366F1), _accent],
+                colors: [_accent, _accent],
               )
             : null,
         color: isUser
@@ -505,7 +505,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
                     height: 46,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [_accentSoft, _accent],
@@ -542,7 +542,7 @@ class _DriverLiveChatScreenState extends State<DriverLiveChatScreen> {
         children: [
           Expanded(
             child: _loadingHistory
-                ? const Center(child: CircularProgressIndicator(color: _accent))
+                ? Center(child: CircularProgressIndicator(color: _accent))
                 : ListView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 8),

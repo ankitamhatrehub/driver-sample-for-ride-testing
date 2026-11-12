@@ -161,7 +161,7 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF6366F1).withValues(alpha: 0.12),
+                      color: context.brandColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: const Icon(
@@ -286,14 +286,10 @@ class _ConfirmDetailsStepState extends State<ConfirmDetailsStep> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
-                        ),
+                        gradient: LinearGradient(colors: [context.brandColor, context.brandColor]),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(
-                              0xFF6366F1,
-                            ).withValues(alpha: 0.35),
+                            color: context.brandColor.withValues(alpha: 0.35),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),

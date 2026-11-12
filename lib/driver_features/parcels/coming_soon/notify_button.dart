@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rider_app/common/constants/app_colors.dart';
 import 'package:rider_app/common/theme/torkk_colors.dart';
 
 class NotifyButton extends StatelessWidget {
@@ -16,7 +15,7 @@ class NotifyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fill = context.torkk.actionFill(AppColors.primary);
+    final fill = context.brandColor;
     return SizedBox(
       width: double.infinity,
       height: 54,

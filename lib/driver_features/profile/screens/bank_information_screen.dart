@@ -74,7 +74,6 @@ class _BankInformationScreenState extends State<BankInformationScreen> {
           label: AppStrings.editReplace,
           icon: Icons.sync_rounded,
           iconAtEnd: true,
-          backgroundColor: const Color(0xFF0F3FBF),
           onPressed: _loading ? null : _edit,
         ),
       ),

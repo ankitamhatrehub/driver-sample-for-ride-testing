@@ -119,7 +119,7 @@ class _DriverWalletScreenState extends State<DriverWalletScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = const Color(0xFF4F46E5);
+    final primaryColor = context.brandColor;
     final bgColor = Theme.of(context).scaffoldBackgroundColor;
     final textColor = context.themed(
       light: Colors.black,

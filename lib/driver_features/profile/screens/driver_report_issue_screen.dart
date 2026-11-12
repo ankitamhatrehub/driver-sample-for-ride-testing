@@ -103,7 +103,7 @@ class _DriverReportIssueScreenState extends State<DriverReportIssueScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF4F46E5);
+    final primaryColor = context.brandColor;
     return Scaffold(
       backgroundColor: context.torkk.surfaceMuted,
       appBar: AppBar(

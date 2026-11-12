@@ -166,7 +166,7 @@ void showRideOtpBottomSheet({
                       onVerify(otpController.text.trim());
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1142BC),
+                      backgroundColor: context.brandColor,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),

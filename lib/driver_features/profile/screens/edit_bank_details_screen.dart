@@ -210,7 +210,6 @@ class _EditBankDetailsScreenState extends State<EditBankDetailsScreen> {
           label: 'Save Bank Details',
           icon: Icons.check_rounded,
           iconAtEnd: true,
-          backgroundColor: const Color(0xFF0F3FBF),
           isLoading: _saving,
           onPressed: _submit,
         ),

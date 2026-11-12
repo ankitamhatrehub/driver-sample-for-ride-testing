@@ -75,8 +75,8 @@ extension _DriverNotificationsScreenStateSections
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(ctx),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: onColorFor(const Color(0xFF4F46E5)),
-                      backgroundColor: const Color(0xFF4F46E5),
+                      foregroundColor: onColorFor(context.brandColor),
+                      backgroundColor: context.brandColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -221,8 +221,8 @@ extension _DriverNotificationsScreenStateSections
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: onColorFor(const Color(0xFF1E3A8A)),
-                  backgroundColor: const Color(0xFF1E3A8A),
+                  foregroundColor: onColorFor(context.brandColor),
+                  backgroundColor: context.brandColor,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),

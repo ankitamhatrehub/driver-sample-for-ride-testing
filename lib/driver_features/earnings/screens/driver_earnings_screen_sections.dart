@@ -141,8 +141,8 @@ extension _DriverEarningsScreenStateSections on _DriverEarningsScreenState {
               ElevatedButton(
                 onPressed: () => Navigator.pop(ctx),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: onColorFor(const Color(0xFF2563EB)),
-                  backgroundColor: const Color(0xFF2563EB),
+                  foregroundColor: onColorFor(context.brandColor),
+                  backgroundColor: context.brandColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -426,8 +426,8 @@ extension _DriverEarningsScreenStateSections on _DriverEarningsScreenState {
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(ctx),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: onColorFor(const Color(0xFF4F46E5)),
-                    backgroundColor: const Color(0xFF4F46E5),
+                    foregroundColor: onColorFor(context.brandColor),
+                    backgroundColor: context.brandColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),

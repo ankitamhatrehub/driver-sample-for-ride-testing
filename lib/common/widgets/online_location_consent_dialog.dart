@@ -143,12 +143,10 @@ Future<bool?> _showLocationActionDialog({
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
-                    ),
+                    gradient: LinearGradient(colors: [context.brandColor, context.brandColor]),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF6366F1).withValues(alpha: 0.3),
+                        color: context.brandColor.withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -237,14 +235,10 @@ Future<bool?> _showLocationActionDialog({
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF6366F1), Color(0xFF4F46E5)],
-                          ),
+                          gradient: LinearGradient(colors: [context.brandColor, context.brandColor]),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(
-                                0xFF6366F1,
-                              ).withValues(alpha: 0.3),
+                              color: context.brandColor.withValues(alpha: 0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 3),
                             ),
