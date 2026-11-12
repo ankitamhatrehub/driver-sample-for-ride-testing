@@ -46,9 +46,18 @@ class SosCircleButton extends StatelessWidget {
 /// right. The sheet sizes itself to its content, and the SOS button follows its
 /// top edge, so it stays exactly above the sheet whatever the height.
 class SheetWithSos extends StatelessWidget {
-  const SheetWithSos({super.key, required this.sheet, this.showSos = true});
+  const SheetWithSos({
+    super.key,
+    required this.sheet,
+    this.showSos = true,
+    this.leading,
+  });
 
   final Widget sheet;
+
+  /// Optional widget on the left, in line with the SOS button (for example
+  /// the waiting-charges timer).
+  final Widget? leading;
   final bool showSos;
 
   @override
@@ -57,15 +66,20 @@ class SheetWithSos extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (showSos)
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(
-                right: context.w(16),
-                bottom: context.h(12),
-              ),
-              child: const SosCircleButton(),
+        if (showSos || leading != null)
+          Padding(
+            padding: EdgeInsets.only(
+              left: context.w(16),
+              right: context.w(16),
+              bottom: context.h(12),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ?leading,
+                const Spacer(),
+                if (showSos) const SosCircleButton(),
+              ],
             ),
           ),
         sheet,

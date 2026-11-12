@@ -41,14 +41,14 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             Positioned(
               top: context.h(100),
               left: context.w(16),
-              right: context.w(80),
+              right: context.w(16),
               child: _banner("You've arrived", 'Please wait for the customer.'),
             ),
           if (_phase == _Phase.waiting)
             Positioned(
-              top: context.h(150),
+              top: context.h(100),
               left: context.w(16),
-              right: context.w(80),
+              right: context.w(16),
               child: _banner(
                 'Waiting charges (if applicable) ₹10 per minute',
                 '',
@@ -57,7 +57,11 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: SheetWithSos(showSos: _showSos, sheet: _sheet(context)),
+            child: SheetWithSos(
+              showSos: _showSos,
+              leading: _phase == _Phase.waiting ? _waitBadge(context) : null,
+              sheet: _sheet(context),
+            ),
           ),
         ],
       ),
@@ -152,7 +156,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
           _Phase.toPickup => _stopSheet(
             context,
             title: 'Heading to Pickup',
-            chip: '',
+            chip: _durationText == '-' ? '' : '$_durationText away',
             place: _pickupAddress,
             action: 'Navigate',
             onAction: _startTrip,
@@ -162,8 +166,9 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             title: 'Arrived',
             chip: '',
             place: _pickupAddress,
-            action: '',
-            onAction: () => _go(_Phase.waiting),
+            action: 'Verify OTP',
+            onAction: _startRide,
+            showCancel: false,
           ),
           _Phase.waiting => _waitingSheet(context),
           _Phase.active => _activeSheet(context),
@@ -625,8 +630,13 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     );
   }
 
-  Widget _statusChip(BuildContext context, String title, String chip) {
-    const success = Color(0xFF1A995B);
+  Widget _statusChip(
+    BuildContext context,
+    String title,
+    String chip, {
+    Color color = const Color(0xFF1A995B),
+  }) {
+    final success = color;
     return Row(
       children: [
         Container(
@@ -638,7 +648,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
             context.h(6),
           ),
           decoration: BoxDecoration(
-            color: const Color(0x121A995B),
+            color: success.withValues(alpha: 0.07),
             borderRadius: BorderRadius.circular(context.r(7)),
           ),
           child: Row(
@@ -647,7 +657,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
               Container(
                 width: context.w(8),
                 height: context.w(8),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: success,
                   shape: BoxShape.circle,
                 ),
@@ -696,6 +706,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     required String action,
     required VoidCallback onAction,
     bool drop = false,
+    bool showCancel = true,
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -710,16 +721,16 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
           drop ? 'DROP' : 'PICKUP',
           place,
         ),
-        if (action.isEmpty)
-          TextButton(onPressed: onAction, child: const Text('Customer is here'))
-        else ...[
+        if (action.isNotEmpty) ...[
           SizedBox(height: context.h(20)),
           Row(
             children: [
-              Expanded(
-                child: _outline(context, 'Cancel', () => _cancel(context)),
-              ),
-              SizedBox(width: context.w(10)),
+              if (showCancel) ...[
+                Expanded(
+                  child: _outline(context, 'Cancel', () => _cancel(context)),
+                ),
+                SizedBox(width: context.w(10)),
+              ],
               Expanded(
                 child: _fill(
                   context,
@@ -739,62 +750,78 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            const Icon(
-              Icons.access_time_filled_rounded,
-              color: Color(0xFFF59E0B),
-              size: 18,
-            ),
-            SizedBox(width: context.w(6)),
-            Text(
-              'Waiting',
-              style: AppTypography.bold.copyWith(fontSize: 16, height: 1.2),
-            ),
-          ],
-        ),
-        SizedBox(height: context.h(10)),
+        _statusChip(context, 'Waiting', '', color: const Color(0xFFF59E0B)),
+        SizedBox(height: context.h(18)),
         _rider(context),
-        _place(context, const Color(0xFF16A34A), 'PICKUP', _pickupAddress),
-        SizedBox(height: context.h(8)),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: context.h(10)),
-          decoration: BoxDecoration(
-            color: context.adaptiveTint(const Color(0xFFFFF1F2)),
-            borderRadius: BorderRadius.circular(context.r(12)),
-          ),
-          child: Column(
-            children: [
-              Text(
-                _waitLabel,
-                style: AppTypography.bold.copyWith(
-                  fontSize: 22,
-                  color: context.legible(Color(0xFFEF4444)),
-                  letterSpacing: -0.3,
-                ),
-              ),
-              Text(
-                'Customer has been notified',
-                style: AppTypography.regular.copyWith(
-                  fontSize: 12,
-                  color: context.legible(Color(0xFFEF4444)),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: context.h(12)),
+        SizedBox(height: context.h(18)),
+        _place(context, const Color(0xFF1A995B), 'PICKUP', _pickupAddress),
+        SizedBox(height: context.h(20)),
         Row(
           children: [
             Expanded(
               child: _outline(context, 'Cancel', () => _cancel(context)),
             ),
             SizedBox(width: context.w(10)),
-            Expanded(child: _fill(context, 'Start Ride', _startRide)),
+            Expanded(child: _fill(context, 'Verify OTP', _startRide)),
           ],
         ),
       ],
+    );
+  }
+
+  /// Waiting-charges timer shown above the sheet, left of SOS.
+  Widget _waitBadge(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.w(14),
+        vertical: context.h(8),
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0xFFDC2626),
+        borderRadius: BorderRadius.circular(context.r(10)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x40000000),
+            offset: Offset(0, 3),
+            blurRadius: 4,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _waitLabel,
+            style: AppTypography.bold.copyWith(
+              fontSize: 22,
+              color: Colors.white,
+              height: 1.1,
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 5,
+                height: 5,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              SizedBox(width: context.w(4)),
+              Text(
+                'Customer has been notified.',
+                style: AppTypography.regular.copyWith(
+                  fontSize: 9,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -876,7 +903,7 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
     return _page(
       context,
       title: '',
-      onBack: () => _go(_Phase.drop),
+      onBack: () => _go(_Phase.payment),
       bottom: Column(
         children: [
           _fill(context, 'Done', () => _go(_Phase.rate)),
@@ -987,9 +1014,10 @@ extension _RideFlowScreenStateSections on _RideFlowScreenState {
           _money(
             context,
             'Payment',
-            _text(['payment_method'], 'cash').toLowerCase() == 'cash'
-                ? 'Paid Cash'
-                : 'Paid Online',
+            _payment?.label ??
+                (_text(['payment_method'], 'cash').toLowerCase() == 'cash'
+                    ? 'Paid Cash'
+                    : 'Paid Online'),
           ),
           SizedBox(height: context.h(12)),
           Container(

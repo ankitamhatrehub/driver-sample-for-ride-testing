@@ -14,7 +14,7 @@ import 'package:rider_app/common/constants/asset_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
 import 'package:rider_app/common/utils/screen_utils.dart';
 import 'package:rider_app/driver_features/dashboard/ride_details_loading_dialog.dart';
-import 'package:rider_app/driver_features/profile/screens/sos_screen.dart';
+import 'package:rider_app/driver_features/rides/ride_payment_flow.dart';
 import 'package:rider_app/driver_features/rides/widgets/passenger_gender_bubbles.dart';
 import 'package:rider_app/service/driver_api_service.dart';
 import 'package:rider_app/driver_features/profile/screens/tickets_screen.dart';
@@ -38,6 +38,7 @@ enum _Phase {
   active,
   navigating,
   drop,
+  payment,
   completed,
   rate,
   reward,
@@ -81,6 +82,8 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
   double _earnings = 0;
   int _offer = 28;
   int _wait = 133;
+  int _arrivedSecs = 0;
+  RidePaymentResult? _payment;
   int _stars = 5;
   bool _sheetLocked = false;
   Timer? _timer;
@@ -103,6 +106,16 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
           if (_offer == 0) _phase = _Phase.expired;
         }
         if (_phase == _Phase.waiting) _wait++;
+        if (_phase == _Phase.arrived) {
+          // Customer has not shown up yet: start the waiting-charges timer.
+          if (++_arrivedSecs >= 10) {
+            _arrivedSecs = 0;
+            _wait = 0;
+            _phase = _Phase.waiting;
+          }
+        } else {
+          _arrivedSecs = 0;
+        }
       });
     });
   }
@@ -228,6 +241,19 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     'call_number',
   ], '');
 
+  /// Amount to collect from the rider.
+  double get _payTotal {
+    final fare = num.tryParse(
+      _text(['estimated_fare', 'fare', 'total_fare'], ''),
+    );
+    if (fare != null && fare > 0) return fare.toDouble();
+    if (_earnings > 0) return _earnings;
+    return 450;
+  }
+
+  String get _riderId =>
+      _text(['customer_id', 'user_id', 'rider_id'], 'TRK${_rideId ?? 10245}');
+
   String get _fareLabel {
     final fare = num.tryParse(
       _text(['estimated_fare', 'fare', 'total_fare'], ''),
@@ -309,8 +335,9 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
     }
   }
 
-  /// Navigate on "Heading to Pickup": only moves the UI on, no API.
-  void _startTrip() => _startNav(_Phase.arrived);
+  /// Navigate on "Heading to Pickup": goes straight to the Arrived sheet
+  /// (Verify OTP). The distance / duration screen is only for the drop leg.
+  void _startTrip() => _go(_Phase.arrived);
 
   /// "Start Ride" on the waiting sheet: tells the backend the ride started,
   /// then asks for the customer's OTP. A failure is logged and does not block.
@@ -421,7 +448,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       }
       if (!mounted) return;
       setState(() => _busy = false);
-      _go(_Phase.completed);
+      _go(_Phase.payment);
     } catch (e) {
       if (!mounted) return;
       setState(() => _busy = false);
@@ -460,6 +487,20 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
       ),
       _Phase.request => _requestOverlay(context),
       _Phase.otp => _otpPage(context),
+      _Phase.payment => RidePaymentFlow(
+        total: _payTotal,
+        earning: _earnings,
+        riderId: _riderId,
+        distanceLabel: _distanceText,
+        onBack: () => _toast(
+          'Collect the payment to finish the ride',
+          error: false,
+        ),
+        onDone: (result) {
+          setState(() => _payment = result);
+          _go(_Phase.completed);
+        },
+      ),
       _Phase.completed => _completedPage(context),
       _Phase.rate => _ratePage(context),
       _Phase.reward => _rewardPage(context),
