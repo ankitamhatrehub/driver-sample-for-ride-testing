@@ -6,6 +6,11 @@ import 'package:rider_app/common/widgets/onboarding_info_banner.dart';
 import 'package:rider_app/common/widgets/onboarding_step_scaffold.dart';
 import 'package:rider_app/driver_features/onboarding/widgets/kyc_status_row.dart';
 
+// ===== TESTING: unlock every KYC step so each API can be tried in any order =====
+// Normally a step opens only after the one before it is verified.
+// Set this to false (PRODUCTION) before building a release.
+const bool _kycUnlockAllForTesting = true;
+
 class KycVerificationScreen extends StatelessWidget {
   final bool aadhaarVerified;
   final bool dlVerified;
@@ -108,37 +113,51 @@ class KycVerificationScreen extends StatelessWidget {
       _KycItem(
         AppStrings.kycAadhaarPan,
         statusFor(0),
-        (nextIndex == 0 || aadhaarVerified) ? onAadhaarTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 0 || aadhaarVerified)
+            ? onAadhaarTap
+            : null,
       ),
       _KycItem(
         AppStrings.kycDrivingLicense,
         statusFor(1),
-        (nextIndex == 1 || dlVerified) ? onDlTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 1 || dlVerified)
+            ? onDlTap
+            : null,
       ),
       _KycItem(
         AppStrings.kycVehicleRc,
         statusFor(2),
-        (nextIndex == 2 || rcVerified) ? onRcTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 2 || rcVerified)
+            ? onRcTap
+            : null,
       ),
       _KycItem(
         AppStrings.kycVehiclePhotos,
         statusFor(3),
-        (nextIndex == 3 || vehiclePhotosVerified) ? onVehiclePhotosTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 3 || vehiclePhotosVerified)
+            ? onVehiclePhotosTap
+            : null,
       ),
       _KycItem(
         AppStrings.kycFaceVerification,
         statusFor(4),
-        (nextIndex == 4 || faceVerified) ? onFaceTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 4 || faceVerified)
+            ? onFaceTap
+            : null,
       ),
       _KycItem(
         AppStrings.kycBankDetails,
         statusFor(5),
-        (nextIndex == 5 || bankVerified) ? onBankTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 5 || bankVerified)
+            ? onBankTap
+            : null,
       ),
       _KycItem(
         AppStrings.kycProfileReview,
         statusFor(6),
-        (nextIndex == 6 || profileSubmitted) ? onProfileTap : null,
+        (_kycUnlockAllForTesting || nextIndex == 6 || profileSubmitted)
+            ? onProfileTap
+            : null,
       ),
     ];
   }

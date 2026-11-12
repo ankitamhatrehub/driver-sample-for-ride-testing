@@ -72,7 +72,7 @@ class SupportApiService {
       'problem_id': problemId,
       'description': description,
       if (quickNote.isNotEmpty) 'quick_note': quickNote,
-      if (rideId.isNotEmpty) 'ride_id': rideId,
+       'ride_id': rideId,
     };
     final data = await _multipart(
       AppUrls.supportTickets,

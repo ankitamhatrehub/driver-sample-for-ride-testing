@@ -61,6 +61,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   bool _fetchingRides = false;
 
   bool _loadingRideDetails = false;
+  // TESTING: show a sample ride on Home. MUST be false for a release build.
+  static const bool _showSampleRideForTesting = true;
   bool _showRideFlow = false;
   Map<String, dynamic>? _flowRide;
   String _driverPhone = '';
@@ -499,6 +501,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       if (mounted) {
         setState(() {
           _rides = data;
+          // ===== TESTING: always show a sample ride (UI check). =====
+          // Set _showSampleRideForTesting = false (or delete this block) before
+          // a release build. Sample ride 9901 never calls the ride APIs.
+          if (_showSampleRideForTesting &&
+              !_rejectedRideIds.contains(9901) &&
+              !_rides.any((r) => r is Map && r['id'] == 9901)) {
+            _rides = [..._sampleTestRides().take(1), ..._rides];
+          }
+          // ===== END TESTING =====
           _syncFlowRide();
         });
       }
@@ -739,54 +750,56 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     }
   }
 
+  List<Map<String, dynamic>> _sampleTestRides() {
+    return [
+      {
+        'id': 9901,
+        'status': 'requested',
+        'estimated_fare': 72.98,
+        'bonus': 17.0,
+        'customer_name': 'Manish Kumar',
+        'customer_rating': '4.9',
+        'passenger_gender': 'Male',
+        'male_passengers': 1,
+        'female_passengers': 0,
+        'passenger_count': 1,
+        'pickup_address': 'Arya Nagar, East Delhi, Delhi',
+        'drop_address': 'Preet Vihar, East Delhi, Delhi',
+        'pickup_lat': (_currentPosition?.latitude ?? 28.6328) + 0.003,
+        'pickup_lng': (_currentPosition?.longitude ?? 77.2197) + 0.003,
+        'drop_lat': (_currentPosition?.latitude ?? 28.6328) + 0.015,
+        'drop_lng': (_currentPosition?.longitude ?? 77.2197) + 0.015,
+        'pickup_distance_km': '0.3',
+        'distance_km': '1.9',
+      },
+      {
+        'id': 9902,
+        'status': 'requested',
+        'is_parcel': true,
+        'item_category': 'Electronics',
+        'item_weight': 'Under 5kg',
+        'item_notes': 'Handle with care, fragile item.',
+        'estimated_fare': 120.50,
+        'bonus': 20.0,
+        'customer_name': 'Fatima Sheikh', // Used as generic sender for now
+        'sender_name': 'Fatima Sheikh',
+        'sender_phone': '+91 98765 43211',
+        'receiver_name': 'Ramesh Bhai',
+        'receiver_phone': '+91 99999 11111',
+        'pickup_address': 'GTB, Civil Lines, Delhi',
+        'drop_address': 'Connaught Place, Delhi',
+        'pickup_lat': (_currentPosition?.latitude ?? 28.6328) + 0.008,
+        'pickup_lng': (_currentPosition?.longitude ?? 77.2197) + 0.004,
+        'drop_lat': (_currentPosition?.latitude ?? 28.6328) + 0.035,
+        'drop_lng': (_currentPosition?.longitude ?? 77.2197) + 0.020,
+        'pickup_distance_km': '0.9',
+        'distance_km': '5.1',
+      },
+    ];
+  }
+
   void _simulateTestRide() {
-    setState(() {
-      _rides = [
-        {
-          'id': 9901,
-          'status': 'requested',
-          'estimated_fare': 72.98,
-          'bonus': 17.0,
-          'customer_name': 'Manish Kumar',
-          'customer_rating': '4.9',
-          'passenger_gender': 'Male',
-          'male_passengers': 1,
-          'female_passengers': 0,
-          'passenger_count': 1,
-          'pickup_address': 'Arya Nagar, East Delhi, Delhi',
-          'drop_address': 'Preet Vihar, East Delhi, Delhi',
-          'pickup_lat': (_currentPosition?.latitude ?? 28.6328) + 0.003,
-          'pickup_lng': (_currentPosition?.longitude ?? 77.2197) + 0.003,
-          'drop_lat': (_currentPosition?.latitude ?? 28.6328) + 0.015,
-          'drop_lng': (_currentPosition?.longitude ?? 77.2197) + 0.015,
-          'pickup_distance_km': '0.3',
-          'distance_km': '1.9',
-        },
-        {
-          'id': 9902,
-          'status': 'requested',
-          'is_parcel': true,
-          'item_category': 'Electronics',
-          'item_weight': 'Under 5kg',
-          'item_notes': 'Handle with care, fragile item.',
-          'estimated_fare': 120.50,
-          'bonus': 20.0,
-          'customer_name': 'Fatima Sheikh', // Used as generic sender for now
-          'sender_name': 'Fatima Sheikh',
-          'sender_phone': '+91 98765 43211',
-          'receiver_name': 'Ramesh Bhai',
-          'receiver_phone': '+91 99999 11111',
-          'pickup_address': 'GTB, Civil Lines, Delhi',
-          'drop_address': 'Connaught Place, Delhi',
-          'pickup_lat': (_currentPosition?.latitude ?? 28.6328) + 0.008,
-          'pickup_lng': (_currentPosition?.longitude ?? 77.2197) + 0.004,
-          'drop_lat': (_currentPosition?.latitude ?? 28.6328) + 0.035,
-          'drop_lng': (_currentPosition?.longitude ?? 77.2197) + 0.020,
-          'pickup_distance_km': '0.9',
-          'distance_km': '5.1',
-        },
-      ];
-    });
+    setState(() => _rides = _sampleTestRides());
   }
 
   @override
