@@ -626,4 +626,6 @@ class AppStrings {
   static String payDue(String amount) =>
       AppTranslations.tr('payDue').replaceAll('{amount}', amount);
   static String get payBackBlocked => AppTranslations.tr('payBackBlocked');
+  static String get payQrLoading => AppTranslations.tr('payQrLoading');
+  static String get payQrFailed => AppTranslations.tr('payQrFailed');
 }

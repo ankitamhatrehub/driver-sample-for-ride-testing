@@ -14,6 +14,8 @@ class PaymentAdjustPage extends StatelessWidget {
     required this.upiPaid,
     required this.remaining,
     required this.paymentId,
+    this.qrData,
+    this.qrUrl,
     required this.byCash,
     required this.onChoose,
     required this.onContinue,
@@ -23,6 +25,8 @@ class PaymentAdjustPage extends StatelessWidget {
   final double upiPaid;
   final double remaining;
   final String paymentId;
+  final String? qrData;
+  final String? qrUrl;
   final bool byCash;
   final ValueChanged<bool> onChoose;
   final VoidCallback onContinue;
@@ -45,7 +49,14 @@ class PaymentAdjustPage extends StatelessWidget {
             amount: upiPaid,
           ),
           SizedBox(height: context.h(14)),
-          Center(child: PaymentQrBlock(paymentId: paymentId, size: 170)),
+          Center(
+            child: PaymentQrBlock(
+              paymentId: paymentId,
+              size: 170,
+              qrData: qrData,
+              imageUrl: qrUrl,
+            ),
+          ),
           SizedBox(height: context.h(16)),
           Row(
             children: [

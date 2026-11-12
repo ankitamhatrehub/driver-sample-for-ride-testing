@@ -53,96 +53,96 @@ class _RideOtpBoxesState extends State<_RideOtpBoxes> {
 
   @override
   Widget build(BuildContext context) {
-    final gap = context.w(8);
-    final boxSize =
-        (MediaQuery.sizeOf(context).width -
-            context.w(48) -
-            gap * (widget.length - 1)) /
-        widget.length;
-    return SizedBox(
-      height: boxSize,
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          IgnorePointer(
-            child: Row(
-              children: List.generate(widget.length, (index) {
-                final char = index < widget.controller.text.length
-                    ? widget.controller.text[index]
-                    : '';
-                final isActive = _cursorInBox(index);
-                return Padding(
-                  padding: EdgeInsets.only(
-                    right: index == widget.length - 1 ? 0 : gap,
-                  ),
-                  child: Container(
-                    width: boxSize,
-                    height: boxSize,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: context.torkk.surface,
-                      borderRadius: BorderRadius.circular(context.r(14)),
-                      border: Border.all(
-                        color: isActive
-                            ? AppColors.primary
-                            : AppColors.fieldBorder,
-                        width: isActive ? 1.6 : 1,
+    final gap = context.w(12);
+    final boxSize = context.w(52);
+    final totalWidth = boxSize * widget.length + gap * (widget.length - 1);
+    return Center(
+      child: SizedBox(
+        width: totalWidth,
+        height: boxSize,
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            IgnorePointer(
+              child: Row(
+                children: List.generate(widget.length, (index) {
+                  final char = index < widget.controller.text.length
+                      ? widget.controller.text[index]
+                      : '';
+                  final isActive = _cursorInBox(index);
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      right: index == widget.length - 1 ? 0 : gap,
+                    ),
+                    child: Container(
+                      width: boxSize,
+                      height: boxSize,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: context.torkk.surface,
+                        borderRadius: BorderRadius.circular(context.r(14)),
+                        border: Border.all(
+                          color: isActive
+                              ? AppColors.primary
+                              : AppColors.fieldBorder,
+                          width: isActive ? 1.6 : 1,
+                        ),
+                      ),
+                      child: Text(
+                        char,
+                        style: AppTypography.bold.copyWith(
+                          fontSize: 20,
+                          height: 1.2,
+                        ),
                       ),
                     ),
-                    child: Text(
-                      char,
-                      style: AppTypography.bold.copyWith(
-                        fontSize: 20,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ),
-          Positioned.fill(
-            child: Listener(
-              behavior: HitTestBehavior.translucent,
-              onPointerDown: (event) {
-                _tappedIndex = (event.localPosition.dx / (boxSize + gap))
-                    .floor()
-                    .clamp(0, widget.length - 1)
-                    .toInt();
-                _selectBox(_tappedIndex);
-              },
-              child: TextField(
-                controller: widget.controller,
-                focusNode: widget.focusNode,
-                keyboardType: TextInputType.number,
-                autofocus: true,
-                showCursor: false,
-                cursorWidth: 0,
-                maxLength: widget.length,
-                enableInteractiveSelection: false,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: const TextStyle(
-                  color: Colors.transparent,
-                  fontSize: 1,
-                  height: 1,
-                ),
-                decoration: const InputDecoration(
-                  filled: false,
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  counterText: '',
-                  isCollapsed: true,
-                  contentPadding: EdgeInsets.zero,
-                ),
-                onTap: () => _selectBox(_tappedIndex),
+                  );
+                }),
               ),
             ),
-          ),
-        ],
+            Positioned.fill(
+              child: Listener(
+                behavior: HitTestBehavior.translucent,
+                onPointerDown: (event) {
+                  _tappedIndex = (event.localPosition.dx / (boxSize + gap))
+                      .floor()
+                      .clamp(0, widget.length - 1)
+                      .toInt();
+                  _selectBox(_tappedIndex);
+                },
+                child: TextField(
+                  controller: widget.controller,
+                  focusNode: widget.focusNode,
+                  keyboardType: TextInputType.number,
+                  autofocus: true,
+                  showCursor: false,
+                  cursorWidth: 0,
+                  maxLength: widget.length,
+                  enableInteractiveSelection: false,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  style: const TextStyle(
+                    color: Colors.transparent,
+                    fontSize: 1,
+                    height: 1,
+                  ),
+                  decoration: const InputDecoration(
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    focusedErrorBorder: InputBorder.none,
+                    counterText: '',
+                    isCollapsed: true,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  onTap: () => _selectBox(_tappedIndex),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -23,6 +23,8 @@ class AppTranslations {
     'en': {
 
       // --- Ride payment flow ---
+      'payQrLoading': 'Generating QR...',
+      'payQrFailed': 'Could not create the QR',
       'payCollectPayment': 'Collect Payment',
       'payTotalAmount': 'Total Amount',
       'payScanQr': 'Scan QR Code to Pay',
@@ -695,6 +697,8 @@ class AppTranslations {
     'hi': {
 
       // --- Ride payment flow ---
+      'payQrLoading': 'QR बन रहा है...',
+      'payQrFailed': 'QR नहीं बन सका',
       'payCollectPayment': 'पेमेंट लें',
       'payTotalAmount': 'कुल राशि',
       'payScanQr': 'पेमेंट के लिए QR कोड स्कैन करें',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:rider_app/common/constants/string_constants.dart';
 import 'package:rider_app/common/theme/app_typography.dart';
@@ -118,10 +119,29 @@ class PaymentAmountHeader extends StatelessWidget {
 }
 
 class PaymentQrBlock extends StatelessWidget {
-  const PaymentQrBlock({super.key, required this.paymentId, this.size = 200});
+  const PaymentQrBlock({
+    super.key,
+    required this.paymentId,
+    this.size = 200,
+    this.qrData,
+    this.imageUrl,
+    this.loading = false,
+    this.error,
+    this.onRetry,
+  });
 
   final String paymentId;
   final double size;
+
+  /// The UPI string (`upi://pay?...`) the QR encodes. Drawn as a clean QR.
+  final String? qrData;
+
+  /// Razorpay's poster image, only used if [qrData] is missing. When null (and not loading / failed) a placeholder
+  /// pattern is drawn.
+  final String? imageUrl;
+  final bool loading;
+  final String? error;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -136,17 +156,93 @@ class PaymentQrBlock extends StatelessWidget {
             borderRadius: BorderRadius.circular(context.r(12)),
             border: Border.all(color: context.torkk.border),
           ),
-          child: CustomPaint(painter: StaticQrPainter(paymentId)),
+          child: _content(context),
         ),
-        SizedBox(height: context.h(8)),
-        Text(
-          '${AppStrings.payPaymentId}:  $paymentId',
-          style: AppTypography.regular.copyWith(
-            fontSize: 12,
-            color: context.torkk.textSecondary,
+        if (qrData != null ||
+            imageUrl != null ||
+            (!loading && error == null)) ...[
+          SizedBox(height: context.h(8)),
+          Text(
+            '${AppStrings.payPaymentId}:  $paymentId',
+            style: AppTypography.regular.copyWith(
+              fontSize: 12,
+              color: context.torkk.textSecondary,
+            ),
           ),
-        ),
+        ],
       ],
+    );
+  }
+
+  Widget _content(BuildContext context) {
+    if (loading) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircularProgressIndicator(strokeWidth: 2),
+            SizedBox(height: context.h(10)),
+            Text(
+              AppStrings.payQrLoading,
+              style: AppTypography.regular.copyWith(
+                fontSize: 12,
+                color: Colors.black54,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    if (error != null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              AppStrings.payQrFailed,
+              textAlign: TextAlign.center,
+              style: AppTypography.bold.copyWith(
+                fontSize: 13,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: context.h(4)),
+            Text(
+              error!,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.regular.copyWith(
+                fontSize: 11,
+                color: Colors.black54,
+              ),
+            ),
+            if (onRetry != null)
+              TextButton(onPressed: onRetry, child: Text(AppStrings.retry)),
+          ],
+        ),
+      );
+    }
+    final data = qrData;
+    if (data != null && data.isNotEmpty) {
+      return QrImageView(
+        data: data,
+        errorCorrectionLevel: QrErrorCorrectLevel.M,
+        backgroundColor: Colors.white,
+        padding: EdgeInsets.zero,
+      );
+    }
+    final url = imageUrl;
+    if (url == null) return CustomPaint(painter: StaticQrPainter(paymentId));
+    return Image.network(
+      url,
+      fit: BoxFit.contain,
+      loadingBuilder: (_, child, progress) => progress == null
+          ? child
+          : const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+      errorBuilder: (_, _, _) => Center(
+        child: TextButton(onPressed: onRetry, child: Text(AppStrings.retry)),
+      ),
     );
   }
 }

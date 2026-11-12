@@ -14,14 +14,26 @@ class PaymentQrPage extends StatelessWidget {
     required this.paymentId,
     required this.onBack,
     required this.onCollectCash,
-    required this.onPartUpi,
+    required this.onRetry,
+    this.qrData,
+    this.qrUrl,
+    this.loading = false,
+    this.error,
+    this.onPartUpi,
   });
 
   final double total;
   final String paymentId;
   final VoidCallback onBack;
   final VoidCallback onCollectCash;
-  final VoidCallback onPartUpi;
+  final VoidCallback onRetry;
+
+  /// Test-only shortcut for a part payment; null hides the button.
+  final VoidCallback? onPartUpi;
+  final String? qrData;
+  final String? qrUrl;
+  final bool loading;
+  final String? error;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +45,17 @@ class PaymentQrPage extends StatelessWidget {
           SizedBox(height: context.h(8)),
           PaymentAmountHeader(label: AppStrings.payTotalAmount, amount: total),
           SizedBox(height: context.h(20)),
-          Center(child: PaymentQrBlock(paymentId: paymentId, size: 220)),
+          Center(
+            child: PaymentQrBlock(
+              paymentId: paymentId,
+              size: 220,
+              qrData: qrData,
+              imageUrl: qrUrl,
+              loading: loading,
+              error: error,
+              onRetry: onRetry,
+            ),
+          ),
           SizedBox(height: context.h(18)),
           Text(
             AppStrings.payCollectPayment,
@@ -56,21 +78,22 @@ class PaymentQrPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: context.h(28)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: context.w(16),
-                height: context.w(16),
-                child: const CircularProgressIndicator(strokeWidth: 2),
-              ),
-              SizedBox(width: context.w(8)),
-              Text(
-                AppStrings.payWaiting,
-                style: AppTypography.regular.copyWith(fontSize: 13),
-              ),
-            ],
-          ),
+          if (qrData != null || qrUrl != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: context.w(16),
+                  height: context.w(16),
+                  child: const CircularProgressIndicator(strokeWidth: 2),
+                ),
+                SizedBox(width: context.w(8)),
+                Text(
+                  AppStrings.payWaiting,
+                  style: AppTypography.regular.copyWith(fontSize: 13),
+                ),
+              ],
+            ),
           SizedBox(height: context.h(20)),
           Row(
             children: [
@@ -80,13 +103,15 @@ class PaymentQrPage extends StatelessWidget {
                   child: Text(AppStrings.payCollectCash),
                 ),
               ),
-              SizedBox(width: context.w(10)),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: onPartUpi,
-                  child: Text(AppStrings.payPaidPartUpi),
+              if (onPartUpi != null) ...[
+                SizedBox(width: context.w(10)),
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: onPartUpi,
+                    child: Text(AppStrings.payPaidPartUpi),
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ],

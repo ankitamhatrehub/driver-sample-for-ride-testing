@@ -39,6 +39,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   file_saver: ^0.7.0
+  qr_flutter: ^4.1.0
 
 dependency_overrides:
   http: ^1.2.0

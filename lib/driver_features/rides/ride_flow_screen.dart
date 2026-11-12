@@ -351,7 +351,9 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         debugPrint('[RIDE FLOW] start-ride failed: $e');
       });
     } else {
-      debugPrint('[RIDE API] start-ride SKIPPED: rideId=$_rideId driverPhone="${widget.driverPhone}"');
+      debugPrint(
+        '[RIDE API] start-ride SKIPPED: rideId=$_rideId driverPhone="${widget.driverPhone}"',
+      );
     }
     _go(_Phase.otp);
   }
@@ -492,6 +494,7 @@ class _RideFlowScreenState extends State<RideFlowScreen> {
         total: _payTotal,
         earning: _earnings,
         riderId: _riderId,
+        rideId: '${_rideId ?? ''}',
         distanceLabel: _distanceText,
         onBack: () => _toast(AppStrings.payBackBlocked, error: false),
         onDone: (result) {

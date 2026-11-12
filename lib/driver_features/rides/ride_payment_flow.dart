@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:rider_app/common/constants/string_constants.dart';
 
 import 'package:rider_app/driver_features/rides/payment/payment_adjust_page.dart';
 import 'package:rider_app/driver_features/rides/payment/payment_cash_page.dart';
@@ -8,6 +11,7 @@ import 'package:rider_app/driver_features/rides/payment/payment_done_page.dart';
 import 'package:rider_app/driver_features/rides/payment/payment_qr_page.dart';
 import 'package:rider_app/driver_features/rides/payment/payment_result.dart';
 import 'package:rider_app/driver_features/rides/payment/payment_review_page.dart';
+import 'package:rider_app/service/razorpay_service.dart';
 
 export 'package:rider_app/driver_features/rides/payment/payment_result.dart';
 
@@ -24,6 +28,7 @@ class RidePaymentFlow extends StatefulWidget {
     required this.total,
     required this.earning,
     required this.riderId,
+    required this.rideId,
     required this.distanceLabel,
     required this.onBack,
     required this.onDone,
@@ -32,6 +37,7 @@ class RidePaymentFlow extends StatefulWidget {
   final double total;
   final double earning;
   final String riderId;
+  final String rideId;
   final String distanceLabel;
   final VoidCallback onBack;
   final ValueChanged<RidePaymentResult> onDone;
@@ -43,7 +49,14 @@ class RidePaymentFlow extends StatefulWidget {
 class _RidePaymentFlowState extends State<RidePaymentFlow> {
   _Step _step = _Step.qr;
   _Step _cashBack = _Step.qr;
-  Timer? _upiTimer;
+  Timer? _pollTimer;
+  bool _polling = false;
+
+  /// The live Razorpay QR for this fare, and its loading / error state.
+  RazorpayQr? _qr;
+  bool _qrLoading = true;
+  String? _qrError;
+  bool _qrPaid = false;
 
   double _upi = 0;
   double _cash = 0;
@@ -72,27 +85,85 @@ class _RidePaymentFlowState extends State<RidePaymentFlow> {
   @override
   void initState() {
     super.initState();
-    _startWaiting();
+    _createQr();
   }
 
   @override
   void dispose() {
-    _upiTimer?.cancel();
+    _pollTimer?.cancel();
+    _closeQr();
     _received.dispose();
     super.dispose();
   }
 
   void _show(_Step step) => setState(() => _step = step);
 
-  /// Placeholder for the payment webhook: the QR "gets paid" after a few
-  /// seconds. Replace with the real payment status once the API exists.
-  void _startWaiting() {
-    _upiTimer?.cancel();
-    _upiTimer = Timer(const Duration(seconds: 6), () {
-      if (!mounted || _step != _Step.qr) return;
-      _setAmounts(upi: _total);
-      _show(_Step.review);
+  /// Creates a fresh QR for the fare and starts watching it for payment.
+  Future<void> _createQr() async {
+    _pollTimer?.cancel();
+    setState(() {
+      _qr = null;
+      _qrError = null;
+      _qrLoading = true;
+      _qrPaid = false;
     });
+    try {
+      final qr = await RazorpayService.createUpiQr(
+        amountRupees: _total,
+        rideId: widget.rideId,
+      );
+      if (!mounted) {
+        RazorpayService.closeQr(qr.id);
+        return;
+      }
+      setState(() {
+        _qr = qr;
+        _qrLoading = false;
+      });
+      _pollTimer = Timer.periodic(const Duration(seconds: 3), (_) => _poll());
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _qrLoading = false;
+        _qrError = '$e';
+      });
+    }
+  }
+
+  /// Asks Razorpay how much has been paid on the QR. Full amount moves on to
+  /// review; a smaller amount goes to the part-payment screen.
+  Future<void> _poll() async {
+    final qr = _qr;
+    if (_polling || qr == null || _step != _Step.qr) return;
+    _polling = true;
+    try {
+      final status = await RazorpayService.fetchQrStatus(qr.id);
+      if (!mounted || _step != _Step.qr) return;
+      if (status.receivedPaise >= qr.amountPaise) {
+        _pollTimer?.cancel();
+        _qrPaid = true;
+        _setAmounts(upi: _total);
+        _show(_Step.review);
+      } else if (status.receivedPaise > 0) {
+        _pollTimer?.cancel();
+        _upi = status.receivedPaise / 100;
+        _remainingByCash = true;
+        _show(_Step.adjust);
+      } else if (status.isClosed) {
+        _pollTimer?.cancel();
+        setState(() => _qrError = AppStrings.payQrFailed);
+      }
+    } catch (e) {
+      debugPrint('[RAZORPAY] poll failed: $e');
+    } finally {
+      _polling = false;
+    }
+  }
+
+  /// Closes the QR if nobody paid on it (cash chosen, or the driver left).
+  void _closeQr() {
+    final qr = _qr;
+    if (qr != null && !_qrPaid) RazorpayService.closeQr(qr.id);
   }
 
   void _setAmounts({
@@ -109,11 +180,12 @@ class _RidePaymentFlowState extends State<RidePaymentFlow> {
 
   void _backToQr() {
     _show(_Step.qr);
-    _startWaiting();
+    _createQr();
   }
 
   void _openCash({required _Step back, double upi = 0}) {
-    _upiTimer?.cancel();
+    _pollTimer?.cancel();
+    if (_step == _Step.qr) _closeQr();
     _upi = upi;
     _cashBack = back;
     _settle = null;
@@ -122,8 +194,9 @@ class _RidePaymentFlowState extends State<RidePaymentFlow> {
     _show(_Step.cash);
   }
 
+  /// Test-only: pretends the rider paid all but ₹50 by UPI.
   void _partUpi() {
-    _upiTimer?.cancel();
+    _pollTimer?.cancel();
     _upi = (_total - 50).clamp(0, _total).toDouble();
     _remainingByCash = true;
     _show(_Step.adjust);
@@ -151,12 +224,17 @@ class _RidePaymentFlowState extends State<RidePaymentFlow> {
   void _back() {
     switch (_step) {
       case _Step.qr:
-        _upiTimer?.cancel();
+        _pollTimer?.cancel();
+        _closeQr();
         widget.onBack();
       case _Step.cash:
         _cashBack == _Step.qr ? _backToQr() : _show(_cashBack);
-      case _Step.adjust || _Step.review:
+      case _Step.adjust:
         _backToQr();
+      case _Step.review:
+        // Paid in full by UPI: nothing to go back to.
+        if (_upi > 0 && _cash == 0 && _outstanding == 0) return;
+        _show(_remainingByCash || _upi == 0 ? _Step.cash : _Step.adjust);
       case _Step.done:
         _show(_Step.review);
     }
@@ -167,10 +245,15 @@ class _RidePaymentFlowState extends State<RidePaymentFlow> {
     return switch (_step) {
       _Step.qr => PaymentQrPage(
         total: _total,
-        paymentId: widget.riderId,
+        paymentId: _qr?.id ?? widget.riderId,
         onBack: _back,
+        qrData: _qr?.imageContent,
+        qrUrl: _qr?.imageUrl,
+        loading: _qrLoading,
+        error: _qrError,
+        onRetry: _createQr,
         onCollectCash: () => _openCash(back: _Step.qr),
-        onPartUpi: _partUpi,
+        onPartUpi: kDebugMode ? _partUpi : null,
       ),
       _Step.cash => PaymentCashPage(
         upiPaid: _upi,
@@ -188,7 +271,9 @@ class _RidePaymentFlowState extends State<RidePaymentFlow> {
       _Step.adjust => PaymentAdjustPage(
         upiPaid: _upi,
         remaining: _due,
-        paymentId: widget.riderId,
+        paymentId: _qr?.id ?? widget.riderId,
+        qrData: _qr?.imageContent,
+        qrUrl: _qr?.imageUrl,
         byCash: _remainingByCash,
         onChoose: (cash) => setState(() => _remainingByCash = cash),
         onContinue: _continueAdjust,
